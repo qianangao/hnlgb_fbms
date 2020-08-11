@@ -24,24 +24,24 @@ const router = [
       },
       {
         path: '/',
-        component: '../layouts/BasicLayout',
-        Routes: ['src/pages/Authorized'],
+        component: '../layouts/SecurityLayout',
         routes: [
-          // VeteranCadresRoutes,
-          {
-            path: '/inspect-log',
-            name: 'inspect-log',
-            component: './inspect-log',
-            icon: 'fileText',
-            remark: '巡查日志',
-            hideChildrenInMenu: true,
-          },
           {
             path: '/',
-            redirect: '/inspection-mgt',
+            component: '../layouts/BasicLayout',
+            routes: [
+              {
+                path: '/',
+                redirect: '/veteran-cadres/base-info',
+              },
+              VeteranCadresRoutes,
+              {
+                component: './404',
+              },
+            ],
           },
           {
-            component: '404',
+            component: './404',
           },
         ],
       },

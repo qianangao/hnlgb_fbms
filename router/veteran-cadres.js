@@ -22,13 +22,7 @@ const routes = {
       component: './veteran-cadres/photo-info',
       remark: '照片信息',
     },
-    {
-      path: '/veteran-cadres/relocated',
-      name: 'veteran-cadres-relocated',
-      component: './veteran-cadres/relocated',
-      remark: '异地安置',
-    },
-  ]
+  ],
 };
 
 export default routes;

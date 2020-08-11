@@ -21,4 +21,6 @@ LICENSE
 yarn-error.log
 
 .history
+CNAME
+/build
 /src/assets/mapdata
