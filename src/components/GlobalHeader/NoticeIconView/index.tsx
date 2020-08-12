@@ -119,12 +119,12 @@ class NoticeIconView extends Component {
   };
 
   render() {
-    const { downloadFiles = [], refreshDownloadFiles } = this.props;
+    const { downloadFiles = [] } = this.props;
     const count = downloadFiles.length;
-
+    // spinning={refreshDownloadFiles}
     const notificationBox = () => (
       <>
-        <Spin spinning={refreshDownloadFiles} delay={500}>
+        <Spin spinning={false} delay={500}>
           <Tabs className={styles.tabs}>
             <Tabs.TabPane tab="导出文件" key="exportFiles">
               <NoticeList
