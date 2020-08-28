@@ -1,10 +1,22 @@
 import request from '@/utils/request';
+
+/**
+ * 根据name获取字段的可选属性
+ * @param {*} params
+ */
+export async function getDictionary(params) {
+  return request('/dictionary', {
+    method: 'GET',
+    params,
+  });
+}
+
 /**
  * 上传文件到文件服务器
  * @param {*} params 登陆信息
  */
 export async function uploadFile(params) {
-  return request('/lgbsmp/api/v1/attachmentsftpto', {
+  return request('/attachmentsftpto', {
     method: 'POST',
     data: params,
   });
@@ -15,7 +27,7 @@ export async function uploadFile(params) {
  * @param {*} params
  */
 export async function getDownloadFiles(params) {
-  return request('/lgbsmp/api/v1/download_center/user', {
+  return request('/download_center/user', {
     method: 'GET',
     params,
   });

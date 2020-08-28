@@ -17,10 +17,10 @@ export default defineConfig({
   targets: {
     ie: 11,
   },
-  publicPath: '/inspection-fbms/',
-  base: '/inspection-fbms/',
+  publicPath: '/hnlgb-fbms/',
+  base: '/hnlgb-fbms/',
   manifest: {
-    basePath: '/inspection-fbms/',
+    basePath: '/hnlgb-fbms/',
   },
   routes,
   define: {

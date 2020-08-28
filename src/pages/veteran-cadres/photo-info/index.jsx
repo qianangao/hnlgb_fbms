@@ -1,3 +1,3 @@
 import React from 'react';
 
-export default () => <div>photo-info</div>;
+export default () => <div>照片信息</div>;

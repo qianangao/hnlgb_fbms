@@ -69,7 +69,7 @@ const errorHandler = error => {
   return { data, error: true };
 };
 
-export const BASE_URL = '/inspection-server';
+export const BASE_URL = '/hnlgb-server';
 
 /**
  * 配置request请求时的默认参数

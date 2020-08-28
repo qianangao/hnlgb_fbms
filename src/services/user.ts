@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function resetPassword(params) {
-  return request(`/lgbsmp/api/v1/user/checkoutPassword/${params.id}`, {
+  return request(`/user/checkoutPassword/${params.id}`, {
     method: 'PUT',
     data: params,
   });

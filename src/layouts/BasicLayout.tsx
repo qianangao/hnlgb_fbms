@@ -67,8 +67,6 @@ const BasicLayout = props => {
     authority: undefined,
   };
 
-  console.log('authorized: ', authorized);
-
   return (
     <ProLayout
       logo={logo}

@@ -7,12 +7,11 @@ module.exports = {
   },
   rules: {
     'arrow-parens': [1, 'as-needed'],
-
     'no-control-regex': 1,
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'no-restricted-syntax': 1,
-    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
-    'no-restricted-syntax': 1,
+    'no-param-reassign': ['error', { props: false }],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-unused-vars': ['error', { caughtErrors: 'none', argsIgnorePattern: '_' }],
     '@typescript-eslint/no-unused-vars': [
       'error',

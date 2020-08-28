@@ -26,7 +26,7 @@ export async function accountLogout(params) {
  * @param {*} params
  */
 export async function getCaptcha(params) {
-  return request('/sdsmp/api/v1/verification-code/login', {
+  return request('/verification-code/login', {
     method: 'POST',
     data: params,
   });

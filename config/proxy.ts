@@ -7,20 +7,20 @@
  */
 export default {
   dev: {
-    '/inspection-server': {
-      target: 'http://10.92.119.138:11111/ecpsmp/api',
+    '/hnlgb-server': {
+      target: 'http://10.92.119.138:11111/lgbsmp/api/v1',
       changeOrigin: true,
       pathRewrite: {
-        '^/inspection-server': '',
+        '^/hnlgb-server': '',
       },
     },
   },
   test: {
-    '/inspection-server': {
-      target: 'http://10.92.119.138:11111/ecpsmp/api',
+    '/hnlgb-server': {
+      target: 'http://10.92.119.138:11111/lgbsmp/api/v1',
       changeOrigin: true,
       pathRewrite: {
-        '^/inspection-server': '',
+        '^/hnlgb-server': '',
       },
     },
   },

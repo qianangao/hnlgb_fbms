@@ -29,7 +29,7 @@ const Model = {
       if (response.token) {
         // 储存用户token
         setCookie(TOKEN_KEY, response.token);
-        setAuthority(response.userInfo.authoritys);
+        setAuthority(response.userInfo.authorityList);
 
         requestConfig.extendOptions({
           headers: {

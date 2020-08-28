@@ -1,5 +1,10 @@
 import { message } from 'antd';
-import { uploadFile, getDownloadFiles, deleteDownloadFiles } from '@/services/global';
+import {
+  getDictionary,
+  uploadFile,
+  getDownloadFiles,
+  deleteDownloadFiles,
+} from '@/services/global';
 
 const GlobalModel = {
   namespace: 'global',
@@ -7,8 +12,53 @@ const GlobalModel = {
     collapsed: false,
     filesStatus: 1, // 导出中：0， 导出完成： 1
     downloadFiles: [],
+    enums: {},
+    enumsTimestamp: {},
   },
   effects: {
+    *getEnums({ payload }, { put }) {
+      const { names } = payload;
+
+      for (const name of names) {
+        yield put({
+          type: 'getEnum',
+          payload: { name },
+        });
+      }
+    },
+    *getEnum({ payload }, { call, put, select }) {
+      const { name } = payload;
+      const enums = yield select(state => state.global.enums);
+      const enumsTimestamp = yield select(state => state.global.enumsTimestamp);
+
+      // 缺少参数
+      if (!name) return;
+
+      // 存在对应枚举，且为常量
+      if (enums[name] && enumsTimestamp[name] === 0) return;
+
+      // 存在对应枚举，且时效为5分钟内
+      if (enums[name] && new Date().getTime() - enumsTimestamp[name] < 60 * 1000 * 5) return;
+
+      const response = yield call(getDictionary, payload);
+
+      if (!response.error) {
+        const isCommon = response[0].isCommonlyUsed;
+        const items = {};
+        response.forEach(item => {
+          items[item.code] = item.chineseName;
+        });
+
+        yield put({
+          type: 'saveEnum',
+          payload: {
+            key: name,
+            timestamp: isCommon ? 0 : new Date().getTime(),
+            items,
+          },
+        });
+      }
+    },
     *uploadFile({ payload }, { call }) {
       const { file } = payload;
       const { type } = payload;
@@ -28,8 +78,9 @@ const GlobalModel = {
 
       const response = yield call(uploadFile, formData);
 
-      if (!response || !response.error) {
-        return;
+      if (!response.error) {
+        // eslint-disable-next-line consistent-return
+        return response;
       }
 
       message.warning('上传文件失败，请重试！');
@@ -66,6 +117,12 @@ const GlobalModel = {
   reducers: {
     save(state, { payload }) {
       return { ...state, ...payload };
+    },
+    saveEnum(state, { payload }) {
+      const enums = { ...state.enums, [payload.key]: payload.items };
+      const enumsTimestamp = { ...state.enumsTimestamp, [payload.key]: payload.timestamp };
+
+      return { ...state, enums, enumsTimestamp };
     },
     deleteDownLoadFiles(state, { payload }) {
       const ids = payload.ids || [];

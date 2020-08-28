@@ -1,0 +1,12 @@
+.treeContent {
+  height: 100%;
+  :global {
+    .ant-tree {
+      height: calc(100% - 40px);
+      overflow: auto;
+    }
+    .ant-tree.ant-tree-block-node .ant-tree-list-holder-inner .ant-tree-node-content-wrapper {
+      white-space: nowrap;
+    }
+  }
+}
