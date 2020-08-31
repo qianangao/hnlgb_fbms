@@ -26,7 +26,7 @@ const getOrgTree = (req, res) => {
     msg: 'success',
     data: [
       {
-        id: '2c948a827409c4aa' + Math.floor(Math.random() * 1000000), //id
+        id: '1' + id, //id
         sort: null,
         organizationName: '测试单位1', //单位名称
         parentEmployerId: id || '1000', //父单位id
@@ -36,12 +36,12 @@ const getOrgTree = (req, res) => {
         organizationTelphone: null,
         dictRank: 1, //单位级别
         children: null,
-        isSubunit: 0,
+        isSubunit: 1,
         gmtCreate: null,
         communityAddress: null,
       },
       {
-        id: '2c948a827409c4aa' + Math.floor(Math.random() * 1000000), //id
+        id: '2' + id, //id
         sort: 0,
         organizationName: '测试单位2',
         parentEmployerId: id || '1000', //父单位id
@@ -51,12 +51,12 @@ const getOrgTree = (req, res) => {
         organizationTelphone: 'string',
         dictRank: 1,
         children: null,
-        isSubunit: 0,
+        isSubunit: 1,
         gmtCreate: null,
         communityAddress: null,
       },
       {
-        id: '2c948a827409c4aa' + Math.floor(Math.random() * 1000000), //id
+        id: '3' + id, //id
         sort: 0,
         organizationName: '测试单位3',
         parentEmployerId: id || '1000', //父单位id
@@ -103,8 +103,24 @@ const searchOrgTree = (req, res) => {
             dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
             organizationTelphone: null,
             dictRank: null,
-            children: null,
-            isSubunit: null,
+            children: [
+              {
+                id: '4028b23f738f519401738f321b9',
+                sort: null,
+                organizationName: '测试单位1-1',
+                parentEmployerId: '1000',
+                parentOrganizationName: '省委老干部局',
+                isLgbMinistry: null,
+                dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
+                organizationTelphone: null,
+                dictRank: null,
+                children: null,
+                isSubunit: null,
+                gmtCreate: '2020-07-27T08:09:15.000+0000',
+                communityAddress: null,
+              },
+            ],
+            isSubunit: 1,
             gmtCreate: '2020-08-20T02:48:38.000+0000',
             communityAddress: null,
           },

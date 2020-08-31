@@ -23,7 +23,7 @@ class NoticeIconView extends Component {
   //   }
   // }
 
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     const { dispatch, filesStatus } = this.props;
 
     if (this.refreshDownloadFilesFlag > -1) {

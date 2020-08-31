@@ -44,7 +44,7 @@ const routes = {
       path: '/veteran-cadres/death-mgt',
       name: 'veteran-cadres-death-mgt',
       component: './veteran-cadres/death-mgt',
-      remark: '历史管理',
+      remark: '离世管理',
     },
   ],
 };
