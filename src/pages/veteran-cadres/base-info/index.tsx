@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 // import ModifyModal from './components/ModifyModal';
@@ -42,4 +43,6 @@ const BaseInfo = ({ dispatch }) => {
   );
 };
 
-export default BaseInfo;
+export default connect(({ vcBasicInfo }) => ({
+  vcBasicInfo,
+}))(BaseInfo);

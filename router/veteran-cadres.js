@@ -22,6 +22,30 @@ const routes = {
       component: './veteran-cadres/photo-info',
       remark: '照片信息',
     },
+    {
+      path: '/veteran-cadres/specialty',
+      name: 'veteran-cadres-specialty',
+      component: './veteran-cadres/specialty',
+      remark: '银色人才',
+    },
+    {
+      path: '/veteran-cadres/hobby',
+      name: 'veteran-cadres-hobby',
+      component: './veteran-cadres/hobby',
+      remark: '兴趣爱好',
+    },
+    {
+      path: '/veteran-cadres/birthday-alert',
+      name: 'veteran-cadres-birthday-alert',
+      component: './veteran-cadres/birthday-alert',
+      remark: '生日提醒',
+    },
+    {
+      path: '/veteran-cadres/death-mgt',
+      name: 'veteran-cadres-death-mgt',
+      component: './veteran-cadres/death-mgt',
+      remark: '历史管理',
+    },
   ],
 };
 
