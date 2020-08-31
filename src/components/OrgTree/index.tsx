@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Tree, Input } from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
 
-const OrgTree = ({ onOrgSelect, orgTree, dispatch }) => {
+const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
   const [hasSearch, setHasSearch] = useState(false);
+  const symbol = useRef(Symbol('OrgTree'));
+  const orgSymbol = symbol.current;
 
-  const {
-    searchOrgTreeData,
-    orgTreeData,
-    orgLoadedLoadedKeys,
-    orgSelectedKeys,
-    orgExpandedKeys,
-  } = orgTree;
+  const { searchOrgTreeData, orgTreeData, orgLoadedLoadedKeys, orgSelectedKeys, orgExpandedKeys } =
+    orgTree[orgSymbol] || {};
 
   useEffect(() => {
-    dispatch({ type: 'orgTree/getOrgTreeById' });
+    dispatch({ type: 'orgTree/initTreeData', payload: { value }, orgSymbol });
+    dispatch({ type: 'orgTree/getOrgTreeById', orgSymbol });
+
+    return () => {
+      dispatch({ type: 'orgTree/destroyTree', orgSymbol });
+    };
   }, []);
 
-  const orgSearchHander = value => {
-    if (!value) return;
+  const orgSearchHander = value0 => {
+    if (!value0) return;
 
     setHasSearch(true);
 
     dispatch({
       type: 'orgTree/searchOrgTree',
+      orgSymbol,
       payload: {
-        organizationName: value,
+        organizationName: value0,
       },
     });
   };
@@ -35,6 +38,7 @@ const OrgTree = ({ onOrgSelect, orgTree, dispatch }) => {
     if (hasSearch && !event.target.value) {
       dispatch({
         type: 'orgTree/clearSearchData',
+        orgSymbol,
       });
 
       setHasSearch(false);
@@ -44,20 +48,24 @@ const OrgTree = ({ onOrgSelect, orgTree, dispatch }) => {
   const orgExpandHandler = node => {
     dispatch({
       type: 'orgTree/save',
+      orgSymbol,
       payload: {
         orgExpandedKeys: node,
       },
     });
   };
-  const orgSelectHandler = selectedKeys => {
+  const orgSelectHandler = (selectedKeys, { node }) => {
+    if (!selectedKeys[0]) return;
+
     dispatch({
       type: 'orgTree/save',
+      orgSymbol,
       payload: {
         orgSelectedKeys: selectedKeys,
       },
     });
 
-    onOrgSelect && onOrgSelect(selectedKeys[0]);
+    onChange && onChange(allInValue ? node : selectedKeys[0]);
   };
 
   const orgLoadDataHandler = treeNode => {
@@ -69,6 +77,7 @@ const OrgTree = ({ onOrgSelect, orgTree, dispatch }) => {
 
       dispatch({
         type: 'orgTree/getOrgTreeById',
+        orgSymbol,
         payload: {
           id: treeNode.id,
         },

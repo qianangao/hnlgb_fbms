@@ -44,6 +44,17 @@ export async function getLgbList(params) {
 }
 
 /**
+ * 重制老干部账号密码
+ * @param {*} params
+ */
+export async function resetLgbPwd(params) {
+  return request(`/users/password/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+/**
  * 获取老干部详情
  * @param {*} params
  */

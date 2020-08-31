@@ -1,11 +1,12 @@
 import { message } from 'antd';
-import { addLgb, deleteLgb, updateLgb, getLgbList } from './service';
+import { addLgb, deleteLgb, updateLgb, getLgbList, resetLgbPwd } from './service';
 
 const Model = {
   namespace: 'vcBasicInfo',
   state: {
     lgbListData: {},
     modifyModalVisible: false, // 新增修改modal visible
+    orgSelectModalVisible: false, // 单位选择modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -50,7 +51,6 @@ const Model = {
         });
       }
     },
-
     *selectOrgChange({ payload }, { put }) {
       yield put({
         type: 'save',
@@ -62,6 +62,34 @@ const Model = {
       yield put({
         type: 'tableReload',
       });
+    },
+    *updateLgbOrg({ payload }, { call, put }) {
+      const response = yield call(updateLgb, payload);
+
+      if (!response.error) {
+        yield put({
+          type: 'save',
+          payload: {
+            orgSelectModalVisible: false,
+          },
+        });
+
+        message.success('修改所选老干部单位成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *resetLgbPwd({ payload }, { call, put }) {
+      const response = yield call(resetLgbPwd, payload);
+
+      if (!response.error) {
+        message.success('老干部账号密码重置成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
     },
     *addLgb({ payload }, { call, put }) {
       const response = yield call(addLgb, payload);

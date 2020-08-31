@@ -44,10 +44,12 @@ const model = {
     orgExpandedKeys: [],
   },
   effects: {
-    *getOrgTreeById({ payload = {}, resolve }, { call, put, select }) {
+    *getOrgTreeById({ payload = {}, orgSymbol, resolve }, { call, put, select }) {
       const { organizationId, organizationName } = yield select(state => state.user.userInfo);
-      const orgTreeData = yield select(state => state.orgTree.orgTreeData);
-      const orgLoadedLoadedKeys = yield select(state => state.orgTree.orgLoadedLoadedKeys);
+      const orgTreeData = yield select(state => state.orgTree[orgSymbol].orgTreeData);
+      const orgLoadedLoadedKeys = yield select(
+        state => state.orgTree[orgSymbol].orgLoadedLoadedKeys,
+      );
       const id = payload.id || organizationId; // 默认使用user的orgid
 
       const response = yield call(getOrgTreeById, {
@@ -67,6 +69,7 @@ const model = {
               orgSelectedKeys: [organizationId],
               orgExpandedKeys: [organizationId],
             },
+            orgSymbol,
           });
         }
 
@@ -82,10 +85,11 @@ const model = {
             orgTreeData: treeData,
             orgLoadedLoadedKeys: [...orgLoadedLoadedKeys, id],
           },
+          orgSymbol,
         });
       }
     },
-    *searchOrgTree({ payload }, { call, put }) {
+    *searchOrgTree({ payload, orgSymbol }, { call, put }) {
       const response = yield call(searchOrgTree, payload);
 
       if (!response.error) {
@@ -97,10 +101,11 @@ const model = {
             searchOrgTreeData: response,
             orgExpandedKeys: parentIds,
           },
+          orgSymbol,
         });
       }
     },
-    *clearSearchData(_, { put, select }) {
+    *clearSearchData({ orgSymbol }, { put, select }) {
       const { organizationId } = yield select(state => state.user.userInfo);
       yield put({
         type: 'save',
@@ -108,12 +113,36 @@ const model = {
           searchOrgTreeData: null,
           orgExpandedKeys: [organizationId],
         },
+        orgSymbol,
       });
     },
   },
   reducers: {
-    save(state, { payload }) {
-      return { ...state, ...payload };
+    save(state, { payload, orgSymbol }) {
+      const symbolData = { ...state[orgSymbol], ...payload };
+
+      return { ...state, [orgSymbol]: symbolData };
+    },
+    initTreeData(state, { payload, orgSymbol }) {
+      const { value } = payload;
+      return {
+        ...state,
+        [orgSymbol]: {
+          orgTreeData: [],
+          searchOrgTreeData: null,
+          orgLoadedLoadedKeys: [],
+          orgSelectedKeys: value ? [value] : [],
+          orgExpandedKeys: [],
+        },
+      };
+    },
+    destroyTree(state, { orgSymbol }) {
+      const stateTemp = state;
+      delete stateTemp[orgSymbol];
+
+      return {
+        ...stateTemp,
+      };
     },
   },
 };

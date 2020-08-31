@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ vcBasicInfo, openModifyModal, enums, dispatch }) => {
+const Table = ({ vcBasicInfo, openModifyModal, openOrgSelectModal, enums, dispatch }) => {
   const { tableRef } = vcBasicInfo;
 
   // "id": "402883e973e5c2ce0173e5c2ce9d", //id
@@ -84,6 +84,14 @@ const Table = ({ vcBasicInfo, openModifyModal, enums, dispatch }) => {
         >
           <a>删除</a>
         </Popconfirm>,
+        <Popconfirm
+          key={`${employeeData.id}del`}
+          title="确认重置该人员账号密码吗？"
+          placement="topRight"
+          onConfirm={() => resetPassword(employeeData.id)}
+        >
+          <a>重置密码</a>
+        </Popconfirm>,
       ],
     },
   ];
@@ -106,6 +114,15 @@ const Table = ({ vcBasicInfo, openModifyModal, enums, dispatch }) => {
     });
   };
 
+  const resetPassword = id => {
+    dispatch({
+      type: 'vcBasicInfo/resetLgbPwd',
+      payload: {
+        id,
+      },
+    });
+  };
+
   return (
     <ProTable
       rowKey="id"
@@ -115,6 +132,25 @@ const Table = ({ vcBasicInfo, openModifyModal, enums, dispatch }) => {
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
+        <Button type="primary" onClick={() => {}}>
+          新增
+        </Button>,
+        <Button onClick={() => {}}>模版下载</Button>,
+        <Button type="primary" onClick={() => {}}>
+          导入
+        </Button>,
+        <Button type="primary" onClick={() => {}}>
+          导出
+        </Button>,
+        selectedRowKeys && selectedRowKeys.length && (
+          <Button
+            onClick={() => {
+              openOrgSelectModal(selectedRowKeys);
+            }}
+          >
+            修改单位
+          </Button>
+        ),
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {

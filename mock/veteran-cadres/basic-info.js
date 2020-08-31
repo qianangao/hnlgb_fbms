@@ -120,4 +120,5 @@ export default {
   'DELETE /users': noResponse,
   'PUT /users/:id': noResponse,
   'GET /users/:id': getUserInfo,
+  'PUT /users/password/:id': noResponse,
 };

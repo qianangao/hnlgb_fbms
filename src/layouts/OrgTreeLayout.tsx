@@ -23,7 +23,7 @@ const OrgTreeLayout = ({ children, onOrgSelect }) => {
             overflow: 'hidden',
           }}
         >
-          <OrgTree onOrgSelect={onOrgSelect} />
+          <OrgTree onChange={onOrgSelect} />
         </aside>
         <section style={{ marginLeft: 20, overflow: 'auto' }}>
           <main style={{ overflow: 'initial' }}>{children}</main>
