@@ -1,3 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-export default () => <div>兴趣爱好</div>;
+import { connect } from 'umi';
+import OrgTreeLayout from '@/layouts/OrgTreeLayout';
+import Table from './components/Table';
+
+const HobbyInfo = ({ dispatch }) => {
+  useEffect(() => {
+    dispatch({
+      type: 'global/getEnums',
+      payload: {
+        names: [
+          'dictSex',
+          'dictNation',
+          'dictPoliticalStatus',
+          'dictRetirementLevel',
+          'dictRetirementType',
+          'dictTreatmentNow',
+          'hobby',
+        ],
+      },
+    });
+  }, []);
+
+  return (
+    <OrgTreeLayout>
+      <Table />
+    </OrgTreeLayout>
+  );
+};
+
+export default connect(({ vcHobbyInfo }) => ({
+  vcHobbyInfo,
+}))(HobbyInfo);
