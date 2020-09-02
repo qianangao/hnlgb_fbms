@@ -3,7 +3,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ vcBasicInfo, openModifyModal, openOrgSelectModal, enums, dispatch }) => {
+const Table = ({
+  vcBasicInfo,
+  openAddModal,
+  openModifyModal,
+  openOrgSelectModal,
+  enums,
+  dispatch,
+}) => {
   const { tableRef } = vcBasicInfo;
 
   // "id": "402883e973e5c2ce0173e5c2ce9d", //id
@@ -132,7 +139,12 @@ const Table = ({ vcBasicInfo, openModifyModal, openOrgSelectModal, enums, dispat
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => {}}>
+        <Button
+          type="primary"
+          onClick={() => {
+            openAddModal();
+          }}
+        >
           新增
         </Button>,
         <Button onClick={() => {}}>模版下载</Button>,

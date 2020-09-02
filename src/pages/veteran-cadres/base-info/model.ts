@@ -5,6 +5,7 @@ const Model = {
   namespace: 'vcBasicInfo',
   state: {
     lgbListData: {},
+    addModalVisible: false, // 新增modal visible
     modifyModalVisible: false, // 新增修改modal visible
     orgSelectModalVisible: false, // 单位选择modal visible
     tableRef: {},
@@ -98,7 +99,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            modifyModalVisible: false,
+            addModalVisible: false,
           },
         });
 

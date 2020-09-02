@@ -45,9 +45,9 @@ const verifyBirthday = (year, month, day, birthday) => {
   const nowYear = now.getFullYear();
   // 年月日是否合理
   if (
-    birthday.getFullYear() === year &&
-    birthday.getMonth() + 1 === month &&
-    birthday.getDate() === day
+    birthday.getFullYear() === Number(year) &&
+    birthday.getMonth() + 1 === Number(month) &&
+    birthday.getDate() === Number(day)
   ) {
     // 判断年份的范围（3岁到200岁之间)
     const time = nowYear - year;
@@ -133,7 +133,9 @@ export const checkIdCard = (rule, value, callback) => {
       82: '澳门',
       91: '国外 ',
     };
-    if (value && !Reg.test(value)) {
+    if (!value) {
+      callback();
+    } else if (!Reg.test(value)) {
       callback('身份证不符合规范');
     } else if (!city[value.substr(0, 2)]) {
       callback('身份证地址编码不合规范');
