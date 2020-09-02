@@ -32,6 +32,8 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         addModalVisible: false,
       },
     });
+
+    form.resetFields();
   };
 
   const handleOk = () => {
