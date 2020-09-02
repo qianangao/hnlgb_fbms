@@ -5,9 +5,10 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 // import ModifyModal from './components/ModifyModal';
 import Table from './components/Table';
 import OrgSelectModal from './components/OrgSelectModal';
+import AddModal from './components/AddModal';
 
 const BaseInfo = ({ dispatch }) => {
-  const modifyRef = useRef({});
+  const addModelRef = useRef({});
   const orgSelectRef = useRef({});
 
   useEffect(() => {
@@ -15,12 +16,20 @@ const BaseInfo = ({ dispatch }) => {
       type: 'global/getEnums',
       payload: {
         names: [
-          'dictSex',
+          'dictAllergenUnitNaturel',
+          'dictDegree',
+          'dictHealth',
+          'dictMedicalTreatment',
           'dictNation',
           'dictPoliticalStatus',
           'dictRetirementLevel',
           'dictRetirementType',
+          'dictRevolutionPeriod',
+          'dictSex',
           'dictTreatmentNow',
+          'dictUnitNature',
+          'hierarchy',
+          'dictIdentity',
         ],
       },
     });
@@ -33,8 +42,8 @@ const BaseInfo = ({ dispatch }) => {
     });
   };
 
-  const openModifyModal = item => {
-    modifyRef.current.showModal(item);
+  const openAddModal = item => {
+    addModelRef.current.showModal(item);
   };
   const openOrgSelectModal = ids => {
     orgSelectRef.current.showModal(ids);
@@ -42,8 +51,9 @@ const BaseInfo = ({ dispatch }) => {
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openModifyModal={openModifyModal} openOrgSelectModal={openOrgSelectModal} />
+      <Table openAddModal={openAddModal} openOrgSelectModal={openOrgSelectModal} />
       <OrgSelectModal actionRef={orgSelectRef} />
+      <AddModal actionRef={addModelRef} />
       {/* <ModifyModal actionRef={modifyRef} /> */}
     </OrgTreeLayout>
   );
