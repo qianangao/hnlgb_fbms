@@ -56,7 +56,7 @@ const AdvancedFormInstance = ({
   };
 
   return (
-    <Form form={form} initialValues={initialValues}>
+    <Form form={form} layout="vertical" initialValues={initialValues}>
       {headerRender || null}
       <Row gutter={24}>{fields.map(field => renderField(field) || null)}</Row>
       {footerRender || null}
