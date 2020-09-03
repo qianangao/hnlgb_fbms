@@ -2,7 +2,14 @@ import React from 'react';
 import { connect } from 'umi';
 import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row } from 'antd';
 
-const AdvancedFormInstance = ({ form, fields = [], initialValues, enums }) => {
+const AdvancedFormInstance = ({
+  form,
+  fields = [],
+  headerRender,
+  footerRender,
+  initialValues,
+  enums,
+}) => {
   const renderField = field => {
     const { type, span = 1, render, enumsLabel, switchEnums, ...resField } = field;
 
@@ -49,8 +56,10 @@ const AdvancedFormInstance = ({ form, fields = [], initialValues, enums }) => {
   };
 
   return (
-    <Form form={form} layout="vertical" initialValues={initialValues}>
+    <Form form={form} initialValues={initialValues}>
+      {headerRender || null}
       <Row gutter={24}>{fields.map(field => renderField(field) || null)}</Row>
+      {footerRender || null}
     </Form>
   );
 };

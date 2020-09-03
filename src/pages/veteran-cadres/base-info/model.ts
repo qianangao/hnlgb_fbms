@@ -13,10 +13,12 @@ const Model = {
   },
   effects: {
     *getList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const { organizationId } = yield select(state => state.user.userInfo);
+
       const params = {
         ...payload,
-        orgIdForDataSelect,
+        orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };

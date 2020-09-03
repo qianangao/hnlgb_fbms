@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Modal, Mentions } from 'antd';
+import { Form, Modal, Input } from 'antd';
 import OrgTree from '@/components/OrgTree';
 
 let tempName = '';
@@ -33,7 +33,7 @@ const OrgSelectInput = ({ value, defaultLabel, onChange }) => {
 
   return (
     <>
-      <Mentions readOnly value={valueName} onClick={showModal} />
+      <Input.Search readOnly value={valueName} onClick={showModal} />
       <Modal
         title="选择单位"
         width={640}

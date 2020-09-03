@@ -84,7 +84,13 @@ const ModifyModal = ({ dispatch, vcBasicInfo, deptList, actionRef, loading, dept
   return (
     <Modal
       title="编辑人员信息"
-      width={640}
+      centered
+      width="95vw"
+      style={{ paddingBottom: 0 }}
+      bodyStyle={{
+        height: 'calc(95vh - 108px)',
+        overflow: 'auto',
+      }}
       visible={modifyModalVisible}
       onOk={handleOk}
       forceRender

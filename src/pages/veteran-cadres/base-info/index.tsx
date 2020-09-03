@@ -35,10 +35,10 @@ const BaseInfo = ({ dispatch }) => {
     });
   }, []);
 
-  const orgChangeHander = orgitem => {
+  const orgChangeHander = orgId => {
     dispatch({
       type: 'vcBasicInfo/selectOrgChange',
-      payload: orgitem.id,
+      payload: orgId,
     });
   };
 

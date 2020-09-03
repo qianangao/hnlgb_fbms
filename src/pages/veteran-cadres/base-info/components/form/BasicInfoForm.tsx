@@ -4,6 +4,7 @@ import { Form, DatePicker, Radio } from 'antd';
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
 import { checkIdCard, checkPhone } from '@/utils/validators';
+import LgbSelectInput from '@/components/LgbSelectInput';
 
 const BasicInfoForm = ({ form }) => {
   const formItems = [
@@ -232,7 +233,14 @@ const BasicInfoForm = ({ form }) => {
     },
   ];
 
-  return <AdvancedForm form={form} fields={formItems} />;
+  // Temp 仅做demo演示
+  const selectLgbInput = (
+    <Form.Item name="lgbid" rules={[{ required: true, message: '请选择老干部!' }]}>
+      <LgbSelectInput />
+    </Form.Item>
+  );
+
+  return <AdvancedForm form={form} fields={formItems} headerRender={selectLgbInput} />;
 };
 
 BasicInfoForm.useForm = AdvancedForm.useForm;
