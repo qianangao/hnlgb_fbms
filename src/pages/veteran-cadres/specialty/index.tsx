@@ -4,12 +4,9 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
-// import OrgSelectModal from './components/OrgSelectModal';
 
 const specialty = ({ dispatch }) => {
   const addModelRef = useRef({})
-  const modifyRef = useRef({});
-  const orgSelectRef = useRef({});
 
   useEffect(() => {
     dispatch({
@@ -37,16 +34,11 @@ const specialty = ({ dispatch }) => {
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
-  const openOrgSelectModal = ids => {
-    orgSelectRef.current.showModal(ids);
-  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openAddModal={openAddModal} openOrgSelectModal={openOrgSelectModal} />
+      <Table openAddModal={openAddModal} />
       <AddModal actionRef={addModelRef} ></AddModal>
-      {/* <OrgSelectModal actionRef={orgSelectRef} /> */}
-      {/* <ModifyModal actionRef={modifyRef} /> */}
     </OrgTreeLayout>
   );
 };

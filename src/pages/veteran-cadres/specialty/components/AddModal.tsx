@@ -48,7 +48,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         });
       })
       .catch(info => {
-        console.error('Validate Failed:', info);
+        console.error('新增报错', info);
       });
   };
 

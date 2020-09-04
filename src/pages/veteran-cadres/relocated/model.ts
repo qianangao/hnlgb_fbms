@@ -4,9 +4,8 @@ import { addRelocated, deleteRelocated, updateLgb, relocatedList } from './servi
 const Model = {
   namespace: 'relocated',
   state: {
-    lgbListData: {},
+    relocatedListData: {},
     addModalVisible: false, //新增modal visible
-    modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -38,7 +37,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            lgbListData: result,
+            relocatedListData: result,
           },
         });
       }

@@ -5,9 +5,6 @@ import { connect } from 'umi';
 
 const Table = ({ openAddModal, specialty, enums, dispatch }) => {
   const { tableRef } = specialty;
-
-  // "id": "402883e973e5c2ce0173e5c2ce9d", //id
-  // "organizationId": "1000", //单位id
   const columns = [
     {
       title: '序号',

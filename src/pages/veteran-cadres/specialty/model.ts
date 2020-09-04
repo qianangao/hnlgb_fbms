@@ -4,7 +4,7 @@ import { addSpecialty, deleteSpecialty, updateSpecialty, specialtyList } from '.
 const Model = {
   namespace: 'specialty',
   state: {
-    lgbListData: {},
+    specialtyListData: {},
     modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id

@@ -50,7 +50,6 @@ const BasicInfoForm = ({ form }) => {
 
   ];
 
-  // Temp 仅做demo演示
   const selectLgbInput = (
     <Form.Item name="lgbid" rules={[{ required: true, message: '请选择老干部!' }]}>
       <LgbSelectInput />

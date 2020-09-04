@@ -4,9 +4,8 @@ import { addPhotoInfo, deletePhotoInfo, updatePhotoInfo, photoInfoList } from '.
 const Model = {
   namespace: 'photoInfo',
   state: {
-    lgbListData: {},
+    photoInfoListData: {},
     addModalVisible: false,  // 新增modal visible
-    modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -37,7 +36,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            lgbListData: result,
+            photoInfoListData: result,
           },
         });
       }
