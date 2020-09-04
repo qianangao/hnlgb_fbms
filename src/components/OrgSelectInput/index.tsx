@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Modal, Input } from 'antd';
 import OrgTree from '@/components/OrgTree';
 
 let tempName = '';
 
-const OrgSelectInput = ({ value, defaultLabel, onChange }) => {
+const OrgSelectInput = ({ value, actionRef, onChange }) => {
   const [orgSelectModalVisible, setVisible] = useState(false);
-  const [valueName, setValueName] = useState(defaultLabel || '');
+  const [valueName, setValueName] = useState('');
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (actionRef && typeof actionRef === 'function') {
+      actionRef({ setLabel });
+    }
+
+    if (actionRef && typeof actionRef !== 'function') {
+      actionRef.current = { setLabel };
+    }
+  }, []);
+
+  const setLabel = label => {
+    setValueName(label);
+  };
 
   const showModal = () => {
     form.setFieldsValue({ organizationId: value });

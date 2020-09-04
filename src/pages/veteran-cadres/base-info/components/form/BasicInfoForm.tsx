@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Form, DatePicker, Radio } from 'antd';
+import { connect } from 'umi';
 
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
+import { formatDate } from '@/utils/format';
 import { checkIdCard, checkPhone } from '@/utils/validators';
-import LgbSelectInput from '@/components/LgbSelectInput';
 
-const BasicInfoForm = ({ form }) => {
+const BasicInfoForm = ({ form, id, dispatch, loading }) => {
+  const orgSelect = useRef({});
+  const nowThePipeOrgSelect = useRef({});
   const formItems = [
+    {
+      name: 'id',
+      label: 'userid',
+      hidden: true,
+    },
     {
       label: '姓名',
       name: 'realName',
+      disabled: !!id,
       rules: [
         { required: true, message: '请输入姓名!', whitespace: true },
         { max: 30, message: '姓名长度请小于30位!', whitespace: true },
@@ -31,7 +40,7 @@ const BasicInfoForm = ({ form }) => {
       label: '工作单位',
       name: 'organizationId',
       rules: [{ required: true, message: '请选择工作单位!' }],
-      render: <OrgSelectInput />,
+      render: <OrgSelectInput actionRef={orgSelect} />,
     },
     {
       label: '籍贯',
@@ -41,6 +50,7 @@ const BasicInfoForm = ({ form }) => {
     {
       label: '身份证号',
       name: 'idCard',
+      disabled: !!id,
       rules: [
         { required: true, message: '请输入身份证号!', whitespace: true },
         { validator: checkIdCard },
@@ -55,7 +65,7 @@ const BasicInfoForm = ({ form }) => {
       label: '现管单位',
       name: 'nowThePipeUnitsId',
       rules: [{ required: true, message: '请选择现管单位!' }],
-      render: <OrgSelectInput />,
+      render: <OrgSelectInput actionRef={nowThePipeOrgSelect} />,
     },
     {
       label: '单位性质',
@@ -87,13 +97,20 @@ const BasicInfoForm = ({ form }) => {
     },
     {
       label: '生日',
-      key: 'birthday',
+      key: 'birthdayout',
       span: 2,
       render: (
         <span style={{ display: 'inline-flex', width: '100%' }}>
-          <Form.Item name="birthday" style={{ flexGrow: 1 }}>
-            <DatePicker style={{ width: '100%' }} />
+          <Form.Item
+            name="birthday"
+            style={{ flexGrow: 1 }}
+            valuePropName="value"
+            getValueFromEvent={value => (value ? value.format('YYYY-MM-DD') : '')}
+            getValueProps={str => ({ value: formatDate(str) })}
+          >
+            <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
           </Form.Item>
+
           <Form.Item name="solarOrLunar" initialValue={0} style={{ flexGrow: 1, marginLeft: 20 }}>
             <Radio.Group>
               <Radio.Button value={0}>阳历</Radio.Button>
@@ -223,7 +240,7 @@ const BasicInfoForm = ({ form }) => {
       label: '离世时间',
       name: 'deadTime',
       type: 'date',
-      rules: [{ required: form.getFieldValue('isDead'), message: '请选择是否在世!' }],
+      rules: [{ required: form.getFieldValue('isDead'), message: '请选择离世时间!' }],
     },
     {
       label: '身份性质',
@@ -233,16 +250,32 @@ const BasicInfoForm = ({ form }) => {
     },
   ];
 
-  // Temp 仅做demo演示
-  const selectLgbInput = (
-    <Form.Item name="lgbid" rules={[{ required: true, message: '请选择老干部!' }]}>
-      <LgbSelectInput />
-    </Form.Item>
-  );
+  useEffect(() => {
+    if (id) {
+      new Promise(resolve => {
+        dispatch({
+          type: 'vcBasicInfo/getLgbDetail',
+          payload: { id },
+          resolve,
+        });
+      }).then(data => {
+        const fields = {
+          ...data,
+        };
 
-  return <AdvancedForm form={form} fields={formItems} headerRender={selectLgbInput} />;
+        orgSelect.current.setLabel(data.organizationName || '');
+        nowThePipeOrgSelect.current.setLabel(data.nowThePipeUnits || '');
+
+        form.setFieldsValue(fields);
+      });
+    }
+  }, [id]);
+
+  return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };
 
 BasicInfoForm.useForm = AdvancedForm.useForm;
 
-export default BasicInfoForm;
+export default connect(({ loading }) => ({
+  loading: loading.models.vcBasicInfo,
+}))(BasicInfoForm);

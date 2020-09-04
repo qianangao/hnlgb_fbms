@@ -1,26 +1,17 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Modal, Select } from 'antd';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
+import { Modal, Steps, Button } from 'antd';
+import BasicInfoForm from './form/BasicInfoForm';
 
-const INIT_FORM_DATA = {
-  name: '', // 姓名
-  phoneNumber: '', // 联系电话
-  IdNumber: '', // 身份证号
-  employeeID: '', // 员工id
-  accessControlStrateg: '', // 门禁状态
-  registrationStatus: 0, // `1：已注册，0：未注册
-  departmentId: '', // 部门id
-};
+const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+  const [form] = BasicInfoForm.useForm();
+  const [stepCurrent, setCurrent] = useState(0);
+  const [lgbId, setLgbId] = useState('');
 
-const ModifyModal = ({ dispatch, vcBasicInfo, deptList, actionRef, loading, deptLoading }) => {
-  const { modifyModalVisible } = vcBasicInfo;
-  const [form] = Form.useForm();
-
-  const showModal = item => {
-    form.setFieldsValue({ ...INIT_FORM_DATA, ...item });
-
+  const showModal = id => {
+    setLgbId(id);
     dispatch({
-      type: 'staffMgt/save',
+      type: 'vcBasicInfo/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -39,11 +30,12 @@ const ModifyModal = ({ dispatch, vcBasicInfo, deptList, actionRef, loading, dept
 
   const hideModal = () => {
     dispatch({
-      type: 'staffMgt/save',
+      type: 'vcBasicInfo/save',
       payload: {
         modifyModalVisible: false,
       },
     });
+    setCurrent(0);
   };
 
   const handleOk = () => {
@@ -51,39 +43,55 @@ const ModifyModal = ({ dispatch, vcBasicInfo, deptList, actionRef, loading, dept
       .validateFields()
       .then(values => {
         dispatch({
-          type: `staffMgt/updateEmployee`,
+          type: `vcBasicInfo/${steps[stepCurrent].effect}`,
           payload: {
             ...values,
           },
         });
+        if (stepCurrent < steps.length - 1) {
+          setCurrent(stepCurrent + 1);
+        } else {
+          dispatch({
+            type: 'vcBasicInfo/save',
+            payload: {
+              modifyModalVisible: false,
+            },
+          });
+        }
       })
       .catch(info => {
         console.error('Validate Failed:', info);
       });
   };
 
-  const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 6,
-      },
+  const steps = [
+    {
+      title: '基本信息',
+      effect: 'updateLgb',
+      StepsForm: BasicInfoForm,
     },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 18,
-      },
+    {
+      title: '家庭信息',
+      content: 'Second-content',
+      StepsForm: BasicInfoForm,
     },
-  };
+    {
+      title: '工作信息',
+      content: 'Last-content',
+      StepsForm: BasicInfoForm,
+    },
+    {
+      title: '健康档案',
+      content: 'Last-content',
+      StepsForm: BasicInfoForm,
+    },
+  ];
+
+  const { StepsForm } = steps[stepCurrent];
 
   return (
     <Modal
-      title="编辑人员信息"
+      title="修改老干部信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -92,56 +100,44 @@ const ModifyModal = ({ dispatch, vcBasicInfo, deptList, actionRef, loading, dept
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      onOk={handleOk}
       forceRender
-      confirmLoading={loading}
+      footer={[
+        <Button key="cancel" onClick={hideModal}>
+          取消
+        </Button>,
+        stepCurrent < steps.length - 1 && (
+          <Button key="next" onClick={() => setCurrent(stepCurrent + 1)}>
+            跳过
+          </Button>
+        ),
+        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+          保存
+        </Button>,
+      ]}
+      maskClosable={false}
+      destroyOnClose
       onCancel={hideModal}
     >
-      <Form form={form} {...formItemLayout} initialValues={INIT_FORM_DATA}>
-        <Form.Item name="id" hidden>
-          <Input />
-        </Form.Item>
-        <Form.Item label="姓名" name="name">
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item label="联系电话" name="phoneNumber">
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item label="身份证号" name="IdNumber">
-          <Input disabled />
-        </Form.Item>
-
-        <Form.Item
-          label="员工id"
-          name="employeeID"
-          rules={[
-            { required: true, message: '请输入员工id!', whitespace: true },
-            { max: 30, message: '员工id长度请小于30位!', whitespace: true },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="部门"
-          name="departmentId"
-          validateTrigger="onBlur"
-          rules={[{ required: true, message: '请选择所属物业!' }]}
-        >
-          <Select loading={deptLoading}>
-            {deptList.map(item => (
-              <Select.Option key={item.departmentId}>{item.departmentName}</Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      </Form>
+      <Steps current={stepCurrent}>
+        {steps.map(item => (
+          <Steps.Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div
+        style={{
+          height: 'calc(100% - 36px)',
+          padding: '20px 0',
+          overflow: 'auto',
+          boxSizing: 'border-box',
+        }}
+      >
+        <StepsForm form={form} id={lgbId} />
+      </div>
     </Modal>
   );
 };
 
 export default connect(({ vcBasicInfo, loading }) => ({
-  vcBasicInfo,
+  modifyModalVisible: vcBasicInfo.modifyModalVisible,
   loading: loading.models.vcBasicInfo,
-  deptLoading: loading.effects['deptMgt/getList'],
 }))(ModifyModal);
