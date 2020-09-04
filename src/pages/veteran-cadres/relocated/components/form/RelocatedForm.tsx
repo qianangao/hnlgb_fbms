@@ -1,7 +1,7 @@
 import React from 'react';
-import AdvancedForm from '@/components/AdvancedForm';
 import { Form } from 'antd';
 import LgbSelectInput from '@/components/LgbSelectInput';
+import AdvancedForm from '@/components/AdvancedForm';
 
 const BasicInfoForm = ({ form }) => {
   const formItems = [
