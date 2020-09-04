@@ -1,7 +1,7 @@
 export default {
   navTheme: 'light',
   layout: 'side',
-  primaryColor: '#FD0000',
+  primaryColor: '#EA4814',
   contentWidth: 'Fluid',
   fixedHeader: true,
   headerHeight: 48,

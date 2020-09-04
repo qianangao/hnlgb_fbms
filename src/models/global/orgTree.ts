@@ -1,4 +1,4 @@
-import { getOrgTreeById, searchOrgTree } from '@/services/orgTree';
+import { getOrgTreeById, searchOrgTree } from '@/services/global/orgTree';
 
 const transformOrgTreeData = tree => {
   const parentIds = [];

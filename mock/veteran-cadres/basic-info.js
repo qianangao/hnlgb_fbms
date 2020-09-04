@@ -114,6 +114,38 @@ const getUserInfo = (req, res) => {
   });
 };
 
+const getFamilyInfo = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      homeAddressDiy: null,
+      residentAddressDiy: null,
+      dictMarriage: '8adcf7c96a48fae4016a4925e570', //婚姻状态
+      dictLiveStatu: '8adcf7c96a48fae4016a4925e79d', //居住状态
+      purchaseSituation: '有', //购房情况
+      structureArea: '100.00', //住房面积
+      childrenNum: 2, //子女数
+      noworkChildrenNum: 1, //无劳动能力子女数
+      supportNum: 1, //赡养人数
+      dependencyNum: 1, //抚养人数
+      telephone: '88888888', //住宅电话
+      telephone1: '888888888', //固定电话1
+      telephone2: '88888888', ////固定电话2
+      groupNumber: '874', //集团号码
+      postCode: '710000', //邮编
+      homeAddressArea: null,
+      homeAddressCountry: null,
+      homeAddressVillage: '1000-1015/1000-1015-1010/1000-1015-1010-1001/', //家庭住址
+      residentAddressArea: null,
+      residentAddressCountry: null,
+      residentAddressVillage: '1000-1015/1000-1015-1010/1000-1015-1010-1001/', //常住住址
+      homeNameList: '延庆区四海镇西沟里村民委员会', //家庭住址名称
+      residentAddressList: '延庆区四海镇西沟里村民委员会', //常住住址名称
+    },
+  });
+};
+
 export default {
   'GET /users': list,
   'POST /users': noResponse,
@@ -121,4 +153,6 @@ export default {
   'PUT /users/:id': noResponse,
   'GET /users/:id': getUserInfo,
   'PUT /users/password/:id': noResponse,
+
+  'GET /users/family/:id': getFamilyInfo,
 };

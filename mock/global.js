@@ -15,6 +15,12 @@ const getDictionary = (req, res) => {
     ],
   });
 
+  a.data.push({
+    chineseName: '男',
+    code: '8adcf7c96a48fae4016a4925e34b',
+    isCommonlyUsed: 1,
+  });
+
   return res.json(a);
 };
 

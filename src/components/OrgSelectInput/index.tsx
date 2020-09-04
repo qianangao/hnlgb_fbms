@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
-import { Form, Modal, Mentions } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Modal, Input } from 'antd';
 import OrgTree from '@/components/OrgTree';
 
 let tempName = '';
 
-const OrgSelectInput = ({ value, defaultLabel, onChange }) => {
+const OrgSelectInput = ({ value, actionRef, onChange }) => {
   const [orgSelectModalVisible, setVisible] = useState(false);
-  const [valueName, setValueName] = useState(defaultLabel || '');
+  const [valueName, setValueName] = useState('');
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (actionRef && typeof actionRef === 'function') {
+      actionRef({ setLabel });
+    }
+
+    if (actionRef && typeof actionRef !== 'function') {
+      actionRef.current = { setLabel };
+    }
+  }, []);
+
+  const setLabel = label => {
+    setValueName(label);
+  };
 
   const showModal = () => {
     form.setFieldsValue({ organizationId: value });
@@ -33,7 +47,7 @@ const OrgSelectInput = ({ value, defaultLabel, onChange }) => {
 
   return (
     <>
-      <Mentions readOnly value={valueName} onClick={showModal} />
+      <Input.Search readOnly value={valueName} onClick={showModal} />
       <Modal
         title="选择单位"
         width={640}

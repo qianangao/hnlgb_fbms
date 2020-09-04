@@ -1,22 +1,34 @@
 import { message } from 'antd';
-import { addLgb, deleteLgb, updateLgb, getLgbList, resetLgbPwd } from './service';
+import {
+  addLgb,
+  deleteLgb,
+  getLgbList,
+  resetLgbPwd,
+  getLgbDetail,
+  updateLgb,
+  getFamilyLgb,
+  updateFamilyLgb,
+} from './service';
 
 const Model = {
   namespace: 'vcBasicInfo',
   state: {
     lgbListData: {},
     addModalVisible: false, // 新增modal visible
-    modifyModalVisible: false, // 新增修改modal visible
+    modifyModalVisible: false, // 修改modal visible
+    detailModalVisible: false, // 详情modal visible
     orgSelectModalVisible: false, // 单位选择modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
   effects: {
     *getList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const { organizationId } = yield select(state => state.user.userInfo);
+
       const params = {
         ...payload,
-        orgIdForDataSelect,
+        orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -110,8 +122,43 @@ const Model = {
         });
       }
     },
+    *deleteLgb({ payload }, { call, put }) {
+      const response = yield call(deleteLgb, payload);
+
+      if (!response.error) {
+        message.success('老干部删除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *getLgbDetail({ payload, resolve }, { call }) {
+      const response = yield call(getLgbDetail, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
     *updateLgb({ payload }, { call, put }) {
       const response = yield call(updateLgb, payload);
+
+      if (!response.error) {
+        message.success('修改老干部信息成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *getFamilyLgb({ payload, resolve }, { call }) {
+      const response = yield call(getFamilyLgb, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *updateFamilyLgb({ payload }, { call, put }) {
+      const response = yield call(updateFamilyLgb, payload);
 
       if (!response.error) {
         yield put({
@@ -121,18 +168,8 @@ const Model = {
           },
         });
 
-        message.success('修改老干部信息成功！');
+        message.success('修改老干部家庭信息成功！');
 
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *deleteLgb({ payload }, { call, put }) {
-      const response = yield call(deleteLgb, payload);
-
-      if (!response.error) {
-        message.success('老干部删除成功！');
         yield put({
           type: 'tableReload',
         });
