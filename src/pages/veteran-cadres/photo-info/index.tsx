@@ -4,10 +4,9 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
-// import OrgSelectModal from './components/OrgSelectModal';
 
-const specialty = ({ dispatch }) => {
-  const addModelRef = useRef({})
+const photoInfo = ({ dispatch }) => {
+  const addModelRef = useRef({});
   const modifyRef = useRef({});
   const orgSelectRef = useRef({});
 
@@ -29,13 +28,17 @@ const specialty = ({ dispatch }) => {
 
   const orgChangeHander = orgitem => {
     dispatch({
-      type: 'specialty/selectOrgChange',
+      type: 'photoInfo/selectOrgChange',
       payload: orgitem.id,
     });
   };
 
   const openAddModal = item => {
     addModelRef.current.showModal(item);
+  };
+
+  const openModifyModal = item => {
+    modifyRef.current.showModal(item);
   };
   const openOrgSelectModal = ids => {
     orgSelectRef.current.showModal(ids);
@@ -45,12 +48,10 @@ const specialty = ({ dispatch }) => {
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table openAddModal={openAddModal} openOrgSelectModal={openOrgSelectModal} />
       <AddModal actionRef={addModelRef} ></AddModal>
-      {/* <OrgSelectModal actionRef={orgSelectRef} /> */}
-      {/* <ModifyModal actionRef={modifyRef} /> */}
     </OrgTreeLayout>
   );
 };
 
-export default connect(({ specialty }) => ({
-  specialty,
-}))(specialty);
+export default connect(({ photoInfo }) => ({
+  photoInfo,
+}))(photoInfo);
