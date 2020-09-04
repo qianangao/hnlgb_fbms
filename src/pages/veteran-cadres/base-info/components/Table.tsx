@@ -6,6 +6,7 @@ import { connect } from 'umi';
 const Table = ({
   vcBasicInfo,
   openAddModal,
+  openDetailModal,
   openModifyModal,
   openOrgSelectModal,
   enums,
@@ -77,9 +78,12 @@ const Table = ({
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 180,
+      width: 200,
       fixed: 'right',
       render: (dom, employeeData) => [
+        <a key={`${employeeData.id}detail`} onClick={() => openDetailModal(employeeData)}>
+          详情
+        </a>,
         <a key={`${employeeData.id}up`} onClick={() => openModifyModal(employeeData)}>
           编辑
         </a>,
