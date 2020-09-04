@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'umi';
-import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row } from 'antd';
+import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row, Spin } from 'antd';
+import { formatDate } from '@/utils/format';
 
 const AdvancedFormInstance = ({
   form,
@@ -9,17 +10,35 @@ const AdvancedFormInstance = ({
   footerRender,
   initialValues,
   enums,
+  loading,
 }) => {
   const renderField = field => {
-    const { type, span = 1, render, enumsLabel, switchEnums, ...resField } = field;
+    const {
+      type,
+      span = 1,
+      render,
+      enumsLabel,
+      switchEnums,
+      hidden,
+      disabled,
+      ...resField
+    } = field;
 
-    let fieldInput = <Input />;
+    let fieldInput = <Input disabled={disabled} />;
+
+    if (hidden) {
+      return (
+        <Form.Item hidden {...resField}>
+          {fieldInput}
+        </Form.Item>
+      );
+    }
 
     if (render) {
       fieldInput = render;
     } else if (enumsLabel) {
       fieldInput = (
-        <Select>
+        <Select disabled={disabled}>
           {enums[enumsLabel] &&
             Object.keys(enums[enumsLabel]).map(key => (
               <Select.Option key={key} value={key}>
@@ -29,9 +48,17 @@ const AdvancedFormInstance = ({
         </Select>
       );
     } else if (type === 'date') {
-      fieldInput = <DatePicker style={{ width: '100%' }} />;
+      resField.valuePropName = 'value';
+      resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD') : '');
+      resField.getValueProps = str => ({ value: formatDate(str) });
+
+      fieldInput = <DatePicker disabled={disabled} style={{ width: '100%' }} format="YYYY-MM-DD" />;
     } else if (type === 'time') {
-      fieldInput = <TimePicker style={{ width: '100%' }} />;
+      resField.valuePropName = 'value';
+      resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');
+      resField.getValueProps = str => ({ value: formatDate(str) });
+
+      fieldInput = <TimePicker disabled={disabled} style={{ width: '100%' }} format="HH:mm:ss" />;
     } else if (type === 'switch') {
       resField.valuePropName = 'checked';
 
@@ -43,9 +70,9 @@ const AdvancedFormInstance = ({
         resField.getValueProps = value => ({ checked: value === 1 });
       }
 
-      fieldInput = <Switch checkedChildren="是" unCheckedChildren="否" />;
+      fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
     } else {
-      fieldInput = <Input />;
+      fieldInput = <Input disabled={disabled} />;
     }
 
     return (
@@ -57,9 +84,11 @@ const AdvancedFormInstance = ({
 
   return (
     <Form form={form} layout="vertical" initialValues={initialValues}>
-      {headerRender || null}
-      <Row gutter={24}>{fields.map(field => renderField(field) || null)}</Row>
-      {footerRender || null}
+      <Spin spinning={loading}>
+        {headerRender || null}
+        <Row gutter={24}>{fields.map(field => renderField(field) || null)}</Row>
+        {footerRender || null}
+      </Spin>
     </Form>
   );
 };
