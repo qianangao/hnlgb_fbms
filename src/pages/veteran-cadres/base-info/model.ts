@@ -15,7 +15,8 @@ const Model = {
   state: {
     lgbListData: {},
     addModalVisible: false, // 新增modal visible
-    modifyModalVisible: false, // 新增修改modal visible
+    modifyModalVisible: false, // 修改modal visible
+    detailModalVisible: false, // 详情modal visible
     orgSelectModalVisible: false, // 单位选择modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
