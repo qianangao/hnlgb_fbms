@@ -7,7 +7,6 @@ import Table from './components/Table';
 
 const DeathInfo = ({ dispatch }) => {
   const modifyRef = useRef({});
-  const orgSelectRef = useRef({});
 
   useEffect(() => {
     dispatch({
@@ -35,13 +34,10 @@ const DeathInfo = ({ dispatch }) => {
   const openModifyModal = item => {
     modifyRef.current.showModal(item);
   };
-  const openOrgSelectModal = ids => {
-    orgSelectRef.current.showModal(ids);
-  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openModifyModal={openModifyModal} openOrgSelectModal={openOrgSelectModal} />
+      <Table openModifyModal={openModifyModal} />
       <ModifyModal actionRef={modifyRef} />
     </OrgTreeLayout>
   );
