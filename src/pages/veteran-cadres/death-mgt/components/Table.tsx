@@ -80,7 +80,7 @@ const Table = ({ vcDeathInfo, openModifyModal, enums, dispatch }) => {
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认恢复在世该人员吗？"
+          title="确认将该人员恢复在世吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -121,7 +121,7 @@ const Table = ({ vcDeathInfo, openModifyModal, enums, dispatch }) => {
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认恢复在世选择人员？',
+                title: '确认将选择人员恢复在世？',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
                 },

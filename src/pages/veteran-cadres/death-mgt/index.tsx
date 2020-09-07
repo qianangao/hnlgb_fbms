@@ -4,7 +4,6 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import ModifyModal from './components/ModifyModal';
 import Table from './components/Table';
-import OrgSelectModal from './components/OrgSelectModal';
 
 const DeathInfo = ({ dispatch }) => {
   const modifyRef = useRef({});
@@ -43,7 +42,6 @@ const DeathInfo = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table openModifyModal={openModifyModal} openOrgSelectModal={openOrgSelectModal} />
-      <OrgSelectModal actionRef={orgSelectRef} />
       <ModifyModal actionRef={modifyRef} />
     </OrgTreeLayout>
   );
