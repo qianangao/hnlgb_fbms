@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions, Modal } from 'antd';
-import DeathInfoForm from './DeathInfoForm';
 import BasicInfo from '@/components/BasicInfo';
+import DeathInfoForm from './DeathInfoForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   const [form] = DeathInfoForm.useForm();

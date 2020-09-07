@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProTable from '@ant-design/pro-table';
-import { Radio } from 'antd';
+import { Radio, Button, Modal, TimePicker } from 'antd';
 import moment from 'moment';
 import { connect } from 'umi';
 
 const RadioGroup = Radio.Group;
 
-const Table = ({ vcBirthdayInfo, enums, dispatch }) => {
+const Table = ({ vcBirthdayInfo, openRemindModal, enums, dispatch }) => {
   const { tableRef } = vcBirthdayInfo;
-
+  const [remindTime, setRemindTime] = useState('');
   const columns = [
     {
       title: '序号',
@@ -149,19 +149,57 @@ const Table = ({ vcBirthdayInfo, enums, dispatch }) => {
     return Math.ceil(days);
   };
 
+  const hideModal = () => {
+    dispatch({
+      type: 'vcBirthdayInfo/save',
+      payload: {
+        openRemindModal: false,
+      },
+    });
+  };
+  const openModal = () => {
+    dispatch({
+      type: 'vcBirthdayInfo/save',
+      payload: {
+        openRemindModal: true,
+      },
+    });
+  };
+
+  const handleOk = () => {
+    dispatch({
+      type: `vcBirthdayInfo/ReminderSet`,
+      payload: { cron: remindTime },
+    });
+  };
+  const onChangeTime = (time, timeString) => {
+    setRemindTime(timeString);
+  };
+
   return (
-    <ProTable
-      rowKey="id"
-      headerTitle="生日信息"
-      actionRef={tableRef}
-      scroll={{ x: 'max-content' }}
-      request={async params => getBirthdayList(params)}
-      columns={columns}
-    />
+    <>
+      <ProTable
+        rowKey="id"
+        headerTitle="生日信息"
+        actionRef={tableRef}
+        scroll={{ x: 'max-content' }}
+        request={async params => getBirthdayList(params)}
+        columns={columns}
+        toolBarRender={() => [
+          <Button type="primary" onClick={openModal}>
+            提醒时间
+          </Button>,
+        ]}
+      />
+      <Modal title="提醒时间" visible={openRemindModal} onOk={handleOk} onCancel={hideModal}>
+        <TimePicker format="HH:mm" style={{ width: '40%' }} onChange={onChangeTime} />
+      </Modal>
+    </>
   );
 };
 
 export default connect(({ vcBirthdayInfo, global }) => ({
   vcBirthdayInfo,
+  openRemindModal: vcBirthdayInfo.openRemindModal,
   enums: global.enums,
 }))(Table);

@@ -53,4 +53,5 @@ const list = (req, res) => {
 export default {
   'GET  /user/birthday': list,
   'POST /user/isReminder': noResponse,
+  'POST /user/change_cron': noResponse,
 };

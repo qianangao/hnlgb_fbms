@@ -1,11 +1,12 @@
 import { message } from 'antd';
-import { getBirthdayList, isReminder } from './service';
+import { getBirthdayList, isReminder, reminderCron } from './service';
 
 const Model = {
   namespace: 'vcBirthdayInfo',
   state: {
     BirthdayListData: {},
     tableRef: {},
+    openRemindModal: false, // 提醒时间modal
     selectedOrgId: undefined, // 选择的组织id
   },
   effects: {
@@ -63,6 +64,25 @@ const Model = {
         });
 
         message.success('修改成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+
+    *ReminderSet({ payload }, { call, put }) {
+      const response = yield call(reminderCron, payload);
+
+      if (!response.error) {
+        yield put({
+          type: 'save',
+          payload: {
+            openRemindModal: false,
+          },
+        });
+
+        message.success('设置成功！');
 
         yield put({
           type: 'tableReload',

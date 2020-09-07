@@ -3,7 +3,7 @@ import { getHobbyList } from './service';
 const Model = {
   namespace: 'vcHobbyInfo',
   state: {
-    HobbyListData: {},
+    hobbyListData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -44,7 +44,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            HobbyListData: result,
+            hobbyListData: result,
           },
         });
       }

@@ -21,3 +21,14 @@ export async function isReminder(params) {
     data: params,
   });
 }
+
+/**
+ * 修改生日提醒时间
+ * @param {*} params
+ */
+export async function reminderCron(params) {
+  return request(`/user/change_cron`, {
+    method: 'POST',
+    data: params,
+  });
+}
