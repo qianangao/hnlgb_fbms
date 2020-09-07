@@ -26,10 +26,10 @@ const DeathInfo = ({ dispatch }) => {
     });
   }, []);
 
-  const orgChangeHander = orgitem => {
+  const orgChangeHander = orgId => {
     dispatch({
       type: 'vcDeathInfo/selectOrgChange',
-      payload: orgitem.id,
+      payload: orgId,
     });
   };
 

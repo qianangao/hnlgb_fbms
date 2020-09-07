@@ -21,8 +21,15 @@ const BirthdayInfo = ({ dispatch }) => {
     });
   }, []);
 
+  const orgChangeHander = orgId => {
+    dispatch({
+      type: 'vcBirthdayInfo/selectOrgChange',
+      payload: orgId,
+    });
+  };
+
   return (
-    <OrgTreeLayout>
+    <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table />
     </OrgTreeLayout>
   );

@@ -22,8 +22,15 @@ const HobbyInfo = ({ dispatch }) => {
     });
   }, []);
 
+  const orgChangeHander = orgId => {
+    dispatch({
+      type: 'vcHobbyInfo/selectOrgChange',
+      payload: orgId,
+    });
+  };
+
   return (
-    <OrgTreeLayout>
+    <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table />
     </OrgTreeLayout>
   );

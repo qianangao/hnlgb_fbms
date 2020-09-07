@@ -25,17 +25,10 @@ const Table = ({ vcHobbyInfo, enums, dispatch }) => {
       hideInSearch: true,
     },
     {
-      title: '出生日期起',
-      valueType: 'date',
+      title: '出生日期',
+      valueType: 'dateRange',
       align: 'center',
-      dataIndex: 'dateOfBirthStart',
-      hideInTable: true,
-    },
-    {
-      title: '出生日期止',
-      valueType: 'date',
-      align: 'center',
-      dataIndex: 'dateOfBirthEnd',
+      dataIndex: 'dateOfBirth',
       hideInTable: true,
     },
     {
@@ -68,6 +61,7 @@ const Table = ({ vcHobbyInfo, enums, dispatch }) => {
       align: 'center',
       dataIndex: 'hobby',
       hideInSearch: true,
+      fixed: 'right',
     },
     {
       title: '兴趣爱好',
