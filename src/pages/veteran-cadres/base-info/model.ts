@@ -14,6 +14,7 @@ const Model = {
   namespace: 'vcBasicInfo',
   state: {
     lgbListData: {},
+    lgbDetailData: {},
     addModalVisible: false, // 新增modal visible
     modifyModalVisible: false, // 修改modal visible
     detailModalVisible: false, // 详情modal visible
@@ -132,11 +133,17 @@ const Model = {
         });
       }
     },
-    *getLgbDetail({ payload, resolve }, { call }) {
+    *getLgbDetail({ payload, resolve }, { call, put }) {
       const response = yield call(getLgbDetail, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            lgbDetailData: response,
+          },
+        });
       }
     },
     *updateLgb({ payload }, { call, put }) {
