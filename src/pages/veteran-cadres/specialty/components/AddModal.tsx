@@ -54,7 +54,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增照片信息"
+      title="新增银色人才"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

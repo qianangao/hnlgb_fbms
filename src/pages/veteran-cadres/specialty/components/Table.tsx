@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, specialty, enums, dispatch }) => {
+const Table = ({ openAddModal, openModifyModal, specialty, enums, dispatch }) => {
   const { tableRef } = specialty;
   const columns = [
     {
@@ -25,16 +25,14 @@ const Table = ({ openAddModal, specialty, enums, dispatch }) => {
       dataIndex: 'dictSex',
       valueEnum: enums.dictSex,
     },
-
     {
-      title: '职级',
-      valueType: 'date',
+      title: '级别',
       align: 'center',
       dataIndex: 'dictRetirementLevel',
+      valueEnum: enums.dictRetirementLevel,
     },
     {
       title: '原工作单位和职务',
-      valueType: 'date',
       align: 'center',
       dataIndex: 'originalUnitAndPosition',
     },
@@ -73,7 +71,12 @@ const Table = ({ openAddModal, specialty, enums, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => { }}>
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openModifyModal(employeeData);
+          }}
+        >
           编辑
         </a>,
         <Popconfirm

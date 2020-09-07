@@ -37,13 +37,12 @@ export async function deleteSpecialty(params) {
  * 银色人才-详情
  * @param {*} params
  */
-export async function getLgbDetail(params) {
+export async function detailSpecialty(params) {
   return request(`/specialty/${params.id}`, {
     method: 'GET',
     params,
   });
 }
-
 
 /**
  * 编辑-银色人才

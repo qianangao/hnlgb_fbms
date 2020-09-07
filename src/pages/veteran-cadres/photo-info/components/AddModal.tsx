@@ -5,7 +5,6 @@ import PhotoInfoForm from './form/PhotoInfoForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = PhotoInfoForm.useForm();
-
   const showModal = () => {
     dispatch({
       type: 'photoInfo/save',

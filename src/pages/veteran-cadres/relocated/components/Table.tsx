@@ -3,11 +3,8 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, relocated, enums, dispatch }) => {
+const Table = ({ openAddModal, openModifyModal, relocated, enums, dispatch }) => {
   const { tableRef } = relocated;
-
-  // "id": "402883e973e5c2ce0173e5c2ce9d", //id
-  // "organizationId": "1000", //单位id
   const columns = [
     {
       title: '序号',
@@ -23,31 +20,16 @@ const Table = ({ openAddModal, relocated, enums, dispatch }) => {
       dataIndex: 'realName',
     },
     {
-      title: '性别',
+      title: '单位',
       align: 'center',
-      dataIndex: 'dictSex',
-      valueEnum: enums.dictSex,
+      dataIndex: 'organizationName',
       hideInSearch: true,
     },
     {
-      title: '民族',
-      align: 'center',
-      dataIndex: 'dictNation',
-      valueEnum: enums.dictNation,
-      hideInSearch: true,
-    },
-    {
-      title: '出生日期',
+      title: '创建时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: 'dateOfBirth',
-      hideInSearch: true,
-    },
-    {
-      title: '政治面貌',
-      align: 'center',
-      dataIndex: 'dictPoliticalStatus',
-      valueEnum: enums.dictPoliticalStatus,
+      dataIndex: 'createTime',
       hideInSearch: true,
     },
     {
@@ -60,9 +42,9 @@ const Table = ({ openAddModal, relocated, enums, dispatch }) => {
       align: 'center',
       dataIndex: 'isRelocation',
       valueEnum: {
-        0: { text: '否', },
-        1: { text: '是', },
-      }
+        0: { text: '否' },
+        1: { text: '是' },
+      },
     },
     {
       title: '操作',
@@ -72,7 +54,12 @@ const Table = ({ openAddModal, relocated, enums, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => { }}>
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openModifyModal(employeeData);
+          }}
+        >
           编辑
         </a>,
         <Popconfirm

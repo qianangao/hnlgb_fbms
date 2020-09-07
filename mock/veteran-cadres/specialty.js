@@ -10,25 +10,25 @@ const staffInfo = [];
 
 for (let i = 0; i < 20; i++) {
   staffInfo.push({
-    "id": "4028b23f73eae1b30173eae1b37b", //id
-    "realName": "银色人才" + i, //姓名
-    "dictSex": "8adcf7c96a48fae4016a4925e34b", //性别
-    "dateOfBirth": "2020-08-12", //出生日期
-    "dictRetirementType": "8adcf7c96a48fae4016a4925f601", //离退休类型
-    "phonenumber": "18655555555", //电话号码
-    "userId": "402883e973e5c2ce0173e5c2ce9d", //userId
-    "dictNation": "8adcf7c96a48fae4016a49260741",//民族
-    "originalUnitAndPosition": "局长",
-    "dictPoliticalStatus": "8adcf7c96a48fae4016a4925f283",//政治面貌
-    "dictRetirementLevel": "8adcf7c96a48fae4016a4925f71e", //职级
-    "dictTreatmentNow": "8adcf7c96a48fae4016a492643c9",//现享受待遇
-    "organizationId": "1000", //单位id
-    "isRelocation": 0, //是否异地安置
-    "resettlementUnit": "哈哈",//安置单位
-    "hobby": "hobby	", //爱好
-    "achievements": "achievements", //成果
-    "administrativeRank": "administrativeRank", //类型
-    "titleGrade": "titleGrade", //等级
+    id: '4028b23f73eae1b30173eae1b37b', //id
+    realName: '银色人才' + i, //姓名
+    dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
+    dateOfBirth: '2020-08-12', //出生日期
+    dictRetirementType: '8adcf7c96a48fae4016a4925f601', //离退休类型
+    phonenumber: '18655555555', //电话号码
+    userId: '402883e973e5c2ce0173e5c2ce9d', //userId
+    dictNation: '8adcf7c96a48fae4016a49260741', //民族
+    originalUnitAndPosition: '局长',
+    dictPoliticalStatus: '8adcf7c96a48fae4016a4925f283', //政治面貌
+    dictRetirementLevel: '8adcf7c96a48fae4016a4925f71e', //职级
+    dictTreatmentNow: '8adcf7c96a48fae4016a492643c9', //现享受待遇
+    organizationId: '1000', //单位id
+    isRelocation: 0, //是否异地安置
+    resettlementUnit: '哈哈', //安置单位
+    hobby: 'hobby	', //爱好
+    achievements: 'achievements', //成果
+    administrativeRank: 'administrativeRank', //类型
+    titleGrade: 'titleGrade', //等级
   });
 }
 
@@ -48,7 +48,7 @@ const list = (req, res) => {
   });
 };
 
-const getUserInfo = (req, res) => {
+const detailSpecialty = (req, res) => {
   res.send({
     code: 0,
     msg: 'success',
@@ -109,6 +109,11 @@ const getUserInfo = (req, res) => {
       dictIdentity: '身份性质', //身份性质
       awardSituation: '奖罚情况', //奖罚情况
       specialContribution: '特殊贡献', //特殊贡献
+      hobby: 'hobby', //爱好
+      achievements: 'achievements', //成果
+      administrativeRank: 'administrativeRank', //类型
+      titleGrade: 'titleGrade', //等级
+      dateOfBirth: 'dateOfBirth',
     },
   });
 };
@@ -118,5 +123,5 @@ export default {
   'POST /specialty': noResponse,
   'DELETE /specialty': noResponse,
   'PUT /specialty/:id': noResponse,
-  'GET /specialty/:id': getUserInfo,
+  'GET /specialty/:id': detailSpecialty,
 };

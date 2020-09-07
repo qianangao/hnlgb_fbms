@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, photoInfo, enums, dispatch }) => {
+const Table = ({ openAddModal, openModifyModal, photoInfo, enums, dispatch }) => {
   const { tableRef } = photoInfo;
   const columns = [
     {
@@ -20,13 +20,6 @@ const Table = ({ openAddModal, photoInfo, enums, dispatch }) => {
       dataIndex: 'realName',
     },
     {
-      title: '性别',
-      align: 'center',
-      dataIndex: 'dictSex',
-      valueEnum: enums.dictSex,
-      hideInSearch: true,
-    },
-    {
       title: '民族',
       align: 'center',
       dataIndex: 'dictNation',
@@ -34,17 +27,16 @@ const Table = ({ openAddModal, photoInfo, enums, dispatch }) => {
       hideInSearch: true,
     },
     {
-      title: '出生日期',
-      valueType: 'date',
+      title: '单位',
       align: 'center',
-      dataIndex: 'dateOfBirth',
+      dataIndex: 'organizationName',
       hideInSearch: true,
     },
     {
-      title: '政治面貌',
+      title: '创建时间',
+      valueType: 'date',
       align: 'center',
-      dataIndex: 'dictPoliticalStatus',
-      valueEnum: enums.dictPoliticalStatus,
+      dataIndex: 'createTime',
       hideInSearch: true,
     },
     {
@@ -55,7 +47,12 @@ const Table = ({ openAddModal, photoInfo, enums, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => { }}>
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openModifyModal(employeeData);
+          }}
+        >
           编辑
         </a>,
         <Popconfirm

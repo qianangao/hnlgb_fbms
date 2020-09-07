@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 /**
- * 异地安置-列表
+ * 照片信息-列表
  * @param {*} params
  */
 export async function photoInfoList(params) {
@@ -12,7 +12,7 @@ export async function photoInfoList(params) {
 }
 
 /**
- * 删除-异地安置
+ * 删除-照片信息
  * @param {*} params
  */
 export async function deletePhotoInfo(params) {
@@ -23,13 +23,24 @@ export async function deletePhotoInfo(params) {
 }
 
 /**
- * 新增-异地安置
+ * 新增-照片信息
  * @param {*} params
  */
 export async function addPhotoInfo(params) {
   return request(`/photoInfo`, {
     method: 'POST',
     data: params,
+  });
+}
+
+/**
+ * 照片信息-详情
+ * @param {*} params
+ */
+export async function detailPhotoInfo(params) {
+  return request(`/photoInfo/${params.id}`, {
+    method: 'GET',
+    params,
   });
 }
 
@@ -41,17 +52,5 @@ export async function updatePhotoInfo(params) {
   return request(`/photoInfo/${params.id}`, {
     method: 'PUT',
     data: params,
-  });
-}
-
-
-/**
- * 异地安置-详情
- * @param {*} params
- */
-export async function getLgbDetail(params) {
-  return request(`/photoInfo/${params.id}`, {
-    method: 'GET',
-    params,
   });
 }

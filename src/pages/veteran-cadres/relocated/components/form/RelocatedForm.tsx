@@ -1,18 +1,12 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { connect } from 'umi';
 import { Form } from 'antd';
 import LgbSelectInput from '@/components/LgbSelectInput';
 import AdvancedForm from '@/components/AdvancedForm';
+import { Descriptions } from 'antd';
 
-const BasicInfoForm = ({ form }) => {
+const RelocatedForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
-    {
-      label: '姓名',
-      name: 'realName',
-      rules: [
-        { required: true, message: '请输入姓名!', whitespace: true },
-        { max: 30, message: '姓名长度请小于30位!', whitespace: true },
-      ],
-    },
     {
       label: '	安置单位',
       name: 'resettlementUnit',
@@ -24,17 +18,41 @@ const BasicInfoForm = ({ form }) => {
       initialValue: 0,
       rules: [{ required: true, message: '请选择是否易地居住!' }],
     },
-
   ];
 
+  useEffect(() => {
+    if (id) {
+      new Promise(resolve => {
+        dispatch({
+          type: 'relocated/detailRelocated',
+          payload: { id },
+          resolve,
+        });
+      }).then(data => {
+        const fields = {
+          ...data,
+        };
+        form.setFieldsValue(fields);
+      });
+    }
+  }, [id]);
+
   const selectLgbInput = (
-    <Form.Item name="lgbid" rules={[{ required: true, message: '请选择老干部!' }]}>
-      <LgbSelectInput />
-    </Form.Item>
+    // 显示老干部信息-公共组件
+    <>
+      <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
+        <LgbSelectInput />
+      </Form.Item>
+      <Descriptions title="异地安置"></Descriptions>
+    </>
   );
-  return <AdvancedForm form={form} fields={formItems} headerRender={selectLgbInput} />;
+  return (
+    <AdvancedForm form={form} fields={formItems} loading={loading} headerRender={selectLgbInput} />
+  );
 };
 
-BasicInfoForm.useForm = AdvancedForm.useForm;
+RelocatedForm.useForm = AdvancedForm.useForm;
 
-export default BasicInfoForm;
+export default connect(({ loading }) => ({
+  loading: loading.models.relocated,
+}))(RelocatedForm);

@@ -1,5 +1,11 @@
 import { message } from 'antd';
-import { addSpecialty, deleteSpecialty, updateSpecialty, specialtyList } from './service';
+import {
+  addSpecialty,
+  deleteSpecialty,
+  updateSpecialty,
+  specialtyList,
+  detailSpecialty,
+} from './service';
 
 const Model = {
   namespace: 'specialty',
@@ -106,6 +112,13 @@ const Model = {
         yield put({
           type: 'tableReload',
         });
+      }
+    },
+    *detailSpecialty({ payload, resolve }, { call }) {
+      const response = yield call(detailSpecialty, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
       }
     },
   },

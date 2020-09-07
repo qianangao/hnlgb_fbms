@@ -1,11 +1,17 @@
 import { message } from 'antd';
-import { addPhotoInfo, deletePhotoInfo, updatePhotoInfo, photoInfoList } from './service';
+import {
+  addPhotoInfo,
+  deletePhotoInfo,
+  updatePhotoInfo,
+  photoInfoList,
+  detailPhotoInfo,
+} from './service';
 
 const Model = {
   namespace: 'photoInfo',
   state: {
     photoInfoListData: {},
-    addModalVisible: false,  // 新增modal visible
+    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -56,7 +62,6 @@ const Model = {
     },
     *addPhotoInfo({ payload }, { call, put }) {
       const response = yield call(addPhotoInfo, payload);
-
       if (!response.error) {
         yield put({
           type: 'save',
@@ -98,6 +103,13 @@ const Model = {
         yield put({
           type: 'tableReload',
         });
+      }
+    },
+    *detailPhotoInfo({ payload, resolve }, { call }) {
+      const response = yield call(detailPhotoInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
       }
     },
   },

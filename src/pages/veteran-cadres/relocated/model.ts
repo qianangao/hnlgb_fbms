@@ -1,11 +1,18 @@
 import { message } from 'antd';
-import { addRelocated, deleteRelocated, updateLgb, relocatedList } from './service';
+import {
+  addRelocated,
+  deleteRelocated,
+  updateRelocated,
+  relocatedList,
+  detailRelocated,
+} from './service';
 
 const Model = {
   namespace: 'relocated',
   state: {
     relocatedListData: {},
     addModalVisible: false, //新增modal visible
+    modifyModalVisible: false, //编辑modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -73,8 +80,8 @@ const Model = {
         });
       }
     },
-    *updateLgb({ payload }, { call, put }) {
-      const response = yield call(updateLgb, payload);
+    *updateRelocated({ payload }, { call, put }) {
+      const response = yield call(updateRelocated, payload);
 
       if (!response.error) {
         yield put({
@@ -99,6 +106,13 @@ const Model = {
         yield put({
           type: 'tableReload',
         });
+      }
+    },
+    *detailRelocated({ payload, resolve }, { call }) {
+      const response = yield call(detailRelocated, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
       }
     },
   },
