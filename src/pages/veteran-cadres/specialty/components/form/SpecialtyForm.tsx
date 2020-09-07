@@ -56,7 +56,9 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
       <Descriptions title="银色人才"></Descriptions>
     </>
   );
-  return (
+  return id ? (
+    <AdvancedForm form={form} loading={loading} fields={formItems} />
+  ) : (
     <AdvancedForm form={form} loading={loading} fields={formItems} headerRender={selectLgbInput} />
   );
 };

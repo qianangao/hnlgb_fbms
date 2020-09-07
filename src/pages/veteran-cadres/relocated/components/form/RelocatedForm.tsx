@@ -46,7 +46,9 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
       <Descriptions title="异地安置"></Descriptions>
     </>
   );
-  return (
+  return id ? (
+    <AdvancedForm form={form} fields={formItems} loading={loading} />
+  ) : (
     <AdvancedForm form={form} fields={formItems} loading={loading} headerRender={selectLgbInput} />
   );
 };

@@ -61,7 +61,9 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
     </>
   );
 
-  return (
+  return id ? (
+    <AdvancedForm form={form} loading={loading} fields={formItems} />
+  ) : (
     <AdvancedForm form={form} loading={loading} fields={formItems} headerRender={selectLgbInput} />
   );
 };
