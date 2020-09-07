@@ -6,10 +6,9 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 
-const specialty = ({ dispatch }) => {
+const photoInfo = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
-
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -26,17 +25,16 @@ const specialty = ({ dispatch }) => {
     });
   }, []);
 
-  const orgChangeHander = orgId => {
+  const orgChangeHander = orgitem => {
     dispatch({
-      type: 'specialty/selectOrgChange',
-      payload: orgId,
+      type: 'photoInfo/selectOrgChange',
+      payload: orgitem.id,
     });
   };
 
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
-
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
   };
@@ -49,6 +47,6 @@ const specialty = ({ dispatch }) => {
   );
 };
 
-export default connect(({ specialty }) => ({
-  specialty,
-}))(specialty);
+export default connect(({ photoInfo }) => ({
+  photoInfo,
+}))(photoInfo);
