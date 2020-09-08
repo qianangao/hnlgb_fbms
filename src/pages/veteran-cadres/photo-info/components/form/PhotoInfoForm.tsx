@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form } from 'antd';
+import { Form, Descriptions, Input, Upload, Button, Icon } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
-import { Descriptions, Input, Upload, Button, message, Icon } from 'antd';
 
 const { TextArea } = Input;
 const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
@@ -15,10 +14,10 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       render: (
         // 附件上传-公共组件
         <Upload
-          name={'fileIds'}
-          action={`global/uploadFile`}
+          name="fileIds"
+          action="global/uploadFile"
           method="post"
-          onChange={info => {}}
+          onChange={() => {}}
           onRemove={() => {}}
         >
           <Button>
@@ -57,7 +56,7 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="照片信息"></Descriptions>
+      <Descriptions title="照片信息" />
     </>
   );
 

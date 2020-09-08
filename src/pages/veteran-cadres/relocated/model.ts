@@ -11,8 +11,8 @@ const Model = {
   namespace: 'relocated',
   state: {
     relocatedListData: {},
-    addModalVisible: false, //新增modal visible
-    modifyModalVisible: false, //编辑modal visible
+    addModalVisible: false, // 新增modal visible
+    modifyModalVisible: false, // 编辑modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },

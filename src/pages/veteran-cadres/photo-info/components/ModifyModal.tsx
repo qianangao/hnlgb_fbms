@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import PhotoInfoForm from './form/PhotoInfoForm';
+
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = PhotoInfoForm.useForm();
   const [lgbId, setLgbId] = useState('');
@@ -36,7 +37,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
 
   const handleOk = () => {
-    console.log(lgbId);
     form
       .validateFields()
       .then(values => {

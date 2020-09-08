@@ -6,7 +6,7 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 
-const photoInfo = ({ dispatch }) => {
+const PhotoInfo = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   useEffect(() => {
@@ -41,7 +41,7 @@ const photoInfo = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table openAddModal={openAddModal} openModifyModal={openModifyModal} />
-      <AddModal actionRef={addModelRef}></AddModal>
+      <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
     </OrgTreeLayout>
   );
@@ -49,4 +49,4 @@ const photoInfo = ({ dispatch }) => {
 
 export default connect(({ photoInfo }) => ({
   photoInfo,
-}))(photoInfo);
+}))(PhotoInfo);
