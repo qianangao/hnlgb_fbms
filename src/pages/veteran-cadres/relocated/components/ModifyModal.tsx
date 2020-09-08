@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import RelocatedForm from './form/RelocatedForm';
+
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = RelocatedForm.useForm();
   const [lgbId, setLgbId] = useState('');

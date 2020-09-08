@@ -3,16 +3,14 @@ import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import Table from './components/Table';
-import AddModal from './components/AddModal'
-import ModifyModal from './components/ModifyModal'
+import AddModal from './components/AddModal';
+import ModifyModal from './components/ModifyModal';
 
-const relocated = ({ dispatch }) => {
+const Relocated = ({ dispatch }) => {
   const addModelRef = useRef({});
-  const modifyModelRef = useRef({})
+  const modifyModelRef = useRef({});
 
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   const orgChangeHander = orgId => {
     dispatch({
@@ -22,10 +20,10 @@ const relocated = ({ dispatch }) => {
   };
   const openAddModal = item => {
     addModelRef.current.showModal(item);
-  }
+  };
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
-  }
+  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -38,4 +36,4 @@ const relocated = ({ dispatch }) => {
 
 export default connect(({ relocated }) => ({
   relocated,
-}))(relocated);
+}))(Relocated);

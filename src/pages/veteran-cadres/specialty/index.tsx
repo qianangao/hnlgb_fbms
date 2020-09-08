@@ -6,7 +6,7 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 
-const specialty = ({ dispatch }) => {
+const Specialty = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
 
@@ -43,7 +43,7 @@ const specialty = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table openAddModal={openAddModal} openModifyModal={openModifyModal} />
-      <AddModal actionRef={addModelRef}></AddModal>
+      <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
     </OrgTreeLayout>
   );
@@ -51,4 +51,4 @@ const specialty = ({ dispatch }) => {
 
 export default connect(({ specialty }) => ({
   specialty,
-}))(specialty);
+}))(Specialty);

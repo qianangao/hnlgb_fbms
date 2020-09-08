@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import SpecialtyForm from './form/SpecialtyForm';
+
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = SpecialtyForm.useForm();
   const [lgbId, setLgbId] = useState('');

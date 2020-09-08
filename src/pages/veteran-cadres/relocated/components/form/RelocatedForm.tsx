@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Form } from 'antd';
+import { Form, Descriptions } from 'antd';
 import LgbSelectInput from '@/components/LgbSelectInput';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Descriptions } from 'antd';
 
 const RelocatedForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
@@ -43,7 +42,7 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="异地安置"></Descriptions>
+      <Descriptions title="异地安置" />
     </>
   );
   return id ? (

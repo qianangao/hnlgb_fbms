@@ -67,7 +67,7 @@ const Table = ({ openAddModal, openModifyModal, photoInfo, enums, dispatch }) =>
     },
   ];
 
-  //列表
+  // 列表
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
@@ -76,7 +76,7 @@ const Table = ({ openAddModal, openModifyModal, photoInfo, enums, dispatch }) =>
         resolve,
       });
     });
-  //删除
+  // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
       type: 'photoInfo/deletePhotoInfo',

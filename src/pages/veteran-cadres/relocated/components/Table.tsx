@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, relocated, enums, dispatch }) => {
+const Table = ({ openAddModal, openModifyModal, relocated, dispatch }) => {
   const { tableRef } = relocated;
   const columns = [
     {
@@ -74,7 +74,7 @@ const Table = ({ openAddModal, openModifyModal, relocated, enums, dispatch }) =>
     },
   ];
 
-  //列表
+  // 列表
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
@@ -83,7 +83,7 @@ const Table = ({ openAddModal, openModifyModal, relocated, enums, dispatch }) =>
         resolve,
       });
     });
-  //删除
+  // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
       type: 'relocated/deleteRelocated',

@@ -1,9 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form } from 'antd';
+import { Form, Descriptions } from 'antd';
 import LgbSelectInput from '@/components/LgbSelectInput';
-import { Descriptions } from 'antd';
 
 const SpecialtyForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
@@ -53,7 +52,7 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="银色人才"></Descriptions>
+      <Descriptions title="银色人才" />
     </>
   );
   return id ? (
