@@ -3,6 +3,7 @@ import { connect } from 'umi';
 import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row, Spin } from 'antd';
 import { formatDate } from '@/utils/format';
 import UploadInput from '@/components/UploadInput';
+import EditorInput from '../EditorInput';
 
 const AdvancedFormInstance = ({
   form,
@@ -78,6 +79,8 @@ const AdvancedFormInstance = ({
       fieldInput = <UploadInput type="image" disabled={disabled} />;
     } else if (type === 'textarea') {
       fieldInput = <Input.TextArea disabled={disabled} />;
+    } else if (type === 'editor') {
+      fieldInput = <EditorInput disabled={disabled} />;
     } else {
       fieldInput = <Input disabled={disabled} />;
     }
