@@ -74,6 +74,8 @@ const AdvancedFormInstance = ({
       fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
     } else if (type === 'upload') {
       fieldInput = <UploadInput disabled={disabled} />;
+    } else if (type === 'image') {
+      fieldInput = <UploadInput type="image" disabled={disabled} />;
     } else if (type === 'textarea') {
       fieldInput = <Input.TextArea disabled={disabled} />;
     } else {

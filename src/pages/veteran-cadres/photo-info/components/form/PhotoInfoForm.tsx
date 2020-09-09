@@ -1,36 +1,26 @@
 import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form, Descriptions, Input, Upload, Button, Icon } from 'antd';
+import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
 
-const { TextArea } = Input;
 const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
+      name: 'id',
+      hidden: true,
+    },
+    {
       label: '附件',
-      name: 'fileIds',
+      name: 'file',
+      type: 'image',
       rules: [{ required: true, message: '请上传附件!' }],
-      render: (
-        // 附件上传-公共组件
-        <Upload
-          name="fileIds"
-          action="global/uploadFile"
-          method="post"
-          onChange={() => {}}
-          onRemove={() => {}}
-        >
-          <Button>
-            <Icon type="upload" /> 上传附件
-          </Button>
-        </Upload>
-      ),
     },
     {
       label: '描述',
       name: 'remark',
+      type: 'textarea',
       rules: [{ required: true, message: '请输入描述!', whitespace: true }],
-      render: <TextArea name="remark" placeholder="请输入描述" />,
     },
   ];
   useEffect(() => {
@@ -44,7 +34,14 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          file: {
+            uid: data.fileId,
+            name: data.fileName,
+            url: data.fileUrl,
+            status: 'done',
+          },
         };
+
         form.setFieldsValue(fields);
       });
     }

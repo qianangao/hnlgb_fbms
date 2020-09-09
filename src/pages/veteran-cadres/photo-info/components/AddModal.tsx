@@ -43,6 +43,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `photoInfo/addPhotoInfo`,
           payload: {
             ...values,
+            fileId: values.file.id,
           },
         });
       })

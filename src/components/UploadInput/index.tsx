@@ -11,16 +11,16 @@ import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons
       },
  * @param type 文件类型 image、 excel
  */
-const UploadInput = ({ value, actionRef, type, onChange, disabled, dispatch }) => {
+const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, dispatch }) => {
   const [loading, setLoading] = useState(false);
   const [upFileList, setUpFileList] = useState([]);
 
-  const setFile = ({ name, url, id }) => {
+  const setFile = ({ fileName, fileUrl, id }) => {
     setUpFileList([
       {
-        url,
+        url: fileUrl,
         uid: id,
-        name,
+        name: fileName,
         status: 'done',
       },
     ]);
@@ -97,7 +97,9 @@ const UploadInput = ({ value, actionRef, type, onChange, disabled, dispatch }) =
   }, []);
 
   useEffect(() => {
-    if (value) setFile(value);
+    if (value) {
+      setUpFileList([value]);
+    }
   }, [value]);
 
   const handleChange = ({ file, fileList }) => {
@@ -115,11 +117,12 @@ const UploadInput = ({ value, actionRef, type, onChange, disabled, dispatch }) =
         .then(data => {
           setLoading(false);
           const tempFile = {
-            url: data.url,
+            url: data.fileUrl,
             uid: data.id,
             name: data.fileName,
             status: 'done',
           };
+
           setUpFileList([tempFile]);
 
           onChange && onChange(tempFile);
@@ -136,7 +139,7 @@ const UploadInput = ({ value, actionRef, type, onChange, disabled, dispatch }) =
 
   const imgUploadButton =
     upFileList && upFileList.length > 0 ? null : (
-      <div>
+      <div key="imgUpload">
         {loading ? <LoadingOutlined /> : <PlusOutlined />}
         <div style={{ marginTop: 8 }}>上传图片</div>
       </div>
@@ -151,7 +154,13 @@ const UploadInput = ({ value, actionRef, type, onChange, disabled, dispatch }) =
       onChange={handleChange}
       onRemove={handleRemove}
     >
-      {type === 'image' ? imgUploadButton : <Button icon={<UploadOutlined />}>点击上传文件</Button>}
+      {type === 'image' ? (
+        imgUploadButton
+      ) : (
+        <Button key="normalUpload" icon={<UploadOutlined />}>
+          点击上传文件
+        </Button>
+      )}
     </Upload>
   );
 };

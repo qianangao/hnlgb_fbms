@@ -44,7 +44,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `photoInfo/updatePhotoInfo`,
           payload: {
             ...values,
-            id: lgbId,
+            fileId: values.file.id,
           },
         });
       })
