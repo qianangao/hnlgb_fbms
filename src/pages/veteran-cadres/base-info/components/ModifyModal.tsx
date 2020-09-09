@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Steps, Button } from 'antd';
 import BasicInfoForm from './form/BasicInfoForm';
+import FamilyForm from './form/FamilyForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   const [form] = BasicInfoForm.useForm();
@@ -44,9 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       .then(values => {
         dispatch({
           type: `vcBasicInfo/${steps[stepCurrent].effect}`,
-          payload: {
-            ...values,
-          },
+          payload: steps[stepCurrent].dataFormat(values),
         });
         if (stepCurrent < steps.length - 1) {
           setCurrent(stepCurrent + 1);
@@ -69,11 +68,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       title: '基本信息',
       effect: 'updateLgb',
       StepsForm: BasicInfoForm,
+      dataFormat: values => ({ ...values }),
     },
     {
       title: '家庭信息',
-      content: 'Second-content',
-      StepsForm: BasicInfoForm,
+      content: 'updateFamilyLgb',
+      StepsForm: FamilyForm,
+      dataFormat: values => ({
+        ...values,
+        residentAddressVillage: values.residentAddress.value,
+        residentAddressList: values.residentAddress.label,
+        homeAddressVillage: values.homeAddress.value,
+        homeNameList: values.homeAddress.label,
+      }),
     },
     {
       title: '工作信息',

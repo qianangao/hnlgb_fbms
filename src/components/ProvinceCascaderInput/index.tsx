@@ -49,7 +49,7 @@ const ProvinceCascaderInput = ({ provinceData, value, onChange, disabled, dispat
 
   return (
     <Cascader
-      value={selectData.value}
+      value={selectData.value && selectData.value.split('/')}
       options={provinceData}
       loadData={loadData}
       disabled={disabled}
