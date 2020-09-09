@@ -59,7 +59,7 @@ const GlobalModel = {
         });
       }
     },
-    *uploadFile({ payload }, { call }) {
+    *uploadFile({ payload, resolve }, { call }) {
       const { file } = payload;
       const { type } = payload;
 
@@ -79,11 +79,10 @@ const GlobalModel = {
       const response = yield call(uploadFile, formData);
 
       if (!response.error) {
-        // eslint-disable-next-line consistent-return
-        return response;
+        resolve && resolve(response);
+      } else {
+        message.warning('上传文件失败，请重试！');
       }
-
-      message.warning('上传文件失败，请重试！');
     },
     *refreshDownloadFiles(_, { call, put }) {
       const response = yield call(getDownloadFiles);

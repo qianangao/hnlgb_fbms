@@ -155,8 +155,21 @@ const searchOrgTree = (req, res) => {
   return res.json(a);
 };
 
+const uploadFile = (req, res) => {
+  res.json({
+    code: 0,
+    msg: 'success',
+    data: {
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      id: '呵呵呵呵哒',
+      fileName: 'demo图片',
+    },
+  });
+};
+
 export default {
   'GET /dictionary': getDictionary,
   'GET /organization/directly-child/:id': getOrgTree,
   'GET /organization/all-child': searchOrgTree,
+  'POST /attachmentsftpto': uploadFile,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'umi';
 import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row, Spin } from 'antd';
 import { formatDate } from '@/utils/format';
+import UploadInput from '@/components/UploadInput';
 
 const AdvancedFormInstance = ({
   form,
@@ -28,7 +29,7 @@ const AdvancedFormInstance = ({
 
     if (hidden) {
       return (
-        <Form.Item hidden {...resField}>
+        <Form.Item key={field.key || field.name} hidden {...resField}>
           {fieldInput}
         </Form.Item>
       );
@@ -71,6 +72,10 @@ const AdvancedFormInstance = ({
       }
 
       fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
+    } else if (type === 'upload') {
+      fieldInput = <UploadInput disabled={disabled} />;
+    } else if (type === 'textarea') {
+      fieldInput = <Input.TextArea disabled={disabled} />;
     } else {
       fieldInput = <Input disabled={disabled} />;
     }
