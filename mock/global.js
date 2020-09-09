@@ -167,9 +167,44 @@ const uploadFile = (req, res) => {
   });
 };
 
+const getCommunity = (req, res) => {
+  const { id } = req.query;
+  res.json({
+    code: 0,
+    msg: 'success',
+    data: [
+      {
+        id: id + '-1', //单位id
+        organizationName: '区域' + id + '-1', // 社区名称
+        parentEmployerId: id, //父组织id
+        parentOrganizationName: '北京', //父组织名称
+        organizationTelphone: null, //社区电话
+        communityAddress: null, //社区地址
+      },
+      {
+        id: id + '-2', //单位id
+        organizationName: '区域' + id + '-2', // 社区名称
+        parentEmployerId: id, //父组织id
+        parentOrganizationName: '北京', //父组织名称
+        organizationTelphone: null, //社区电话
+        communityAddress: null, //社区地址
+      },
+      {
+        id: id + '-3', //单位id
+        organizationName: '区域' + id + '-3', // 社区名称
+        parentEmployerId: id, //父组织id
+        parentOrganizationName: '北京', //父组织名称
+        organizationTelphone: null, //社区电话
+        communityAddress: null, //社区地址
+      },
+    ],
+  });
+};
+
 export default {
   'GET /dictionary': getDictionary,
   'GET /organization/directly-child/:id': getOrgTree,
   'GET /organization/all-child': searchOrgTree,
   'POST /attachmentsftpto': uploadFile,
+  'GET /communityAddress/child/:id': getCommunity,
 };

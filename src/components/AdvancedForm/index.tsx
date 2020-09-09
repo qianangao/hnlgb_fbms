@@ -17,7 +17,7 @@ const AdvancedFormInstance = ({
   const renderField = field => {
     const {
       type,
-      span = 1,
+      span = 1, // span传 4 占据整行
       render,
       enumsLabel,
       switchEnums,
@@ -86,7 +86,13 @@ const AdvancedFormInstance = ({
     }
 
     return (
-      <Col key={field.key || field.name} lg={12 * span} xl={8 * span} xxl={6 * span}>
+      <Col
+        key={field.key || field.name}
+        span={Math.min(24, 12 * span)}
+        lg={Math.min(24, 12 * span)}
+        xl={Math.min(24, 8 * span)}
+        xxl={Math.min(24, 6 * span)}
+      >
         <Form.Item {...resField}>{fieldInput}</Form.Item>
       </Col>
     );
