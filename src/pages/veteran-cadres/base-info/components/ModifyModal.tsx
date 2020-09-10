@@ -3,6 +3,8 @@ import { connect } from 'umi';
 import { Modal, Steps, Button } from 'antd';
 import BasicInfoForm from './form/BasicInfoForm';
 import FamilyForm from './form/FamilyForm';
+import PartTimeForm from './form/PartTimeForm';
+import HealthyForm from './form/HealthyForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   const [form] = BasicInfoForm.useForm();
@@ -43,10 +45,15 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `vcBasicInfo/${steps[stepCurrent].effect}`,
-          payload: steps[stepCurrent].dataFormat(values),
+        return new Promise(resolve => {
+          dispatch({
+            type: `vcBasicInfo/${steps[stepCurrent].effect}`,
+            payload: steps[stepCurrent].dataFormat(values),
+            resolve,
+          });
         });
+      })
+      .then(_ => {
         if (stepCurrent < steps.length - 1) {
           setCurrent(stepCurrent + 1);
         } else {
@@ -72,7 +79,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     },
     {
       title: '家庭信息',
-      content: 'updateFamilyLgb',
+      effect: 'updateFamilyLgb',
       StepsForm: FamilyForm,
       dataFormat: values => ({
         ...values,
@@ -84,13 +91,21 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     },
     {
       title: '工作信息',
-      content: 'Last-content',
-      StepsForm: BasicInfoForm,
+      effect: 'updatePartTimeLgb',
+      StepsForm: PartTimeForm,
+      dataFormat: values => ({
+        ...values,
+        placeOfResidence: values.residence.value,
+        placeOfResidenceName: values.residence.label,
+      }),
     },
     {
       title: '健康档案',
-      content: 'Last-content',
-      StepsForm: BasicInfoForm,
+      effect: 'updateHealthyLgb',
+      StepsForm: HealthyForm,
+      dataFormat: values => ({
+        ...values,
+      }),
     },
   ];
 
@@ -112,6 +127,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         <Button key="cancel" onClick={hideModal}>
           取消
         </Button>,
+        stepCurrent !== 0 && (
+          <Button key="pre" onClick={() => setCurrent(stepCurrent - 1)}>
+            上一步
+          </Button>
+        ),
         stepCurrent < steps.length - 1 && (
           <Button key="next" onClick={() => setCurrent(stepCurrent + 1)}>
             跳过
@@ -134,11 +154,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >
-        <StepsForm form={form} id={lgbId} />
+        <StepsForm key={`form${stepCurrent}`} name="modify" form={form} id={lgbId} />
       </div>
     </Modal>
   );

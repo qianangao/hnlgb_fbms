@@ -146,13 +146,85 @@ const getFamilyInfo = (req, res) => {
   });
 };
 
+const getPartTime = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      id: '4028b23f73ebcd260173ebcd262f', //id
+      userId: '402883e973e5c2ce0173e5c2ce9d', //userId
+      realName: '伍仟', //姓名
+      dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
+      dateOfBirth: '2020-08-12', //出生日期
+      dictPoliticalStatus: '8adcf7c96a48fae4016a4925f283', //政治面貌
+      originalUnitAndPosition: '局长', //原工作单位及职务
+      dictRetirementLevel: '8adcf7c96a48fae4016a4925f71e', //职级
+      dictRetirementType: '8adcf7c96a48fae4016a4925f601', //离退休职级
+      phonenumber: '18655555555', //电话号码
+      dict: null,
+      createUserId: null,
+      updateUserId: null,
+      gmtCreate: null,
+      gmtModified: null,
+      isDeleted: null,
+      createOrgId: null,
+      dictTreatmentNow: '8adcf7c96a48fae4016a492643c9', //现享受待遇
+      dictNation: '8adcf7c96a48fae4016a49260741', //民族
+      organizationId: '1000', //单位id
+      socialGroups: '广场舞大队', //社会团体
+      post: '领舞', //职务
+      placeOfResidence: '1000/1000-1001/1000-1001-1002/1000-1001-1002-1003', //兼职常驻地
+      placeOfResidenceName: '万宁市/广场舞镇/回头乡/小钢炮村', //兼职常驻地名称
+      detailedAddress: '我家住在黄土高坡', //详细地址
+    },
+  });
+};
+
+const getHealthInfo = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      id: '402883e973e5c2ce0173e5c2ce9d', //id
+      userId: 'userId',
+      realName: 'realName',
+      dictSex: 'dictSex',
+      dateOfBirth: 'dateOfBirth',
+      dictRetirementType: 'dictRetirementType',
+      phonenumber: 'phonenumber	',
+      medical: 'medical',
+      dictHealth: 'dictHealth',
+      disease: 'disease',
+      action: 'action',
+      disability: 'disability',
+      caregivers: 'caregivers',
+      assignedHospital: 'assignedHospital',
+      nearHospital: 'nearHospital',
+      retiredCadres: 'retiredCadres',
+      hasMedical: 'hasMedical	',
+      dictMedicalTreatment: 'dictMedicalTreatment',
+      medicalTreatment: 'medicalTreatment',
+      dictNation: 'dictNation',
+      originalUnitAndPosition: 'originalUnitAndPosition',
+      dictPoliticalStatus: 'dictPoliticalStatus',
+      dictRetirementLevel: 'dictRetirementLevel',
+      dictTreatmentNow: 'dictTreatmentNow',
+      organizationId: 'organizationId',
+    },
+  });
+};
+
 export default {
   'GET /users': list,
   'POST /users': noResponse,
   'DELETE /users': noResponse,
-  'PUT /users/:id': noResponse,
   'GET /users/:id': getUserInfo,
+  'PUT /users/:id': noResponse,
   'PUT /users/password/:id': noResponse,
-
   'GET /users/family/:id': getFamilyInfo,
+  'PUT /users/family/:id': noResponse,
+  'GET /part_time/:id': getPartTime,
+  'PUT /part_time/:id': noResponse,
+  'GET /users/health/:id': getHealthInfo,
+  'PUT /users/health/:id': noResponse,
 };

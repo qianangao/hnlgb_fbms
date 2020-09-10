@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, DatePicker, Radio } from 'antd';
 import { connect } from 'umi';
 
@@ -7,9 +7,10 @@ import OrgSelectInput from '@/components/OrgSelectInput';
 import { formatDate } from '@/utils/format';
 import { checkIdCard, checkPhone } from '@/utils/validators';
 
-const BasicInfoForm = ({ form, id, dispatch, loading }) => {
+const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const orgSelect = useRef({});
   const nowThePipeOrgSelect = useRef({});
+  const [deadTimeVisible, setDeadTimeVisible] = useState(false);
   const formItems = [
     {
       name: 'id',
@@ -239,8 +240,9 @@ const BasicInfoForm = ({ form, id, dispatch, loading }) => {
     {
       label: '离世时间',
       name: 'deadTime',
+      visible: deadTimeVisible,
       type: 'date',
-      rules: [{ required: form.getFieldValue('isDead'), message: '请选择离世时间!' }],
+      rules: [{ required: true, message: '请选择离世时间!' }],
     },
     {
       label: '身份性质',
@@ -265,13 +267,28 @@ const BasicInfoForm = ({ form, id, dispatch, loading }) => {
 
         orgSelect.current.setLabel(data.organizationName || '');
         nowThePipeOrgSelect.current.setLabel(data.nowThePipeUnits || '');
+        setDeadTimeVisible(!!data.isDead);
 
         form.setFieldsValue(fields);
       });
     }
   }, [id]);
 
-  return <AdvancedForm form={form} loading={loading} fields={formItems} />;
+  const fieldChangeHander = (label, value) => {
+    if (label === 'isDead') {
+      setDeadTimeVisible(!!value);
+    }
+  };
+
+  return (
+    <AdvancedForm
+      name={name}
+      fieldChange={fieldChangeHander}
+      form={form}
+      loading={loading}
+      fields={formItems}
+    />
+  );
 };
 
 BasicInfoForm.useForm = AdvancedForm.useForm;

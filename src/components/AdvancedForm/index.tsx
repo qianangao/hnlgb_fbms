@@ -1,9 +1,113 @@
 import React from 'react';
 import { connect } from 'umi';
-import { Form, Input, Select, Switch, DatePicker, TimePicker, Col, Row, Spin } from 'antd';
+import {
+  Form,
+  Input,
+  Select,
+  Switch,
+  DatePicker,
+  TimePicker,
+  Col,
+  Row,
+  Spin,
+  InputNumber,
+} from 'antd';
 import { formatDate } from '@/utils/format';
 import UploadInput from '@/components/UploadInput';
 import EditorInput from '../EditorInput';
+
+const AdvancedFormItem = ({
+  enums,
+  type,
+  span = 1, // span传 4 占据整行
+  visible = true,
+  render,
+  enumsLabel,
+  switchEnums,
+  hidden,
+  disabled,
+  ...resField
+}) => {
+  let fieldInput = <Input disabled={disabled} />;
+
+  if (!visible) {
+    return null;
+  }
+
+  if (type === 'segmentation') {
+    return <Col span={24} />;
+  }
+
+  if (hidden) {
+    return (
+      <Form.Item hidden {...resField}>
+        {fieldInput}
+      </Form.Item>
+    );
+  }
+
+  if (render) {
+    fieldInput = render;
+  } else if (enumsLabel) {
+    fieldInput = (
+      <Select disabled={disabled}>
+        {enums[enumsLabel] &&
+          Object.keys(enums[enumsLabel]).map(key => (
+            <Select.Option key={key} value={key}>
+              {enums[enumsLabel][key]}
+            </Select.Option>
+          ))}
+      </Select>
+    );
+  } else if (type === 'date') {
+    resField.valuePropName = 'value';
+    resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD') : '');
+    resField.getValueProps = str => ({ value: formatDate(str) });
+
+    fieldInput = <DatePicker disabled={disabled} style={{ width: '100%' }} format="YYYY-MM-DD" />;
+  } else if (type === 'time') {
+    resField.valuePropName = 'value';
+    resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');
+    resField.getValueProps = str => ({ value: formatDate(str) });
+
+    fieldInput = <TimePicker disabled={disabled} style={{ width: '100%' }} format="HH:mm:ss" />;
+  } else if (type === 'switch') {
+    resField.valuePropName = 'checked';
+
+    if (switchEnums) {
+      resField.getValueFromEvent = checked => (checked ? switchEnums[1] : switchEnums[0]);
+      resField.getValueProps = value => ({ checked: value === switchEnums[1] });
+    } else {
+      resField.getValueFromEvent = checked => (checked ? 1 : 0);
+      resField.getValueProps = value => ({ checked: value === 1 });
+    }
+
+    fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
+  } else if (type === 'upload') {
+    fieldInput = <UploadInput disabled={disabled} />;
+  } else if (type === 'image') {
+    fieldInput = <UploadInput type="image" disabled={disabled} />;
+  } else if (type === 'number') {
+    fieldInput = <InputNumber disabled={disabled} />;
+  } else if (type === 'textarea') {
+    fieldInput = <Input.TextArea disabled={disabled} />;
+  } else if (type === 'editor') {
+    fieldInput = <EditorInput disabled={disabled} />;
+  } else {
+    fieldInput = <Input disabled={disabled} />;
+  }
+
+  return (
+    <Col
+      span={Math.min(24, 12 * span)}
+      lg={Math.min(24, 12 * span)}
+      xl={Math.min(24, 8 * span)}
+      xxl={Math.min(24, 6 * span)}
+    >
+      <Form.Item {...resField}>{fieldInput}</Form.Item>
+    </Col>
+  );
+};
 
 const AdvancedFormInstance = ({
   form,
@@ -11,98 +115,39 @@ const AdvancedFormInstance = ({
   headerRender,
   footerRender,
   initialValues,
+  fieldChange,
   enums,
-  loading,
+  loading = false,
+  ...props
 }) => {
-  const renderField = field => {
-    const {
-      type,
-      span = 1, // span传 4 占据整行
-      render,
-      enumsLabel,
-      switchEnums,
-      hidden,
-      disabled,
-      ...resField
-    } = field;
-
-    let fieldInput = <Input disabled={disabled} />;
-
-    if (hidden) {
-      return (
-        <Form.Item key={field.key || field.name} hidden {...resField}>
-          {fieldInput}
-        </Form.Item>
-      );
-    }
-
-    if (render) {
-      fieldInput = render;
-    } else if (enumsLabel) {
-      fieldInput = (
-        <Select disabled={disabled}>
-          {enums[enumsLabel] &&
-            Object.keys(enums[enumsLabel]).map(key => (
-              <Select.Option key={key} value={key}>
-                {enums[enumsLabel][key]}
-              </Select.Option>
-            ))}
-        </Select>
-      );
-    } else if (type === 'date') {
-      resField.valuePropName = 'value';
-      resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD') : '');
-      resField.getValueProps = str => ({ value: formatDate(str) });
-
-      fieldInput = <DatePicker disabled={disabled} style={{ width: '100%' }} format="YYYY-MM-DD" />;
-    } else if (type === 'time') {
-      resField.valuePropName = 'value';
-      resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');
-      resField.getValueProps = str => ({ value: formatDate(str) });
-
-      fieldInput = <TimePicker disabled={disabled} style={{ width: '100%' }} format="HH:mm:ss" />;
-    } else if (type === 'switch') {
-      resField.valuePropName = 'checked';
-
-      if (switchEnums) {
-        resField.getValueFromEvent = checked => (checked ? switchEnums[1] : switchEnums[0]);
-        resField.getValueProps = value => ({ checked: value === switchEnums[1] });
-      } else {
-        resField.getValueFromEvent = checked => (checked ? 1 : 0);
-        resField.getValueProps = value => ({ checked: value === 1 });
-      }
-
-      fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
-    } else if (type === 'upload') {
-      fieldInput = <UploadInput disabled={disabled} />;
-    } else if (type === 'image') {
-      fieldInput = <UploadInput type="image" disabled={disabled} />;
-    } else if (type === 'textarea') {
-      fieldInput = <Input.TextArea disabled={disabled} />;
-    } else if (type === 'editor') {
-      fieldInput = <EditorInput disabled={disabled} />;
-    } else {
-      fieldInput = <Input disabled={disabled} />;
-    }
-
-    return (
-      <Col
-        key={field.key || field.name}
-        span={Math.min(24, 12 * span)}
-        lg={Math.min(24, 12 * span)}
-        xl={Math.min(24, 8 * span)}
-        xxl={Math.min(24, 6 * span)}
-      >
-        <Form.Item {...resField}>{fieldInput}</Form.Item>
-      </Col>
-    );
+  const onValuesChange = (changedValues, allValues) => {
+    fieldChange &&
+      fieldChange(Object.keys(changedValues)[0], Object.values(changedValues)[0], allValues);
   };
 
   return (
-    <Form form={form} layout="vertical" initialValues={initialValues}>
+    <Form
+      form={form}
+      layout="vertical"
+      initialValues={initialValues}
+      onValuesChange={onValuesChange}
+      {...props}
+    >
       <Spin spinning={loading}>
         {headerRender || null}
-        <Row gutter={24}>{fields.map(field => renderField(field) || null)}</Row>
+        <Row gutter={24}>
+          {fields.map(
+            field =>
+              (
+                <AdvancedFormItem
+                  key={field.key || field.name}
+                  form={form}
+                  enums={enums}
+                  {...field}
+                />
+              ) || null,
+          )}
+        </Row>
         {footerRender || null}
       </Spin>
     </Form>

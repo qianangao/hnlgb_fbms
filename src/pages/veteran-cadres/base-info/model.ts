@@ -8,6 +8,10 @@ import {
   updateLgb,
   getFamilyLgb,
   updateFamilyLgb,
+  getPartTimeLgb,
+  updatePartTimeLgb,
+  getHealthyLgb,
+  updateHealthyLgb,
 } from './service';
 
 const Model = {
@@ -146,12 +150,13 @@ const Model = {
         });
       }
     },
-    *updateLgb({ payload }, { call, put }) {
+    *updateLgb({ payload, resolve }, { call, put }) {
       const response = yield call(updateLgb, payload);
 
       if (!response.error) {
         message.success('修改老干部信息成功！');
 
+        yield resolve && resolve();
         yield put({
           type: 'tableReload',
         });
@@ -164,22 +169,42 @@ const Model = {
         resolve && resolve(response);
       }
     },
-    *updateFamilyLgb({ payload }, { call, put }) {
+    *updateFamilyLgb({ payload, resolve }, { call }) {
       const response = yield call(updateFamilyLgb, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
         message.success('修改老干部家庭信息成功！');
+        yield resolve && resolve();
+      }
+    },
+    *getPartTimeLgb({ payload, resolve }, { call }) {
+      const response = yield call(getPartTimeLgb, payload);
 
-        yield put({
-          type: 'tableReload',
-        });
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *updatePartTimeLgb({ payload, resolve }, { call }) {
+      const response = yield call(updatePartTimeLgb, payload);
+
+      if (!response.error) {
+        message.success('修改老干社会兼职信息成功！');
+        yield resolve && resolve();
+      }
+    },
+    *getHealthyLgb({ payload, resolve }, { call }) {
+      const response = yield call(getHealthyLgb, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *updateHealthyLgb({ payload, resolve }, { call }) {
+      const response = yield call(updateHealthyLgb, payload);
+
+      if (!response.error) {
+        message.success('修改老干健康档案信息成功！');
+        yield resolve && resolve();
       }
     },
   },

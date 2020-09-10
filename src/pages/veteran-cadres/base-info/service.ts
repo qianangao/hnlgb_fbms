@@ -87,3 +87,47 @@ export async function updateFamilyLgb(params) {
     data: params,
   });
 }
+
+/**
+ * 获取老干部社会兼职信息
+ * @param {*} params
+ */
+export async function getPartTimeLgb(params) {
+  return request(`/part_time/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 编辑老干部社会兼职信息
+ * @param {*} params
+ */
+export async function updatePartTimeLgb(params) {
+  return request(`/part_time/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+/**
+ * 获取老干部健康信息
+ * @param {*} params
+ */
+export async function getHealthyLgb(params) {
+  return request(`/users/health/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 编辑老干部健康信息
+ * @param {*} params
+ */
+export async function updateHealthyLgb(params) {
+  return request(`/users/health/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}

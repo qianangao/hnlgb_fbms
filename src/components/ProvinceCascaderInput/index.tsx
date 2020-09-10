@@ -40,7 +40,8 @@ const ProvinceCascaderInput = ({ provinceData, value, onChange, disabled, dispat
     };
 
     setSelectData(data);
-    onChange && onChange(data);
+
+    onChange && onChange(data.value ? data : null);
   };
 
   const displayRender = () => {

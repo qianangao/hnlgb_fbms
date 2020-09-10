@@ -68,7 +68,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <BasicInfoForm form={form} />
+      <BasicInfoForm name="add" form={form} />
     </Modal>
   );
 };
