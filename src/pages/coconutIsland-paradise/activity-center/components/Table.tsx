@@ -38,13 +38,6 @@ const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
       hideInSearch: true,
     },
     {
-      title: '下设团队数',
-      align: 'center',
-      dataIndex: 'teamNum',
-      hideInSearch: true,
-      render: _ => <a href="https://procomponents.ant.design/components/table">{_}</a>, // onclick点击跳转至活动团队管理页面
-    },
-    {
       title: '操作',
       valueType: 'option',
       align: 'center',

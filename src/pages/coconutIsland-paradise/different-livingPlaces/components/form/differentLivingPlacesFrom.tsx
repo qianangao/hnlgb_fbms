@@ -3,6 +3,7 @@ import AdvancedForm from '@/components/AdvancedForm';
 import { Form } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
+import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 
 const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
   useEffect(() => {
@@ -33,9 +34,8 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
     {
       label: '异地居住地址',
       name: 'offSiteAddress',
-      type: 'input',
-      // initialValue: ,
       rules: [{ required: true, message: '请选择异地居住地址!' }],
+      render: <ProvinceCascaderInput />,
     },
   ];
   return id ? (

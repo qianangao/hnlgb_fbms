@@ -15,7 +15,6 @@ for (let i = 0; i < 20; i++) {
     address: '这就是街舞天台', //活动中心地址
     phoneNumber: '13000001786', //联系电话
     organizationName: '省委老干部局', //所属单位
-    teamNum: '3', //下设团队数
   });
 }
 
@@ -41,11 +40,15 @@ const detailActivityCenterInfo = (req, res) => {
     msg: 'success',
     data: {
       id: '4028b23f73eae1b30173eae1xl1', //id
-      name: '跳个广场舞' + i, //活动中心名称
+      name: '跳个广场舞', //活动中心名称
       address: '这就是街舞天台', //活动中心地址
       phoneNumber: '13000001786', //联系电话
       organizationName: '省委老干部局', //所属单位
-      teamNum: '3', //下设团队数
+      publishTime: '2020-3-18', //发布时间
+      context: '我要跳舞', //内容
+      fileId: 'fileId',
+      fileName: 'fileName',
+      fileUrl: 'fileUrl',
     },
   });
 };
