@@ -1,5 +1,6 @@
 // umi routes: https://umijs.org/zh/guide/router.html
 import VeteranCadresRoutes from './veteran-cadres';
+import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
 
 const router = [
   {
@@ -35,6 +36,7 @@ const router = [
                 redirect: '/veteran-cadres/base-info',
               },
               VeteranCadresRoutes,
+              CoconutIslandParadiseRoutes,
               {
                 component: './404',
               },
