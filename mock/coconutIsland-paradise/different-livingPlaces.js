@@ -43,7 +43,8 @@ const detailDifferentLivingPlaces = (req, res) => {
       realName: '伍仟', //姓名
       dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
       dateOfBirth: '2020-08-12', //出生日期
-      offSiteAddress: '1000/1000-1001/1000-1001-1002/1000-1001-1002-1003', //异地居住地址
+      offSiteAddressVillage: '1000/1000-1001/1000-1001-1002/1000-1001-1002-1003', //异地居住地址
+      offSiteAddressList: '延庆区四海镇西沟里村民委员会',
     },
   });
 };

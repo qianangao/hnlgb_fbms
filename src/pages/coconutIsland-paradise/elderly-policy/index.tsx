@@ -8,10 +8,10 @@ import Table from './components/Table';
 const ElderlyPolicyInfo = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
-  const orgChangeHander = orgitem => {
+  const orgChangeHander = orgId => {
     dispatch({
       type: 'elderlyPolicy/selectOrgChange',
-      payload: orgitem.id,
+      payload: orgId,
     });
   };
 

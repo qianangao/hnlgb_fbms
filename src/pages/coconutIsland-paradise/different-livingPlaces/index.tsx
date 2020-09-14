@@ -18,10 +18,10 @@ const DifferentLivingPlacesInfo = ({ dispatch }) => {
     });
   }, []);
 
-  const orgChangeHander = orgitem => {
+  const orgChangeHander = orgId => {
     dispatch({
       type: 'differentLivingPlaces/selectOrgChange',
-      payload: orgitem.id,
+      payload: orgId,
     });
   };
 

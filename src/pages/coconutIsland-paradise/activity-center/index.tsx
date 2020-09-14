@@ -17,10 +17,10 @@ const ActivityCenterInfo = ({ dispatch }) => {
     });
   }, []);
 
-  const orgChangeHander = orgitem => {
+  const orgChangeHander = orgId => {
     dispatch({
       type: 'activityCenter/selectOrgChange',
-      payload: orgitem.id,
+      payload: orgId,
     });
   };
 

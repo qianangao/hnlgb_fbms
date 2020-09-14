@@ -18,6 +18,12 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
+        fields.offSiteAddress = data.offSiteAddressVillage
+          ? {
+              value: data.offSiteAddressVillage,
+              label: data.offSiteAddressList,
+            }
+          : null;
         form.setFieldsValue(fields);
       });
     }
