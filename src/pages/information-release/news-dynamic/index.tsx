@@ -43,12 +43,12 @@ const NewsDynamic = ({ dispatch }) => {
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
-  const onPublishStatusChange = status => {
+  const onPublishStatusChange = publishStatus => {
     // 控制：新增、编辑按钮
-    // status 0 草稿箱 ， 1 已发布
+    // publishStatus 0 草稿箱 ， 1 已发布
     dispatch({
       type: 'newsDynamic/publishStatusChange',
-      payload: status,
+      payload: publishStatus,
     });
   };
 

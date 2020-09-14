@@ -35,7 +35,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = status => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
@@ -43,7 +43,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `dailyBroadcast/addDailyBroadcast`,
           payload: {
             ...values,
-            status: status ? 0 : 1,
+            status: publishStatus ? 0 : 1,
           },
         });
         form.resetFields();

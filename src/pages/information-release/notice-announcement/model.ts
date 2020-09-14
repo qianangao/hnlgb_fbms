@@ -14,13 +14,13 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    status: 1, // type  0 草稿箱 ， 1 已发布
+    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailNoticeAnnouncementData: {},
   },
   effects: {
     *noticeAnnouncementList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.noticeAnnouncement.selectedOrgId);
-      const dictPublishStatus = yield select(state => state.noticeAnnouncement.status);
+      const dictPublishStatus = yield select(state => state.noticeAnnouncement.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
@@ -69,7 +69,7 @@ const Model = {
       yield put({
         type: 'save',
         payload: {
-          status: payload,
+          publishStatus: payload,
         },
       });
 
@@ -80,7 +80,7 @@ const Model = {
 
     *addNoticeAnnouncement({ payload }, { call, put }) {
       const response = yield call(addNoticeAnnouncement, payload);
-      const { status } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -88,7 +88,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(status == 0 ? '通知公告新增成功！' : '通知公告发布成功！');
+        message.success(publishStatus == 0 ? '通知公告新增成功！' : '通知公告发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -96,7 +96,7 @@ const Model = {
     },
     *updateNoticeAnnouncement({ payload }, { call, put }) {
       const response = yield call(updateNoticeAnnouncement, payload);
-      const { status } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -105,7 +105,7 @@ const Model = {
           },
         });
 
-        message.success(status == 0 ? '通知公告修改成功！' : '通知公告发布成功！');
+        message.success(publishStatus == 0 ? '通知公告修改成功！' : '通知公告发布成功！');
 
         yield put({
           type: 'tableReload',

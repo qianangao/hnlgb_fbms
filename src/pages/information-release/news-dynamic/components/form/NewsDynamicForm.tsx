@@ -14,12 +14,12 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       type: 'segmentation',
     },
     {
-      label: '附件',
+      label: '缩略图',
       name: 'attachmentId',
-      type: 'upload',
+      type: 'image',
     },
     {
-      key: 'firstLine',
+      key: 'secondLine',
       type: 'segmentation',
     },
     {

@@ -14,17 +14,17 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    status: 1, // type  0 草稿箱 ， 1 已发布
+    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailDailyBroadcastData: {},
   },
   effects: {
     *dailyBroadcastList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.dailyBroadcast.selectedOrgId);
-      const status = yield select(state => state.dailyBroadcast.status);
+      const publishStatus = yield select(state => state.dailyBroadcast.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
-        status,
+        status: publishStatus,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -69,7 +69,7 @@ const Model = {
       yield put({
         type: 'save',
         payload: {
-          status: payload,
+          publishStatus: payload,
         },
       });
 
@@ -81,14 +81,14 @@ const Model = {
     *addDailyBroadcast({ payload }, { call, put }) {
       const response = yield call(addDailyBroadcast, payload);
       if (!response.error) {
-        const { status } = payload;
+        const { publishStatus } = payload;
         yield put({
           type: 'save',
           payload: {
             addModalVisible: false,
           },
         });
-        message.success(status == 0 ? '每日播报新增成功！' : '每日播报发布成功！');
+        message.success(publishStatus == 0 ? '每日播报新增成功！' : '每日播报发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -97,7 +97,7 @@ const Model = {
     },
     *updateDailyBroadcast({ payload }, { call, put }) {
       const response = yield call(updateDailyBroadcast, payload);
-      const { status } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -106,7 +106,7 @@ const Model = {
           },
         });
 
-        message.success(status == 0 ? '每日播报修改成功！' : '每日播报发布成功！');
+        message.success(publishStatus == 0 ? '每日播报修改成功！' : '每日播报发布成功！');
 
         yield put({
           type: 'tableReload',

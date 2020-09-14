@@ -20,7 +20,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
     },
     {
-      key: 'firstLine',
+      key: 'secondLine',
       type: 'segmentation',
     },
     {
@@ -29,7 +29,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       type: 'upload',
     },
     {
-      key: 'firstLine',
+      key: 'thirdlyLine',
       type: 'segmentation',
     },
     {

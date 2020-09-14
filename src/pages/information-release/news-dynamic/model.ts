@@ -14,17 +14,17 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    status: 1, // type  0 草稿箱 ， 1 已发布
+    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailNewsDynamicData: {},
   },
   effects: {
     *newsDynamicList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.newsDynamic.selectedOrgId);
-      const status = yield select(state => state.newsDynamic.status);
+      const publishStatus = yield select(state => state.newsDynamic.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
-        status,
+        status: publishStatus,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -69,7 +69,7 @@ const Model = {
       yield put({
         type: 'save',
         payload: {
-          status: payload,
+          publishStatus: payload,
         },
       });
 
@@ -80,7 +80,7 @@ const Model = {
 
     *addNewsDynamic({ payload }, { call, put }) {
       const response = yield call(addNewsDynamic, payload);
-      const { status } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -88,7 +88,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(status == 0 ? '新闻动态新增成功！' : '新闻动态发布成功！');
+        message.success(publishStatus == 0 ? '新闻动态新增成功！' : '新闻动态发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -96,7 +96,7 @@ const Model = {
     },
     *updateNewsDynamic({ payload }, { call, put }) {
       const response = yield call(updateNewsDynamic, payload);
-      const { status } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -105,7 +105,7 @@ const Model = {
           },
         });
 
-        message.success(status == 0 ? '新闻动态修改成功！' : '新闻动态发布成功！');
+        message.success(publishStatus == 0 ? '新闻动态修改成功！' : '新闻动态发布成功！');
 
         yield put({
           type: 'tableReload',

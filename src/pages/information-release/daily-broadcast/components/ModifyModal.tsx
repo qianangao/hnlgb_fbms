@@ -36,7 +36,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form.resetFields();
   };
 
-  const handleOk = status => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
@@ -45,7 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           payload: {
             ...values,
             id: lgbId,
-            status: status ? 0 : 1,
+            status: publishStatus ? 0 : 1,
           },
         });
         form.resetFields();

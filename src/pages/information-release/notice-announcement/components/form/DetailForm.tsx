@@ -4,19 +4,6 @@ import { connect } from 'umi';
 
 const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
   useEffect(() => {
-    dispatch({
-      type: 'global/getEnums',
-      payload: {
-        names: [
-          'dictNation',
-          'dictRetirementLevel',
-          'dictRetirementType',
-          'dictSex',
-          'dictTreatmentNow',
-          'dictPoliticalStatus',
-        ],
-      },
-    });
     if (id) {
       dispatch({
         type: 'noticeAnnouncement/detailNoticeAnnouncement',

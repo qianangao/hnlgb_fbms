@@ -4,19 +4,6 @@ import DetailFormPage from '@/components/DetailFormPage';
 
 const DetailForm = ({ id, dispatch, detailNewsDynamicData }) => {
   useEffect(() => {
-    dispatch({
-      type: 'global/getEnums',
-      payload: {
-        names: [
-          'dictNation',
-          'dictRetirementLevel',
-          'dictRetirementType',
-          'dictSex',
-          'dictTreatmentNow',
-          'dictPoliticalStatus',
-        ],
-      },
-    });
     if (id) {
       dispatch({
         type: 'newsDynamic/detailNewsDynamic',
