@@ -16,6 +16,12 @@ const routes = {
       component: './coconutIsland-paradise/activity-center',
       remark: '活动中心',
     },
+    {
+      path: '/coconutIsland-paradise/elderly-policy',
+      name: 'coconutIsland-paradise-elderly-policy',
+      component: './coconutIsland-paradise/elderly-policy',
+      remark: '涉老政策',
+    },
   ],
 };
 export default routes;

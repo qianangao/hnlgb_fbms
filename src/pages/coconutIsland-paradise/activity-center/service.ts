@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 /**
- * 异地居住-列表
+ * 活动中心-列表
  * @param {*} params
  */
 export async function activityCenterInfoList(params) {
@@ -12,7 +12,7 @@ export async function activityCenterInfoList(params) {
 }
 
 /**
- * 删除-异地居住
+ * 删除-活动中心
  * @param {*} params
  */
 export async function deleteActivityCenterInfo(params) {
@@ -23,7 +23,7 @@ export async function deleteActivityCenterInfo(params) {
 }
 
 /**
- * 新增-异地居住
+ * 新增-活动中心
  * @param {*} params
  */
 export async function addActivityCenterInfo(params) {
@@ -34,7 +34,7 @@ export async function addActivityCenterInfo(params) {
 }
 
 /**
- * 异地居住-详情
+ * 活动中心-详情
  * @param {*} params
  */
 export async function detailActivityCenterInfo(params) {
