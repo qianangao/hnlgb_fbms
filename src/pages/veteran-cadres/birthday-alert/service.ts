@@ -12,6 +12,17 @@ export async function getBirthdayList(params) {
 }
 
 /**
+ * 获取提醒时间
+ * @param {*} params
+ */
+export async function remindTime(params) {
+  return request('/birthday-reminder/cron', {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
  * 修改生日是否提醒
  * @param {*} params
  */

@@ -1,5 +1,6 @@
 // umi routes: https://umijs.org/zh/guide/router.html
 import VeteranCadresRoutes from './veteran-cadres';
+import OriginalAspirationRoutes from './original-aspiration';
 
 const router = [
   {
@@ -35,6 +36,7 @@ const router = [
                 redirect: '/veteran-cadres/base-info',
               },
               VeteranCadresRoutes,
+              OriginalAspirationRoutes,
               {
                 component: './404',
               },

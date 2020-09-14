@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Descriptions } from 'antd';
 import { connect } from 'umi';
 
-const BasicInfo = ({ userId, dispatch, enums, lgbDetailData }) => {
+const LgbBasicInfo = ({ userId, dispatch, enums, lgbDetailData }) => {
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -58,4 +58,4 @@ export default connect(({ vcBasicInfo, loading, global }) => ({
   lgbDetailData: vcBasicInfo.lgbDetailData,
   loading: loading.models.vcBasicInfo,
   enums: global.enums,
-}))(BasicInfo);
+}))(LgbBasicInfo);
