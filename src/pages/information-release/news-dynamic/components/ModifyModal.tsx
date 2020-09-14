@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Descriptions, Modal } from 'antd';
-import BasicInfo from '@/components/BasicInfo';
-import PhotoInfoForm from './form/PhotoInfoForm';
+import { Modal, Button } from 'antd';
+import NewsDynamicForm from './form/NewsDynamicForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = PhotoInfoForm.useForm();
+  const [form] = NewsDynamicForm.useForm();
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'photoInfo/save',
+      type: 'newsDynamic/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -28,7 +27,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'photoInfo/save',
+      type: 'newsDynamic/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -37,15 +36,17 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = status => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `photoInfo/updatePhotoInfo`,
+          type: `newsDynamic/updateNewsDynamic`,
           payload: {
             ...values,
-            fileId: values.file.id,
+            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
+            status: status ? 0 : 1, // 状态 0：保存 1：发布
+            id: lgbId,
           },
         });
       })
@@ -55,7 +56,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改照片信息"
+      title="修改新闻动态"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -64,7 +65,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
@@ -77,15 +85,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <BasicInfo userId={lgbId} />
-        <Descriptions title="照片信息" size="middle" />
-        <PhotoInfoForm form={form} id={lgbId} />
+        <NewsDynamicForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ photoInfo, loading }) => ({
-  modifyModalVisible: photoInfo.modifyModalVisible,
-  loading: loading.models.photoInfo,
+export default connect(({ newsDynamic, loading }) => ({
+  modifyModalVisible: newsDynamic.modifyModalVisible,
+  loading: loading.models.newsDynamic,
 }))(ModifyModal);

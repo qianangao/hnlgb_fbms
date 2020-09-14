@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Descriptions, Modal } from 'antd';
+import BasicInfo from '@/components/BasicInfo';
 import RelocatedForm from './form/RelocatedForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
@@ -76,6 +77,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
+        <BasicInfo userId={lgbId} />
+        <Descriptions title="异地安置" size="middle" />
         <RelocatedForm form={form} id={lgbId} />
       </div>
     </Modal>
