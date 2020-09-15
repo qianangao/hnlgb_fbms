@@ -4,14 +4,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import { connect } from 'umi';
 
 const Table = ({
-  vcCaresNext,
+  oaCaresNext,
   dispatch,
   openDetailModal,
   openModifyModal,
   openAddCaresModal,
   openAddTrendsModal,
 }) => {
-  const { tableRef } = vcCaresNext;
+  const { tableRef } = oaCaresNext;
 
   const columns = [
     {
@@ -63,7 +63,7 @@ const Table = ({
   const getHobbyList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'vcCaresNext/getCaresList',
+        type: 'oaCaresNext/getCaresList',
         payload: { ...params },
         resolve,
       });
@@ -71,7 +71,7 @@ const Table = ({
 
   const deleteCaresInfo = ids => {
     dispatch({
-      type: 'vcCaresNext/deleteCares',
+      type: 'oaCaresNext/deleteCares',
       payload: {
         ids,
       },
@@ -115,6 +115,6 @@ const Table = ({
   );
 };
 
-export default connect(({ vcCaresNext }) => ({
-  vcCaresNext,
+export default connect(({ oaCaresNext }) => ({
+  oaCaresNext,
 }))(Table);

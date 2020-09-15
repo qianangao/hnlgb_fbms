@@ -9,7 +9,7 @@ const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, load
   const showModal = formValues => {
     setformData(formValues);
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         memberModifyModalVisible: true,
       },
@@ -27,7 +27,7 @@ const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, load
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         memberModifyModalVisible: false,
       },
@@ -39,7 +39,7 @@ const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, load
       .validateFields()
       .then(values => {
         dispatch({
-          type: `vcCaresNext/updateMember`,
+          type: `oaCaresNext/updateMember`,
           payload: {
             ...values,
             id: formData.id,
@@ -70,7 +70,7 @@ const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, load
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  memberModifyModalVisible: vcCaresNext.memberModifyModalVisible,
-  loading: loading.effects['vcCaresNext/addCares'],
+export default connect(({ oaCaresNext, loading }) => ({
+  memberModifyModalVisible: oaCaresNext.memberModifyModalVisible,
+  loading: loading.effects['oaCaresNext/addCares'],
 }))(MemberModifyModal);

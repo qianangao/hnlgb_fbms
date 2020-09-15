@@ -4,14 +4,14 @@ import { Popconfirm, Button, Modal } from 'antd';
 import { connect } from 'umi';
 
 const TableCaresMember = ({
-  vcCaresNext,
+  oaCaresNext,
   dispatch,
   id,
   openMemberModifyModel,
   openMemberAddModal,
   enums,
 }) => {
-  const { tableRef } = vcCaresNext;
+  const { tableRef } = oaCaresNext;
 
   const columns = [
     {
@@ -51,7 +51,7 @@ const TableCaresMember = ({
   const getMemberList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'vcCaresNext/getMemberList',
+        type: 'oaCaresNext/getMemberList',
         payload: { ...params, mechanismId: id },
         resolve,
       });
@@ -59,7 +59,7 @@ const TableCaresMember = ({
 
   const deleteMember = ids => {
     dispatch({
-      type: 'vcCaresNext/deleteMember',
+      type: 'oaCaresNext/deleteMember',
       payload: {
         ids,
       },
@@ -106,7 +106,7 @@ const TableCaresMember = ({
   );
 };
 
-export default connect(({ vcCaresNext, global }) => ({
-  vcCaresNext,
+export default connect(({ oaCaresNext, global }) => ({
+  oaCaresNext,
   enums: global.enums,
 }))(TableCaresMember);

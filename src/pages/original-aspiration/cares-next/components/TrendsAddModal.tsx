@@ -10,7 +10,7 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
     form.resetFields();
     setMechanismId(id);
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         trendsAddModalVisible: true,
       },
@@ -28,7 +28,7 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         trendsAddModalVisible: false,
       },
@@ -39,7 +39,7 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
       .validateFields()
       .then(values => {
         dispatch({
-          type: `vcCaresNext/addTrends`,
+          type: `oaCaresNext/addTrends`,
           payload: {
             ...values,
             mechanismId,
@@ -70,7 +70,7 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  trendsAddModalVisible: vcCaresNext.trendsAddModalVisible,
-  loading: loading.effects['vcCaresNext/addTrends'],
+export default connect(({ oaCaresNext, loading }) => ({
+  trendsAddModalVisible: oaCaresNext.trendsAddModalVisible,
+  loading: loading.effects['oaCaresNext/addTrends'],
 }))(TrendsAddModal);

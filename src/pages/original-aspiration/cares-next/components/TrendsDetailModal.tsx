@@ -7,7 +7,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
   const showModal = id => {
     setTrendsId(id);
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         trendsDetailModalVisible: true,
       },
@@ -24,7 +24,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
 
     if (trendsId) {
       dispatch({
-        type: 'vcCaresNext/getTrendsDetail',
+        type: 'oaCaresNext/getTrendsDetail',
         payload: { id: trendsId },
       });
     }
@@ -32,7 +32,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         trendsDetailModalVisible: false,
       },
@@ -68,8 +68,8 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  trendsDetailModalVisible: vcCaresNext.trendsDetailModalVisible,
-  trendsDetailData: vcCaresNext.trendsDetailData,
-  loading: loading.models.vcCaresNext,
+export default connect(({ oaCaresNext, loading }) => ({
+  trendsDetailModalVisible: oaCaresNext.trendsDetailModalVisible,
+  trendsDetailData: oaCaresNext.trendsDetailData,
+  loading: loading.models.oaCaresNext,
 }))(TrendsDetailModal);

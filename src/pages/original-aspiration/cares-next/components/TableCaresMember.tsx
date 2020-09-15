@@ -2,8 +2,8 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const TableCaresMember = ({ vcCaresNext, enums, dispatch, id }) => {
-  const { tableRef } = vcCaresNext;
+const TableCaresMember = ({ oaCaresNext, enums, dispatch, id }) => {
+  const { tableRef } = oaCaresNext;
 
   const columns = [
     {
@@ -28,7 +28,7 @@ const TableCaresMember = ({ vcCaresNext, enums, dispatch, id }) => {
   const getMemberList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'vcCaresNext/getMemberList',
+        type: 'oaCaresNext/getMemberList',
         payload: { ...params, mechanismId: id },
         resolve,
       });
@@ -47,7 +47,7 @@ const TableCaresMember = ({ vcCaresNext, enums, dispatch, id }) => {
   );
 };
 
-export default connect(({ vcCaresNext, global }) => ({
-  vcCaresNext,
+export default connect(({ oaCaresNext, global }) => ({
+  oaCaresNext,
   enums: global.enums,
 }))(TableCaresMember);

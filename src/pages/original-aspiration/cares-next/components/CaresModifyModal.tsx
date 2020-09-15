@@ -15,7 +15,7 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
   const showModal = id => {
     setCaresId(id);
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         caresModifyModalVisible: true,
       },
@@ -29,10 +29,11 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
     if (actionRef && typeof actionRef !== 'function') {
       actionRef.current = { showModal };
     }
-
+  }, []);
+  useEffect(() => {
     if (caresId) {
       dispatch({
-        type: 'vcCaresNext/getCaresDetail',
+        type: 'oaCaresNext/getCaresDetail',
         payload: { id: caresId },
       });
     }
@@ -40,7 +41,7 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         caresModifyModalVisible: false,
       },
@@ -51,7 +52,7 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
       .validateFields()
       .then(values => {
         dispatch({
-          type: `vcCaresNext/updateCares`,
+          type: `oaCaresNext/updateCares`,
           payload: {
             ...values,
             id: caresId,
@@ -93,8 +94,8 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  caresModifyModalVisible: vcCaresNext.caresModifyModalVisible,
-  caresDetailData: vcCaresNext.caresDetailData,
-  loading: loading.models.vcCaresNext,
+export default connect(({ oaCaresNext, loading }) => ({
+  caresModifyModalVisible: oaCaresNext.caresModifyModalVisible,
+  caresDetailData: oaCaresNext.caresDetailData,
+  loading: loading.models.oaCaresNext,
 }))(CaresDetailModal);

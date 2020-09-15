@@ -8,7 +8,7 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
   const showModal = () => {
     form.resetFields();
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         caresAddModalVisible: true,
       },
@@ -26,7 +26,7 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         caresAddModalVisible: false,
       },
@@ -37,7 +37,7 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
       .validateFields()
       .then(values => {
         dispatch({
-          type: `vcCaresNext/addCares`,
+          type: `oaCaresNext/addCares`,
           payload: {
             ...values,
           },
@@ -67,7 +67,7 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  caresAddModalVisible: vcCaresNext.caresAddModalVisible,
-  loading: loading.effects['vcCaresNext/addCares'],
+export default connect(({ oaCaresNext, loading }) => ({
+  caresAddModalVisible: oaCaresNext.caresAddModalVisible,
+  loading: loading.effects['oaCaresNext/addCares'],
 }))(CaresAddModal);

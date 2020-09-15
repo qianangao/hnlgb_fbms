@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Input } from 'antd';
-
-const { TextArea } = Input;
 
 const CaresForm = ({ form, caresFormData }) => {
   const formItems = [
@@ -24,8 +21,8 @@ const CaresForm = ({ form, caresFormData }) => {
     {
       label: '简介',
       name: 'introduction',
+      type: 'textArea',
       span: 4,
-      render: <TextArea name="introduction" placeholder="输入描述" />,
     },
   ];
 

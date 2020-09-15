@@ -16,7 +16,7 @@ import {
 } from './service';
 
 const Model = {
-  namespace: 'vcCaresNext',
+  namespace: 'oaCaresNext',
   state: {
     caresListData: {},
     trendsListData: {},
@@ -25,16 +25,16 @@ const Model = {
     trendsDetailData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    caresDetailModalVisible: false, // 详情modal visible
-    caresModifyModalVisible: false, // 详情modal visible
-    caresAddModalVisible: false,
-    trendsAddModalVisible: false,
-    memberModifyModalVisible: false,
-    memberAddModalVisible: false,
+    caresDetailModalVisible: false, // 关工组织详情modal visible
+    caresModifyModalVisible: false, // 关工组织编辑modal visible
+    caresAddModalVisible: false, // 新增关工组织modal visible
+    trendsAddModalVisible: false, // 发布动态modal visible
+    memberModifyModalVisible: false, // 编辑成员modal visible
+    memberAddModalVisible: false, // 新增成员modal visible
   },
   effects: {
     *getCaresList({ payload, resolve }, { call, put, select }) {
-      const selectedOrgId = yield select(state => state.vcCaresNext.selectedOrgId);
+      const selectedOrgId = yield select(state => state.oaCaresNext.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
       const params = {
         ...payload,
@@ -67,7 +67,7 @@ const Model = {
       }
     },
     *getTrendsList({ payload, resolve }, { call, put, select }) {
-      const selectedOrgId = yield select(state => state.vcCaresNext.selectedOrgId);
+      const selectedOrgId = yield select(state => state.oaCaresNext.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
       const params = {
         ...payload,

@@ -29,7 +29,7 @@ const HobbyInfo = ({ dispatch }) => {
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'vcCaresNext/selectOrgChange',
+      type: 'oaCaresNext/selectOrgChange',
       payload: orgId,
     });
   };
@@ -89,6 +89,6 @@ const HobbyInfo = ({ dispatch }) => {
   );
 };
 
-export default connect(({ vcCaresNext }) => ({
-  vcCaresNext,
+export default connect(({ oaCaresNext }) => ({
+  oaCaresNext,
 }))(HobbyInfo);

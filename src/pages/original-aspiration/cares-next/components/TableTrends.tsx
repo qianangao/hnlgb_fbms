@@ -3,8 +3,8 @@ import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Modal } from 'antd';
 import { connect } from 'umi';
 
-const Table = ({ vcCaresNext, openTrendsDetailModal, dispatch }) => {
-  const { tableRef } = vcCaresNext;
+const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
+  const { tableRef } = oaCaresNext;
 
   const columns = [
     {
@@ -44,7 +44,7 @@ const Table = ({ vcCaresNext, openTrendsDetailModal, dispatch }) => {
   const getHobbyList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'vcCaresNext/getTrendsList',
+        type: 'oaCaresNext/getTrendsList',
         payload: { ...params },
         resolve,
       });
@@ -52,7 +52,7 @@ const Table = ({ vcCaresNext, openTrendsDetailModal, dispatch }) => {
 
   const deleteTrendsInfo = ids => {
     dispatch({
-      type: 'vcCaresNext/deleteTrends',
+      type: 'oaCaresNext/deleteTrends',
       payload: {
         ids,
       },
@@ -88,6 +88,6 @@ const Table = ({ vcCaresNext, openTrendsDetailModal, dispatch }) => {
   );
 };
 
-export default connect(({ vcCaresNext }) => ({
-  vcCaresNext,
+export default connect(({ oaCaresNext }) => ({
+  oaCaresNext,
 }))(Table);

@@ -7,7 +7,7 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading })
   const [form] = MemberForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         memberAddModalVisible: true,
       },
@@ -25,7 +25,7 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading })
 
   const hideModal = () => {
     dispatch({
-      type: 'vcCaresNext/save',
+      type: 'oaCaresNext/save',
       payload: {
         memberAddModalVisible: false,
       },
@@ -37,7 +37,7 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading })
       .validateFields()
       .then(values => {
         dispatch({
-          type: `vcCaresNext/addMember`,
+          type: `oaCaresNext/addMember`,
           payload: {
             ...values,
           },
@@ -67,7 +67,7 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading })
   );
 };
 
-export default connect(({ vcCaresNext, loading }) => ({
-  memberAddModalVisible: vcCaresNext.memberAddModalVisible,
-  loading: loading.effects['vcCaresNext/addCares'],
+export default connect(({ oaCaresNext, loading }) => ({
+  memberAddModalVisible: oaCaresNext.memberAddModalVisible,
+  loading: loading.effects['oaCaresNext/addCares'],
 }))(MemberAddModal);
