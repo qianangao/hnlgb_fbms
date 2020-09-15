@@ -88,7 +88,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(publishStatus == 0 ? '每日播报新增成功！' : '每日播报发布成功！');
+        message.success(publishStatus === 0 ? '每日播报新增成功！' : '每日播报发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -106,7 +106,7 @@ const Model = {
           },
         });
 
-        message.success(publishStatus == 0 ? '每日播报修改成功！' : '每日播报发布成功！');
+        message.success(publishStatus === 0 ? '每日播报修改成功！' : '每日播报发布成功！');
 
         yield put({
           type: 'tableReload',

@@ -88,7 +88,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(publishStatus == 0 ? '通知公告新增成功！' : '通知公告发布成功！');
+        message.success(publishStatus === 0 ? '通知公告新增成功！' : '通知公告发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -105,7 +105,7 @@ const Model = {
           },
         });
 
-        message.success(publishStatus == 0 ? '通知公告修改成功！' : '通知公告发布成功！');
+        message.success(publishStatus === 0 ? '通知公告修改成功！' : '通知公告发布成功！');
 
         yield put({
           type: 'tableReload',

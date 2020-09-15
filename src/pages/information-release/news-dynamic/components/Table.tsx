@@ -40,10 +40,10 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: publishStatus == 0 ? '保存时间' : '发布时间',
+      title: publishStatus === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus == 0 ? 'createTime' : 'releaseTime',
+      dataIndex: publishStatus === 0 ? 'createTime' : 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -54,7 +54,7 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        publishStatus == 0 ? (
+        publishStatus === 0 ? (
           <a
             key={`${employeeData.id}up`}
             onClick={() => {
@@ -113,7 +113,7 @@ const Table = ({
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        publishStatus == 0 ? (
+        publishStatus === 0 ? (
           <Button type="primary" onClick={() => openAddModal()}>
             新增
           </Button>

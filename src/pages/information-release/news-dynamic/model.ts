@@ -88,7 +88,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(publishStatus == 0 ? '新闻动态新增成功！' : '新闻动态发布成功！');
+        message.success(publishStatus === 0 ? '新闻动态新增成功！' : '新闻动态发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -105,7 +105,7 @@ const Model = {
           },
         });
 
-        message.success(publishStatus == 0 ? '新闻动态修改成功！' : '新闻动态发布成功！');
+        message.success(publishStatus === 0 ? '新闻动态修改成功！' : '新闻动态发布成功！');
 
         yield put({
           type: 'tableReload',
