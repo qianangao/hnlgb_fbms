@@ -2,6 +2,7 @@
 import VeteranCadresRoutes from './veteran-cadres';
 import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
+import InformationRelease from './information-release';
 
 const router = [
   {
@@ -46,6 +47,7 @@ const router = [
               VeteranCadresRoutes,
               OriginalAspirationRoutes,
               WorkRecordRoutes,
+              InformationRelease,
               {
                 component: './404',
               },
