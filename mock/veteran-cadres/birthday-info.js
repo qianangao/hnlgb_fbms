@@ -6,6 +6,16 @@ const noResponse = (req, res) => {
   });
 };
 
+const reminTime = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      time: '09:00',
+    },
+  });
+};
+
 const staffInfo = [];
 
 for (let i = 0; i < 20; i++) {
@@ -52,6 +62,7 @@ const list = (req, res) => {
 
 export default {
   'GET  /user/birthday': list,
+  'GET  /birthday-reminder/cron': reminTime,
   'POST /user/isReminder': noResponse,
   'POST /user/change_cron': noResponse,
 };

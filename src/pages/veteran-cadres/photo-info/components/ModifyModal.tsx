@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions, Modal } from 'antd';
-import BasicInfo from '@/components/BasicInfo';
+import LgbBasicInfo from '@/components/LgbBasicInfo';
 import PhotoInfoForm from './form/PhotoInfoForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
@@ -77,7 +77,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <BasicInfo userId={lgbId} />
+        <LgbBasicInfo userId={lgbId} />
         <Descriptions title="照片信息" size="middle" />
         <PhotoInfoForm form={form} id={lgbId} />
       </div>
