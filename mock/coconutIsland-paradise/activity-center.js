@@ -11,8 +11,8 @@ const activityCenterInfo = [];
 for (let i = 0; i < 20; i++) {
   activityCenterInfo.push({
     id: '4028b23f73eae1b30173eae1xl1' + i, //id
-    name: '跳个广场舞' + i, //活动中心名称
-    address: '这就是街舞天台', //活动中心地址
+    title: '跳个广场舞' + i, //活动中心名称
+    coreAdd: '这就是街舞天台', //活动中心地址
     phoneNumber: '13000001786', //联系电话
     organizationName: '省委老干部局', //所属单位
   });
@@ -39,24 +39,27 @@ const detailActivityCenterInfo = (req, res) => {
     code: 0,
     msg: 'success',
     data: {
-      id: '4028b23f73eae1b30173eae1xl1', //id
-      name: '跳个广场舞', //活动中心名称
-      address: '这就是街舞天台', //活动中心地址
+      id: '4028b23f73eae1b30173eae1xl', //id
+      title: '跳个广场舞', //活动中心名称
+      coreAdd: '这就是街舞天台', //活动中心地址
       phoneNumber: '13000001786', //联系电话
       organizationName: '省委老干部局', //所属单位
-      publishTime: '2020-3-18', //发布时间
       context: '我要跳舞', //内容
       fileId: 'fileId',
       fileName: 'fileName',
       fileUrl: 'fileUrl',
+      url: 'url', //缩略图路径
+      urlId: 'urlId', //缩略图
+      urlName: '我是缩略图',
+      createOrgId: 'createOrgId',
     },
   });
 };
 
 export default {
-  'GET /activityCenter': list,
-  'POST /activityCenter': noResponse,
-  'DELETE /activityCenter': noResponse,
-  'PUT /activityCenter/:id': noResponse,
-  'GET /activityCenter/:id': detailActivityCenterInfo,
+  'GET /activity': list,
+  'POST /activity': noResponse,
+  'DELETE /activity': noResponse,
+  'PUT /activity/:id': noResponse,
+  'GET /activity/:id': detailActivityCenterInfo,
 };

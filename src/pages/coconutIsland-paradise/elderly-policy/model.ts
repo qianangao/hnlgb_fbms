@@ -14,6 +14,8 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
+    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
+    detailElderlyPolicyData: {},
   },
   effects: {
     *elderlyPolicyInfoList({ payload, resolve }, { call, put, select }) {
@@ -106,12 +108,30 @@ const Model = {
         });
       }
     },
-    *detailElderlyPolicyInfo({ payload, resolve }, { call }) {
+    *detailElderlyPolicyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(detailElderlyPolicyInfo, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailElderlyPolicyData: response,
+          },
+        });
       }
+    },
+    *publishStatusChange({ payload }, { put }) {
+      yield put({
+        type: 'save',
+        payload: {
+          publishStatus: payload,
+        },
+      });
+
+      yield put({
+        type: 'tableReload',
+      });
     },
   },
   reducers: {

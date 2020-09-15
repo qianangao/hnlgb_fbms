@@ -6,9 +6,8 @@ import ActivityCenterInfoForm from './form/ActivityCenterInfoForm';
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   const [form] = ActivityCenterInfoForm.useForm();
   const [lgbId, setLgbId] = useState();
-
   const showModal = item => {
-    setLgbId(item);
+    setLgbId(item.id);
     dispatch({
       type: 'activityCenter/save',
       payload: {

@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function activityCenterInfoList(params) {
-  return request('/activityCenter', {
+  return request('/activity', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function activityCenterInfoList(params) {
  * @param {*} params
  */
 export async function deleteActivityCenterInfo(params) {
-  return request(`/activityCenter`, {
+  return request(`/activity`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteActivityCenterInfo(params) {
  * @param {*} params
  */
 export async function addActivityCenterInfo(params) {
-  return request(`/activityCenter`, {
+  return request(`/activity`, {
     method: 'POST',
     data: params,
   });
@@ -38,18 +38,18 @@ export async function addActivityCenterInfo(params) {
  * @param {*} params
  */
 export async function detailActivityCenterInfo(params) {
-  return request(`/activityCenter/${params.id}`, {
+  return request(`/activity/${params.id}`, {
     method: 'GET',
     params,
   });
 }
 
 /**
- * 编辑-异地安置
+ * 编辑-活动中心
  * @param {*} params
  */
 export async function updateActivityCenterInfo(params) {
-  return request(`/activityCenter/${params.id}`, {
+  return request(`/activity/${params.id}`, {
     method: 'PUT',
     data: params,
   });

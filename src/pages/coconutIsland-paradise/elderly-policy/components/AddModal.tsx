@@ -36,7 +36,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
@@ -44,6 +44,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `elderlyPolicy/addElderlyPolicyInfo`,
           payload: {
             ...values,
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })

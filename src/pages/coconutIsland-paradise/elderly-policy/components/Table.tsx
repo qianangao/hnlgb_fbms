@@ -3,8 +3,8 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch }) => {
-  const { tableRef } = elderlyPolicy;
+const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendetailModal }) => {
+  const { tableRef, publishStatus } = elderlyPolicy;
   const columns = [
     {
       title: '序号',
@@ -17,14 +17,14 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch }) => {
     {
       title: '标题',
       align: 'center',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
-      title: '发布时间',
+      title: publishStatus === 0 ? '保存时间' : '发布时间',
+      valueType: 'date',
       align: 'center',
-      dataIndex: 'publishTime',
+      dataIndex: publishStatus === 0 ? 'createTime' : 'pushTime',
       hideInSearch: true,
-      type: 'time',
     },
     {
       title: '操作',
@@ -34,14 +34,25 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a
-          key={`${employeeData.id}up`}
-          onClick={() => {
-            openModifyModal(employeeData);
-          }}
-        >
-          编辑
-        </a>,
+        publishStatus === 0 ? (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              openModifyModal(employeeData);
+            }}
+          >
+            编辑
+          </a>
+        ) : (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              opendetailModal(employeeData);
+            }}
+          >
+            详情
+          </a>
+        ),
         <Popconfirm
           key={`${employeeData.id}del`}
           title="确认删除该涉老政策吗？"

@@ -17,17 +17,7 @@ const Table = ({ openAddModal, openModifyModal, differentLivingPlaces, enums, di
     {
       title: '姓名',
       align: 'center',
-      dataIndex: 'realName',
-    },
-    {
-      title: '省内/省外异地',
-      align: 'center',
-      dataIndex: 'offSite',
-      hideInTable: true,
-      valueEnum: {
-        0: { text: '省内异地' },
-        1: { text: '省外异地' },
-      },
+      dataIndex: 'userName',
     },
     {
       title: '性别',
@@ -43,9 +33,9 @@ const Table = ({ openAddModal, openModifyModal, differentLivingPlaces, enums, di
       hideInSearch: true,
     },
     {
-      title: '当前居住地',
+      title: '详细地址',
       align: 'center',
-      dataIndex: 'currentResidence',
+      dataIndex: 'addressDiy',
       hideInSearch: true,
     },
     {

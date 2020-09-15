@@ -8,7 +8,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   const [lgbId, setLgbId] = useState();
 
   const showModal = item => {
-    setLgbId(item);
+    setLgbId(item.id);
     dispatch({
       type: 'elderlyPolicy/save',
       payload: {
@@ -36,7 +36,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     });
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
@@ -45,6 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           payload: {
             ...values,
             id: lgbId,
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })

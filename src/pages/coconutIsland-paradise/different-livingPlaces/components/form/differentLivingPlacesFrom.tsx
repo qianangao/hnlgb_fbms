@@ -18,10 +18,10 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
-        fields.offSiteAddress = data.offSiteAddressVillage
+        fields.address = data.addressCode
           ? {
-              value: data.offSiteAddressVillage,
-              label: data.offSiteAddressList,
+              value: data.addressCode,
+              label: data.address,
             }
           : null;
         form.setFieldsValue(fields);
@@ -39,9 +39,14 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
       label: '异地居住地址',
-      name: 'offSiteAddress',
+      name: 'address',
       rules: [{ required: true, message: '请选择异地居住地址!' }],
       render: <ProvinceCascaderInput />,
+    },
+    {
+      label: '异地居住详细地址',
+      name: 'addressDiy',
+      rules: [{ required: true, message: '请输入异地居住详细地址!' }],
     },
   ];
   return id ? (

@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function elderlyPolicyInfoList(params) {
-  return request('/elderlyPolicy', {
+  return request('/concerning_old', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function elderlyPolicyInfoList(params) {
  * @param {*} params
  */
 export async function deleteElderlyPolicyInfo(params) {
-  return request(`/elderlyPolicy`, {
+  return request(`/concerning_old`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteElderlyPolicyInfo(params) {
  * @param {*} params
  */
 export async function addElderlyPolicyInfo(params) {
-  return request(`/elderlyPolicy`, {
+  return request(`/concerning_old`, {
     method: 'POST',
     data: params,
   });
@@ -38,18 +38,18 @@ export async function addElderlyPolicyInfo(params) {
  * @param {*} params
  */
 export async function detailElderlyPolicyInfo(params) {
-  return request(`/elderlyPolicy/${params.id}`, {
+  return request(`/concerning_old/${params.id}`, {
     method: 'GET',
     params,
   });
 }
 
 /**
- * 编辑-异地安置
+ * 编辑-涉老政策
  * @param {*} params
  */
 export async function updateElderlyPolicyInfo(params) {
-  return request(`/elderlyPolicy/${params.id}`, {
+  return request(`/concerning_old/${params.id}`, {
     method: 'PUT',
     data: params,
   });

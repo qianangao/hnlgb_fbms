@@ -7,7 +7,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
-    setLgbId(item);
+    setLgbId(item.id);
     dispatch({
       type: 'differentLivingPlaces/save',
       payload: {
@@ -40,6 +40,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
+        values.addressCode = values.address.value;
+        values.address = values.address.label;
         dispatch({
           type: `differentLivingPlaces/updateDifferentLivingInfo`,
           payload: {

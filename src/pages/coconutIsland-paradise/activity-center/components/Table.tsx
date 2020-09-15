@@ -17,12 +17,12 @@ const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
     {
       title: '活动中心名称',
       align: 'center',
-      dataIndex: 'name',
+      dataIndex: 'title',
     },
     {
       title: '活动中心地址',
       align: 'center',
-      dataIndex: 'address',
+      dataIndex: 'coreAdd',
       hideInSearch: true,
     },
     {

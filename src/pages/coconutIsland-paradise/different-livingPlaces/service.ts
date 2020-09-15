@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function differentLivingInfoList(params) {
-  return request('/differentLivingPlaces', {
+  return request('/user_address', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function differentLivingInfoList(params) {
  * @param {*} params
  */
 export async function deleteDifferentLivingInfo(params) {
-  return request(`/differentLivingPlaces`, {
+  return request(`/user_address`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteDifferentLivingInfo(params) {
  * @param {*} params
  */
 export async function addDifferentLivingInfo(params) {
-  return request(`/differentLivingPlaces`, {
+  return request(`/user_address`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addDifferentLivingInfo(params) {
  * @param {*} params
  */
 export async function detailDifferentLivingInfo(params) {
-  return request(`/differentLivingPlaces/${params.id}`, {
+  return request(`/user_address/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailDifferentLivingInfo(params) {
  * @param {*} params
  */
 export async function updateDifferentLivingInfo(params) {
-  return request(`/differentLivingPlaces/${params.id}`, {
+  return request(`/user_address/${params.id}`, {
     method: 'PUT',
     data: params,
   });
