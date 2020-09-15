@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions, Modal } from 'antd';
-import BasicInfo from '@/components/BasicInfo';
+import LgbBasicInfo from '@/components/LgbBasicInfo';
 import DeathInfoForm from './DeathInfoForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
@@ -72,7 +72,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <BasicInfo userId={deathValues && deathValues.userId} />
+      <LgbBasicInfo userId={deathValues && deathValues.userId} />
       <Descriptions title="离世信息" size="middle" />
       <DeathInfoForm form={form} deathValues={deathValues} />
     </Modal>

@@ -47,7 +47,7 @@ const OrgSelectInput = ({ value, actionRef, onChange }) => {
 
   return (
     <>
-      <Input.Search readOnly value={valueName} onClick={showModal} />
+      <Input.Search readOnly value={valueName} onSearch={showModal} onClick={showModal} />
       <Modal
         title="选择单位"
         width={640}

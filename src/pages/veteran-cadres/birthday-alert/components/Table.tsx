@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProTable from '@ant-design/pro-table';
-import { Radio, Button, Modal, TimePicker } from 'antd';
+import { Radio, Button, Modal, TimePicker, message } from 'antd';
 import moment from 'moment';
 import { connect } from 'umi';
 
 const RadioGroup = Radio.Group;
 
-const Table = ({ vcBirthdayInfo, openRemindModal, enums, dispatch }) => {
+const Table = ({
+  vcBirthdayInfo,
+  openRemindModal,
+  enums,
+  dispatch,
+  remindLoading,
+  defaultRemindTime,
+}) => {
   const { tableRef } = vcBirthdayInfo;
   const [remindTime, setRemindTime] = useState('');
+
+  useEffect(() => {
+    dispatch({
+      type: 'vcBirthdayInfo/getRemindTime',
+      payload: {},
+    });
+    setRemindTime(defaultRemindTime);
+  }, [defaultRemindTime]);
   const columns = [
     {
       title: '序号',
@@ -167,10 +182,14 @@ const Table = ({ vcBirthdayInfo, openRemindModal, enums, dispatch }) => {
   };
 
   const handleOk = () => {
-    dispatch({
-      type: `vcBirthdayInfo/ReminderSet`,
-      payload: { cron: remindTime },
-    });
+    if (remindTime) {
+      dispatch({
+        type: `vcBirthdayInfo/ReminderSet`,
+        payload: { cron: remindTime },
+      });
+    } else {
+      message.warn('请选择提醒时间！');
+    }
   };
   const onChangeTime = (time, timeString) => {
     setRemindTime(timeString);
@@ -191,15 +210,28 @@ const Table = ({ vcBirthdayInfo, openRemindModal, enums, dispatch }) => {
           </Button>,
         ]}
       />
-      <Modal title="提醒时间" visible={openRemindModal} onOk={handleOk} onCancel={hideModal}>
-        <TimePicker format="HH:mm" style={{ width: '40%' }} onChange={onChangeTime} />
+      <Modal
+        title="提醒时间"
+        visible={openRemindModal}
+        onOk={handleOk}
+        onCancel={hideModal}
+        confirmLoading={remindLoading}
+      >
+        <TimePicker
+          format="HH:mm"
+          style={{ width: '40%' }}
+          defaultValue={moment(defaultRemindTime, 'HH:mm')}
+          onChange={onChangeTime}
+        />
       </Modal>
     </>
   );
 };
 
-export default connect(({ vcBirthdayInfo, global }) => ({
+export default connect(({ vcBirthdayInfo, global, loading }) => ({
   vcBirthdayInfo,
   openRemindModal: vcBirthdayInfo.openRemindModal,
+  remindLoading: loading.effects['vcBirthdayInfo/ReminderSet'],
+  defaultRemindTime: vcBirthdayInfo.defaultRemindTime,
   enums: global.enums,
 }))(Table);

@@ -1,6 +1,8 @@
 // umi routes: https://umijs.org/zh/guide/router.html
 import VeteranCadresRoutes from './veteran-cadres';
 import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
+import OriginalAspirationRoutes from './original-aspiration';
+import WorkRecordRoutes from './work-record';
 
 const router = [
   {
@@ -33,10 +35,19 @@ const router = [
             routes: [
               {
                 path: '/',
-                redirect: '/veteran-cadres/base-info',
+                redirect: '/home',
+              },
+              {
+                path: '/home',
+                name: 'home',
+                component: './home',
+                remark: '首页',
+                icon: 'dashboard',
               },
               VeteranCadresRoutes,
               CoconutIslandParadiseRoutes,
+              OriginalAspirationRoutes,
+              WorkRecordRoutes,
               {
                 component: './404',
               },

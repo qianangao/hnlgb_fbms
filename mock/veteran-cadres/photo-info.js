@@ -107,9 +107,9 @@ const detailPhotoInfo = (req, res) => {
       dictIdentity: '身份性质', //身份性质
       awardSituation: '奖罚情况', //奖罚情况
       specialContribution: '特殊贡献', //特殊贡献
-      fileId: 'fileId',
-      fileName: 'fileName',
-      fileUrl: 'fileUrl',
+      fileId: '1234',
+      fileName: 'demo图片',
+      fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       createTime: '',
       remark: '描述',
     },
