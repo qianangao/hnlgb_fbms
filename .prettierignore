@@ -1,6 +1,6 @@
 **/*.svg
 package.json
-**/iconfont/*
+**/icon/*
 **/iconfont.js
 .umi
 .umi-production
@@ -19,6 +19,7 @@ LICENSE
 .eslintcache
 *.lock
 yarn-error.log
+.yarnrc
 
 .history
 CNAME
