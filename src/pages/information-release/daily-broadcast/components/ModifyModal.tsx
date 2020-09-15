@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Descriptions, Modal } from 'antd';
-import BasicInfo from '@/components/BasicInfo';
-import PhotoInfoForm from './form/PhotoInfoForm';
+import { Modal, Button } from 'antd';
+import DailyBroadcastForm from './form/DailyBroadcastForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = PhotoInfoForm.useForm();
+  const [form] = DailyBroadcastForm.useForm();
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'photoInfo/save',
+      type: 'dailyBroadcast/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -28,7 +27,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'photoInfo/save',
+      type: 'dailyBroadcast/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -37,17 +36,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `photoInfo/updatePhotoInfo`,
+          type: `dailyBroadcast/updateDailyBroadcast`,
           payload: {
             ...values,
-            fileId: values.file.id,
+            id: lgbId,
+            status: publishStatus ? 0 : 1,
           },
         });
+        form.resetFields();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -55,7 +56,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改照片信息"
+      title="修改每日播报"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -64,10 +65,17 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      onOk={handleOk}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
     >
       <div
         style={{
@@ -77,15 +85,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <BasicInfo userId={lgbId} />
-        <Descriptions title="照片信息" size="middle" />
-        <PhotoInfoForm form={form} id={lgbId} />
+        <DailyBroadcastForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ photoInfo, loading }) => ({
-  modifyModalVisible: photoInfo.modifyModalVisible,
-  loading: loading.models.photoInfo,
+export default connect(({ dailyBroadcast, loading }) => ({
+  modifyModalVisible: dailyBroadcast.modifyModalVisible,
+  loading: loading.models.dailyBroadcast,
 }))(ModifyModal);

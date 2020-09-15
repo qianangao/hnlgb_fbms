@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Descriptions } from 'antd';
+import BasicInfo from '@/components/BasicInfo';
 import SpecialtyForm from './form/SpecialtyForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
@@ -76,6 +77,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
+        <BasicInfo userId={lgbId} />
+        <Descriptions title="银色人才" size="middle" />
         <SpecialtyForm form={form} id={lgbId} />
       </div>
     </Modal>
