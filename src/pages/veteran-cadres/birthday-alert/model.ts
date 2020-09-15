@@ -1,11 +1,13 @@
 import { message } from 'antd';
-import { getBirthdayList, isReminder, reminderCron } from './service';
+import { getBirthdayList, isReminder, reminderCron, remindTime } from './service';
 
 const Model = {
   namespace: 'vcBirthdayInfo',
   state: {
     BirthdayListData: {},
+    remindLoading: false,
     tableRef: {},
+    defaultRemindTime: '', // 提醒时间
     openRemindModal: false, // 提醒时间modal
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -47,6 +49,19 @@ const Model = {
           type: 'save',
           payload: {
             BirthdayListData: result,
+          },
+        });
+      }
+    },
+    // 获取提醒时间
+    *getRemindTime({ payload }, { call, put }) {
+      const response = yield call(remindTime, payload);
+
+      if (!response.error) {
+        yield put({
+          type: 'save',
+          payload: {
+            defaultRemindTime: response.time,
           },
         });
       }
