@@ -90,7 +90,7 @@ const AdvancedFormItem = ({
   } else if (type === 'number') {
     fieldInput = <InputNumber disabled={disabled} />;
   } else if (type === 'textarea') {
-    fieldInput = <Input.TextArea disabled={disabled} />;
+    fieldInput = <Input.TextArea disabled={disabled} autoSize={{ minRows: 3, maxRows: 5 }} />;
   } else if (type === 'editor') {
     fieldInput = <EditorInput disabled={disabled} />;
   } else {

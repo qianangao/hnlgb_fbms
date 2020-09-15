@@ -16,7 +16,7 @@ const GlobalHeaderRight = props => {
   return (
     <div className={className}>
       <NoticeIconView />
-      <Avatar menu={false} />
+      <Avatar menu />
     </div>
   );
 };
