@@ -19,19 +19,18 @@ const OrgMultiSelectInput = ({ value, multiOrgTreeData, onChange, dispatch }) =>
     checked: [],
     halfChecked: [],
   });
-  const [autoExpandParent, setAutoExpandParent] = useState(false);
-  const getTreeitems = (treeData, items) => {
-    const itemsTemp = items || new Map();
 
-    treeData.foreach(item => {
-      itemsTemp.set(`${item.key}`, item.title);
+  const [autoExpandParent, setAutoExpandParent] = useState(false);
+  const getTreeitems = (treeData, items = new Map()) => {
+    treeData.forEach(item => {
+      items.set(`${item.key}`, item.title);
 
       if (item.children) {
-        getTreeitems(item.children, itemsTemp);
+        getTreeitems(item.children, items);
       }
     });
 
-    return itemsTemp;
+    return items;
   };
 
   const getParentKey = (key, tree) => {
@@ -55,10 +54,14 @@ const OrgMultiSelectInput = ({ value, multiOrgTreeData, onChange, dispatch }) =>
     dispatch({
       type: 'orgTree/getAllOrgTree',
     });
-    multiOrgTreeData && multiOrgTreeData[0] && setExpandedKeys([multiOrgTreeData[0].key]);
-
-    treeItems = getTreeitems(multiOrgTreeData);
   }, []);
+  useEffect(() => {
+    if (multiOrgTreeData && multiOrgTreeData[0]) {
+      setExpandedKeys([multiOrgTreeData[0].key]);
+      treeItems = getTreeitems(multiOrgTreeData);
+    }
+  }, [multiOrgTreeData]);
+
   useEffect(() => {
     if (value && value.length > 0) {
       const nameArr = [];
@@ -112,7 +115,7 @@ const OrgMultiSelectInput = ({ value, multiOrgTreeData, onChange, dispatch }) =>
     const orgArr = [];
     const nameArr = [];
 
-    checkedKeys.checked.foreach(id => {
+    checkedKeys.checked.forEach(id => {
       const name = treeItems.get(id);
       nameArr.push(name);
       orgArr.push({

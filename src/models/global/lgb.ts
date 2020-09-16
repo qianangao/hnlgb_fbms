@@ -11,7 +11,7 @@ const Model = {
 
       const params = {
         ...payload,
-        orgIdForDataSelect: organizationId,
+        orgIdForDataSelect: payload.orgIdForDataSelect || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
         allIndex: 'all',
