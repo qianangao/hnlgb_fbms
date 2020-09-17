@@ -91,9 +91,11 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
       scroll={{ x: 'max-content' }}
       request={async params => getElderlyPolicyList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal()}>
-          新增
-        </Button>,
+        publishStatus === 0 ? (
+          <Button type="primary" onClick={() => openAddModal()}>
+            新增
+          </Button>
+        ) : null,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
