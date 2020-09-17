@@ -47,7 +47,7 @@ const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
 
   const orgExpandHandler = node => {
     dispatch({
-      type: 'orgTree/save',
+      type: 'orgTree/saveOrgTree',
       orgSymbol,
       payload: {
         orgExpandedKeys: node,
@@ -58,7 +58,7 @@ const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
     if (!selectedKeys[0]) return;
 
     dispatch({
-      type: 'orgTree/save',
+      type: 'orgTree/saveOrgTree',
       orgSymbol,
       payload: {
         orgSelectedKeys: selectedKeys,

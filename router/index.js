@@ -1,5 +1,6 @@
 // umi routes: https://umijs.org/zh/guide/router.html
 import VeteranCadresRoutes from './veteran-cadres';
+import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
 import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
 import InformationRelease from './information-release';
@@ -45,6 +46,7 @@ const router = [
                 icon: 'dashboard',
               },
               VeteranCadresRoutes,
+              CoconutIslandParadiseRoutes,
               OriginalAspirationRoutes,
               WorkRecordRoutes,
               InformationRelease,

@@ -39,6 +39,7 @@ const model = {
   state: {
     orgTreeData: [],
     searchOrgTreeData: null,
+    multiOrgTreeData: [],
     orgLoadedLoadedKeys: [],
     orgSelectedKeys: [],
     orgExpandedKeys: [],
@@ -64,7 +65,7 @@ const model = {
           });
 
           yield put({
-            type: 'save',
+            type: 'saveOrgTree',
             payload: {
               orgSelectedKeys: [organizationId],
               orgExpandedKeys: [organizationId],
@@ -80,7 +81,7 @@ const model = {
         resolve && resolve();
 
         yield put({
-          type: 'save',
+          type: 'saveOrgTree',
           payload: {
             orgTreeData: treeData,
             orgLoadedLoadedKeys: [...orgLoadedLoadedKeys, id],
@@ -96,7 +97,7 @@ const model = {
         const parentIds = transformOrgTreeData(response);
 
         yield put({
-          type: 'save',
+          type: 'saveOrgTree',
           payload: {
             searchOrgTreeData: response,
             orgExpandedKeys: parentIds,
@@ -105,10 +106,30 @@ const model = {
         });
       }
     },
+    *getAllOrgTree(_, { call, put, select }) {
+      const multiData = yield select(state => state.orgTree.multiOrgTreeData);
+      if (multiData.length > 0) return;
+
+      const { organizationId } = yield select(state => state.user.userInfo);
+      const response = yield call(searchOrgTree, {
+        orgIdForDataSelect: organizationId,
+      });
+
+      if (!response.error) {
+        transformOrgTreeData(response);
+
+        yield put({
+          type: 'save',
+          payload: {
+            multiOrgTreeData: response,
+          },
+        });
+      }
+    },
     *clearSearchData({ orgSymbol }, { put, select }) {
       const { organizationId } = yield select(state => state.user.userInfo);
       yield put({
-        type: 'save',
+        type: 'saveOrgTree',
         payload: {
           searchOrgTreeData: null,
           orgExpandedKeys: [organizationId],
@@ -118,7 +139,10 @@ const model = {
     },
   },
   reducers: {
-    save(state, { payload, orgSymbol }) {
+    save(state, { payload }) {
+      return { ...state, ...payload };
+    },
+    saveOrgTree(state, { payload, orgSymbol }) {
       const symbolData = { ...state[orgSymbol], ...payload };
 
       return { ...state, [orgSymbol]: symbolData };
