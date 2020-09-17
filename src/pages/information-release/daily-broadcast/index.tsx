@@ -2,14 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
-import AddModal from './components/AddModal';
 import Table from './components/Table';
-import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
 const DailyBroadcast = ({ dispatch }) => {
-  const addModelRef = useRef({});
-  const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   useEffect(() => {
     dispatch({
@@ -34,26 +30,13 @@ const DailyBroadcast = ({ dispatch }) => {
     });
   };
 
-  const openAddModal = item => {
-    addModelRef.current.showModal(item);
-  };
-  const openModifyModal = ids => {
-    modifyModelRef.current.showModal(ids);
-  };
-
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table
-        openAddModal={openAddModal}
-        openModifyModal={openModifyModal}
-        opendetailModal={opendetailModal}
-      />
-      <AddModal actionRef={addModelRef} />
-      <ModifyModal actionRef={modifyModelRef} />
+      <Table opendetailModal={opendetailModal} />
       <DetailModal actionRef={detailModalRef} />
     </OrgTreeLayout>
   );

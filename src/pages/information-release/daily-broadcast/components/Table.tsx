@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Popconfirm, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
@@ -59,14 +59,6 @@ const Table = ({ openAddModal, openModifyModal, dailyBroadcast, dispatch, opende
             详情
           </a>
         ),
-        <Popconfirm
-          key={`${employeeData.id}del`}
-          title="确认删除每日播报吗？"
-          placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
-        >
-          <a>删除</a>
-        </Popconfirm>,
       ],
     },
   ];
