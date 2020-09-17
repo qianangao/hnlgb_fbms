@@ -180,3 +180,20 @@ export const checkCreditCode = (rule, value, callback) => {
     callback();
   }
 };
+
+// =================================== ⬇ 网址输入检验相关逻辑 =========================================
+
+/**
+ * 网址表单校验
+ * @param {*} rule
+ * @param {*} value 需校验的值
+ * @param {*} callback form回调函数
+ */
+export const checkUrl = (rule, value, callback) => {
+  const strRegex = /[http|https]:\/\/.*\.[com|cn|org|net|gov|edu|pub]/;
+  if (value === '' || value === null || strRegex.test(value) === false) {
+    callback('请输入以http://或者 https://开头的正确网址！');
+  } else {
+    callback();
+  }
+};

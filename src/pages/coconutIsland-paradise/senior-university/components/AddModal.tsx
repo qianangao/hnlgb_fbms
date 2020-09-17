@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import ElderlyPolicyForm from './form/ElderlyPolicyForm';
+import SeniorUniversityForm from './form/SeniorUniversityForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = ElderlyPolicyForm.useForm();
+  const [form] = SeniorUniversityForm.useForm();
 
   const showModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'seniorUniversity/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'seniorUniversity/save',
       payload: {
         addModalVisible: false,
       },
@@ -41,7 +41,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `elderlyPolicy/addElderlyPolicyInfo`,
+          type: `seniorUniversity/addSeniorUniversityInfo`,
           payload: {
             ...values,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
@@ -55,7 +55,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增涉老政策"
+      title="新增老年大学"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -69,12 +69,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <ElderlyPolicyForm form={form} />
+      <SeniorUniversityForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  addModalVisible: elderlyPolicy.addModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ seniorUniversity, loading }) => ({
+  addModalVisible: seniorUniversity.addModalVisible,
+  loading: loading.models.seniorUniversity,
 }))(AddModal);
