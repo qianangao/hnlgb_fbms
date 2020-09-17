@@ -19,7 +19,7 @@ const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
           {detailNoticeAnnouncementData && detailNoticeAnnouncementData.subject}
         </h2>
         <div style={{ textAlign: 'center' }}>
-          发布单位：{detailNoticeAnnouncementData && detailNoticeAnnouncementData.organizationName}
+          发布单位：{detailNoticeAnnouncementData && detailNoticeAnnouncementData.createOrgName}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
           {detailNoticeAnnouncementData && detailNoticeAnnouncementData.releaseTime}
         </div>

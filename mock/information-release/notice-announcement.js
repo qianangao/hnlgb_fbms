@@ -76,6 +76,7 @@ const detailNoticeAnnouncement = (req, res) => {
       noticeStatus: 0, //通知状态
       organizationId: 1000, //单位id
       organizationName: '省委老干部局11', //单位名称
+      createOrgName: '省委老干部局', //创建单位
       subject: '通知通告', //通知主题
       releaseTime: '2020-08-13 03:00:16',
     },
