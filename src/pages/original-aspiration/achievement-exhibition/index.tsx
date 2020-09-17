@@ -8,26 +8,20 @@ import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
-const ActivityHome = ({ dispatch }) => {
+const AchievementHome = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   useEffect(() => {
     dispatch({
-      type: 'oaActivityHome/publishStatusChange',
+      type: 'oaAchievementExhibition/publishStatusChange',
       payload: 1,
     });
     dispatch({
       type: 'global/getEnums',
       payload: {
         names: [
-          'dictSex',
-          'dictNation',
-          'dictPoliticalStatus',
-          'dictRetirementLevel',
-          'dictRetirementType',
-          'dictTreatmentNow',
-          'dictActivityClassification',
+          'dictResultType', // 成果分类
         ],
       },
     });
@@ -35,7 +29,7 @@ const ActivityHome = ({ dispatch }) => {
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'oaActivityHome/selectOrgChange',
+      type: 'oaAchievementExhibition/selectOrgChange',
       payload: orgId,
     });
   };
@@ -51,7 +45,7 @@ const ActivityHome = ({ dispatch }) => {
   const onPublishStatusChange = publishStatus => {
     // publishStatus 0 草稿箱 ， 1 已发布
     dispatch({
-      type: 'oaActivityHome/publishStatusChange',
+      type: 'oaAchievementExhibition/publishStatusChange',
       payload: publishStatus,
     });
   };
@@ -72,6 +66,6 @@ const ActivityHome = ({ dispatch }) => {
   );
 };
 
-export default connect(({ oaActivityHome }) => ({
-  oaActivityHome,
-}))(ActivityHome);
+export default connect(({ oaAchievementExhibition }) => ({
+  oaAchievementExhibition,
+}))(AchievementHome);

@@ -3,8 +3,8 @@ import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Modal } from 'antd';
 import { connect } from 'umi';
 
-const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
-  const { tableRef } = oaCaresNext;
+const Table = ({ oaCommunity, openActivityDetailModal, dispatch }) => {
+  const { tableRef } = oaCommunity;
 
   const columns = [
     {
@@ -16,8 +16,9 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       width: 64,
     },
     { title: '主题', align: 'center', dataIndex: 'theme' },
+
     { title: '发布单位', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
-    { title: '所属组织', align: 'center', dataIndex: 'mechanismName', hideInSearch: true },
+    { title: '所属社团', align: 'center', dataIndex: 'clubName', hideInSearch: true },
     { title: '发布时间', align: 'center', dataIndex: 'createTime', hideInSearch: true },
     {
       title: '操作',
@@ -27,14 +28,14 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       width: 200,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openTrendsDetailModal(employeeData)}>
+        <a key={`${employeeData.id}up`} onClick={() => openActivityDetailModal(employeeData)}>
           查看
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除该动态吗？"
+          title="确认删除该活动吗？"
           placement="topRight"
-          onConfirm={() => deleteTrendsInfo([employeeData.id])}
+          onConfirm={() => deleteActivityInfo([employeeData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -42,18 +43,18 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
     },
   ];
 
-  const getHobbyList = params =>
+  const getActivityList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCaresNext/getTrendsList',
+        type: 'oaCommunity/getActivityList',
         payload: { ...params },
         resolve,
       });
     });
 
-  const deleteTrendsInfo = ids => {
+  const deleteActivityInfo = ids => {
     dispatch({
-      type: 'oaCaresNext/deleteTrends',
+      type: 'oaCommunity/deleteActivity',
       payload: {
         ids,
       },
@@ -62,21 +63,22 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
 
   return (
     <ProTable
-      headerTitle="关工动态信息"
+      rowKey="id"
+      headerTitle="活动信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getHobbyList(params)}
+      request={async params => getActivityList(params)}
       columns={columns}
       toolBarRender={(_, { selectedRowKeys }) => [
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除？',
+                title: '确认批量删除活动信息？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteTrendsInfo(selectedRowKeys);
+                  deleteActivityInfo(selectedRowKeys);
                 },
               });
             }}
@@ -89,6 +91,6 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
   );
 };
 
-export default connect(({ oaCaresNext }) => ({
-  oaCaresNext,
+export default connect(({ oaCommunity }) => ({
+  oaCommunity,
 }))(Table);

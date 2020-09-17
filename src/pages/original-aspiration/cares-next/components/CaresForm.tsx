@@ -22,7 +22,7 @@ const CaresForm = ({ form, caresFormData }) => {
       label: '简介',
       name: 'introduction',
       type: 'textArea',
-      span: 4,
+      span: 2,
     },
   ];
 

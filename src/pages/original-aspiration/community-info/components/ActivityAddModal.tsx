@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import CaresForm from './CaresForm';
+import ActivityForm from './ActivityForm';
 
-const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) => {
-  const [form] = CaresForm.useForm();
-  const showModal = () => {
+const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
+  const [form] = ActivityForm.useForm();
+  const [clubId, setClubId] = useState('');
+  const showModal = id => {
     form.resetFields();
+    setClubId(id);
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        caresAddModalVisible: true,
+        activityAddModalVisible: true,
       },
     });
   };
@@ -26,9 +28,9 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
 
   const hideModal = () => {
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        caresAddModalVisible: false,
+        activityAddModalVisible: false,
       },
     });
   };
@@ -37,9 +39,10 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
       .validateFields()
       .then(values => {
         dispatch({
-          type: `oaCaresNext/addCares`,
+          type: `oaCommunity/addActivity`,
           payload: {
             ...values,
+            clubId,
           },
         });
       })
@@ -48,7 +51,7 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
 
   return (
     <Modal
-      title="新增关工组织"
+      title="发布活动"
       centered
       width="80vw"
       style={{ paddingBottom: 0 }}
@@ -56,18 +59,18 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={caresAddModalVisible}
+      visible={activityAddModalVisible}
       onOk={handleOk}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <CaresForm size="middle" column={1} form={form} caresFormData={{}} />
+      <ActivityForm size="middle" column={1} form={form} />
     </Modal>
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  caresAddModalVisible: oaCaresNext.caresAddModalVisible,
-  loading: loading.effects['oaCaresNext/addCares'],
-}))(CaresAddModal);
+export default connect(({ oaCommunity, loading }) => ({
+  activityAddModalVisible: oaCommunity.activityAddModalVisible,
+  loading: loading.effects['oaCommunity/addActivity'],
+}))(ActivityAddModal);

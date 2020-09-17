@@ -14,13 +14,19 @@ const routes = {
       path: '/original-aspiration/community-info',
       name: 'community-info',
       component: './original-aspiration/community-info',
-      remark: '社团信息',
+      remark: '社团之家',
     },
     {
       path: '/original-aspiration/activity-home',
       name: 'activity-home',
       component: './original-aspiration/activity-home',
-      remark: '活动之家',
+      remark: '活动信息',
+    },
+    {
+      path: '/original-aspiration/achievement-exhibition',
+      name: 'achievement-exhibition',
+      component: './original-aspiration/achievement-exhibition',
+      remark: '成果展台',
     },
   ],
 };

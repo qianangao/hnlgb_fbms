@@ -3,8 +3,16 @@ import ProTable from '@ant-design/pro-table';
 import { Button, Popconfirm, Modal } from 'antd';
 import { connect } from 'umi';
 
-const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
-  const { tableRef } = oaCaresNext;
+const Table = ({
+  oaCommunity,
+  dispatch,
+  openDetailModal,
+  openModifyModal,
+  openAddCommnityModal,
+  openAddActivityModal,
+  enums,
+}) => {
+  const { tableRef } = oaCommunity;
 
   const columns = [
     {
@@ -15,10 +23,17 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       fixed: 'left',
       width: 64,
     },
-    { title: '主题', align: 'center', dataIndex: 'theme' },
+    { title: '社团名称', align: 'center', dataIndex: 'clubName' },
+    {
+      title: '社团类型',
+      align: 'center',
+      dataIndex: 'dictClubType',
+      valueEnum: enums.dictClubType,
+      hideInTable: true,
+    },
     { title: '发布单位', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
-    { title: '所属组织', align: 'center', dataIndex: 'mechanismName', hideInSearch: true },
     { title: '发布时间', align: 'center', dataIndex: 'createTime', hideInSearch: true },
+
     {
       title: '操作',
       valueType: 'option',
@@ -27,14 +42,20 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       width: 200,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openTrendsDetailModal(employeeData)}>
+        <a key={`${employeeData.id}up`} onClick={() => openDetailModal(employeeData)}>
           查看
+        </a>,
+        <a key={`${employeeData.id}up`} onClick={() => openModifyModal(employeeData)}>
+          编辑
+        </a>,
+        <a key={`${employeeData.id}up`} onClick={() => openAddActivityModal(employeeData.id)}>
+          发布活动
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除该动态吗？"
+          title="确认删除该社团吗？"
           placement="topRight"
-          onConfirm={() => deleteTrendsInfo([employeeData.id])}
+          onConfirm={() => deleteCommunityInfo([employeeData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -42,18 +63,18 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
     },
   ];
 
-  const getHobbyList = params =>
+  const getCommunityList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCaresNext/getTrendsList',
+        type: 'oaCommunity/getCommunityList',
         payload: { ...params },
         resolve,
       });
     });
 
-  const deleteTrendsInfo = ids => {
+  const deleteCommunityInfo = ids => {
     dispatch({
-      type: 'oaCaresNext/deleteTrends',
+      type: 'oaCommunity/deleteCommunity',
       payload: {
         ids,
       },
@@ -62,21 +83,30 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
 
   return (
     <ProTable
-      headerTitle="关工动态信息"
+      rowKey="id"
+      headerTitle="社团信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getHobbyList(params)}
+      request={async params => getCommunityList(params)}
       columns={columns}
       toolBarRender={(_, { selectedRowKeys }) => [
+        <Button
+          type="primary"
+          onClick={() => {
+            openAddCommnityModal();
+          }}
+        >
+          新增
+        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除？',
+                title: '确认批量删除社团？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteTrendsInfo(selectedRowKeys);
+                  deleteCommunityInfo(selectedRowKeys);
                 },
               });
             }}
@@ -89,6 +119,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
   );
 };
 
-export default connect(({ oaCaresNext }) => ({
-  oaCaresNext,
+export default connect(({ oaCommunity, global }) => ({
+  oaCommunity,
+  enums: global.enums,
 }))(Table);

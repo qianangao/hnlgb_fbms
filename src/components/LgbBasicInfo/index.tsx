@@ -33,22 +33,22 @@ const LgbBasicInfo = ({ userId, dispatch, enums, lgbDetailData }) => {
       </Descriptions.Item>
       <Descriptions.Item label="出生日期">{lgbDetailData.dateOfBirth}</Descriptions.Item>
       <Descriptions.Item label="民族">
-        {enums.dictSex && enums.dictSex[lgbDetailData.dictNation]}
+        {enums.dictNation && enums.dictNation[lgbDetailData.dictNation]}
       </Descriptions.Item>
       <Descriptions.Item label="离退休类型">
-        {enums.dictSex && enums.dictSex[lgbDetailData.dictRetirementType]}
+        {enums.dictRetirementType && enums.dictRetirementType[lgbDetailData.dictRetirementType]}
       </Descriptions.Item>
       <Descriptions.Item label="政治面貌">
-        {enums.dictSex && enums.dictSex[lgbDetailData.dictPoliticalStatus]}
+        {enums.dictPoliticalStatus && enums.dictPoliticalStatus[lgbDetailData.dictPoliticalStatus]}
       </Descriptions.Item>
       <Descriptions.Item label="原工作单位及职务">
         {lgbDetailData && lgbDetailData.originalUnitAndPosition}
       </Descriptions.Item>
       <Descriptions.Item label="职级">
-        {enums.dictSex && enums.dictSex[lgbDetailData.dictRetirementLevel]}
+        {enums.dictRetirementLevel && enums.dictRetirementLevel[lgbDetailData.dictRetirementLevel]}
       </Descriptions.Item>
       <Descriptions.Item label="现享受待遇">
-        {enums.dictSex && enums.dictSex[lgbDetailData.dictTreatmentNow]}
+        {enums.dictTreatmentNow && enums.dictTreatmentNow[lgbDetailData.dictTreatmentNow]}
       </Descriptions.Item>
     </Descriptions>
   );
