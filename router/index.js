@@ -4,7 +4,6 @@ import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
 import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
 import InformationRelease from './information-release';
-import WorkHelper from './work-helper';
 const router = [
   {
     path: '/',
@@ -50,7 +49,6 @@ const router = [
               OriginalAspirationRoutes,
               WorkRecordRoutes,
               InformationRelease,
-              WorkHelper,
               {
                 component: './404',
               },
