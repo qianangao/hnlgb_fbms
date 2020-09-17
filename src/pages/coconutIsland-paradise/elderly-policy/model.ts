@@ -21,10 +21,12 @@ const Model = {
     *elderlyPolicyInfoList({ payload, resolve }, { call, put, select }) {
       const selectedOrgId = yield select(state => state.elderlyPolicy.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
+      const publishStatus = yield select(state => state.elderlyPolicy.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
+        pushStatus: publishStatus,
         pageSize: payload.pageSize,
       };
       const response = yield call(elderlyPolicyInfoList, params);

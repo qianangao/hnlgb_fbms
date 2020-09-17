@@ -45,7 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           payload: {
             ...values,
             id: lgbId,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
