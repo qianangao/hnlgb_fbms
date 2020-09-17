@@ -1,27 +1,27 @@
 import { message } from 'antd';
 import {
-  addElderlyPolicyInfo,
-  deleteElderlyPolicyInfo,
-  updateElderlyPolicyInfo,
-  elderlyPolicyInfoList,
-  detailElderlyPolicyInfo,
+  addSeniorUniversityInfo,
+  deleteSeniorUniversityInfo,
+  updateSeniorUniversityInfo,
+  seniorUniversityInfoList,
+  detailSeniorUniversityInfo,
 } from './service';
 
 const Model = {
-  namespace: 'elderlyPolicy',
+  namespace: 'seniorUniversity',
   state: {
-    elderlyPolicyInfoListData: {},
+    seniorUniversityInfoListData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     publishStatus: 1, // type  0 草稿箱 ， 1 已发布
-    detailElderlyPolicyData: {},
+    detailSeniorUniversityData: {},
   },
   effects: {
-    *elderlyPolicyInfoList({ payload, resolve }, { call, put, select }) {
-      const selectedOrgId = yield select(state => state.elderlyPolicy.selectedOrgId);
+    *seniorUniversityInfoList({ payload, resolve }, { call, put, select }) {
+      const selectedOrgId = yield select(state => state.seniorUniversity.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
-      const publishStatus = yield select(state => state.elderlyPolicy.publishStatus);
+      const publishStatus = yield select(state => state.seniorUniversity.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect: selectedOrgId || organizationId,
@@ -29,7 +29,7 @@ const Model = {
         pushStatus: publishStatus,
         pageSize: payload.pageSize,
       };
-      const response = yield call(elderlyPolicyInfoList, params);
+      const response = yield call(seniorUniversityInfoList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -47,7 +47,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            elderlyPolicyInfoListData: result,
+            seniorUniversityInfoListData: result,
           },
         });
       }
@@ -65,8 +65,8 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addElderlyPolicyInfo({ payload }, { call, put }) {
-      const response = yield call(addElderlyPolicyInfo, payload);
+    *addSeniorUniversityInfo({ payload }, { call, put }) {
+      const response = yield call(addSeniorUniversityInfo, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -75,15 +75,15 @@ const Model = {
           },
         });
 
-        message.success('新增活动中心成功！');
+        message.success('新增老年大学成功！');
 
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateElderlyPolicyInfo({ payload }, { call, put }) {
-      const response = yield call(updateElderlyPolicyInfo, payload);
+    *updateSeniorUniversityInfo({ payload }, { call, put }) {
+      const response = yield call(updateSeniorUniversityInfo, payload);
 
       if (!response.error) {
         yield put({
@@ -93,32 +93,32 @@ const Model = {
           },
         });
 
-        message.success('修改活动中心成功！');
+        message.success('修改老年大学成功！');
 
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deleteElderlyPolicyInfo({ payload }, { call, put }) {
-      const response = yield call(deleteElderlyPolicyInfo, payload);
+    *deleteSeniorUniversityInfo({ payload }, { call, put }) {
+      const response = yield call(deleteSeniorUniversityInfo, payload);
 
       if (!response.error) {
-        message.success('活动中心删除成功！');
+        message.success('老年大学删除成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *detailElderlyPolicyInfo({ payload, resolve }, { call, put }) {
-      const response = yield call(detailElderlyPolicyInfo, payload);
+    *detailSeniorUniversityInfo({ payload, resolve }, { call, put }) {
+      const response = yield call(detailSeniorUniversityInfo, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            detailElderlyPolicyData: response,
+            detailSeniorUniversityData: response,
           },
         });
       }

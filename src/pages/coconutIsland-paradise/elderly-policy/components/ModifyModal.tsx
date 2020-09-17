@@ -45,7 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           payload: {
             ...values,
             id: lgbId,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -82,7 +82,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

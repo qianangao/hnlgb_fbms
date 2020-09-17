@@ -22,6 +22,18 @@ const routes = {
       component: './coconutIsland-paradise/elderly-policy',
       remark: '涉老政策',
     },
+    {
+      path: '/coconutIsland-paradise/senior-university',
+      name: 'coconutIsland-paradise-senior-university',
+      component: './coconutIsland-paradise/senior-university',
+      remark: '老年大学',
+    },
+    // {
+    //   path: '/coconutIsland-paradise/works-corner',
+    //   name: 'coconutIsland-paradise-works-corner',
+    //   component: './coconutIsland-paradise/works-corner',
+    //   remark: '作品园地',
+    // },
   ],
 };
 export default routes;

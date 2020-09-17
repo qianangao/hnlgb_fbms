@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import ActivityCenterInfoForm from './form/ActivityCenterInfoForm';
+import SeniorUniversityForm from './form/SeniorUniversityForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
-  const [form] = ActivityCenterInfoForm.useForm();
+  const [form] = SeniorUniversityForm.useForm();
   const [lgbId, setLgbId] = useState();
+
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'activityCenter/save',
+      type: 'seniorUniversity/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -28,22 +29,23 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'activityCenter/save',
+      type: 'seniorUniversity/save',
       payload: {
         modifyModalVisible: false,
       },
     });
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `activityCenter/updateActivityCenterInfo`,
+          type: `seniorUniversity/updateSeniorUniversityInfo`,
           payload: {
             ...values,
             id: lgbId,
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -54,7 +56,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="修改活动中心信息"
+      title="修改老年大学信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -84,13 +86,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           boxSizing: 'border-box',
         }}
       >
-        <ActivityCenterInfoForm form={form} id={lgbId} />
+        <SeniorUniversityForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ activityCenter, loading }) => ({
-  modifyModalVisible: activityCenter.modifyModalVisible,
-  loading: loading.models.activityCenter,
+export default connect(({ seniorUniversity, loading }) => ({
+  modifyModalVisible: seniorUniversity.modifyModalVisible,
+  loading: loading.models.seniorUniversity,
 }))(ModifyModal);
