@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Descriptions } from 'antd';
 import DifferentLivingPlacesFrom from './form/differentLivingPlacesFrom';
+import LgbBasicInfo from '@/components/LgbBasicInfo';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();
@@ -74,10 +75,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >
+        <LgbBasicInfo userId={lgbId} />
+        <Descriptions title="异地居住地址" size="middle" />
         <DifferentLivingPlacesFrom form={form} id={lgbId} />
       </div>
     </Modal>
