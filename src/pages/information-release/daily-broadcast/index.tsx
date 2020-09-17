@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
-import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
@@ -42,28 +41,17 @@ const DailyBroadcast = ({ dispatch }) => {
     modifyModelRef.current.showModal(ids);
   };
 
-  const onPublishStatusChange = publishStatus => {
-    // 控制：新增、编辑按钮
-    // publishStatus 0 草稿箱 ， 1 已发布
-    dispatch({
-      type: 'dailyBroadcast/publishStatusChange',
-      payload: publishStatus,
-    });
-  };
-
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
-        <Table
-          openAddModal={openAddModal}
-          openModifyModal={openModifyModal}
-          opendetailModal={opendetailModal}
-        />
-      </TypeSelectLayout>
+      <Table
+        openAddModal={openAddModal}
+        openModifyModal={openModifyModal}
+        opendetailModal={opendetailModal}
+      />
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
