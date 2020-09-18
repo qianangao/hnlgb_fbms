@@ -45,7 +45,7 @@ const CaresDetailModal = ({ dispatch, caresDetailModalVisible, caresDetailData, 
     <Modal
       title="关工组织详情"
       centered
-      width="50vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',

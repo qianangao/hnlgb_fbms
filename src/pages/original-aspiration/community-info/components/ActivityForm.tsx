@@ -7,7 +7,7 @@ const ActivityForm = ({ form }) => {
     {
       label: '主题',
       name: 'theme',
-      span: 2,
+      span: 4,
       rules: [{ required: true, message: '请输入主题!', whitespace: true }],
     },
 

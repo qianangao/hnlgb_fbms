@@ -6,7 +6,6 @@ import AchievementForm from './form/AchievementForm';
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = AchievementForm.useForm();
   const [achievementId, setAchievementId] = useState('');
-  const [loadingStatus, setLoadingStatus] = useState(false);
   const showModal = item => {
     setAchievementId(item.id);
     dispatch({
@@ -41,7 +40,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        setLoadingStatus(publishStatus);
         dispatch({
           type: `oaAchievementExhibition/updateAchievement`,
           payload: {
@@ -59,7 +57,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     <Modal
       title="编辑成果信息"
       centered
-      width="80vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -67,10 +65,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       footer={[
-        <Button loading={loadingStatus && loading} type="primary" onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
         </Button>,
-        <Button loading={!loadingStatus && loading} type="primary" onClick={() => handleOk(false)}>
+        <Button loading={loading} onClick={() => handleOk(false)}>
           发布
         </Button>,
       ]}

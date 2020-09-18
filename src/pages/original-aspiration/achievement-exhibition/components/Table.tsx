@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
@@ -10,8 +10,9 @@ const Table = ({
   enums,
   dispatch,
   opendetailModal,
+  publishStatus,
 }) => {
-  const { tableRef, publishStatus } = oaAchievementExhibition;
+  const { tableRef } = oaAchievementExhibition;
   const columns = [
     {
       title: '序号',
@@ -87,15 +88,21 @@ const Table = ({
     },
   ];
 
+  useEffect(() => {
+    tableRef.current && tableRef.current.reloadAndRest();
+  }, [publishStatus]);
+
   // 列表
-  const getEmployeeList = params =>
-    new Promise(resolve => {
+  const getEmployeeList = params => {
+    return new Promise(resolve => {
       dispatch({
         type: 'oaAchievementExhibition/getAchievementList',
-        payload: { ...params },
+        payload: { ...params, isPublished: publishStatus },
         resolve,
       });
     });
+  };
+
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({

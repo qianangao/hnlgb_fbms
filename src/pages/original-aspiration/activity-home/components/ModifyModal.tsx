@@ -6,7 +6,6 @@ import ActivityForm from './form/ActivityForm';
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = ActivityForm.useForm();
   const [activityId, setActivityId] = useState('');
-  const [loadingStatus, setLoadingStatus] = useState(false);
   const showModal = item => {
     setActivityId(item.id);
     dispatch({
@@ -41,7 +40,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        setLoadingStatus(publishStatus);
         dispatch({
           type: `oaActivityHome/updateActivity`,
           payload: {
@@ -59,7 +57,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     <Modal
       title="编辑活动信息"
       centered
-      width="80vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -67,10 +65,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       footer={[
-        <Button loading={loadingStatus && loading} type="primary" onClick={() => handleOk(true)}>
+        <Button loading={loading} type="primary" onClick={() => handleOk(true)}>
           保存
         </Button>,
-        <Button loading={!loadingStatus && loading} type="primary" onClick={() => handleOk(false)}>
+        <Button loading={loading} type="primary" onClick={() => handleOk(false)}>
           发布
         </Button>,
       ]}

@@ -22,7 +22,7 @@ const AchievementForm = ({ form, id, dispatch, loading }) => {
       name: 'resultSummary',
       type: 'editor',
       rules: [{ required: true, message: '请输入成果汇总!', whitespace: true }],
-      span: 3,
+      span: 4,
     },
   ];
   useEffect(() => {

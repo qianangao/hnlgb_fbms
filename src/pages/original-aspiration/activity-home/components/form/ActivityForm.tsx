@@ -22,7 +22,7 @@ const ActivityForm = ({ form, id, dispatch, loading }) => {
       name: 'activityContent',
       type: 'editor',
       rules: [{ required: true, message: '请输入内容!', whitespace: true }],
-      span: 3,
+      span: 4,
     },
   ];
   useEffect(() => {

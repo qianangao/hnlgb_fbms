@@ -58,7 +58,7 @@ const CommunityAddModal = ({ dispatch, communityAddModalVisible, actionRef, load
     <Modal
       title="新增社团"
       centered
-      width="80vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',

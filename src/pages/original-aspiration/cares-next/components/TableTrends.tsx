@@ -63,6 +63,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
   return (
     <ProTable
       headerTitle="关工动态信息"
+      rowKey="id"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

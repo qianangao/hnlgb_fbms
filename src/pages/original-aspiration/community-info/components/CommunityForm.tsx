@@ -21,7 +21,7 @@ const CommunityForm = ({ form, communityFormData }) => {
       label: '社团简介',
       name: 'clubIntroduction',
       type: 'textArea',
-      span: 2,
+      span: 4,
     },
     {
       label: '社团成员',

@@ -16,9 +16,8 @@ const Community = ({ dispatch }) => {
   const modifyModelRef = useRef({});
   const activityDetailModelRef = useRef({});
   const activityAddModelRef = useRef({});
-  const [tableStatus, setTableStatus] = useState(false);
+  const [tableType, setTableType] = useState('community');
   useEffect(() => {
-    setTableStatus(true);
     dispatch({
       type: 'global/getEnums',
       payload: {
@@ -43,21 +42,17 @@ const Community = ({ dispatch }) => {
   };
   const tabs = [
     {
-      id: '01',
+      id: 'community',
       label: '社团',
     },
     {
-      id: '02',
+      id: 'activity',
       label: '活动',
     },
   ];
 
   const onTabChange = id => {
-    if (id === '01') {
-      setTableStatus(true);
-    } else {
-      setTableStatus(false);
-    }
+    setTableType(id);
   };
   const openDetailModal = item => {
     detailModelRef.current.showModal(item.id);
@@ -78,15 +73,16 @@ const Community = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout tabs={tabs} hidePublish onTabChange={onTabChange}>
-        {tableStatus && (
+        {tableType === 'community' ? (
           <TableCommunity
             openDetailModal={openDetailModal}
             openModifyModal={openModifyModal}
             openAddCommnityModal={openAddCommnityModal}
             openAddActivityModal={openAddActivityModal}
           />
+        ) : (
+          <TableActivity openActivityDetailModal={openActivityDetailModal} />
         )}
-        {!tableStatus && <TableActivity openActivityDetailModal={openActivityDetailModal} />}
         <CommunityDetailModal actionRef={detailModelRef} />
         <CommunityModifyModal actionRef={modifyModelRef} />
         <CommunityAddModal actionRef={addModelRef} />

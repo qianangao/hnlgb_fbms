@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ActivityForm from './form/ActivityForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = ActivityForm.useForm();
-  const [loadingStatus, setLoadingStatus] = useState(false);
   const showModal = () => {
     dispatch({
       type: 'oaActivityHome/save',
@@ -40,7 +39,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        setLoadingStatus(publishStatus);
         dispatch({
           type: `oaActivityHome/addActivity`,
           payload: {
@@ -59,7 +57,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     <Modal
       title="新增活动信息"
       centered
-      width="95vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -67,10 +65,10 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loadingStatus && loading} type="primary" onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
         </Button>,
-        <Button loading={!loadingStatus && loading} type="primary" onClick={() => handleOk(false)}>
+        <Button loading={loading} onClick={() => handleOk(false)}>
           发布
         </Button>,
       ]}

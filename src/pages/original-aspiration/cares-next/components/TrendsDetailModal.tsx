@@ -43,7 +43,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
     <Modal
       title="关工动态详情"
       centered
-      width="80vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',

@@ -2,7 +2,7 @@ const routes = {
   path: '/original-aspiration',
   name: 'original-aspiration',
   icon: 'team',
-  remark: '南海初心',
+  remark: '琼崖初心',
   routes: [
     {
       path: '/original-aspiration/cares-next',

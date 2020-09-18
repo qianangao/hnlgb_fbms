@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
-  const [DetailId, setDetailId] = useState('');
+  const [detailId, setDetailId] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
@@ -36,7 +36,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
     <Modal
       title="活动详情"
       centered
-      width="80vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -56,7 +56,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <DetailForm id={DetailId} />
+        <DetailForm id={detailId} />
       </div>
     </Modal>
   );

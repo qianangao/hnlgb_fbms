@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
@@ -9,14 +9,11 @@ import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
 const ActivityHome = ({ dispatch }) => {
+  const [publishStatus, setPublishStatus] = useState(1);
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   useEffect(() => {
-    dispatch({
-      type: 'oaActivityHome/publishStatusChange',
-      payload: 1,
-    });
     dispatch({
       type: 'global/getEnums',
       payload: {
@@ -48,18 +45,16 @@ const ActivityHome = ({ dispatch }) => {
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
-  const onPublishStatusChange = publishStatus => {
+  const onPublishStatusChange = value => {
     // publishStatus 0 草稿箱 ， 1 已发布
-    dispatch({
-      type: 'oaActivityHome/publishStatusChange',
-      payload: publishStatus,
-    });
+    setPublishStatus(value);
   };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
         <Table
+          publishStatus={publishStatus}
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}

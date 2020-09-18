@@ -14,17 +14,14 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailAchievementData: {},
   },
   effects: {
     *getAchievementList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.oaAchievementExhibition.selectedOrgId);
-      const publishStatus = yield select(state => state.oaAchievementExhibition.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
-        isPublished: publishStatus,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
