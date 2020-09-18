@@ -3,8 +3,8 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendetailModal }) => {
-  const { tableRef, publishStatus } = elderlyPolicy;
+const Table = ({ openAddModal, openModifyModal, seniorUniversity, dispatch, opendetailModal }) => {
+  const { tableRef, publishStatus } = seniorUniversity;
   const columns = [
     {
       title: '序号',
@@ -15,15 +15,34 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
       width: 64,
     },
     {
-      title: '标题',
+      title: '大学名称',
       align: 'center',
-      dataIndex: 'title',
+      dataIndex: 'universityName',
     },
     {
-      title: publishStatus === 0 ? '保存时间' : '发布时间',
-      valueType: 'date',
+      title: '大学网址',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'createTime' : 'pushTime',
+      dataIndex: 'url',
+      width: 200,
+      hideInSearch: true,
+      render: _ => <a href={_}>{_}</a>,
+    },
+    {
+      title: '大学地址',
+      align: 'center',
+      dataIndex: 'address',
+      hideInSearch: true,
+    },
+    {
+      title: '教学安排',
+      align: 'center',
+      dataIndex: 'teachingActivities',
+      hideInSearch: true,
+    },
+    {
+      title: '联系电话',
+      align: 'center',
+      dataIndex: 'phone',
       hideInSearch: true,
     },
     {
@@ -55,7 +74,7 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
         ),
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除该涉老政策吗？"
+          title="确认删除该老年大学吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -66,17 +85,17 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
   ];
 
   // 列表
-  const getElderlyPolicyList = params =>
+  const getSeniorUniversityList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'elderlyPolicy/elderlyPolicyInfoList',
+        type: 'seniorUniversity/seniorUniversityInfoList',
         payload: { ...params },
         resolve,
       });
     });
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'elderlyPolicy/deleteElderlyPolicyInfo',
+      type: 'seniorUniversity/deleteSeniorUniversityInfo',
       payload: {
         ids,
       },
@@ -85,11 +104,11 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
   return (
     <ProTable
       rowKey="id"
-      headerTitle="涉老政策"
+      headerTitle="老年大学"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getElderlyPolicyList(params)}
+      request={async params => getSeniorUniversityList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
         publishStatus === 0 ? (
           <Button type="primary" onClick={() => openAddModal()}>
@@ -100,7 +119,7 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除选择涉老政策信息？',
+                title: '确认删除选择老年大学信息？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -117,6 +136,6 @@ const Table = ({ openAddModal, openModifyModal, elderlyPolicy, dispatch, opendet
   );
 };
 
-export default connect(({ elderlyPolicy }) => ({
-  elderlyPolicy,
+export default connect(({ seniorUniversity }) => ({
+  seniorUniversity,
 }))(Table);

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Descriptions, Modal } from 'antd';
-import LgbBasicInfo from '@/components/LgbBasicInfo';
-import RelocatedForm from './form/RelocatedForm';
+import { Modal, Button } from 'antd';
+import SeniorUniversityForm from './form/SeniorUniversityForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = RelocatedForm.useForm();
-  const [lgbId, setLgbId] = useState('');
+const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+  const [form] = SeniorUniversityForm.useForm();
+  const [lgbId, setLgbId] = useState();
+
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'relocated/save',
+      type: 'seniorUniversity/save',
       payload: {
         modifyModalVisible: true,
       },
     });
   };
+
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
@@ -28,45 +29,53 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'relocated/save',
+      type: 'seniorUniversity/save',
       payload: {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `relocated/updateRelocated`,
+          type: `seniorUniversity/updateSeniorUniversityInfo`,
           payload: {
             ...values,
             id: lgbId,
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
       .catch(info => {
-        console.error('修改错误', info);
+        console.error('Validate Failed:', info);
       });
   };
+
   return (
     <Modal
-      title="修改异地安置"
+      title="修改老年大学信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflowX: 'hidden',
+        overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      onOk={handleOk}
       forceRender
-      confirmLoading={loading}
+      footer={[
+        <Button key="cancel" onClick={hideModal}>
+          取消
+        </Button>,
+        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+          保存
+        </Button>,
+      ]}
+      maskClosable={false}
+      destroyOnClose
       onCancel={hideModal}
     >
       <div
@@ -77,14 +86,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <LgbBasicInfo userId={lgbId} />
-        <Descriptions title="异地安置" size="middle" />
-        <RelocatedForm form={form} id={lgbId} />
+        <SeniorUniversityForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
-export default connect(({ relocated, loading }) => ({
-  modifyModalVisible: relocated.modifyModalVisible,
-  loading: loading.models.relocated,
+
+export default connect(({ seniorUniversity, loading }) => ({
+  modifyModalVisible: seniorUniversity.modifyModalVisible,
+  loading: loading.models.seniorUniversity,
 }))(ModifyModal);

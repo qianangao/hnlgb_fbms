@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import Detail from './form/Detail';
+import DetailForm from './form/SeniorUniversityDetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
-  const [detailId, setDetailId] = useState('');
+  const [DetailId, setDetailId] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
-      type: 'oaAchievementExhibition/save',
+      type: 'seniorUniversity/save',
       payload: {
         detailModalVisible: true,
       },
@@ -25,7 +25,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     dispatch({
-      type: 'oaAchievementExhibition/save',
+      type: 'seniorUniversity/save',
       payload: {
         detailModalVisible: false,
       },
@@ -34,9 +34,9 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
 
   return (
     <Modal
-      title="成果详情"
+      title="老年大学详情"
       centered
-      width="900px"
+      width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -56,13 +56,13 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <Detail id={detailId} />
+        <DetailForm id={DetailId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ oaAchievementExhibition, loading }) => ({
-  detailModalVisible: oaAchievementExhibition.detailModalVisible,
-  loading: loading.models.oaAchievementExhibition,
+export default connect(({ seniorUniversity, loading }) => ({
+  detailModalVisible: seniorUniversity.detailModalVisible,
+  loading: loading.models.seniorUniversity,
 }))(DetailModal);

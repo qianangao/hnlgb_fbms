@@ -19,6 +19,9 @@ const Model = {
   state: {
     lgbListData: {},
     lgbDetailData: {},
+    lgbFamilyData: {},
+    lgbPartTimeData: {},
+    lgbHealthyData: {},
     addModalVisible: false, // 新增modal visible
     modifyModalVisible: false, // 修改modal visible
     detailModalVisible: false, // 详情modal visible
@@ -162,11 +165,17 @@ const Model = {
         });
       }
     },
-    *getFamilyLgb({ payload, resolve }, { call }) {
+    *getFamilyLgb({ payload, resolve }, { call, put }) {
       const response = yield call(getFamilyLgb, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            lgbFamilyData: response,
+          },
+        });
       }
     },
     *updateFamilyLgb({ payload, resolve }, { call }) {
@@ -177,11 +186,17 @@ const Model = {
         yield resolve && resolve();
       }
     },
-    *getPartTimeLgb({ payload, resolve }, { call }) {
+    *getPartTimeLgb({ payload, resolve }, { call, put }) {
       const response = yield call(getPartTimeLgb, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            lgbPartTimeData: response,
+          },
+        });
       }
     },
     *updatePartTimeLgb({ payload, resolve }, { call }) {
@@ -192,11 +207,17 @@ const Model = {
         yield resolve && resolve();
       }
     },
-    *getHealthyLgb({ payload, resolve }, { call }) {
+    *getHealthyLgb({ payload, resolve }, { call, put }) {
       const response = yield call(getHealthyLgb, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            lgbHealthyData: response,
+          },
+        });
       }
     },
     *updateHealthyLgb({ payload, resolve }, { call }) {

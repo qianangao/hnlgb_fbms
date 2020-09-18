@@ -4,7 +4,10 @@ import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
 import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
 import InformationRelease from './information-release';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8a5266542dfa3d1c8d378219b9902e0ef536c72e
 const router = [
   {
     path: '/',

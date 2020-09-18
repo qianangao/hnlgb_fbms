@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import DetailForm from './form/DetailForm';
+import Detail from './form/Detail';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   const [detailId, setDetailId] = useState('');
@@ -56,7 +56,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <DetailForm id={detailId} />
+        <Detail id={detailId} />
       </div>
     </Modal>
   );

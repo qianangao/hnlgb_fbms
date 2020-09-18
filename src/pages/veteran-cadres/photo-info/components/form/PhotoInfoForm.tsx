@@ -11,16 +11,21 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       hidden: true,
     },
     {
-      label: '附件',
+      label: '缩略图',
       name: 'file',
       type: 'image',
-      rules: [{ required: true, message: '请上传附件!' }],
+      rules: [{ required: true, message: '请上传缩略图!' }],
+    },
+    {
+      key: 'firstLine',
+      type: 'segmentation',
     },
     {
       label: '描述',
       name: 'remark',
       type: 'textarea',
       rules: [{ required: true, message: '请输入描述!', whitespace: true }],
+      span: 2,
     },
   ];
   useEffect(() => {

@@ -119,8 +119,8 @@ const getFamilyInfo = (req, res) => {
     code: 0,
     msg: 'success',
     data: {
-      homeAddressDiy: null,
-      residentAddressDiy: null,
+      homeAddressDiy: '山的那边海的那边',
+      residentAddressDiy: '蓝精灵隔壁的羊驼平原',
       dictMarriage: '8adcf7c96a48fae4016a4925e570', //婚姻状态
       dictLiveStatu: '8adcf7c96a48fae4016a4925e79d', //居住状态
       purchaseSituation: '有', //购房情况

@@ -80,7 +80,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

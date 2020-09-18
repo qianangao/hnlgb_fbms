@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions } from 'antd';
 
-const DetailForm = ({ id, dispatch, detailActivityData }) => {
+const Detail = ({ id, dispatch, detailAchievementData }) => {
   useEffect(() => {
     if (id) {
       dispatch({
-        type: 'oaActivityHome/detailActivity',
+        type: 'oaAchievementExhibition/detailAchievement',
         payload: { id },
       });
     }
@@ -15,16 +15,16 @@ const DetailForm = ({ id, dispatch, detailActivityData }) => {
   return (
     <Descriptions size="middle">
       <div style={{ margin: '5px' }}>
-        <h2 style={{ textAlign: 'center' }}>{detailActivityData.activityTitle}</h2>
+        <h2 style={{ textAlign: 'center' }}>{detailAchievementData.title}</h2>
         <div style={{ textAlign: 'center' }}>
-          发布单位：{detailActivityData.organizationName}
+          发布单位：{detailAchievementData.organizationName}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-          {detailActivityData.createTime}
+          {detailAchievementData.pushTime}
         </div>
         <hr style={{ color: '#CCCCCC' }} />
         <div
           dangerouslySetInnerHTML={{
-            __html: detailActivityData.activityContent,
+            __html: detailAchievementData.resultSummary,
           }}
         />
       </div>
@@ -32,7 +32,7 @@ const DetailForm = ({ id, dispatch, detailActivityData }) => {
   );
 };
 
-export default connect(({ oaActivityHome, loading }) => ({
-  detailActivityData: oaActivityHome.detailActivityData,
-  loading: loading.models.oaActivityHome,
-}))(DetailForm);
+export default connect(({ oaAchievementExhibition, loading }) => ({
+  detailAchievementData: oaAchievementExhibition.detailAchievementData,
+  loading: loading.models.oaAchievementExhibition,
+}))(Detail);
