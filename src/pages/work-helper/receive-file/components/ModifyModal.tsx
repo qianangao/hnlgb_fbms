@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import DailyBroadcastForm from './form/DailyBroadcastForm';
+import ReceiveFileForm from './form/ReceiveFileForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = DailyBroadcastForm.useForm();
+  const [form] = ReceiveFileForm.useForm();
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'receiveFile/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -27,7 +27,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'receiveFile/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -41,14 +41,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `dailyBroadcast/updateDailyBroadcast`,
+          type: `receiveFile/updateReceiveFile`,
           payload: {
             ...values,
+            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
-            status: publishStatus ? 0 : 1,
           },
         });
-        form.resetFields();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -56,18 +56,15 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改每日播报"
+      title="修改政策规定与解答"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflowX: 'hidden',
+        overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      forceRender
-      confirmLoading={loading}
-      onCancel={hideModal}
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
@@ -76,22 +73,25 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           发布
         </Button>,
       ]}
+      forceRender
+      confirmLoading={loading}
+      onCancel={hideModal}
     >
       <div
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflowX: 'hidden',
+          overflow: 'auto',
           boxSizing: 'border-box',
         }}
       >
-        <DailyBroadcastForm form={form} id={lgbId} />
+        <ReceiveFileForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ dailyBroadcast, loading }) => ({
-  modifyModalVisible: dailyBroadcast.modifyModalVisible,
-  loading: loading.models.dailyBroadcast,
+export default connect(({ receiveFile, loading }) => ({
+  modifyModalVisible: receiveFile.modifyModalVisible,
+  loading: loading.models.receiveFile,
 }))(ModifyModal);

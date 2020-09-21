@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import DailyBroadcastForm from './form/DailyBroadcastForm';
+import ReceiveFileForm from './form/ReceiveFileForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = DailyBroadcastForm.useForm();
+  const [form] = ReceiveFileForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'receiveFile/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'receiveFile/save',
       payload: {
         addModalVisible: false,
       },
@@ -40,10 +40,11 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `dailyBroadcast/addDailyBroadcast`,
+          type: `receiveFile/addReceiveFile`,
           payload: {
             ...values,
-            status: publishStatus ? 0 : 1,
+            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -55,18 +56,15 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增每日播报"
+      title="新增政策规定与解答"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflowX: 'hidden',
+        overflow: 'auto',
       }}
       visible={addModalVisible}
-      forceRender
-      confirmLoading={loading}
-      onCancel={hideModal}
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
@@ -75,13 +73,16 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           发布
         </Button>,
       ]}
+      forceRender
+      confirmLoading={loading}
+      onCancel={hideModal}
     >
-      <DailyBroadcastForm form={form} />
+      <ReceiveFileForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ dailyBroadcast, loading }) => ({
-  addModalVisible: dailyBroadcast.addModalVisible,
-  loading: loading.models.dailyBroadcast,
+export default connect(({ receiveFile, loading }) => ({
+  addModalVisible: receiveFile.addModalVisible,
+  loading: loading.models.receiveFile,
 }))(AddModal);
