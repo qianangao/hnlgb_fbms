@@ -2,33 +2,35 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { connect } from 'umi';
 
-const DetailFormPage = ({ detailData }) => {
+const DetailFormPage = ({ title, releaseTime, orgName, content, extraFile }) => {
   return (
     <Descriptions size="middle">
       <div style={{ margin: '5px' }}>
-        <h2 style={{ textAlign: 'center' }}>{detailData && detailData.headline}</h2>
+        <h2 style={{ textAlign: 'center' }}>{title}</h2>
         <div style={{ textAlign: 'center' }}>
-          发布单位：{detailData && detailData.createOrgName}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-          {detailData && detailData.releaseTime}
+          <span style={{ marginRight: 40 }}>发布单位：{orgName}</span>
+          <span>
+            发布时间：
+            {releaseTime}
+          </span>
         </div>
         <hr style={{ color: '#CCCCCC' }} />
         <div
           dangerouslySetInnerHTML={{
-            __html: detailData && detailData.context,
+            __html: content,
           }}
         />
-        {detailData && detailData.attachmentId && (
+        {extraFile && extraFile.url && (
           <div style={{ textAlign: 'left', margin: '20px 0px 10px 10px' }}>
             缩略图：
             <a
-              href={detailData.attachmentId.url}
+              href={extraFile.url}
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: 'block' }}
               download="下载"
             >
-              {detailData.attachmentId.name}
+              {extraFile.name}
             </a>
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
@@ -12,6 +12,7 @@ const PolicyStipulate = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
+  const [publishStatus, setPublishStatus] = useState(1);
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -43,12 +44,18 @@ const PolicyStipulate = ({ dispatch }) => {
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
-  const onPublishStatusChange = publishStatus => {
+  const onPublishStatusChange = changeStatus => {
     // 控制：新增、编辑按钮
-    // publishStatus 0 草稿箱 ， 1 已发布
+    // changeStatus 0 草稿箱 ， 1 已发布
+    setPublishStatus(changeStatus);
     dispatch({
-      type: 'policyStipulate/publishStatusChange',
-      payload: publishStatus,
+      type: 'policyStipulate/policyStipulateList',
+      payload: {
+        isRelease: changeStatus,
+        current: 1,
+        pageSize: 20,
+        currentPage: 1,
+      },
     });
   };
 
@@ -59,6 +66,7 @@ const PolicyStipulate = ({ dispatch }) => {
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
+          publishStatus={publishStatus}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />

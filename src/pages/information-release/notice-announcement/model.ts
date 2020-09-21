@@ -14,17 +14,14 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailNoticeAnnouncementData: {},
   },
   effects: {
     *noticeAnnouncementList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.noticeAnnouncement.selectedOrgId);
-      const dictPublishStatus = yield select(state => state.noticeAnnouncement.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
-        dictPublishStatus,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -65,22 +62,9 @@ const Model = {
       });
     },
 
-    *publishStatusChange({ payload }, { put }) {
-      yield put({
-        type: 'save',
-        payload: {
-          publishStatus: payload,
-        },
-      });
-
-      yield put({
-        type: 'tableReload',
-      });
-    },
-
     *addNoticeAnnouncement({ payload }, { call, put }) {
       const response = yield call(addNoticeAnnouncement, payload);
-      const { publishStatus } = payload;
+      const publishStatus = payload.dictPublishStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -96,7 +80,7 @@ const Model = {
     },
     *updateNoticeAnnouncement({ payload }, { call, put }) {
       const response = yield call(updateNoticeAnnouncement, payload);
-      const { publishStatus } = payload;
+      const publishStatus = payload.dictPublishStatus;
       if (!response.error) {
         yield put({
           type: 'save',

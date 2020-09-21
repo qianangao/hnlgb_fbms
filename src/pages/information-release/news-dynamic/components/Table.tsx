@@ -10,8 +10,9 @@ const Table = ({
   enums,
   dispatch,
   opendetailModal,
+  publishStatus,
 }) => {
-  const { tableRef, publishStatus } = newsDynamic;
+  const { tableRef } = newsDynamic;
   const columns = [
     {
       title: '序号',
@@ -90,7 +91,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'newsDynamic/newsDynamicList',
-        payload: { ...params },
+        payload: { ...params, status: publishStatus },
         resolve,
       });
     });

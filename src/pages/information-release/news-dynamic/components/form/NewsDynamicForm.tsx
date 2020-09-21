@@ -15,7 +15,7 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '缩略图',
-      name: 'attachmentId',
+      name: 'attachmentInfo',
       type: 'image',
     },
     {

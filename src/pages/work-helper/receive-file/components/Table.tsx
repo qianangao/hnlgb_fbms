@@ -3,8 +3,15 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetailModal }) => {
-  const { tableRef, publishStatus } = receiveFile;
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  receiveFile,
+  dispatch,
+  opendetailModal,
+  publishStatus,
+}) => {
+  const { tableRef } = receiveFile;
   const columns = [
     {
       title: '序号',
@@ -76,7 +83,7 @@ const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetai
     new Promise(resolve => {
       dispatch({
         type: 'receiveFile/receiveFileList',
-        payload: { ...params },
+        payload: { ...params, isRelease: publishStatus },
         resolve,
       });
     });

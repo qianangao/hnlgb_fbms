@@ -45,7 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           payload: {
             ...values,
             type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
           },
         });

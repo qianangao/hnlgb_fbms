@@ -12,7 +12,15 @@ const DetailForm = ({ id, dispatch, detailDailyBroadcastData }) => {
     }
   }, [id]);
 
-  return <DetailFormPage detailData={detailDailyBroadcastData} />;
+  return (
+    <DetailFormPage
+      title={detailDailyBroadcastData.headline}
+      releaseTime={detailDailyBroadcastData.releaseTime}
+      orgName={detailDailyBroadcastData.createOrgName}
+      content={detailDailyBroadcastData.context}
+      extraFile={detailDailyBroadcastData.attachmentInfo}
+    />
+  );
 };
 
 export default connect(({ dailyBroadcast, loading }) => ({
