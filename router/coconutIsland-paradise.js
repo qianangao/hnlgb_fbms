@@ -28,12 +28,12 @@ const routes = {
       component: './coconutIsland-paradise/senior-university',
       remark: '老年大学',
     },
-    // {
-    //   path: '/coconutIsland-paradise/works-corner',
-    //   name: 'coconutIsland-paradise-works-corner',
-    //   component: './coconutIsland-paradise/works-corner',
-    //   remark: '作品园地',
-    // },
+    {
+      path: '/coconutIsland-paradise/works-corner',
+      name: 'coconutIsland-paradise-works-corner',
+      component: './coconutIsland-paradise/works-corner',
+      remark: '作品园地',
+    },
   ],
 };
 export default routes;

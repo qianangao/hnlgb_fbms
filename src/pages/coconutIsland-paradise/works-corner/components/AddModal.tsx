@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
-import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
+import { Modal, Button } from 'antd';
+import WorksCornerForm from './form/WorksCornerForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = DifferentLivingPlacesFrom.useForm();
+  const [form] = WorksCornerForm.useForm();
+
   const showModal = () => {
     dispatch({
-      type: 'differentLivingPlaces/save',
+      type: 'worksCorner/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'differentLivingPlaces/save',
+      type: 'worksCorner/save',
       payload: {
         addModalVisible: false,
       },
@@ -35,27 +36,26 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        values.addressCode = values.address.value;
-        values.address = values.address.label;
         dispatch({
-          type: `differentLivingPlaces/addDifferentLivingInfo`,
+          type: `worksCorner/addWorksCornerInfo`,
           payload: {
             ...values,
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
       .catch(info => {
-        console.error('新增错误', info);
+        console.error('Validate Failed:', info);
       });
   };
 
   return (
     <Modal
-      title="新增异地居住"
+      title="新增作品园地"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -64,17 +64,24 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DifferentLivingPlacesFrom form={form} />
+      <WorksCornerForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ differentLivingPlaces, loading }) => ({
-  addModalVisible: differentLivingPlaces.addModalVisible,
-  loading: loading.models.differentLivingPlaces,
+export default connect(({ worksCorner, loading }) => ({
+  addModalVisible: worksCorner.addModalVisible,
+  loading: loading.models.worksCorner,
 }))(AddModal);
