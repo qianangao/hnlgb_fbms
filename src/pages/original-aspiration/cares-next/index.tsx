@@ -16,9 +16,8 @@ const HobbyInfo = ({ dispatch }) => {
   const modifyModelRef = useRef({});
   const trendsDetailModelRef = useRef({});
   const trendsAddModelRef = useRef({});
-  const [tableStatus, setTableStatus] = useState(false);
+  const [tableType, setTableType] = useState('cares');
   useEffect(() => {
-    setTableStatus(true);
     dispatch({
       type: 'global/getEnums',
       payload: {
@@ -35,21 +34,17 @@ const HobbyInfo = ({ dispatch }) => {
   };
   const tabs = [
     {
-      id: '01',
+      id: 'cares',
       label: '关工组织',
     },
     {
-      id: '02',
+      id: 'trends',
       label: '关工动态',
     },
   ];
 
   const onTabChange = id => {
-    if (id === '01') {
-      setTableStatus(true);
-    } else {
-      setTableStatus(false);
-    }
+    setTableType(id);
   };
   const openDetailModal = item => {
     detailModelRef.current.showModal(item.id);
@@ -70,15 +65,16 @@ const HobbyInfo = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout tabs={tabs} hidePublish onTabChange={onTabChange}>
-        {tableStatus && (
+        {tableType === 'cares' ? (
           <TableCares
             openDetailModal={openDetailModal}
             openModifyModal={openModifyModal}
             openAddCaresModal={openAddCaresModal}
             openAddTrendsModal={openAddTrendsModal}
           />
+        ) : (
+          <TableTrends openTrendsDetailModal={openTrendsDetailModal} />
         )}
-        {!tableStatus && <TableTrends openTrendsDetailModal={openTrendsDetailModal} />}
         <CaresDetailModal actionRef={detailModelRef} />
         <CaresModifyModal actionRef={modifyModelRef} />
         <CaresAddModal actionRef={addModelRef} />

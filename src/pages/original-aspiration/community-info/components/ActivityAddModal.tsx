@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TrendsForm from './TrendsForm';
+import ActivityForm from './ActivityForm';
 
-const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading }) => {
-  const [form] = TrendsForm.useForm();
-  const [mechanismId, setMechanismId] = useState('');
+const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
+  const [form] = ActivityForm.useForm();
+  const [clubId, setClubId] = useState('');
   const showModal = id => {
     form.resetFields();
-    setMechanismId(id);
+    setClubId(id);
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        trendsAddModalVisible: true,
+        activityAddModalVisible: true,
       },
     });
   };
@@ -28,9 +28,9 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
 
   const hideModal = () => {
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        trendsAddModalVisible: false,
+        activityAddModalVisible: false,
       },
     });
   };
@@ -39,10 +39,10 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
       .validateFields()
       .then(values => {
         dispatch({
-          type: `oaCaresNext/addTrends`,
+          type: `oaCommunity/addActivity`,
           payload: {
             ...values,
-            mechanismId,
+            clubId,
           },
         });
       })
@@ -51,7 +51,7 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
 
   return (
     <Modal
-      title="发布关工动态"
+      title="发布活动"
       centered
       width="900px"
       style={{ paddingBottom: 0 }}
@@ -59,18 +59,18 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={trendsAddModalVisible}
+      visible={activityAddModalVisible}
       onOk={handleOk}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <TrendsForm size="middle" column={1} form={form} />
+      <ActivityForm size="middle" column={1} form={form} />
     </Modal>
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  trendsAddModalVisible: oaCaresNext.trendsAddModalVisible,
-  loading: loading.effects['oaCaresNext/addTrends'],
-}))(TrendsAddModal);
+export default connect(({ oaCommunity, loading }) => ({
+  activityAddModalVisible: oaCommunity.activityAddModalVisible,
+  loading: loading.effects['oaCommunity/addActivity'],
+}))(ActivityAddModal);

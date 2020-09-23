@@ -81,6 +81,7 @@ const Table = ({
   return (
     <ProTable
       headerTitle="关工组织信息"
+      rowKey="id"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button, Descriptions } from 'antd';
 
-const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailData, actionRef }) => {
-  const [trendsId, setTrendsId] = useState('');
+const ActivityDetailModal = ({
+  dispatch,
+  activityDetailModalVisible,
+  activityDetailData,
+  actionRef,
+}) => {
+  const [activityId, setActivityId] = useState('');
   const showModal = id => {
-    setTrendsId(id);
+    setActivityId(id);
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        trendsDetailModalVisible: true,
+        activityDetailModalVisible: true,
       },
     });
   };
@@ -22,26 +27,26 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
       actionRef.current = { showModal };
     }
 
-    if (trendsId) {
+    if (activityId) {
       dispatch({
-        type: 'oaCaresNext/getTrendsDetail',
-        payload: { id: trendsId },
+        type: 'oaCommunity/getActivityDetail',
+        payload: { id: activityId },
       });
     }
-  }, [trendsId]);
+  }, [activityId]);
 
   const hideModal = () => {
     dispatch({
-      type: 'oaCaresNext/save',
+      type: 'oaCommunity/save',
       payload: {
-        trendsDetailModalVisible: false,
+        activityDetailModalVisible: false,
       },
     });
   };
 
   return (
     <Modal
-      title="关工动态详情"
+      title="活动详情"
       centered
       width="900px"
       style={{ paddingBottom: 0 }}
@@ -49,7 +54,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={trendsDetailModalVisible}
+      visible={activityDetailModalVisible}
       destroyOnClose
       onCancel={hideModal}
       footer={[
@@ -60,16 +65,16 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
     >
       <Descriptions size="middle">
         <div style={{ margin: '5px' }}>
-          <h2 style={{ textAlign: 'center' }}>{trendsDetailData.theme}</h2>
+          <h2 style={{ textAlign: 'center' }}>{activityDetailData.theme}</h2>
           <div style={{ textAlign: 'center' }}>
-            发布单位：{trendsDetailData.organizationName}
+            发布单位：{activityDetailData.organizationName}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-            {trendsDetailData.createTime}
+            {activityDetailData.createTime}
           </div>
           <hr style={{ color: '#CCCCCC' }} />
           <div
             dangerouslySetInnerHTML={{
-              __html: trendsDetailData.content,
+              __html: activityDetailData.content,
             }}
           />
         </div>
@@ -78,8 +83,8 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  trendsDetailModalVisible: oaCaresNext.trendsDetailModalVisible,
-  trendsDetailData: oaCaresNext.trendsDetailData,
-  loading: loading.models.oaCaresNext,
-}))(TrendsDetailModal);
+export default connect(({ oaCommunity, loading }) => ({
+  activityDetailModalVisible: oaCommunity.activityDetailModalVisible,
+  activityDetailData: oaCommunity.activityDetailData,
+  loading: loading.models.oaCommunity,
+}))(ActivityDetailModal);

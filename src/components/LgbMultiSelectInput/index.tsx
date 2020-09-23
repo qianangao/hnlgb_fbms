@@ -127,7 +127,7 @@ const LgbSelectInput = ({
     const listMap = new Map();
 
     listData.forEach(item => {
-      listMap.set(item.id, item.name);
+      listMap.set(item.id, item.realName);
     });
     tempSelectData.forEach(item => {
       listMap.set(item.id, item.realName);
@@ -137,7 +137,7 @@ const LgbSelectInput = ({
       Array.from(listMap).map(item => {
         return {
           id: item[0],
-          name: item[1],
+          realName: item[1],
         };
       }),
     );
@@ -180,7 +180,7 @@ const LgbSelectInput = ({
                   />
                 }
               >
-                {item.name}
+                {item.realName}
               </List.Item>
             )}
           />
