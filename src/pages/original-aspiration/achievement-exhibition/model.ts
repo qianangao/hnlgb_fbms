@@ -62,19 +62,6 @@ const Model = {
       });
     },
 
-    *publishStatusChange({ payload }, { put }) {
-      yield put({
-        type: 'save',
-        payload: {
-          publishStatus: payload,
-        },
-      });
-
-      yield put({
-        type: 'tableReload',
-      });
-    },
-
     *addAchievement({ payload }, { call, put }) {
       const response = yield call(addAchievement, payload);
       const { isPublished } = payload;

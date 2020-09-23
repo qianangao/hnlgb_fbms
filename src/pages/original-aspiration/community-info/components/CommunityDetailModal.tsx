@@ -35,11 +35,12 @@ const CommunityDetail = ({
         type: 'oaCommunity/getCommunityDetail',
         payload: { id: communityId },
       });
-      let members = '';
-      communityDetailData.memberItems &&
-        communityDetailData.memberItems.forEach((item, index) => {
-          members = `${members + (index + 1)}、${item.realName} , `;
+      const membersArray =
+        communityDetailData.memberItems &&
+        communityDetailData.memberItems.map((Item, index) => {
+          return ` ${index + 1}、${Item.realName}`;
         });
+      const members = membersArray.join();
       setCommunityMembers(members);
     }
   }, [communityId]);
