@@ -3,6 +3,7 @@ import {
   addLgb,
   deleteLgb,
   getLgbList,
+  updateLgbOrg,
   resetLgbPwd,
   getLgbDetail,
   updateLgb,
@@ -85,7 +86,7 @@ const Model = {
       });
     },
     *updateLgbOrg({ payload }, { call, put }) {
-      const response = yield call(updateLgb, payload);
+      const response = yield call(updateLgbOrg, payload);
 
       if (!response.error) {
         yield put({

@@ -1,31 +1,13 @@
-import mockjs, { Random } from 'mockjs';
-
-const getDictionary = (req, res) => {
-  const { name } = req.query;
-
-  const a = mockjs.mock({
+const noResponse = (req, res) => {
+  res.send({
     code: 0,
     msg: 'success',
-    'data|10': [
-      {
-        chineseName: '@name',
-        code: /[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]/,
-        isCommonlyUsed: 1,
-      },
-    ],
+    data: {},
   });
-
-  a.data.push({
-    chineseName: '男',
-    code: '8adcf7c96a48fae4016a4925e34b',
-    isCommonlyUsed: 1,
-  });
-
-  return res.json(a);
 };
 
 const getOrgTree = (req, res) => {
-  const { name, id } = req.query;
+  const { id } = req.query;
 
   const a = {
     code: 0,
@@ -155,54 +137,113 @@ const searchOrgTree = (req, res) => {
   return res.json(a);
 };
 
-const uploadFile = (req, res) => {
-  res.json({
+const getOrgList = (req, res) => {
+  const a = {
     code: 0,
     msg: 'success',
     data: {
-      fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      id: '呵呵呵呵哒',
-      fileName: 'demo图片',
+      currentPage: 1,
+      pageSize: 20,
+      totalNum: 2,
+      isMore: 0,
+      totalPage: 1,
+      startIndex: 0,
+      items: [
+        {
+          id: '2c948a827409c4aa017409c4aa63', //id
+          sort: null,
+          organizationName: '测试单位1', //单位名称
+          parentEmployerId: '1000', //父单位id
+          parentOrganizationName: '省委老干部局', //父单位名称
+          isLgbMinistry: null,
+          dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3', //单位性质
+          organizationTelphone: null,
+          dictRank: 1, //单位级别
+          children: null,
+          isSubunit: null,
+          gmtCreate: null,
+          communityAddress: null,
+        },
+        {
+          id: '4028b23f738f519401738f5194b9',
+          sort: 0,
+          organizationName: '测试单位2',
+          parentEmployerId: '1000',
+          parentOrganizationName: '省委老干部局',
+          isLgbMinistry: 0,
+          dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
+          organizationTelphone: 'string',
+          dictRank: 1,
+          children: null,
+          isSubunit: null,
+          gmtCreate: null,
+          communityAddress: null,
+        },
+        {
+          id: '4028b23f738f519401738f5194b3',
+          sort: 0,
+          organizationName: '测试单位3',
+          parentEmployerId: '1000',
+          parentOrganizationName: '省委老干部局',
+          isLgbMinistry: 0,
+          dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
+          organizationTelphone: 'string',
+          dictRank: 1,
+          children: null,
+          isSubunit: null,
+          gmtCreate: null,
+          communityAddress: null,
+        },
+        {
+          id: '4028b23f738f519401738f5194b4',
+          sort: 0,
+          organizationName: '测试单位4',
+          parentEmployerId: '1000',
+          parentOrganizationName: '省委老干部局',
+          isLgbMinistry: 0,
+          dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
+          organizationTelphone: 'string',
+          dictRank: 1,
+          children: null,
+          isSubunit: null,
+          gmtCreate: null,
+          communityAddress: null,
+        },
+      ],
     },
-  });
+  };
+  return res.json(a);
 };
 
-const getCommunity = (req, res) => {
-  const { id } = req.query;
-  res.json({
+const getOrgItem = (req, res) => {
+  const a = {
     code: 0,
     msg: 'success',
-    data: [
-      {
-        id: id + '-1', //单位id
-        organizationName: '区域' + id + '-1', // 社区名称
-        parentEmployerId: id, //父组织id
-        parentOrganizationName: '北京', //父组织名称
-        organizationTelphone: null, //社区电话
-        communityAddress: null, //社区地址
-      },
-      {
-        id: id + '-2', //单位id
-        organizationName: '区域' + id + '-2', // 社区名称
-        parentEmployerId: id, //父组织id
-        parentOrganizationName: '北京', //父组织名称
-        organizationTelphone: null, //社区电话
-        communityAddress: null, //社区地址
-      },
-      {
-        id: id + '-3', //单位id
-        organizationName: '区域' + id + '-3', // 社区名称
-        parentEmployerId: id, //父组织id
-        parentOrganizationName: '北京', //父组织名称
-        organizationTelphone: null, //社区电话
-        communityAddress: null, //社区地址
-      },
-    ],
-  });
+    data: {
+      id: '4028b23f738f519401738f5194b4',
+      sort: 0,
+      organizationName: '测试单位4',
+      parentEmployerId: '1000',
+      parentOrganizationName: '省委老干部局',
+      isLgbMinistry: 0,
+      dictOrganizationType: '8adcf7c96a48fae4016a4925f3e3',
+      organizationTelphone: 'string',
+      dictRank: 1,
+      children: null,
+      isSubunit: null,
+      gmtCreate: null,
+      communityAddress: null,
+    },
+  };
+  return res.json(a);
 };
 
 export default {
-  'GET /dictionary': getDictionary,
-  'POST /attachmentsftpto': uploadFile,
-  'GET /communityAddress/child/:id': getCommunity,
+  'GET /organization/directly-child/:id': getOrgTree,
+  'GET /organization/all-child': searchOrgTree,
+  'POST /organization': noResponse,
+  'PUT /organization/:id': noResponse,
+  'DELETE /organization': noResponse,
+  'GET /organization': getOrgList,
+  'GET /organization/:id': getOrgItem,
 };
