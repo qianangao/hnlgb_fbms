@@ -56,7 +56,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     <Modal
       title="新增就医指南"
       centered
-      width="95vw"
+      width="70vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
