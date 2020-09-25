@@ -77,7 +77,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'helpElderly/helpElderlyInfoList',
-        payload: { ...params, status: publishStatus },
+        payload: { ...params, pushStatus: publishStatus },
         resolve,
       });
     });

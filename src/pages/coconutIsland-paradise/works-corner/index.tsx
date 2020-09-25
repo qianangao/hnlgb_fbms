@@ -7,7 +7,7 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import DetailModal from './components/DetailModal';
 
-const WorksCornerInfo = ({ dispatch }) => {
+const WorksCornerInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
@@ -40,15 +40,7 @@ const WorksCornerInfo = ({ dispatch }) => {
     // 控制：新增、编辑按钮
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(statusChange);
-    dispatch({
-      type: 'worksCorner/worksCornerInfoList',
-      payload: {
-        status: statusChange,
-        current: 1,
-        pageSize: 20,
-        currentPage: 1,
-      },
-    });
+    tableRef.current.reload();
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -68,5 +60,5 @@ const WorksCornerInfo = ({ dispatch }) => {
 };
 
 export default connect(({ worksCorner }) => ({
-  worksCorner,
+  tableRef: worksCorner.tableRef,
 }))(WorksCornerInfo);

@@ -7,7 +7,7 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import DetailModal from './components/DetailModal';
 
-const HelpElderlyInfo = ({ dispatch }) => {
+const HelpElderlyInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
@@ -32,15 +32,7 @@ const HelpElderlyInfo = ({ dispatch }) => {
     // 控制：新增、编辑按钮
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(statusChange);
-    dispatch({
-      type: 'helpElderly/helpElderlyInfoList',
-      payload: {
-        pushStatus: statusChange,
-        current: 1,
-        pageSize: 20,
-        currentPage: 1,
-      },
-    });
+    tableRef.current.reload();
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -60,5 +52,5 @@ const HelpElderlyInfo = ({ dispatch }) => {
 };
 
 export default connect(({ helpElderly }) => ({
-  helpElderly,
+  tableRef: helpElderly.tableRef,
 }))(HelpElderlyInfo);
