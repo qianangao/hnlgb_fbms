@@ -41,7 +41,7 @@ const WorksCornerInfo = ({ dispatch }) => {
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(statusChange);
     dispatch({
-      type: 'worksCorner/publishStatusChange',
+      type: 'worksCorner/worksCornerInfoList',
       payload: {
         status: statusChange,
         current: 1,

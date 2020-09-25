@@ -57,7 +57,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     <Modal
       title="新增助老志愿"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',

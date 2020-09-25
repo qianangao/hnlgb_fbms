@@ -41,13 +41,12 @@ const LifeServiceInfo = ({ dispatch }) => {
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(statusChange);
     dispatch({
-      type: 'lifeService/publishStatusChange',
+      type: 'lifeService/lifeServiceInfoList',
       payload: {
         status: statusChange,
         current: 1,
         pageSize: 20,
         currentPage: 1,
-        isLgb: 1, // 用户类型：0-老干部，1-工作人员
       },
     });
   };

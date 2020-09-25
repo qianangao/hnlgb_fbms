@@ -45,7 +45,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           payload: {
             ...values,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            isLgb: 1, // 用户类型：0-老干部，1-工作人员
           },
         });
       })
@@ -58,7 +57,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     <Modal
       title="新增生活服务"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',

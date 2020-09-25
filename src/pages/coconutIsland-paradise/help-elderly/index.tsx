@@ -33,7 +33,7 @@ const HelpElderlyInfo = ({ dispatch }) => {
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(statusChange);
     dispatch({
-      type: 'helpElderly/publishStatusChange',
+      type: 'helpElderly/helpElderlyInfoList',
       payload: {
         pushStatus: statusChange,
         current: 1,

@@ -36,7 +36,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
     <Modal
       title="生活服务详情"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
