@@ -40,10 +40,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       .validateFields()
       .then(values => {
         dispatch({
-          type:
-            deedsType === 'personal'
-              ? 'oaAdvancedDeeds/addPersonal'
-              : 'oaAdvancedDeeds/addCollective',
+          type: `oaAdvancedDeeds/${deedsType === 'personal' ? 'addPersonal' : 'addCollective'}`,
           payload: {
             ...values,
             isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布

@@ -10,7 +10,7 @@ import {
 const Model = {
   namespace: 'oaExperienceIntroduction',
   state: {
-    ExperienceListData: {},
+    experienceListData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -45,7 +45,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            ExperienceListData: result,
+            experienceListData: result,
           },
         });
       }

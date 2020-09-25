@@ -10,7 +10,7 @@ import {
 const Model = {
   namespace: 'oaElegantDemeanor',
   state: {
-    ElegantDemeanorListData: {},
+    elegantDemeanorListData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -43,7 +43,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            ElegantDemeanorListData: result,
+            elegantDemeanorListData: result,
           },
         });
       }

@@ -54,11 +54,11 @@ const AcadvancedDeeds = ({ dispatch }) => {
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
-  const openModifyModal = ids => {
-    modifyModelRef.current.showModal(ids);
+  const openModifyModal = id => {
+    modifyModelRef.current.showModal(id);
   };
-  const opendetailModal = ids => {
-    detailModalRef.current.showModal(ids);
+  const opendetailModal = id => {
+    detailModalRef.current.showModal(id);
   };
 
   return (

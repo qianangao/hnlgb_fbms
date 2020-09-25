@@ -29,10 +29,9 @@ const DeedsForm = ({ form, id, dispatch, loading, deedsType }) => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type:
-            deedsType === 'personal'
-              ? 'oaAdvancedDeeds/detailPersonal'
-              : 'oaAdvancedDeeds/detailCollective',
+          type: `oaAdvancedDeeds/${
+            deedsType === 'personal' ? 'detailPersonal' : 'detailCollective'
+          }`,
           payload: { id },
           resolve,
         });

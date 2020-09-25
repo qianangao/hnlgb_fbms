@@ -15,8 +15,8 @@ import {
 const Model = {
   namespace: 'oaAdvancedDeeds',
   state: {
-    PersonalListData: {},
-    CollectiveListData: {},
+    personalListData: {},
+    collectiveListData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -49,7 +49,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            PersonalListData: result,
+            personalListData: result,
           },
         });
       }
@@ -81,7 +81,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            CollectiveListData: result,
+            collectiveListData: result,
           },
         });
       }

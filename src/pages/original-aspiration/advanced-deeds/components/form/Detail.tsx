@@ -6,10 +6,7 @@ const Detail = ({ id, dispatch, detailDeedsData, deedsType }) => {
   useEffect(() => {
     if (id) {
       dispatch({
-        type:
-          deedsType === 'personal'
-            ? 'oaAdvancedDeeds/detailPersonal'
-            : 'oaAdvancedDeeds/detailCollective',
+        type: `oaAdvancedDeeds/${deedsType === 'personal' ? 'detailPersonal' : 'detailCollective'}`,
         payload: { id },
       });
     }

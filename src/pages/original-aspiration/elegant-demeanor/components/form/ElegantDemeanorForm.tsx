@@ -52,6 +52,7 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
                   uid: data.attachmentInfo.id,
                   name: data.attachmentInfo.name,
                   url: data.attachmentInfo.url,
+                  status: 'done',
                 }
               : null,
         };
