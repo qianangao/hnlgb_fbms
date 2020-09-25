@@ -46,6 +46,12 @@ const routes = {
       component: './coconutIsland-paradise/life-service',
       remark: '生活服务',
     },
+    {
+      path: '/coconutIsland-paradise/help-elderly',
+      name: 'coconutIsland-paradise-help-elderly',
+      component: './coconutIsland-paradise/help-elderly',
+      remark: '助老志愿',
+    },
   ],
 };
 export default routes;

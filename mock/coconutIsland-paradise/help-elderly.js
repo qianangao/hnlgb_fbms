@@ -10,19 +10,22 @@ const lifeServiceInfo = [];
 
 for (let i = 0; i < 20; i++) {
   lifeServiceInfo.push({
-    id: '402883e973e5c2ce0173e5c2ce9d' + i, //id
-    type: '家政上门服务' + i, //服务类型
-    title: '蓝色一望无际',
+    id: '402883e973e5c2ce0173e5c2cooo' + i, //id
+    title: '黑色的幽默',
     context: 'context',
-    pushStatus: 'pushStatus',
-    createUserId: 'createUserId',
-    organizationName: 'organizationName',
-    pushStatus: 'pushStatus',
+    pushStatus: '0',
     createUserId: 'createUserId',
     organizationName: 'organizationName',
     createTime: '2020-3-24',
     pushTime: '2020-4-14',
-    num: 15, //点赞数
+    attachmentInfo: {
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      id: '234567788997543',
+      fileName: '这是个附件',
+    },
+    fileId: 'fileId',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
   });
 }
 
@@ -42,32 +45,35 @@ const list = (req, res) => {
   });
 };
 
-const detailLifeServiceInfo = (req, res) => {
+const detailHelpElderlyInfo = (req, res) => {
   res.send({
     code: 0,
     msg: 'success',
     data: {
       id: '402883e973e5c2ce0173e5c2ce9d', //id
-      type: '家政上门服务', //服务类型
-      title: '蓝色一望无际',
+      title: '黑色的幽默',
       context: 'context',
-      pushStatus: 'pushStatus',
-      createUserId: 'createUserId',
-      organizationName: 'organizationName',
-      pushStatus: 'pushStatus',
+      pushStatus: '0',
       createUserId: 'createUserId',
       organizationName: 'organizationName',
       createTime: '2020-3-24',
       pushTime: '2020-4-14',
-      num: 15, //点赞数
+      attachmentInfo: {
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+        id: '234567788997543',
+        fileName: '这是个附件',
+      },
+      fileId: 'fileId',
+      fileName: 'fileName',
+      fileUrl: 'fileUrl',
     },
   });
 };
 
 export default {
-  'GET /life_service': list,
-  'POST /life_service': noResponse,
-  'DELETE /life_service': noResponse,
-  'PUT /life_service/:id': noResponse,
-  'GET /life_service/:id': detailLifeServiceInfo,
+  'GET /help_old': list,
+  'POST /help_old': noResponse,
+  'DELETE /help_old': noResponse,
+  'PUT /help_old/:id': noResponse,
+  'GET /help_old/:id': detailHelpElderlyInfo,
 };
