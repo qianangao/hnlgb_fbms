@@ -5,6 +5,7 @@ import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
 import InformationRelease from './information-release';
 import WorkHelper from './work-helper';
+import SystemMgt from './system-mgt';
 const router = [
   {
     path: '/',
@@ -51,6 +52,7 @@ const router = [
               WorkRecordRoutes,
               InformationRelease,
               WorkHelper,
+              SystemMgt,
               {
                 component: './404',
               },

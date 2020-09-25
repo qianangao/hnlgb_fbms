@@ -3,7 +3,7 @@ import { Tree, Input } from 'antd';
 import { connect } from 'umi';
 import styles from './index.less';
 
-const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
+const OrgTree = ({ value, onChange, orgTree, userInfo, allInValue, dispatch }) => {
   const [hasSearch, setHasSearch] = useState(false);
   const symbol = useRef(Symbol('OrgTree'));
   const orgSymbol = symbol.current;
@@ -14,6 +14,19 @@ const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
   useEffect(() => {
     dispatch({ type: 'orgTree/initTreeData', payload: { value }, orgSymbol });
     dispatch({ type: 'orgTree/getOrgTreeById', orgSymbol });
+
+    const { organizationId, organizationName } = userInfo;
+
+    // 初始化组织树选择
+    onChange &&
+      onChange(
+        allInValue
+          ? {
+              key: organizationId,
+              title: organizationName,
+            }
+          : organizationId,
+      );
 
     return () => {
       dispatch({ type: 'orgTree/destroyTree', orgSymbol });
@@ -106,6 +119,7 @@ const OrgTree = ({ value, onChange, orgTree, allInValue, dispatch }) => {
   );
 };
 
-export default connect(({ orgTree }) => ({
+export default connect(({ orgTree, user }) => ({
   orgTree,
+  userInfo: user.userInfo,
 }))(OrgTree);

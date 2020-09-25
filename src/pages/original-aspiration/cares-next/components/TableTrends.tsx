@@ -17,7 +17,8 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
     },
     { title: '主题', align: 'center', dataIndex: 'theme' },
     { title: '发布单位', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
-    { title: '发布时间', align: 'center', dataIndex: 'releaseTime', hideInSearch: true },
+    { title: '所属组织', align: 'center', dataIndex: 'mechanismName', hideInSearch: true },
+    { title: '发布时间', align: 'center', dataIndex: 'createTime', hideInSearch: true },
     {
       title: '操作',
       valueType: 'option',
@@ -62,6 +63,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
   return (
     <ProTable
       headerTitle="关工动态信息"
+      rowKey="id"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

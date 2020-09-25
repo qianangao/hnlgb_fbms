@@ -34,6 +34,17 @@ export async function resetLgbPwd(params) {
 }
 
 /**
+ * 编辑老干部所属部门
+ * @param {*} params
+ */
+export async function updateLgbOrg(params) {
+  return request(`/users/list/organization`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+/**
  * 新增老干部
  * @param {*} params
  */

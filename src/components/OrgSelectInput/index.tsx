@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Modal, Input } from 'antd';
+import { Modal, Input } from 'antd';
 import OrgTree from '@/components/OrgTree';
 
-let tempName = '';
+let tempOrg = {};
 
 const OrgSelectInput = ({ value, actionRef, onChange }) => {
   const [orgSelectModalVisible, setVisible] = useState(false);
   const [valueName, setValueName] = useState('');
-  const [form] = Form.useForm();
+  const [orgId, setOrgId] = useState('');
 
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -19,12 +19,16 @@ const OrgSelectInput = ({ value, actionRef, onChange }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setOrgId(value);
+  }, [value]);
+
   const setLabel = label => {
     setValueName(label);
   };
 
   const showModal = () => {
-    form.setFieldsValue({ organizationId: value });
+    setOrgId(value);
     setVisible(true);
   };
 
@@ -33,16 +37,10 @@ const OrgSelectInput = ({ value, actionRef, onChange }) => {
   };
 
   const handleOk = () => {
-    form
-      .validateFields()
-      .then(values => {
-        setValueName(tempName);
-        onChange && onChange(values.organizationId);
-        setVisible(false);
-      })
-      .catch(info => {
-        console.error('Validate Failed:', info);
-      });
+    setValueName(tempOrg.title);
+    setOrgId(tempOrg.key);
+    onChange && onChange(tempOrg.key);
+    setVisible(false);
   };
 
   return (
@@ -58,21 +56,15 @@ const OrgSelectInput = ({ value, actionRef, onChange }) => {
           height: 'calc(95vh - 108px)',
           overflow: 'auto',
         }}
-        forceRender
         onCancel={hideModal}
       >
-        <Form form={form}>
-          <Form.Item
-            name="organizationId"
-            rules={[{ required: true, message: '请选择具体单位!' }]}
-            getValueFromEvent={item => {
-              tempName = item.title;
-              return item.key;
-            }}
-          >
-            <OrgTree allInValue />
-          </Form.Item>
-        </Form>
+        <OrgTree
+          value={orgId}
+          onChange={item => {
+            tempOrg = item;
+          }}
+          allInValue
+        />
       </Modal>
     </>
   );
