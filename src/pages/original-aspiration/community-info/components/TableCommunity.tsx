@@ -48,7 +48,7 @@ const Table = ({
         <a key={`${Data.id}up`} onClick={() => openModifyModal(Data)}>
           编辑
         </a>,
-        <a key={`${Data.id}up`} onClick={() => openAddActivityModal(Data.id)}>
+        <a key={`${Data.id}release`} onClick={() => openAddActivityModal(Data.id)}>
           发布活动
         </a>,
         <Popconfirm

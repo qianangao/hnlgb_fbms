@@ -68,7 +68,7 @@ const Table = ({
           </a>
         ) : (
           <a
-            key={`${Data.id}up`}
+            key={`${Data.id}detail`}
             onClick={() => {
               opendetailModal(Data);
             }}
