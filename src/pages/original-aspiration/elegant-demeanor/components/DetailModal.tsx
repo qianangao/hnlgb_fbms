@@ -5,8 +5,8 @@ import Detail from './form/Detail';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   const [detailId, setDetailId] = useState('');
-  const showModal = item => {
-    setDetailId(item.id);
+  const showModal = id => {
+    setDetailId(id);
     dispatch({
       type: 'oaElegantDemeanor/save',
       payload: {

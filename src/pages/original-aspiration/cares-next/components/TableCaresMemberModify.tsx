@@ -32,15 +32,15 @@ const TableCaresMember = ({
       dataIndex: 'id',
       width: 200,
       fixed: 'right',
-      render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openMemberModifyModel(employeeData)}>
+      render: (dom, Data) => [
+        <a key={`${Data.id}up`} onClick={() => openMemberModifyModel(Data)}>
           编辑
         </a>,
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${Data.id}del`}
           title="确认删除该成员吗？"
           placement="topRight"
-          onConfirm={() => deleteMember([employeeData.id])}
+          onConfirm={() => deleteMember([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

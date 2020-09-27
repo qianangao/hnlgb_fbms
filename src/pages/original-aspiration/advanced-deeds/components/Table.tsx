@@ -9,7 +9,7 @@ const Table = ({
   oaAdvancedDeeds,
   enums,
   dispatch,
-  opendetailModal,
+  openDetailModal,
   tableType,
   publishStatus,
 }) => {
@@ -57,31 +57,31 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, Data) => [
         publishStatus === 0 ? (
           <a
-            key={`${employeeData.id}up`}
+            key={`${Data.id}up`}
             onClick={() => {
-              openModifyModal(employeeData);
+              openModifyModal(Data);
             }}
           >
             编辑
           </a>
         ) : (
           <a
-            key={`${employeeData.id}up`}
+            key={`${Data.id}detail`}
             onClick={() => {
-              opendetailModal(employeeData);
+              openDetailModal(Data);
             }}
           >
             详情
           </a>
         ),
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${Data.id}del`}
           title="确认删除该事迹信息？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

@@ -6,8 +6,8 @@ import ElegantDemeanorForm from './form/ElegantDemeanorForm';
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = ElegantDemeanorForm.useForm();
   const [elegantDemeanorId, setElegantDemeanorId] = useState('');
-  const showModal = item => {
-    setElegantDemeanorId(item.id);
+  const showModal = id => {
+    setElegantDemeanorId(id);
     dispatch({
       type: 'oaElegantDemeanor/save',
       payload: {
@@ -48,7 +48,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             context: values.context,
             fileId: values.uploadInfo.uid,
             fileUrl: values.uploadInfo.url,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            publishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: elegantDemeanorId,
           },
         });

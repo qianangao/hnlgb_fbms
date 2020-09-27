@@ -33,11 +33,11 @@ const ElegantDemeanorHome = ({ dispatch }) => {
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
-  const openModifyModal = ids => {
-    modifyModelRef.current.showModal(ids);
+  const openModifyModal = item => {
+    modifyModelRef.current.showModal(item.id);
   };
-  const opendetailModal = ids => {
-    detailModalRef.current.showModal(ids);
+  const openDetailModal = item => {
+    detailModalRef.current.showModal(item.id);
   };
   const onPublishStatusChange = value => {
     // publishStatus 、value  0 草稿箱 ， 1 已发布
@@ -51,7 +51,7 @@ const ElegantDemeanorHome = ({ dispatch }) => {
           publishStatus={publishStatus}
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
-          opendetailModal={opendetailModal}
+          openDetailModal={openDetailModal}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />

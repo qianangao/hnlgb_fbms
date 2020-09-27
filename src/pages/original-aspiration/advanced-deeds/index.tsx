@@ -57,8 +57,8 @@ const AcadvancedDeeds = ({ dispatch }) => {
   const openModifyModal = id => {
     modifyModelRef.current.showModal(id);
   };
-  const opendetailModal = id => {
-    detailModalRef.current.showModal(id);
+  const openDetailModal = item => {
+    detailModalRef.current.showModal(item.id);
   };
 
   return (
@@ -73,7 +73,7 @@ const AcadvancedDeeds = ({ dispatch }) => {
           publishStatus={publishStatus}
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
-          opendetailModal={opendetailModal}
+          openDetailModal={openDetailModal}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} deedsType={tableType} />

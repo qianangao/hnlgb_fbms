@@ -64,7 +64,7 @@ const Model = {
 
     *addElegantDemeanor({ payload }, { call, put }) {
       const response = yield call(addElegantDemeanor, payload);
-      const { isPublished } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -72,7 +72,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(isPublished === 0 ? '五老风采新增成功！' : '五老风采发布成功！');
+        message.success(publishStatus === 0 ? '五老风采新增成功！' : '五老风采发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -80,7 +80,7 @@ const Model = {
     },
     *updateElegantDemeanor({ payload }, { call, put }) {
       const response = yield call(updateElegantDemeanor, payload);
-      const { isPublished } = payload;
+      const { publishStatus } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -89,7 +89,7 @@ const Model = {
           },
         });
 
-        message.success(isPublished === 0 ? '五老风采修改成功！' : '五老风采发布成功！');
+        message.success(publishStatus === 0 ? '五老风采修改成功！' : '五老风采发布成功！');
 
         yield put({
           type: 'tableReload',
