@@ -6,13 +6,12 @@ import { connect } from 'umi';
 const Table = ({
   openAddModal,
   openModifyModal,
-  oaActivityHome,
-  enums,
+  oaExperienceIntroduction,
   dispatch,
   opendetailModal,
   publishStatus,
 }) => {
-  const { tableRef } = oaActivityHome;
+  const { tableRef } = oaExperienceIntroduction;
   const columns = [
     {
       title: '序号',
@@ -25,14 +24,7 @@ const Table = ({
     {
       title: `标题`,
       align: 'center',
-      dataIndex: 'activityTitle',
-    },
-    {
-      title: '活动分类',
-      align: 'center',
-      dataIndex: 'dictActivityClassification',
-      valueEnum: enums.dictActivityClassification,
-      hideInTable: true,
+      dataIndex: 'title',
     },
 
     {
@@ -78,7 +70,7 @@ const Table = ({
         ),
         <Popconfirm
           key={`${Data.id}del`}
-          title="确认删除该活动信息？"
+          title="确认删除该经验介绍？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
@@ -93,18 +85,20 @@ const Table = ({
   }, [publishStatus]);
 
   // 列表
-  const getEmployeeList = params =>
-    new Promise(resolve => {
+  const getEmployeeList = params => {
+    return new Promise(resolve => {
       dispatch({
-        type: 'oaActivityHome/getActivityList',
+        type: 'oaExperienceIntroduction/getExperienceList',
         payload: { ...params, isPublished: publishStatus },
         resolve,
       });
     });
+  };
+
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'oaActivityHome/deleteActivity',
+      type: 'oaExperienceIntroduction/deleteExperience',
       payload: {
         ids,
       },
@@ -114,7 +108,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="活动信息"
+      headerTitle="经验介绍"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -129,7 +123,7 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除活动信息？',
+                title: '确认批量删除经验介绍？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -146,7 +140,6 @@ const Table = ({
   );
 };
 
-export default connect(({ oaActivityHome, global }) => ({
-  oaActivityHome,
-  enums: global.enums,
+export default connect(({ oaExperienceIntroduction }) => ({
+  oaExperienceIntroduction,
 }))(Table);
