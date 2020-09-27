@@ -6,13 +6,13 @@ import { connect } from 'umi';
 const Table = ({
   openAddModal,
   openModifyModal,
-  oaActivityHome,
+  oaElegantDemeanor,
   enums,
   dispatch,
-  opendetailModal,
+  openDetailModal,
   publishStatus,
 }) => {
-  const { tableRef } = oaActivityHome;
+  const { tableRef } = oaElegantDemeanor;
   const columns = [
     {
       title: '序号',
@@ -25,13 +25,13 @@ const Table = ({
     {
       title: `标题`,
       align: 'center',
-      dataIndex: 'activityTitle',
+      dataIndex: 'title',
     },
     {
-      title: '活动分类',
+      title: '五老类型',
       align: 'center',
-      dataIndex: 'dictActivityClassification',
-      valueEnum: enums.dictActivityClassification,
+      dataIndex: 'type',
+      valueEnum: enums.dictResultType,
       hideInTable: true,
     },
 
@@ -39,7 +39,7 @@ const Table = ({
       title: publishStatus === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'updateTime' : 'pushTime',
+      dataIndex: publishStatus === 0 ? 'createTime' : 'pushTime',
       hideInSearch: true,
     },
 
@@ -70,7 +70,7 @@ const Table = ({
           <a
             key={`${Data.id}detail`}
             onClick={() => {
-              opendetailModal(Data);
+              openDetailModal(Data);
             }}
           >
             详情
@@ -78,7 +78,7 @@ const Table = ({
         ),
         <Popconfirm
           key={`${Data.id}del`}
-          title="确认删除该活动信息？"
+          title="确认删除该五老风采？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
@@ -93,18 +93,20 @@ const Table = ({
   }, [publishStatus]);
 
   // 列表
-  const getEmployeeList = params =>
-    new Promise(resolve => {
+  const getEmployeeList = params => {
+    return new Promise(resolve => {
       dispatch({
-        type: 'oaActivityHome/getActivityList',
+        type: 'oaElegantDemeanor/getElegantDemeanorList',
         payload: { ...params, isPublished: publishStatus },
         resolve,
       });
     });
+  };
+
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'oaActivityHome/deleteActivity',
+      type: 'oaElegantDemeanor/deleteElegantDemeanor',
       payload: {
         ids,
       },
@@ -114,7 +116,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="活动信息"
+      headerTitle="五老风采信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -129,7 +131,7 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除活动信息？',
+                title: '确认批量删除五老风采？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -146,7 +148,7 @@ const Table = ({
   );
 };
 
-export default connect(({ oaActivityHome, global }) => ({
-  oaActivityHome,
+export default connect(({ oaElegantDemeanor, global }) => ({
+  oaElegantDemeanor,
   enums: global.enums,
 }))(Table);

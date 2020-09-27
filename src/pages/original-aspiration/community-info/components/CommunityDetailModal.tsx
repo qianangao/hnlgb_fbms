@@ -40,7 +40,7 @@ const CommunityDetail = ({
         communityDetailData.memberItems.map((Item, index) => {
           return ` ${index + 1}、${Item.realName}`;
         });
-      const members = membersArray.join();
+      const members = membersArray && membersArray.join();
       setCommunityMembers(members);
     }
   }, [communityId]);

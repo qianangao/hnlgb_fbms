@@ -27,7 +27,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       width: 200,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openTrendsDetailModal(employeeData)}>
+        <a key={`${employeeData.id}detail`} onClick={() => openTrendsDetailModal(employeeData)}>
           查看
         </a>,
         <Popconfirm

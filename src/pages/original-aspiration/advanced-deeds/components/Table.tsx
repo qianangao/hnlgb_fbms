@@ -6,13 +6,14 @@ import { connect } from 'umi';
 const Table = ({
   openAddModal,
   openModifyModal,
-  oaActivityHome,
+  oaAdvancedDeeds,
   enums,
   dispatch,
-  opendetailModal,
+  openDetailModal,
+  tableType,
   publishStatus,
 }) => {
-  const { tableRef } = oaActivityHome;
+  const { tableRef } = oaAdvancedDeeds;
   const columns = [
     {
       title: '序号',
@@ -25,13 +26,13 @@ const Table = ({
     {
       title: `标题`,
       align: 'center',
-      dataIndex: 'activityTitle',
+      dataIndex: 'title',
     },
     {
-      title: '活动分类',
+      title: '事迹分类',
       align: 'center',
-      dataIndex: 'dictActivityClassification',
-      valueEnum: enums.dictActivityClassification,
+      dataIndex: tableType === 'personal' ? 'dictPerson' : 'dictUnit',
+      valueEnum: tableType === 'personal' ? enums.dictPerson : enums.dictUnit,
       hideInTable: true,
     },
 
@@ -70,7 +71,7 @@ const Table = ({
           <a
             key={`${Data.id}detail`}
             onClick={() => {
-              opendetailModal(Data);
+              openDetailModal(Data);
             }}
           >
             详情
@@ -78,7 +79,7 @@ const Table = ({
         ),
         <Popconfirm
           key={`${Data.id}del`}
-          title="确认删除该活动信息？"
+          title="确认删除该事迹信息？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
@@ -91,20 +92,31 @@ const Table = ({
   useEffect(() => {
     tableRef.current && tableRef.current.reloadAndRest();
   }, [publishStatus]);
+  useEffect(() => {
+    tableRef.current && tableRef.current.reloadAndRest();
+  }, [tableType]);
 
   // 列表
-  const getEmployeeList = params =>
-    new Promise(resolve => {
+  const getDeedsList = params => {
+    return new Promise(resolve => {
       dispatch({
-        type: 'oaActivityHome/getActivityList',
+        type:
+          tableType === 'personal'
+            ? 'oaAdvancedDeeds/getPersonalList'
+            : 'oaAdvancedDeeds/getCollectiveList',
         payload: { ...params, isPublished: publishStatus },
         resolve,
       });
     });
+  };
+
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'oaActivityHome/deleteActivity',
+      type:
+        tableType === 'personal'
+          ? 'oaAdvancedDeeds/deletePersonal'
+          : 'oaAdvancedDeeds/deleteCollective',
       payload: {
         ids,
       },
@@ -114,11 +126,11 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="活动信息"
+      headerTitle={tableType === 'personal' ? '个人先进事迹信息' : '集体先进事迹信息'}
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getEmployeeList(params)}
+      request={async params => getDeedsList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
         publishStatus === 0 ? (
           <Button type="primary" onClick={() => openAddModal()}>
@@ -129,7 +141,7 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除活动信息？',
+                title: '确认批量删除事迹信息？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -146,7 +158,7 @@ const Table = ({
   );
 };
 
-export default connect(({ oaActivityHome, global }) => ({
-  oaActivityHome,
+export default connect(({ oaAdvancedDeeds, global }) => ({
+  oaAdvancedDeeds,
   enums: global.enums,
 }))(Table);
