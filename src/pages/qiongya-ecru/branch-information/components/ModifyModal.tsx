@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
+import BranchInformationPartyUserListTable from './form/BranchInformationPartyUserListTable';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = BranchInformationForm.useForm();
-  const [lgbId, setLgbId] = useState('');
+  const [id, setId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setId(item.id);
     dispatch({
       type: 'branchInformation/save',
       payload: {
@@ -80,7 +81,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <BranchInformationForm form={form} id={lgbId} />
+        <BranchInformationForm form={form} id={id} />
+        <BranchInformationPartyUserListTable id={id} />
       </div>
     </Modal>
   );

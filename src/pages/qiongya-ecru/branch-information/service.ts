@@ -54,3 +54,14 @@ export async function updateBranchInformation(params) {
     data: params,
   });
 }
+
+/**
+ * 支部成员列表
+ * @param {*} params
+ */
+export async function partyUserList(params) {
+  return request(`/partyUser/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}

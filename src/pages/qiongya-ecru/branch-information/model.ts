@@ -5,6 +5,7 @@ import {
   updateBranchInformation,
   branchInformationList,
   detailBranchInformation,
+  partyUserList,
 } from './service';
 
 const Model = {
@@ -15,6 +16,7 @@ const Model = {
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailbranchInformationData: {},
+    partyUserListData: {},
   },
   effects: {
     *branchInformationList({ payload, resolve }, { call, put, select }) {
@@ -95,7 +97,7 @@ const Model = {
     *deleteBranchInformation({ payload }, { call, put }) {
       const response = yield call(deleteBranchInformation, payload);
       if (!response.error) {
-        message.success('支部信息删除成功！');
+        message.success('支部信息新增删除成功！');
         yield put({
           type: 'tableReload',
         });
@@ -110,6 +112,19 @@ const Model = {
           type: 'save',
           payload: {
             detailBranchInformationData: response,
+          },
+        });
+      }
+    },
+    *partyUserList({ payload, resolve }, { call, put }) {
+      const response = yield call(partyUserList, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            partyUserListData: response,
           },
         });
       }
