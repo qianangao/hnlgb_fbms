@@ -118,6 +118,8 @@ const AdvancedFormInstance = ({
   fieldChange,
   enums,
   loading = false,
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  dispatch, // 为了将dispatch从props中移除
   ...props
 }) => {
   const onValuesChange = (changedValues, allValues) => {

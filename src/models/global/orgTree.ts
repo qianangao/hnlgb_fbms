@@ -1,4 +1,14 @@
-import { getOrgTreeById, searchOrgTree } from '@/services/global/orgTree';
+import { message } from 'antd';
+
+import {
+  getOrgTreeById,
+  searchOrgTree,
+  addOrg,
+  updateOrg,
+  deleteOrgs,
+  getOrgList,
+  getOrgItem,
+} from '@/services/global/orgTree';
 
 const transformOrgTreeData = tree => {
   const parentIds = [];
@@ -38,11 +48,10 @@ const model = {
   namespace: 'orgTree',
   state: {
     orgTreeData: [],
-    searchOrgTreeData: null,
     multiOrgTreeData: [],
-    orgLoadedLoadedKeys: [],
-    orgSelectedKeys: [],
-    orgExpandedKeys: [],
+    orgList: [],
+    detailOrgData: {},
+    tableRef: {},
   },
   effects: {
     *getOrgTreeById({ payload = {}, orgSymbol, resolve }, { call, put, select }) {
@@ -53,24 +62,13 @@ const model = {
       );
       const id = payload.id || organizationId; // 默认使用user的orgid
 
-      const response = yield call(getOrgTreeById, {
-        id,
-      });
+      const response = yield call(getOrgTreeById, { id });
 
       if (!response.error) {
         if (orgTreeData.length === 0) {
           orgTreeData.push({
             key: organizationId,
             title: organizationName,
-          });
-
-          yield put({
-            type: 'saveOrgTree',
-            payload: {
-              orgSelectedKeys: [organizationId],
-              orgExpandedKeys: [organizationId],
-            },
-            orgSymbol,
           });
         }
 
@@ -88,6 +86,17 @@ const model = {
           },
           orgSymbol,
         });
+
+        if (id === organizationId) {
+          yield put({
+            type: 'saveOrgTree',
+            payload: {
+              orgSelectedKeys: [organizationId],
+              orgExpandedKeys: [organizationId],
+            },
+            orgSymbol,
+          });
+        }
       }
     },
     *searchOrgTree({ payload, orgSymbol }, { call, put }) {
@@ -137,6 +146,81 @@ const model = {
         orgSymbol,
       });
     },
+    *getOrgList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+      const response = yield call(getOrgList, params);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            orgList: result,
+          },
+        });
+      }
+    },
+    *addOrg({ payload, resolve }, { call, put }) {
+      const response = yield call(addOrg, payload);
+      if (!response.error) {
+        message.success('组织新增成功！');
+
+        resolve();
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *updateOrg({ payload, resolve }, { call, put }) {
+      const response = yield call(updateOrg, payload);
+      if (!response.error) {
+        message.success('组织信息修改成功！');
+
+        resolve();
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *deleteOrgs({ payload }, { call, put }) {
+      const response = yield call(deleteOrgs, payload);
+
+      if (!response.error) {
+        message.success('组织删除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *getOrgItem({ payload, resolve }, { call, put }) {
+      const response = yield call(getOrgItem, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailOrgData: response,
+          },
+        });
+      }
+    },
   },
   reducers: {
     save(state, { payload }) {
@@ -167,6 +251,13 @@ const model = {
       return {
         ...stateTemp,
       };
+    },
+    tableReload(state) {
+      const tableRef = state.tableRef || {};
+      setTimeout(() => {
+        tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
     },
   },
 };

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Descriptions } from 'antd';
-import DifferentLivingPlacesFrom from './form/differentLivingPlacesFrom';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
+import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();

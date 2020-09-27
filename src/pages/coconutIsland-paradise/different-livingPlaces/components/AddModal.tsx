@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import DifferentLivingPlacesFrom from './form/differentLivingPlacesFrom';
+import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();

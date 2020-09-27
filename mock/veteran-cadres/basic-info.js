@@ -221,6 +221,7 @@ export default {
   'GET /users/:id': getUserInfo,
   'PUT /users/:id': noResponse,
   'PUT /users/password/:id': noResponse,
+  'PUT /users/list/organization': noResponse,
   'GET /users/family/:id': getFamilyInfo,
   'PUT /users/family/:id': noResponse,
   'GET /part_time/:id': getPartTime,

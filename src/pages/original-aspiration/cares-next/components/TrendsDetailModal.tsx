@@ -43,7 +43,7 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
     <Modal
       title="关工动态详情"
       centered
-      width="50vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -58,11 +58,21 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
         </Button>,
       ]}
     >
-      <Descriptions size="middle" column={1}>
-        <Descriptions.Item label="主题">{trendsDetailData.theme}</Descriptions.Item>
-        <Descriptions.Item label="发布时间">{trendsDetailData.createTime}</Descriptions.Item>
-        <Descriptions.Item label="发布单位">{trendsDetailData.organizationName}</Descriptions.Item>
-        <Descriptions.Item label="内容">{trendsDetailData.content}</Descriptions.Item>
+      <Descriptions size="middle">
+        <div style={{ margin: '5px' }}>
+          <h2 style={{ textAlign: 'center' }}>{trendsDetailData.theme}</h2>
+          <div style={{ textAlign: 'center' }}>
+            发布单位：{trendsDetailData.organizationName}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
+            {trendsDetailData.createTime}
+          </div>
+          <hr style={{ color: '#CCCCCC' }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: trendsDetailData.content,
+            }}
+          />
+        </div>
       </Descriptions>
     </Modal>
   );

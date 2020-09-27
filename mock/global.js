@@ -203,8 +203,6 @@ const getCommunity = (req, res) => {
 
 export default {
   'GET /dictionary': getDictionary,
-  'GET /organization/directly-child/:id': getOrgTree,
-  'GET /organization/all-child': searchOrgTree,
   'POST /attachmentsftpto': uploadFile,
   'GET /communityAddress/child/:id': getCommunity,
 };
