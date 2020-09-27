@@ -32,8 +32,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = publishStatus => {
@@ -55,13 +53,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改政策规定与解答"
+      title="修改收发文件"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={modifyModalVisible}
       footer={[
@@ -80,7 +78,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

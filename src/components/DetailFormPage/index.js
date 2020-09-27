@@ -22,7 +22,7 @@ const DetailFormPage = ({ title, releaseTime, orgName, content, extraFile }) => 
         />
         {extraFile && extraFile.url && (
           <div style={{ textAlign: 'left', margin: '20px 0px 10px 10px' }}>
-            缩略图：
+            附件：
             <a
               href={extraFile.url}
               target="_blank"

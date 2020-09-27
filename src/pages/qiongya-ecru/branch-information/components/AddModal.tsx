@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import ReceiveFileForm from './form/ReceiveFileForm';
+import BranchInformationForm from './form/BranchInformationForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = ReceiveFileForm.useForm();
+  const [form] = BranchInformationForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'receiveFile/save',
+      type: 'branchInformation/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'receiveFile/save',
+      type: 'branchInformation/save',
       payload: {
         addModalVisible: false,
       },
@@ -35,15 +35,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `receiveFile/addReceiveFile`,
+          type: `branchInformation/addBranchInformation`,
           payload: {
             ...values,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -55,7 +54,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增收发文件"
+      title="新增支部信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -65,23 +64,20 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk()}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <ReceiveFileForm form={form} />
+      <BranchInformationForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ receiveFile, loading }) => ({
-  addModalVisible: receiveFile.addModalVisible,
-  loading: loading.models.receiveFile,
+export default connect(({ branchInformation, loading }) => ({
+  addModalVisible: branchInformation.addModalVisible,
+  loading: loading.models.branchInformation,
 }))(AddModal);
