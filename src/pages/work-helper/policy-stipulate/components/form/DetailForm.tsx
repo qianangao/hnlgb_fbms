@@ -12,7 +12,15 @@ const DetailForm = ({ id, dispatch, detailPolicyStipulateData }) => {
     }
   }, [id]);
 
-  return <DetailFormPage detailData={detailPolicyStipulateData} />;
+  return (
+    <DetailFormPage
+      title={detailPolicyStipulateData.title}
+      releaseTime={detailPolicyStipulateData.releaseTime}
+      orgName={detailPolicyStipulateData.createOrgName}
+      content={detailPolicyStipulateData.content}
+      extraFile={detailPolicyStipulateData.attachmentInfo}
+    />
+  );
 };
 
 export default connect(({ policyStipulate, loading }) => ({

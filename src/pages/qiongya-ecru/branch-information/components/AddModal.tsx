@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
+import BranchInformationForm from './form/BranchInformationForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = NoticeAnnouncementForm.useForm();
+  const [form] = BranchInformationForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'noticeAnnouncement/save',
+      type: 'branchInformation/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'noticeAnnouncement/save',
+      type: 'branchInformation/save',
       payload: {
         addModalVisible: false,
       },
@@ -35,16 +35,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `noticeAnnouncement/addNoticeAnnouncement`,
+          type: `branchInformation/addBranchInformation`,
           payload: {
             ...values,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -56,7 +54,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增通知公告"
+      title="新增支部信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -66,23 +64,20 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk()}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <NoticeAnnouncementForm form={form} />
+      <BranchInformationForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ noticeAnnouncement, loading }) => ({
-  addModalVisible: noticeAnnouncement.addModalVisible,
-  loading: loading.models.noticeAnnouncement,
+export default connect(({ branchInformation, loading }) => ({
+  addModalVisible: branchInformation.addModalVisible,
+  loading: loading.models.branchInformation,
 }))(AddModal);

@@ -43,8 +43,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `policyStipulate/addPolicyStipulate`,
           payload: {
             ...values,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -62,7 +61,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={addModalVisible}
       footer={[

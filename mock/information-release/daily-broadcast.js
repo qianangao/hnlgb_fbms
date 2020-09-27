@@ -49,7 +49,7 @@ const detailDailyBroadcast = (req, res) => {
       headline: '每日播报', //姓名
       gmtCreate: '2020-08-13 03:00:16', //创建时间
       createOrgName: '省委老干部局',
-      attachmentId: {
+      attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         uid: '呵呵呵呵哒',
         name: 'demo图片',

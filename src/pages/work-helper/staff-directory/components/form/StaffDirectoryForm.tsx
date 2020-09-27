@@ -1,32 +1,36 @@
 import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
+import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 
-const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
+const StaffDirectoryForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
-      label: '标题',
-      name: 'headline',
-      rules: [{ required: true, message: '请输入标题!', whitespace: true }],
+      label: '姓名',
+      name: 'name',
+    },
+
+    {
+      label: '电话',
+      name: 'telephone',
     },
     {
       key: 'firstLine',
       type: 'segmentation',
     },
     {
-      label: '缩略图',
-      name: 'attachmentInfo',
-      type: 'image',
+      label: '地区名称',
+      name: 'region',
+      render: <ProvinceCascaderInput />,
+      span: 2,
     },
     {
       key: 'secondLine',
       type: 'segmentation',
     },
     {
-      label: '内容',
-      name: 'context',
-      type: 'editor',
-      rules: [{ required: true, message: '请输入内容!', whitespace: true }],
+      label: '详细地址',
+      name: 'detailedAddress',
       span: 2,
     },
   ];
@@ -34,7 +38,7 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type: 'newsDynamic/detailNewsDynamic',
+          type: 'staffDirectory/detailStaffDirectory',
           payload: { id },
           resolve,
         });
@@ -42,6 +46,12 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
+        fields.region = data.regionName
+          ? {
+              value: data.regionCode,
+              label: data.regionName,
+            }
+          : null;
         form.setFieldsValue(fields);
       });
     }
@@ -50,8 +60,8 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
   return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };
 
-NewsDynamicForm.useForm = AdvancedForm.useForm;
+StaffDirectoryForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
-  loading: loading.models.newsDynamic,
-}))(NewsDynamicForm);
+  loading: loading.models.staffDirectory,
+}))(StaffDirectoryForm);
