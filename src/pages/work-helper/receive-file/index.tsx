@@ -8,7 +8,7 @@ import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
-const ReceiveFile = ({ dispatch }) => {
+const ReceiveFile = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
@@ -48,15 +48,7 @@ const ReceiveFile = ({ dispatch }) => {
     // 控制：新增、编辑按钮
     // changeStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(changeStatus);
-    dispatch({
-      type: 'receiveFile/receiveFileList',
-      payload: {
-        isRelease: changeStatus,
-        current: 1,
-        pageSize: 20,
-        currentPage: 1,
-      },
-    });
+    tableRef.current.reload();
   };
 
   return (
@@ -78,4 +70,5 @@ const ReceiveFile = ({ dispatch }) => {
 
 export default connect(({ receiveFile }) => ({
   receiveFile,
+  tableRef: receiveFile.tableRef,
 }))(ReceiveFile);

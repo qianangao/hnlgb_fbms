@@ -8,7 +8,7 @@ import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
-const NoticeAnnouncement = ({ dispatch }) => {
+const NoticeAnnouncement = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
@@ -49,15 +49,7 @@ const NoticeAnnouncement = ({ dispatch }) => {
     // 控制：新增、编辑按钮
     // changeStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(changeStatus);
-    dispatch({
-      type: 'noticeAnnouncement/noticeAnnouncementList',
-      payload: {
-        dictPublishStatus: changeStatus,
-        current: 1,
-        pageSize: 20,
-        currentPage: 1,
-      },
-    });
+    tableRef.current.reload();
   };
 
   return (
@@ -79,4 +71,5 @@ const NoticeAnnouncement = ({ dispatch }) => {
 
 export default connect(({ noticeAnnouncement }) => ({
   noticeAnnouncement,
+  tableRef: noticeAnnouncement.tableRef,
 }))(NoticeAnnouncement);

@@ -8,7 +8,7 @@ import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
-const NewsDynamic = ({ dispatch }) => {
+const NewsDynamic = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
@@ -48,15 +48,7 @@ const NewsDynamic = ({ dispatch }) => {
     // 控制：新增、编辑按钮
     // changeStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(changeStatus);
-    dispatch({
-      type: 'newsDynamic/newsDynamicList',
-      payload: {
-        status: changeStatus,
-        current: 1,
-        pageSize: 20,
-        currentPage: 1,
-      },
-    });
+    tableRef.current.reload();
   };
 
   return (
@@ -78,4 +70,5 @@ const NewsDynamic = ({ dispatch }) => {
 
 export default connect(({ newsDynamic }) => ({
   newsDynamic,
+  tableRef: newsDynamic.tableRef,
 }))(NewsDynamic);
