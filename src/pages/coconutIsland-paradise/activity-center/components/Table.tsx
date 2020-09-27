@@ -3,7 +3,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  openDetailModal,
+  activityCenter,
+  dispatch,
+  publishStatus,
+}) => {
   const { tableRef } = activityCenter;
   const columns = [
     {
@@ -45,14 +52,25 @@ const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a
-          key={`${employeeData.id}up`}
-          onClick={() => {
-            openModifyModal(employeeData);
-          }}
-        >
-          编辑
-        </a>,
+        publishStatus === 0 ? (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              openModifyModal(employeeData);
+            }}
+          >
+            编辑
+          </a>
+        ) : (
+          <a
+            key={`${employeeData.id}detail`}
+            onClick={() => {
+              openDetailModal(employeeData);
+            }}
+          >
+            详情
+          </a>
+        ),
         <Popconfirm
           key={`${employeeData.id}del`}
           title="确认删除该活动中心吗？"
@@ -70,7 +88,7 @@ const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
     new Promise(resolve => {
       dispatch({
         type: 'activityCenter/activityCenterInfoList',
-        payload: { ...params },
+        payload: { ...params, pushStatus: publishStatus },
         resolve,
       });
     });
@@ -91,9 +109,11 @@ const Table = ({ openAddModal, openModifyModal, activityCenter, dispatch }) => {
       scroll={{ x: 'max-content' }}
       request={async params => getActivityCenterList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal()}>
-          新增
-        </Button>,
+        publishStatus === 0 ? (
+          <Button type="primary" onClick={() => openAddModal()}>
+            新增
+          </Button>
+        ) : null,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import ActivityCenterInfoForm from './form/ActivityCenterInfoForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
@@ -36,7 +36,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = () => {
+  const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
@@ -44,6 +44,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `activityCenter/addActivityCenterInfo`,
           payload: {
             ...values,
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -63,7 +64,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}

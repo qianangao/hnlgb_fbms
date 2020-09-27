@@ -1,13 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import ModifyModal from './components/ModifyModal';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
+import TypeSelectLayout from '@/layouts/TypeSelectLayout';
+import DetailModal from './components/DetailModal';
 
-const ActivityCenterInfo = ({ dispatch }) => {
+const ActivityCenterInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
+  const detailModalRef = useRef({});
+  const [publishStatus, setPublishStatus] = useState(1);
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -30,15 +34,32 @@ const ActivityCenterInfo = ({ dispatch }) => {
   const openModifyModal = item => {
     modifyModelRef.current.showModal(item);
   };
+  const openDetailModal = item => {
+    detailModalRef.current.showModal(item);
+  };
+  const onPublishStatusChange = statusChange => {
+    // 控制：新增、编辑按钮
+    // publishStatus 0 草稿箱 ， 1 已发布
+    setPublishStatus(statusChange);
+    tableRef.current.reload();
+  };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openAddModal={openAddModal} openModifyModal={openModifyModal} />
+      <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
+        <Table
+          openAddModal={openAddModal}
+          openModifyModal={openModifyModal}
+          openDetailModal={openDetailModal}
+          publishStatus={publishStatus}
+        />
+      </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
+      <DetailModal actionRef={detailModalRef} />
     </OrgTreeLayout>
   );
 };
 
 export default connect(({ activityCenter }) => ({
-  activityCenter,
+  tableRef: activityCenter.tableRef,
 }))(ActivityCenterInfo);
