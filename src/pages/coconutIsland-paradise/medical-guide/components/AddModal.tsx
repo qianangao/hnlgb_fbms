@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import ElderlyPolicyForm from './form/ElderlyPolicyForm';
+import MedicalGuideForm from './form/MedicalGuideForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = ElderlyPolicyForm.useForm();
+  const [form] = MedicalGuideForm.useForm();
 
   const showModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'medicalGuide/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'medicalGuide/save',
       payload: {
         addModalVisible: false,
       },
@@ -36,15 +36,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `elderlyPolicy/addElderlyPolicyInfo`,
+          type: `medicalGuide/addMedicalGuideInfo`,
           payload: {
             ...values,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -55,9 +54,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增涉老政策"
+      title="新增就医指南"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -69,12 +68,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <ElderlyPolicyForm form={form} />
+      <MedicalGuideForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  addModalVisible: elderlyPolicy.addModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ medicalGuide, loading }) => ({
+  addModalVisible: medicalGuide.addModalVisible,
+  loading: loading.models.medicalGuide,
 }))(AddModal);

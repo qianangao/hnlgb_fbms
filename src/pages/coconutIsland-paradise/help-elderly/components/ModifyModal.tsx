@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import ElderlyPolicyForm from './form/ElderlyPolicyForm';
+import HelpElderlyForm from './form/HelpElderlyForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
-  const [form] = ElderlyPolicyForm.useForm();
+  const [form] = HelpElderlyForm.useForm();
   const [lgbId, setLgbId] = useState();
 
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'helpElderly/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -29,7 +29,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'helpElderly/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -41,7 +41,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `elderlyPolicy/updateElderlyPolicyInfo`,
+          type: `helpElderly/updateHelpElderlyInfo`,
           payload: {
             ...values,
             id: lgbId,
@@ -56,9 +56,9 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="修改涉老政策信息"
+      title="修改助老志愿信息"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -67,32 +67,23 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       visible={modifyModalVisible}
       forceRender
       footer={[
-        <Button key="cancel" onClick={hideModal}>
-          取消
-        </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
         </Button>,
       ]}
       maskClosable={false}
       destroyOnClose
       onCancel={hideModal}
     >
-      <div
-        style={{
-          height: 'calc(100% - 36px)',
-          padding: '20px 0',
-          overflowX: 'hidden',
-          boxSizing: 'border-box',
-        }}
-      >
-        <ElderlyPolicyForm form={form} id={lgbId} />
-      </div>
+      <HelpElderlyForm form={form} id={lgbId} />
     </Modal>
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  modifyModalVisible: elderlyPolicy.modifyModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ helpElderly, loading }) => ({
+  modifyModalVisible: helpElderly.modifyModalVisible,
+  loading: loading.models.helpElderly,
 }))(ModifyModal);

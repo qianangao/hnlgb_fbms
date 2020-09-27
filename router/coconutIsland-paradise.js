@@ -28,12 +28,30 @@ const routes = {
       component: './coconutIsland-paradise/senior-university',
       remark: '老年大学',
     },
-    // {
-    //   path: '/coconutIsland-paradise/works-corner',
-    //   name: 'coconutIsland-paradise-works-corner',
-    //   component: './coconutIsland-paradise/works-corner',
-    //   remark: '作品园地',
-    // },
+    {
+      path: '/coconutIsland-paradise/works-corner',
+      name: 'coconutIsland-paradise-works-corner',
+      component: './coconutIsland-paradise/works-corner',
+      remark: '作品园地',
+    },
+    {
+      path: '/coconutIsland-paradise/medical-guide',
+      name: 'coconutIsland-paradise-medical-guide',
+      component: './coconutIsland-paradise/medical-guide',
+      remark: '就医指南',
+    },
+    {
+      path: '/coconutIsland-paradise/life-service',
+      name: 'coconutIsland-paradise-life-service',
+      component: './coconutIsland-paradise/life-service',
+      remark: '生活服务',
+    },
+    {
+      path: '/coconutIsland-paradise/help-elderly',
+      name: 'coconutIsland-paradise-help-elderly',
+      component: './coconutIsland-paradise/help-elderly',
+      remark: '助老志愿',
+    },
   ],
 };
 export default routes;

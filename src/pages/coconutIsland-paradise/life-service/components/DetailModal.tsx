@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import DetailForm from './form/ElderlyPolicyDetailForm';
+import DetailForm from './form/LifeServiceDetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   const [DetailId, setDetailId] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'lifeService/save',
       payload: {
         detailModalVisible: true,
       },
@@ -25,7 +25,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'lifeService/save',
       payload: {
         detailModalVisible: false,
       },
@@ -34,9 +34,9 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
 
   return (
     <Modal
-      title="涉老政策详情"
+      title="生活服务详情"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -62,7 +62,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  detailModalVisible: elderlyPolicy.detailModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ lifeService, loading }) => ({
+  detailModalVisible: lifeService.detailModalVisible,
+  loading: loading.models.lifeService,
 }))(DetailModal);

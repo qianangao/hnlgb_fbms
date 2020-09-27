@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
-import DifferentLivingPlacesFrom from './form/differentLivingPlacesFrom';
+import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();

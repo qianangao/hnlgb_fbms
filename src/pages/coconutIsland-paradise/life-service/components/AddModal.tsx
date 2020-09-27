@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
-import ElderlyPolicyForm from './form/ElderlyPolicyForm';
+import { Modal, Button } from 'antd';
+import LifeServiceForm from './form/LifeServiceForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = ElderlyPolicyForm.useForm();
+  const [form] = LifeServiceForm.useForm();
 
   const showModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'lifeService/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'lifeService/save',
       payload: {
         addModalVisible: false,
       },
@@ -41,7 +41,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `elderlyPolicy/addElderlyPolicyInfo`,
+          type: `lifeService/addLifeServiceInfo`,
           payload: {
             ...values,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
@@ -55,26 +55,33 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增涉老政策"
+      title="新增生活服务"
       centered
-      width="70vw"
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <ElderlyPolicyForm form={form} />
+      <LifeServiceForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  addModalVisible: elderlyPolicy.addModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ lifeService, loading }) => ({
+  addModalVisible: lifeService.addModalVisible,
+  loading: loading.models.lifeService,
 }))(AddModal);

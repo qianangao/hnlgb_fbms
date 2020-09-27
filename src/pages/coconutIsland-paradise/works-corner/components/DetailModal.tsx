@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import DetailForm from './form/ElderlyPolicyDetailForm';
+import DetailForm from './form/WorksCornerDetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   const [DetailId, setDetailId] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'worksCorner/save',
       payload: {
         detailModalVisible: true,
       },
@@ -25,7 +25,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     dispatch({
-      type: 'elderlyPolicy/save',
+      type: 'worksCorner/save',
       payload: {
         detailModalVisible: false,
       },
@@ -34,9 +34,9 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
 
   return (
     <Modal
-      title="涉老政策详情"
+      title="作品园地详情"
       centered
-      width="70vw"
+      width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -62,7 +62,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  detailModalVisible: elderlyPolicy.detailModalVisible,
-  loading: loading.models.elderlyPolicy,
+export default connect(({ worksCorner, loading }) => ({
+  detailModalVisible: worksCorner.detailModalVisible,
+  loading: loading.models.worksCorner,
 }))(DetailModal);
