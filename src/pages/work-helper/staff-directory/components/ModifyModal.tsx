@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
-import PolicyStipulateForm from './form/PolicyStipulateForm';
+import { Modal } from 'antd';
+import StaffDirectoryForm from './form/StaffDirectoryForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = PolicyStipulateForm.useForm();
+  const [form] = StaffDirectoryForm.useForm();
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
-      type: 'policyStipulate/save',
+      type: 'staffDirectory/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -27,35 +27,15 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'policyStipulate/save',
+      type: 'staffDirectory/save',
       payload: {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
-  };
-
-  const handleOk = publishStatus => {
-    form
-      .validateFields()
-      .then(values => {
-        dispatch({
-          type: `policyStipulate/updatePolicyStipulate`,
-          payload: {
-            ...values,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: lgbId,
-          },
-        });
-      })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
   };
   return (
     <Modal
-      title="修改政策规定与解答"
+      title="工作人员电话簿详情"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -64,17 +44,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         overflowX: 'hidden',
       }}
       visible={modifyModalVisible}
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
+      footer={null}
     >
       <div
         style={{
@@ -84,13 +57,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <PolicyStipulateForm form={form} id={lgbId} />
+        <StaffDirectoryForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ policyStipulate, loading }) => ({
-  modifyModalVisible: policyStipulate.modifyModalVisible,
-  loading: loading.models.policyStipulate,
+export default connect(({ staffDirectory, loading }) => ({
+  modifyModalVisible: staffDirectory.modifyModalVisible,
+  loading: loading.models.staffDirectory,
 }))(ModifyModal);

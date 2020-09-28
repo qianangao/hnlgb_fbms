@@ -6,6 +6,7 @@ import WorkRecordRoutes from './work-record';
 import InformationRelease from './information-release';
 import WorkHelper from './work-helper';
 import SystemMgt from './system-mgt';
+import QiongyaEcru from './qiongya-ecru';
 const router = [
   {
     path: '/',
@@ -52,6 +53,7 @@ const router = [
               WorkRecordRoutes,
               InformationRelease,
               WorkHelper,
+              QiongyaEcru,
               SystemMgt,
               {
                 component: './404',

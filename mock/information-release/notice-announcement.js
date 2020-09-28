@@ -58,7 +58,7 @@ const detailNoticeAnnouncement = (req, res) => {
     data: {
       id: '402883e973e5c2ce0173e5c2ce9d', //userId
 
-      attachmentId: {
+      attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         uid: '呵呵呵呵哒',
         name: 'demo图片',

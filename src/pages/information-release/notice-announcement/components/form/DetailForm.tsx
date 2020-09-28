@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Descriptions } from 'antd';
 import { connect } from 'umi';
+import DetailFormPage from '@/components/DetailFormPage';
 
 const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
   useEffect(() => {
@@ -13,38 +13,13 @@ const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
   }, [id]);
 
   return (
-    <Descriptions size="middle">
-      <div style={{ margin: '5px' }}>
-        <h2 style={{ textAlign: 'center' }}>
-          {detailNoticeAnnouncementData && detailNoticeAnnouncementData.subject}
-        </h2>
-        <div style={{ textAlign: 'center' }}>
-          发布单位：{detailNoticeAnnouncementData && detailNoticeAnnouncementData.createOrgName}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-          {detailNoticeAnnouncementData && detailNoticeAnnouncementData.releaseTime}
-        </div>
-        <hr style={{ color: '#CCCCCC' }} />
-        <div
-          dangerouslySetInnerHTML={{
-            __html: detailNoticeAnnouncementData && detailNoticeAnnouncementData.content,
-          }}
-        />
-        {detailNoticeAnnouncementData && detailNoticeAnnouncementData.attachmentId && (
-          <div style={{ textAlign: 'left', margin: '20px 0px 10px 10px' }}>
-            缩略图：
-            <a
-              href={detailNoticeAnnouncementData.attachmentId.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'block' }}
-              download="下载"
-            >
-              {detailNoticeAnnouncementData.attachmentId.name}
-            </a>
-          </div>
-        )}
-      </div>
-    </Descriptions>
+    <DetailFormPage
+      title={detailNoticeAnnouncementData.subject}
+      releaseTime={detailNoticeAnnouncementData.releaseTime}
+      orgName={detailNoticeAnnouncementData.createOrgName}
+      content={detailNoticeAnnouncementData.content}
+      extraFile={detailNoticeAnnouncementData.attachmentInfo}
+    />
   );
 };
 

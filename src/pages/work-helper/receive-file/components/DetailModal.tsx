@@ -34,7 +34,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
 
   return (
     <Modal
-      title="政策规定与解答详情"
+      title="收发文件详情"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

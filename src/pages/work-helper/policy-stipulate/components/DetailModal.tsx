@@ -40,7 +40,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={detailModalVisible}
       footer={null}
@@ -52,7 +52,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

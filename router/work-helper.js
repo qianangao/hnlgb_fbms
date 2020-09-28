@@ -5,6 +5,12 @@ const routes = {
   remark: '工作助手',
   routes: [
     {
+      path: '/work-helper/staff-directory',
+      name: 'work-helper-staff-directory',
+      component: './work-helper/staff-directory',
+      remark: '工作人员电话簿',
+    },
+    {
       path: '/work-helper/policy-stipulate',
       name: 'work-helper-policy-stipulate',
       component: './work-helper/policy-stipulate',

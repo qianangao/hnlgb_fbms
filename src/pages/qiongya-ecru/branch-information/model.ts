@@ -1,31 +1,33 @@
 import { message } from 'antd';
 import {
-  addReceiveFile,
-  deleteReceiveFile,
-  updateReceiveFile,
-  receiveFileList,
-  detailReceiveFile,
+  addBranchInformation,
+  deleteBranchInformation,
+  updateBranchInformation,
+  branchInformationList,
+  detailBranchInformation,
+  partyUserList,
 } from './service';
 
 const Model = {
-  namespace: 'receiveFile',
+  namespace: 'branchInformation',
   state: {
-    receiveFileData: {},
+    branchInformationData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    detailReceiveFileData: {},
+    detailbranchInformationData: {},
+    partyUserListData: {},
   },
   effects: {
-    *receiveFileList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.receiveFile.selectedOrgId);
+    *branchInformationList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.branchInformation.selectedOrgId);
       const params = {
         ...payload,
         orgIdForDataSelect,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
-      const response = yield call(receiveFileList, params);
+      const response = yield call(branchInformationList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -43,7 +45,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            receiveFileData: result,
+            branchInformationData: result,
           },
         });
       }
@@ -62,9 +64,8 @@ const Model = {
       });
     },
 
-    *addReceiveFile({ payload }, { call, put }) {
-      const response = yield call(addReceiveFile, payload);
-      const publishStatus = payload.isRelease;
+    *addBranchInformation({ payload }, { call, put }) {
+      const response = yield call(addBranchInformation, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -72,15 +73,14 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(publishStatus === 0 ? '收发文件新增成功！' : '收发文件发布成功！');
+        message.success('支部信息新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateReceiveFile({ payload }, { call, put }) {
-      const response = yield call(updateReceiveFile, payload);
-      const publishStatus = payload.isRelease;
+    *updateBranchInformation({ payload }, { call, put }) {
+      const response = yield call(updateBranchInformation, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -88,33 +88,43 @@ const Model = {
             modifyModalVisible: false,
           },
         });
-
-        message.success(publishStatus === 0 ? '收发文件修改成功！' : '收发文件发布成功！');
-
+        message.success('支部信息修改成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deleteReceiveFile({ payload }, { call, put }) {
-      const response = yield call(deleteReceiveFile, payload);
-
+    *deleteBranchInformation({ payload }, { call, put }) {
+      const response = yield call(deleteBranchInformation, payload);
       if (!response.error) {
-        message.success('收发文件删除成功！');
+        message.success('支部信息新增删除成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *detailReceiveFile({ payload, resolve }, { call, put }) {
-      const response = yield call(detailReceiveFile, payload);
+    *detailBranchInformation({ payload, resolve }, { call, put }) {
+      const response = yield call(detailBranchInformation, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            detailReceiveFileData: response,
+            detailBranchInformationData: response,
+          },
+        });
+      }
+    },
+    *partyUserList({ payload, resolve }, { call, put }) {
+      const response = yield call(partyUserList, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            partyUserListData: response,
           },
         });
       }

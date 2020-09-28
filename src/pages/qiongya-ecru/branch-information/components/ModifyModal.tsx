@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import PolicyStipulateForm from './form/PolicyStipulateForm';
+import BranchInformationForm from './form/BranchInformationForm';
+import BranchInformationPartyUserListTable from './form/BranchInformationPartyUserListTable';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = PolicyStipulateForm.useForm();
-  const [lgbId, setLgbId] = useState('');
+  const [form] = BranchInformationForm.useForm();
+  const [id, setId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setId(item.id);
     dispatch({
-      type: 'policyStipulate/save',
+      type: 'branchInformation/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -27,7 +28,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'policyStipulate/save',
+      type: 'branchInformation/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -36,15 +37,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `policyStipulate/updatePolicyStipulate`,
+          type: `branchInformation/updateBranchInformation`,
           payload: {
             ...values,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
           },
         });
@@ -55,7 +55,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改政策规定与解答"
+      title="修改支部信息"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -65,11 +65,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk()}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender
@@ -84,13 +81,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <PolicyStipulateForm form={form} id={lgbId} />
+        <BranchInformationForm form={form} id={id} />
+        <BranchInformationPartyUserListTable id={id} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ policyStipulate, loading }) => ({
-  modifyModalVisible: policyStipulate.modifyModalVisible,
-  loading: loading.models.policyStipulate,
+export default connect(({ branchInformation, loading }) => ({
+  modifyModalVisible: branchInformation.modifyModalVisible,
+  loading: loading.models.branchInformation,
 }))(ModifyModal);
