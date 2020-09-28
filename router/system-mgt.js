@@ -10,12 +10,12 @@ const routes = {
       component: './system-mgt/organization-mgt',
       remark: '单位管理',
     },
-    // {
-    //   path: '/system-mgt/role-mgt',
-    //   name: 'system-mgt-role-mgt',
-    //   component: './system-mgt/role-mgt',
-    //   remark: '角色管理',
-    // },
+    {
+      path: '/system-mgt/role-mgt',
+      name: 'system-mgt-role-mgt',
+      component: './system-mgt/role-mgt',
+      remark: '角色管理',
+    },
     // {
     //   path: '/system-mgt/role-mgt',
     //   name: 'system-mgt-role-mgt',
