@@ -61,7 +61,7 @@ const Table = ({ smRoleMgt, openModifyModal, dispatch }) => {
   return (
     <ProTable
       rowKey="id"
-      headerTitle="组织信息"
+      headerTitle="角色信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

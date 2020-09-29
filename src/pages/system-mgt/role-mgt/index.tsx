@@ -16,9 +16,10 @@ const RoleMgt = ({ dispatch }) => {
     });
   };
 
-  const openModifyModal = ids => {
-    modifyModelRef.current.showModal(ids);
+  const openModifyModal = item => {
+    modifyModelRef.current.showModal(item);
   };
+
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Table openModifyModal={openModifyModal} />

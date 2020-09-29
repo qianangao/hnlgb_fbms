@@ -1,16 +1,30 @@
 import { message } from 'antd';
-import { addRole, updateRole, deleteRoles, getRoleList } from './service';
+import { getRoleList, getRules, getRuleIds, updateRoleRules } from './service';
+
+const transformRuleData = tree => {
+  tree.forEach(node => {
+    if (node.routes) {
+      node.children = node.routes;
+      transformRuleData(node.children);
+    }
+
+    node.key = node.id || node.key;
+    node.title = node.ruleName || node.title;
+    return node;
+  });
+};
 
 const Model = {
-  namespace: 'smRoleMgt',
+  namespace: 'smRoleRule',
   state: {
     roleListData: {},
+    ruleData: [],
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
   effects: {
     *getRoleList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.smRoleRule.selectedOrgId);
+      const orgIdForDataSelect = yield select(state => state.smRoleMgt.selectedOrgId);
 
       const params = {
         ...payload,
@@ -42,6 +56,33 @@ const Model = {
       }
     },
 
+    *getRuleIds({ payload, resolve }, { call }) {
+      const response = yield call(getRuleIds, payload);
+
+      if (!response.error) {
+        yield resolve && resolve(response);
+      }
+    },
+    *getRules({ payload }, { call, put }) {
+      const response = yield call(getRules, payload);
+
+      transformRuleData(response);
+      if (!response.error) {
+        yield put({
+          type: 'save',
+          payload: {
+            ruleData: response,
+          },
+        });
+      }
+    },
+    *updateRoleRules({ payload, resolve }, { call }) {
+      const response = yield call(updateRoleRules, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('角色权限修改成功！');
+      }
+    },
     *selectOrgChange({ payload }, { put }) {
       yield put({
         type: 'save',
@@ -53,37 +94,6 @@ const Model = {
       yield put({
         type: 'tableReload',
       });
-    },
-    *addRole({ payload }, { call, put }) {
-      const response = yield call(addRole, payload);
-      if (!response.error) {
-        message.success('角色新增成功！');
-
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *updateRole({ payload }, { call, put }) {
-      const response = yield call(updateRole, payload);
-
-      if (!response.error) {
-        message.success('修改角色信息成功！');
-
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *deleteRoles({ payload }, { call, put }) {
-      const response = yield call(deleteRoles, payload);
-
-      if (!response.error) {
-        message.success('角色删除成功！');
-        yield put({
-          type: 'tableReload',
-        });
-      }
     },
   },
   reducers: {

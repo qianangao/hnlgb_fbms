@@ -55,12 +55,82 @@ const roleList = (req, res) => {
   });
 };
 
+const getRules = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: [
+      {
+        id: '01', //id
+        parentId: '00', //父菜单id
+        ruleName: '离退休干部', //菜单名称
+        routes: [
+          //子菜单信息
+          {
+            id: '01-01',
+            parentId: '01',
+            ruleName: '信息维护',
+            routes: [],
+          },
+          {
+            id: '01-02',
+            parentId: '01',
+            ruleName: '信息维护2',
+            routes: [],
+          },
+          {
+            id: '01-03',
+            parentId: '01',
+            ruleName: '信息维护3',
+            routes: [],
+          },
+        ],
+      },
+      {
+        id: '02', //id
+        parentId: '00', //父菜单id
+        ruleName: '琼崖本色', //菜单名称
+        routes: [
+          //子菜单信息
+          {
+            id: '02-01',
+            parentId: '01',
+            ruleName: '支部信息',
+            routes: [],
+          },
+          {
+            id: '02-02',
+            parentId: '01',
+            ruleName: '支部信息2',
+            routes: [],
+          },
+          {
+            id: '02-03',
+            parentId: '01',
+            ruleName: '支部信息3',
+            routes: [],
+          },
+        ],
+      },
+    ],
+  });
+};
+
+const getRuleId = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: ['01-01', '02-02'],
+  });
+};
+
 export default {
   'POST /role': noResponse,
   'PUT /role/:id': noResponse,
   'DELETE /role': noResponse,
   'GET /role': roleList,
   'GET /role/:id': noResponse,
-  'GET /role/:roleId/rule': noResponse,
+  'GET /rule': getRules,
+  'GET /role/:roleId/rule': getRuleId,
   'POST /role/update_rule': noResponse,
 };

@@ -1,10 +1,10 @@
-import { getCookie, setCookie } from './cookie';
+import { getCookie, setCookie, AUTHORITY_KEYS } from './cookie';
 import { reloadAuthorized } from './Authorized';
 
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getAuthority(str?: string): string | string[] {
   const authorityString =
-    typeof str === 'undefined' && localStorage ? getCookie('antd-pro-authority') : str;
+    typeof str === 'undefined' && localStorage ? getCookie(AUTHORITY_KEYS) : str;
   // authorityString could be admin, "admin", ["admin"]
   let authority;
   try {
@@ -23,7 +23,7 @@ export function getAuthority(str?: string): string | string[] {
 
 export function setAuthority(authority) {
   const proAuthority = typeof authority === 'string' ? [authority] : authority;
-  setCookie('antd-pro-authority', JSON.stringify(proAuthority));
+  setCookie(AUTHORITY_KEYS, JSON.stringify(proAuthority));
   // auto reload
   reloadAuthorized();
 }
