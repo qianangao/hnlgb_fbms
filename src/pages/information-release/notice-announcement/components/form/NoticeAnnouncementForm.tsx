@@ -25,7 +25,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '附件',
-      name: 'attachmentId',
+      name: 'attachmentInfo',
       type: 'upload',
     },
     {

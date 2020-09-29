@@ -32,8 +32,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = publishStatus => {
@@ -44,8 +42,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `receiveFile/updateReceiveFile`,
           payload: {
             ...values,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
           },
         });
@@ -56,13 +53,13 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改政策规定与解答"
+      title="修改收发文件"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={modifyModalVisible}
       footer={[
@@ -81,7 +78,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

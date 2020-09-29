@@ -14,17 +14,14 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailReceiveFileData: {},
   },
   effects: {
     *receiveFileList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.receiveFile.selectedOrgId);
-      const publishStatus = yield select(state => state.receiveFile.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect,
-        isRelease: publishStatus,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -65,22 +62,9 @@ const Model = {
       });
     },
 
-    *publishStatusChange({ payload }, { put }) {
-      yield put({
-        type: 'save',
-        payload: {
-          publishStatus: payload,
-        },
-      });
-
-      yield put({
-        type: 'tableReload',
-      });
-    },
-
     *addReceiveFile({ payload }, { call, put }) {
       const response = yield call(addReceiveFile, payload);
-      const { publishStatus } = payload;
+      const publishStatus = payload.isRelease;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -96,7 +80,7 @@ const Model = {
     },
     *updateReceiveFile({ payload }, { call, put }) {
       const response = yield call(updateReceiveFile, payload);
-      const { publishStatus } = payload;
+      const publishStatus = payload.isRelease;
       if (!response.error) {
         yield put({
           type: 'save',

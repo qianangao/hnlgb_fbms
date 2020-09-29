@@ -27,15 +27,15 @@ const Table = ({ oaCommunity, openActivityDetailModal, dispatch }) => {
       dataIndex: 'id',
       width: 200,
       fixed: 'right',
-      render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openActivityDetailModal(employeeData)}>
+      render: (dom, Data) => [
+        <a key={`${Data.id}detail`} onClick={() => openActivityDetailModal(Data)}>
           查看
         </a>,
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${Data.id}del`}
           title="确认删除该活动吗？"
           placement="topRight"
-          onConfirm={() => deleteActivityInfo([employeeData.id])}
+          onConfirm={() => deleteActivityInfo([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

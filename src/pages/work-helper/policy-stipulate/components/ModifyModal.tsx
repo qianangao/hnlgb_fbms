@@ -44,8 +44,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `policyStipulate/updatePolicyStipulate`,
           payload: {
             ...values,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
           },
         });
@@ -62,7 +61,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={modifyModalVisible}
       footer={[
@@ -81,7 +80,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

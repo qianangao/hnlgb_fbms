@@ -3,8 +3,15 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, policyStipulate, dispatch, opendetailModal }) => {
-  const { tableRef, publishStatus } = policyStipulate;
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  policyStipulate,
+  dispatch,
+  opendetailModal,
+  publishStatus,
+}) => {
+  const { tableRef } = policyStipulate;
   const columns = [
     {
       title: '序号',
@@ -76,7 +83,7 @@ const Table = ({ openAddModal, openModifyModal, policyStipulate, dispatch, opend
     new Promise(resolve => {
       dispatch({
         type: 'policyStipulate/policyStipulateList',
-        payload: { ...params },
+        payload: { ...params, isRelease: publishStatus },
         resolve,
       });
     });

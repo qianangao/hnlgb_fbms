@@ -31,7 +31,8 @@ const checkPermissions = (authority, currentAuthority, target, Exception) => {
   // string 处理
   if (typeof authority === 'string') {
     if (Array.isArray(currentAuthority)) {
-      if (currentAuthority.some(item => authority === item)) {
+      // 权限列表中存在已当前菜单权限开头的，视为拥有对应菜单权限
+      if (currentAuthority.some(item => item.indexOf(authority) === 0)) {
         return target;
       }
     } else if (authority === currentAuthority) {

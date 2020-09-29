@@ -3,8 +3,15 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetailModal }) => {
-  const { tableRef, publishStatus } = receiveFile;
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  receiveFile,
+  dispatch,
+  opendetailModal,
+  publishStatus,
+}) => {
+  const { tableRef } = receiveFile;
   const columns = [
     {
       title: '序号',
@@ -61,7 +68,7 @@ const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetai
         ),
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除政策规定与解答吗？"
+          title="确认删除收发文件吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -76,7 +83,7 @@ const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetai
     new Promise(resolve => {
       dispatch({
         type: 'receiveFile/receiveFileList',
-        payload: { ...params },
+        payload: { ...params, isRelease: publishStatus },
         resolve,
       });
     });
@@ -93,7 +100,7 @@ const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetai
   return (
     <ProTable
       rowKey="id"
-      headerTitle="政策规定与解答"
+      headerTitle="收发文件"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -108,7 +115,7 @@ const Table = ({ openAddModal, openModifyModal, receiveFile, dispatch, opendetai
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除政策规定与解答？',
+                title: '确认删除收发文件？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);

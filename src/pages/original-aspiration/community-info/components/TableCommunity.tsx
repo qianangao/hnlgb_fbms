@@ -41,21 +41,21 @@ const Table = ({
       dataIndex: 'id',
       width: 200,
       fixed: 'right',
-      render: (dom, employeeData) => [
-        <a key={`${employeeData.id}up`} onClick={() => openDetailModal(employeeData)}>
+      render: (dom, Data) => [
+        <a key={`${Data.id}detail`} onClick={() => openDetailModal(Data)}>
           查看
         </a>,
-        <a key={`${employeeData.id}up`} onClick={() => openModifyModal(employeeData)}>
+        <a key={`${Data.id}up`} onClick={() => openModifyModal(Data)}>
           编辑
         </a>,
-        <a key={`${employeeData.id}up`} onClick={() => openAddActivityModal(employeeData.id)}>
+        <a key={`${Data.id}release`} onClick={() => openAddActivityModal(Data.id)}>
           发布活动
         </a>,
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${Data.id}del`}
           title="确认删除该社团吗？"
           placement="topRight"
-          onConfirm={() => deleteCommunityInfo([employeeData.id])}
+          onConfirm={() => deleteCommunityInfo([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,
