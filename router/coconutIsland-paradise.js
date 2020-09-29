@@ -52,6 +52,17 @@ const routes = {
       component: './coconutIsland-paradise/help-elderly',
       remark: '助老志愿',
     },
+    {
+      path: '/coconutIsland-paradise/online-registration',
+      name: 'coconutIsland-paradise-online-registration',
+      component: './coconutIsland-paradise/online-registration',
+      remark: '网络报名',
+    },
+    {
+      path: '/coconutIsland-paradise/socialSecurity-certification',
+      name: 'coconutIsland-paradise-socialSecurity-certification',
+      remark: '社保认证',
+    },
   ],
 };
 export default routes;

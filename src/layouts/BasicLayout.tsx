@@ -83,7 +83,15 @@ const BasicLayout = props => {
         if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
           return defaultDom;
         }
-
+        if (menuItemProps.path === '/coconutIsland-paradise/socialSecurity-certification') {
+          return (
+            <span>
+              <a href="https://www.baidu.com" target="_blank" rel="noreferrer">
+                {defaultDom}
+              </a>
+            </span>
+          );
+        }
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [
