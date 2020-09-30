@@ -10,18 +10,18 @@ const routes = {
       component: './system-mgt/organization-mgt',
       remark: '单位管理',
     },
-    // {
-    //   path: '/system-mgt/role-mgt',
-    //   name: 'system-mgt-role-mgt',
-    //   component: './system-mgt/role-mgt',
-    //   remark: '角色管理',
-    // },
-    // {
-    //   path: '/system-mgt/role-mgt',
-    //   name: 'system-mgt-role-mgt',
-    //   component: './system-mgt/role-mgt',
-    //   remark: '角色授权',
-    // },
+    {
+      path: '/system-mgt/role-mgt',
+      name: 'system-mgt-role-mgt',
+      component: './system-mgt/role-mgt',
+      remark: '角色管理',
+    },
+    {
+      path: '/system-mgt/role-rule',
+      name: 'system-mgt-role-rule',
+      component: './system-mgt/role-rule',
+      remark: '角色授权',
+    },
   ],
 };
 

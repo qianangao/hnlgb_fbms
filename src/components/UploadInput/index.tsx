@@ -135,6 +135,7 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
 
   const handleRemove = () => {
     setUpFileList([]);
+    onChange && onChange(null);
   };
 
   const imgUploadButton =

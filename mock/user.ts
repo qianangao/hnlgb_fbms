@@ -45,7 +45,7 @@ export default {
             community: null,
             isAdmin: 1,
           },
-          authorityList: ['01', '01-01', '01-02'],
+          authorityList: ['01-01', '02', '02-02'],
           dataAuthSql: null,
           version: 'v1',
           isRefresh: 0,
