@@ -52,7 +52,7 @@ const detailNewsDynamic = (req, res) => {
       attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         uid: '呵呵呵呵哒',
-        name: 'demo图片',
+        fileName: 'demo图片',
       },
       createTime: '',
       remark: '描述',

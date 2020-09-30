@@ -10,6 +10,12 @@ const routes = {
       component: './qiongya-ecru/branch-information',
       remark: '支部信息',
     },
+    {
+      path: '/qiongya-ecru/branch-activity',
+      name: 'qiongya-ecru-branch-activity',
+      component: './qiongya-ecru/branch-activity',
+      remark: '支部活动',
+    },
   ],
 };
 

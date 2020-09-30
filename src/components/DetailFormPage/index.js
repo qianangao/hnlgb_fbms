@@ -30,7 +30,7 @@ const DetailFormPage = ({ title, releaseTime, orgName, content, extraFile }) => 
               style={{ display: 'block' }}
               download="下载"
             >
-              {extraFile.name}
+              {extraFile.fileName}
             </a>
           </div>
         )}

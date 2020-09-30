@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import NewsDynamicForm from './form/NewsDynamicForm';
+import BranchActivityForm from './form/BranchActivityForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = NewsDynamicForm.useForm();
+  const [form] = BranchActivityForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'branchActivity/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'branchActivity/save',
       payload: {
         addModalVisible: false,
       },
@@ -40,13 +40,10 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `newsDynamic/addNewsDynamic`,
+          type: `branchActivity/addBranchActivity`,
           payload: {
-            type: values.attachmentInfo ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            headline: values.headline,
-            attachmentId: values.attachmentInfo.uid,
-            context: values.context,
+            ...values,
+            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -58,7 +55,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增新闻动态"
+      title="新增支部活动"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -79,12 +76,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <NewsDynamicForm form={form} />
+      <BranchActivityForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ newsDynamic, loading }) => ({
-  addModalVisible: newsDynamic.addModalVisible,
-  loading: loading.models.newsDynamic,
+export default connect(({ branchActivity, loading }) => ({
+  addModalVisible: branchActivity.addModalVisible,
+  loading: loading.models.branchActivity,
 }))(AddModal);
