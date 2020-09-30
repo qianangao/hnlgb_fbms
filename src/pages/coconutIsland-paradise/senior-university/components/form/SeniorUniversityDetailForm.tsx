@@ -3,8 +3,6 @@ import { connect } from 'umi';
 import DetailFormPage from '@/components/DetailFormPage';
 
 const DetailForm = ({ id, dispatch, detailSeniorUniversityData }) => {
-  detailSeniorUniversityData.headline = detailSeniorUniversityData.universityName;
-  detailSeniorUniversityData.context = detailSeniorUniversityData.universitySynopsis;
   useEffect(() => {
     if (id) {
       dispatch({
@@ -14,7 +12,14 @@ const DetailForm = ({ id, dispatch, detailSeniorUniversityData }) => {
     }
   }, [id]);
 
-  return <DetailFormPage detailData={detailSeniorUniversityData} />;
+  return (
+    <DetailFormPage
+      title={detailSeniorUniversityData.universityName}
+      releaseTime={detailSeniorUniversityData.releaseTime}
+      orgName={detailSeniorUniversityData.createOrgName}
+      content={detailSeniorUniversityData.teachingActivities}
+    />
+  );
 };
 
 export default connect(({ seniorUniversity, loading }) => ({

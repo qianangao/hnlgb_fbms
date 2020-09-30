@@ -3,8 +3,6 @@ import { connect } from 'umi';
 import DetailFormPage from '@/components/DetailFormPage';
 
 const DetailForm = ({ id, dispatch, detailElderlyPolicyData }) => {
-  detailElderlyPolicyData.headline = detailElderlyPolicyData.title;
-  detailElderlyPolicyData.releaseTime = detailElderlyPolicyData.pushTime;
   useEffect(() => {
     if (id) {
       dispatch({
@@ -14,7 +12,15 @@ const DetailForm = ({ id, dispatch, detailElderlyPolicyData }) => {
     }
   }, [id]);
 
-  return <DetailFormPage detailData={detailElderlyPolicyData} />;
+  return (
+    <DetailFormPage
+      title={detailElderlyPolicyData.title}
+      releaseTime={detailElderlyPolicyData.pushTime}
+      orgName={detailElderlyPolicyData.createOrgName}
+      content={detailElderlyPolicyData.context}
+      extraFile={detailElderlyPolicyData.attachmentInfo}
+    />
+  );
 };
 
 export default connect(({ elderlyPolicy, loading }) => ({

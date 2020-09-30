@@ -50,6 +50,7 @@ const detailSeniorUniversityInfo = (req, res) => {
       universitySynopsis: 'universitySynopsis', //大学介绍
       teachingActivities: 'teachingActivities', //教学安排
       createOrgName: 'createOrgName', //创建单位
+      releaseTime: '2020-03-24',
     },
   });
 };

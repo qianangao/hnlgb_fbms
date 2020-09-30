@@ -14,12 +14,11 @@ const DetailForm = ({ id, dispatch, detailOnlineRegistrationData }) => {
 
   return (
     <DetailFormPage
-      detailData={detailOnlineRegistrationData}
-      // title={detailOnlineRegistrationData.headline}
-      // releaseTime={detailOnlineRegistrationData.releaseTime}
-      // orgName={detailOnlineRegistrationData.createOrgName}
-      // content={detailOnlineRegistrationData.context}
-      // extraFile={detailOnlineRegistrationData.attachmentInfo}
+      title={detailOnlineRegistrationData.title}
+      releaseTime={detailOnlineRegistrationData.releaseTime}
+      orgName={detailOnlineRegistrationData.organizationName}
+      content={detailOnlineRegistrationData.context}
+      extraFile={detailOnlineRegistrationData.attachmentInfo}
     />
   );
 };

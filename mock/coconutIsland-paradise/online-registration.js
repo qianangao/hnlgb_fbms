@@ -52,6 +52,12 @@ const detailOnlineRegistrationInfo = (req, res) => {
       urlId: 'urlId', //缩略图
       urlName: '我是缩略图',
       createOrgId: 'createOrgId',
+      attachmentInfo: {
+        id: 'id',
+        url: 'url',
+        fileName: 'fileName',
+      },
+      releaseTime: '2020-3-24',
     },
   });
 };

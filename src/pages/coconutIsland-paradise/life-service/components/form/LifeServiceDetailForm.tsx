@@ -14,12 +14,10 @@ const DetailForm = ({ id, dispatch, detailLifeServiceData }) => {
 
   return (
     <DetailFormPage
-      detailData={detailLifeServiceData}
-      // title={detailLifeServiceData.headline}
-      // releaseTime={detailLifeServiceData.releaseTime}
-      // orgName={detailLifeServiceData.createOrgName}
-      // content={detailLifeServiceData.context}
-      // extraFile={detailLifeServiceData.attachmentInfo}
+      title={detailLifeServiceData.title}
+      releaseTime={detailLifeServiceData.pushTime}
+      orgName={detailLifeServiceData.organizationName}
+      content={detailLifeServiceData.context}
     />
   );
 };
