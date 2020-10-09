@@ -92,7 +92,7 @@ const commnityMember = (req, res) => {
       startIndex: 0,
       items: [
         {
-          id: '1',
+          id: '402883e973e5c2ce0173e5c2ce91',
           realName: '杨紫1', //姓名
           dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
           dateOfBirth: '2020-09-15', //出生日期
@@ -105,7 +105,7 @@ const commnityMember = (req, res) => {
           phonenumber: '13609192876', //手机号码
         },
         {
-          id: '2',
+          id: '402883e973e5c2ce0173e5c2ce92',
           realName: '杨紫2', //姓名
           dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
           dateOfBirth: '2020-09-15', //出生日期
@@ -176,8 +176,19 @@ const getActivityDetail = (req, res) => {
   });
 };
 
+const getMembersIds = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      ids: ['402883e973e5c2ce0173e5c2ce91', '402883e973e5c2ce0173e5c2ce92'],
+    },
+  });
+};
+
 export default {
   'GET /club-house/club': listCommunity,
+  'GET /club-house/club-member/user-ids/club': getMembersIds,
   'GET /club-house/club-activity': listActivity,
   'GET /club-house/club/:id': getCommunityDetail,
   'GET /club-house/club-activity/:id': getActivityDetail,
@@ -188,4 +199,5 @@ export default {
   'POST /club-house/club': noResponse,
   'PUT /club-house/club/:id': noResponse,
   'POST /club-house/club-activity': noResponse,
+  'POST /club-house/club-member': noResponse,
 };

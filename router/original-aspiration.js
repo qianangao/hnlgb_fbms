@@ -46,6 +46,12 @@ const routes = {
       component: './original-aspiration/elegant-demeanor',
       remark: '五老风采',
     },
+    {
+      path: '/original-aspiration/volunteer-team',
+      name: 'volunteer-team',
+      component: './original-aspiration/volunteer-team',
+      remark: '志愿团队',
+    },
   ],
 };
 
