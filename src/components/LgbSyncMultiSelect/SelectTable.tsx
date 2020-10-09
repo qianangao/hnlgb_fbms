@@ -24,7 +24,7 @@ const SelectTable = ({
       (actionRef.current = {
         showModal: () => {
           setVisible(true);
-          selectRef.current.reload();
+          selectRef.current.reload && selectRef.current.reload();
         },
       });
   }, []);
