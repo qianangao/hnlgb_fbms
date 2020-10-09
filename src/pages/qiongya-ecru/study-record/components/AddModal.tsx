@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import NewsDynamicForm from './form/NewsDynamicForm';
+import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
+import StudyRecordForm from './form/StudyRecordForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = NewsDynamicForm.useForm();
+  const [form] = StudyRecordForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'studyRecord/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'studyRecord/save',
       payload: {
         addModalVisible: false,
       },
@@ -35,18 +36,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `newsDynamic/addNewsDynamic`,
+          type: `studyRecord/addStudyRecord`,
           payload: {
-            type: values.attachmentInfo ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            headline: values.headline,
-            attachmentId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
-            context: values.context,
+            ...values,
           },
         });
         form.resetFields();
@@ -58,7 +55,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增新闻动态"
+      title="新增学习记录"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -68,23 +65,21 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk()}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <NewsDynamicForm form={form} />
+      <StudyRecordForm form={form} />
+      <LgbSyncMultiSelect />
     </Modal>
   );
 };
 
-export default connect(({ newsDynamic, loading }) => ({
-  addModalVisible: newsDynamic.addModalVisible,
-  loading: loading.models.newsDynamic,
+export default connect(({ studyRecord, loading }) => ({
+  addModalVisible: studyRecord.addModalVisible,
+  loading: loading.models.studyRecord,
 }))(AddModal);
