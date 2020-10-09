@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-// import CommunityForm from './CommunityForm';
 import TableMembersModify from './TableMembersModify';
 
 const CommunityModifyModal = ({
@@ -10,10 +9,7 @@ const CommunityModifyModal = ({
   communityDetailData,
   actionRef,
 }) => {
-  // const [form] = CommunityForm.useForm();
   const [communityId, setCommunityId] = useState('');
-  // const memberModifyModelRef = useRef({});
-  // const memberAddModelRef = useRef({});
 
   const showModal = id => {
     setCommunityId(id);
