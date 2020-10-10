@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
-import BranchInformationPartyUserListTable from './form/BranchInformationPartyUserListTable';
+import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = BranchInformationForm.useForm();
@@ -82,7 +82,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         }}
       >
         <BranchInformationForm form={form} id={id} />
-        <BranchInformationPartyUserListTable id={id} />
+        <LgbSyncMultiSelect />
       </div>
     </Modal>
   );

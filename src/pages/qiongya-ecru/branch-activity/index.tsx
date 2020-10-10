@@ -84,16 +84,18 @@ const BranchActivity = ({ dispatch, tableRef }) => {
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <TypeSelectLayout tabs={tabs} hidePublish onTabChange={onTabChange}>
-        <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
-          <Table
-            openAddModal={openAddModal}
-            openModifyModal={openModifyModal}
-            opendetailModal={opendetailModal}
-            publishStatus={publishStatus}
-            tableType={tableType}
-          />
-        </TypeSelectLayout>
+      <TypeSelectLayout
+        tabs={tabs}
+        onTabChange={onTabChange}
+        onPublishStatusChange={onPublishStatusChange}
+      >
+        <Table
+          openAddModal={openAddModal}
+          openModifyModal={openModifyModal}
+          opendetailModal={opendetailModal}
+          publishStatus={publishStatus}
+          tableType={tableType}
+        />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
