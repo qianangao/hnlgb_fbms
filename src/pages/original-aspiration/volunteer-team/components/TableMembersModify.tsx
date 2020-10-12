@@ -2,36 +2,36 @@ import React from 'react';
 import { connect } from 'umi';
 import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
 
-const TableCommunityMember = ({ dispatch, id }) => {
+const TableMember = ({ dispatch, id }) => {
   const getMemberList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCommunity/getMemberList',
-        payload: { ...params, clubId: id },
+        type: 'oaVolunteerTeam/getMemberList',
+        payload: { ...params, teamId: id },
         resolve,
       });
     });
   const getMemberIds = () =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCommunity/getMemberIds',
-        payload: { clubId: id },
+        type: 'oaVolunteerTeam/getMemberIds',
+        payload: { teamId: id },
         resolve,
       });
     });
   const addLgb = param =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCommunity/addMember',
-        payload: { clubId: id, ...param },
+        type: 'oaVolunteerTeam/addMember',
+        payload: { teamId: id, ...param },
         resolve,
       });
     });
   const deleteLgb = param =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCommunity/deleteMember',
-        payload: { clubId: id, ...param },
+        type: 'oaVolunteerTeam/deleteMember',
+        payload: { teamId: id, ...param },
         resolve,
       });
     });
@@ -46,6 +46,6 @@ const TableCommunityMember = ({ dispatch, id }) => {
   );
 };
 
-export default connect(({ oaCommunity }) => ({
-  oaCommunity,
-}))(TableCommunityMember);
+export default connect(({ oaVolunteerTeam }) => ({
+  oaVolunteerTeam,
+}))(TableMember);

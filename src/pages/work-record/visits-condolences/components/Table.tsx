@@ -4,15 +4,14 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const Table = ({
-  openActivityModifyModal,
-  oaVolunteerTeam,
+  openAddModal,
+  openModifyModal,
+  wrVisitsCondolences,
+  enums,
   dispatch,
-  opendetailActivityModal,
-  openRegisteredModal,
   tableType,
-  publishStatus,
 }) => {
-  const { tableRef } = oaVolunteerTeam;
+  const { tableRef } = wrVisitsCondolences;
   const columns = [
     {
       title: '序号',
@@ -23,31 +22,50 @@ const Table = ({
       width: 64,
     },
     {
-      title: `主题`,
+      title: `姓名`,
       align: 'center',
-      dataIndex: 'activityName',
+      dataIndex: 'userRealName',
     },
     {
-      title: `所属团队`,
+      title: '性别',
       align: 'center',
-      dataIndex: 'teamName',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
       hideInSearch: true,
     },
-
     {
-      title: publishStatus === 0 ? '保存时间' : '发布时间',
+      title: '离退休类型',
+      align: 'center',
+      dataIndex: 'dictRetirementType',
+      valueEnum: enums.dictRetirementType,
+      hideInSearch: true,
+    },
+    {
+      title: '出生日期',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'releaseTime' : 'releaseTime',
+      dataIndex: 'birthday',
       hideInSearch: true,
     },
-
     {
-      title: publishStatus === 0 ? '保存单位' : '发布单位',
+      title: '慰问时间',
+      valueType: 'dateRange',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'releaseOrganizationName' : 'releaseOrganizationName',
+      dataIndex: 'searchTime',
+      hideInTable: true,
+    },
+    { title: '慰问领导', align: 'center', dataIndex: 'leader', hideInSearch: true },
+    { title: '慰问地点', align: 'center', dataIndex: 'address', hideInSearch: true },
+    {
+      title: '慰问时间',
+      valueType: 'date',
+      align: 'center',
+      dataIndex: 'time',
       hideInSearch: true,
     },
+    { title: '陪同人员', align: 'center', dataIndex: 'entourage', hideInSearch: true },
+    { title: '慰问品', align: 'center', dataIndex: 'consolationGoods', hideInSearch: true },
+
     {
       title: '操作',
       valueType: 'option',
@@ -56,42 +74,20 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, Data) => [
-        publishStatus === 0 ? (
-          <a
-            key={`${Data.id}up`}
-            onClick={() => {
-              openActivityModifyModal(Data);
-            }}
-          >
-            编辑
-          </a>
-        ) : (
-          <a
-            key={`${Data.id}detail`}
-            onClick={() => {
-              opendetailActivityModal(Data);
-            }}
-          >
-            详情
-          </a>
-        ),
-        publishStatus === 1 ? (
-          <a
-            key={`${Data.id}up`}
-            onClick={() => {
-              openRegisteredModal(Data);
-            }}
-          >
-            报名列表
-          </a>
-        ) : (
-          ''
-        ),
+        <a
+          key={`${Data.id}up`}
+          onClick={() => {
+            openModifyModal(Data);
+          }}
+        >
+          编辑
+        </a>,
+
         <Popconfirm
           key={`${Data.id}del`}
           title="确认删除？"
           placement="topRight"
-          onConfirm={() => deleteActivity([Data.id])}
+          onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -101,26 +97,23 @@ const Table = ({
 
   useEffect(() => {
     tableRef.current && tableRef.current.reloadAndRest();
-  }, [publishStatus]);
-  useEffect(() => {
-    tableRef.current && tableRef.current.reloadAndRest();
   }, [tableType]);
 
   // 列表
-  const getList = params => {
+  const getVisitList = params => {
     return new Promise(resolve => {
       dispatch({
-        type: 'oaVolunteerTeam/getActivityList',
-        payload: { ...params, publishState: publishStatus },
+        type: 'wrVisitsCondolences/getVisitList',
+        payload: { ...params, type: tableType },
         resolve,
       });
     });
   };
 
   // 删除
-  const deleteActivity = ids => {
+  const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'oaVolunteerTeam/deleteActivity',
+      type: 'wrVisitsCondolences/deleteVisit',
       payload: {
         ids,
       },
@@ -130,12 +123,15 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="团队活动信息"
+      headerTitle={`${tableType}信息`}
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getList(params)}
+      request={async params => getVisitList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
+        <Button type="primary" onClick={() => openAddModal()}>
+          新增
+        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
@@ -143,7 +139,7 @@ const Table = ({
                 title: '确认批量删除？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteActivity(selectedRowKeys);
+                  deleteReturnworkPerson(selectedRowKeys);
                 },
               });
             }}
@@ -157,6 +153,7 @@ const Table = ({
   );
 };
 
-export default connect(({ oaVolunteerTeam }) => ({
-  oaVolunteerTeam,
+export default connect(({ wrVisitsCondolences, global }) => ({
+  wrVisitsCondolences,
+  enums: global.enums,
 }))(Table);

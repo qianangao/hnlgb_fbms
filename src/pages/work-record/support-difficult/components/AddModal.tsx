@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TeamForm from './form/TeamForm';
+import SupportDifficultForm from './form/SupportDifficultForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) => {
-  const [form] = TeamForm.useForm();
+const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) => {
+  const [form] = SupportDifficultForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrSupportDifficult/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   const hideModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrSupportDifficult/save',
       payload: {
         addModalVisible: false,
       },
@@ -40,9 +40,10 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       .validateFields()
       .then(values => {
         dispatch({
-          type: 'oaVolunteerTeam/addTeam',
+          type: `wrSupportDifficult/addSupportDifficult`,
           payload: {
             ...values,
+            helpType: tableType,
           },
         });
         form.resetFields();
@@ -54,9 +55,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   return (
     <Modal
-      title="新增志愿团队"
+      title={`新增${tableType === '1' ? '特困补助申请管理' : '遗孀补助申请管理'}`}
       centered
-      width="900px"
+      width="80%"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -68,12 +69,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <TeamForm form={form} deedsType={deedsType} />
+      <SupportDifficultForm form={form} tableType={tableType} />
     </Modal>
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  addModalVisible: oaVolunteerTeam.addModalVisible,
-  loading: loading.effects['oaVolunteerTeam/addTeam'],
+export default connect(({ wrSupportDifficult, loading }) => ({
+  addModalVisible: wrSupportDifficult.addModalVisible,
+  loading: loading.effects['wrSupportDifficult/addSupportDifficult'],
 }))(AddModal);

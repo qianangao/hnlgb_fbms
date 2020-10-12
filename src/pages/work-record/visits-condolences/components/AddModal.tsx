@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TeamForm from './form/TeamForm';
+import VisitForm from './form/VisitForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) => {
-  const [form] = TeamForm.useForm();
+const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) => {
+  const [form] = VisitForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrVisitsCondolences/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   const hideModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrVisitsCondolences/save',
       payload: {
         addModalVisible: false,
       },
@@ -36,13 +36,29 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
   };
 
   const handleOk = () => {
+    let visitType = '';
+    if (tableType === '生日慰问') {
+      visitType = 'e2stg89000k9991';
+    } else if (tableType === '住院慰问') {
+      visitType = 'e2stg89000k9992';
+    } else if (tableType === '节日慰问') {
+      visitType = 'e2stg89000k9993';
+    } else if (tableType === '日常走访') {
+      visitType = 'e2stg89000k9994';
+    } else if (tableType === '易地安置人员慰问') {
+      visitType = 'e2stg89000k9995';
+    } else if (tableType === '遗属慰问') {
+      visitType = 'e2stg89000k9996';
+    }
+
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: 'oaVolunteerTeam/addTeam',
+          type: `wrVisitsCondolences/addVisit`,
           payload: {
             ...values,
+            type: visitType,
           },
         });
         form.resetFields();
@@ -54,9 +70,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   return (
     <Modal
-      title="新增志愿团队"
+      title={`新增${tableType}`}
       centered
-      width="900px"
+      width="80%"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -68,12 +84,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <TeamForm form={form} deedsType={deedsType} />
+      <VisitForm form={form} tableType={tableType} />
     </Modal>
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  addModalVisible: oaVolunteerTeam.addModalVisible,
-  loading: loading.effects['oaVolunteerTeam/addTeam'],
+export default connect(({ wrVisitsCondolences, loading }) => ({
+  addModalVisible: wrVisitsCondolences.addModalVisible,
+  loading: loading.effects['wrVisitsCondolences/addVisit'],
 }))(AddModal);

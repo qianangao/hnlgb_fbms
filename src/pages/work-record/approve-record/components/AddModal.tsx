@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TeamForm from './form/TeamForm';
+import ApproveRecordForm from './form/ApproveRecordForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) => {
-  const [form] = TeamForm.useForm();
+const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+  const [form] = ApproveRecordForm.useForm();
+
   const showModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrApproveRecord/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   const hideModal = () => {
     dispatch({
-      type: 'oaVolunteerTeam/save',
+      type: 'wrApproveRecord/save',
       payload: {
         addModalVisible: false,
       },
@@ -40,27 +41,26 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       .validateFields()
       .then(values => {
         dispatch({
-          type: 'oaVolunteerTeam/addTeam',
+          type: `wrApproveRecord/addApproveRecord`,
           payload: {
             ...values,
           },
         });
-        form.resetFields();
       })
       .catch(info => {
-        console.error('新增错误', info);
+        console.error('新增报错', info);
       });
   };
 
   return (
     <Modal
-      title="新增志愿团队"
+      title="新增审批备案"
       centered
-      width="900px"
+      width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={addModalVisible}
       onOk={handleOk}
@@ -68,12 +68,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <TeamForm form={form} deedsType={deedsType} />
+      <ApproveRecordForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  addModalVisible: oaVolunteerTeam.addModalVisible,
-  loading: loading.effects['oaVolunteerTeam/addTeam'],
+export default connect(({ wrApproveRecord, loading }) => ({
+  addModalVisible: wrApproveRecord.addModalVisible,
+  loading: loading.models.wrApproveRecord,
 }))(AddModal);
