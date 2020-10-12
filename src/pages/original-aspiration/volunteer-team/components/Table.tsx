@@ -4,12 +4,11 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const Table = ({
-  openAddModal,
-  openModifyModal,
+  openActivityModifyModal,
   oaVolunteerTeam,
-  enums,
   dispatch,
-  opendetailModal,
+  opendetailActivityModal,
+  openRegisteredModal,
   tableType,
   publishStatus,
 }) => {
@@ -24,30 +23,29 @@ const Table = ({
       width: 64,
     },
     {
-      title: `标题`,
+      title: `主题`,
       align: 'center',
-      dataIndex: 'title',
+      dataIndex: 'activityName',
     },
     {
-      title: '事迹分类',
+      title: `所属团队`,
       align: 'center',
-      dataIndex: tableType === 'personal' ? 'dictPerson' : 'dictUnit',
-      valueEnum: tableType === 'personal' ? enums.dictPerson : enums.dictUnit,
-      hideInTable: true,
+      dataIndex: 'teamName',
+      hideInSearch: true,
     },
 
     {
       title: publishStatus === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'updateTime' : 'pushTime',
+      dataIndex: publishStatus === 0 ? 'releaseTime' : 'releaseTime',
       hideInSearch: true,
     },
 
     {
-      title: publishStatus === 0 ? '保存人' : '发布单位',
+      title: publishStatus === 0 ? '保存单位' : '发布单位',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'realName' : 'organizationName',
+      dataIndex: publishStatus === 0 ? 'releaseOrganizationName' : 'releaseOrganizationName',
       hideInSearch: true,
     },
     {
@@ -62,7 +60,7 @@ const Table = ({
           <a
             key={`${Data.id}up`}
             onClick={() => {
-              openModifyModal(Data);
+              openActivityModifyModal(Data);
             }}
           >
             编辑
@@ -71,17 +69,29 @@ const Table = ({
           <a
             key={`${Data.id}detail`}
             onClick={() => {
-              opendetailModal(Data);
+              opendetailActivityModal(Data);
             }}
           >
             详情
           </a>
         ),
+        publishStatus === 1 ? (
+          <a
+            key={`${Data.id}up`}
+            onClick={() => {
+              openRegisteredModal(Data);
+            }}
+          >
+            报名列表
+          </a>
+        ) : (
+          ''
+        ),
         <Popconfirm
           key={`${Data.id}del`}
-          title="确认删除该事迹信息？"
+          title="确认删除？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([Data.id])}
+          onConfirm={() => deleteActivity([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -97,26 +107,20 @@ const Table = ({
   }, [tableType]);
 
   // 列表
-  const getDeedsList = params => {
+  const getList = params => {
     return new Promise(resolve => {
       dispatch({
-        type:
-          tableType === 'personal'
-            ? 'oaVolunteerTeam/getPersonalList'
-            : 'oaVolunteerTeam/getCollectiveList',
-        payload: { ...params, isPublished: publishStatus },
+        type: 'oaVolunteerTeam/getActivityList',
+        payload: { ...params, publishState: publishStatus },
         resolve,
       });
     });
   };
 
   // 删除
-  const deleteReturnworkPerson = ids => {
+  const deleteActivity = ids => {
     dispatch({
-      type:
-        tableType === 'personal'
-          ? 'oaVolunteerTeam/deletePersonal'
-          : 'oaVolunteerTeam/deleteCollective',
+      type: 'oaVolunteerTeam/deleteActivity',
       payload: {
         ids,
       },
@@ -126,25 +130,20 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle={tableType === 'personal' ? '基本志愿服务信息' : '专项志愿服务信息'}
+      headerTitle="团队活动信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getDeedsList(params)}
+      request={async params => getList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        publishStatus === 0 ? (
-          <Button type="primary" onClick={() => openAddModal()}>
-            新增
-          </Button>
-        ) : null,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认批量删除事迹信息？',
+                title: '确认批量删除？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteReturnworkPerson(selectedRowKeys);
+                  deleteActivity(selectedRowKeys);
                 },
               });
             }}
@@ -158,7 +157,6 @@ const Table = ({
   );
 };
 
-export default connect(({ oaVolunteerTeam, global }) => ({
+export default connect(({ oaVolunteerTeam }) => ({
   oaVolunteerTeam,
-  enums: global.enums,
 }))(Table);

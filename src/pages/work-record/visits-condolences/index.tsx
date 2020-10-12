@@ -1,62 +1,101 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
+import AddModal from './components/AddModal';
+import Table from './components/Table';
+import StatisticsTable from './components/StatisticsTable';
+import ModifyModal from './components/ModifyModal';
 
-const AAAAAAA = ({ dispatch }) => {
+const AcadvancedDeeds = ({ dispatch }) => {
+  const [tableType, setTableType] = useState('生日慰问');
+  const addModelRef = useRef({});
+  const modifyModelRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [],
+        names: [
+          'dictPerson', // 个人先进事迹分类
+          'dictUnit', // 集体先进事迹分类
+        ],
       },
     });
   }, []);
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'vcBasicInfo/selectOrgChange',
+      type: 'wrVisitsCondolences/selectOrgChange',
       payload: orgId,
     });
   };
 
-  // Temp demo演示，稍后删除
   const tabs = [
     {
-      id: '231421',
-      label: '问卷草稿',
+      id: '生日慰问',
+      label: '生日慰问',
     },
     {
-      id: '43241341',
-      label: '问卷进行中',
+      id: '住院慰问',
+      label: '住院慰问',
     },
     {
-      id: '32432421',
-      label: '问卷统计',
+      id: '节日慰问',
+      label: '节日慰问',
+    },
+    {
+      id: '日常走访',
+      label: '日常走访',
+    },
+    {
+      id: '易地安置人员慰问',
+      label: '易地安置人员慰问',
+    },
+    {
+      id: '遗属慰问',
+      label: '遗属慰问',
+    },
+    {
+      id: '统计查询',
+      label: '统计查询',
     },
   ];
 
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onPublishStatusChange = status => {
-    // status 0 草稿箱 ， 1 已发布
-    // Do Something
+  const onTabChange = id => {
+    setTableType(id);
   };
 
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onTabChange = id => {
-    // Do Something
+  const openAddModal = item => {
+    addModelRef.current.showModal(item);
+  };
+  const openModifyModal = id => {
+    modifyModelRef.current.showModal(id);
   };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <TypeSelectLayout
-        tabs={tabs}
-        onPublishStatusChange={onPublishStatusChange}
-        onTabChange={onTabChange}
-      />
+      <TypeSelectLayout hidePublish tabs={tabs} onTabChange={onTabChange}>
+        {tableType === '统计查询' ? (
+          <StatisticsTable
+            tableType={tableType}
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+          />
+        ) : (
+          <Table
+            tableType={tableType}
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+          />
+        )}
+      </TypeSelectLayout>
+      <AddModal actionRef={addModelRef} tableType={tableType} />
+      <ModifyModal actionRef={modifyModelRef} tableType={tableType} />
     </OrgTreeLayout>
   );
 };
 
-export default connect(() => ({}))(AAAAAAA);
+export default connect(({ wrVisitsCondolences }) => ({
+  wrVisitsCondolences,
+}))(AcadvancedDeeds);

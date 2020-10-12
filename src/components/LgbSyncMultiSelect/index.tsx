@@ -30,6 +30,8 @@ const LgbSyncMultiSelect = ({
         ],
       },
     });
+
+    getCheckedIds();
   }, []);
 
   const getCheckedIds = () => {

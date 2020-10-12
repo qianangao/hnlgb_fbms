@@ -180,9 +180,7 @@ const getMembersIds = (req, res) => {
   res.send({
     code: 0,
     msg: 'success',
-    data: {
-      ids: ['402883e973e5c2ce0173e5c2ce91', '402883e973e5c2ce0173e5c2ce92'],
-    },
+    data: ['402883e973e5c2ce0173e5c2ce91', '402883e973e5c2ce0173e5c2ce92'],
   });
 };
 
@@ -195,7 +193,7 @@ export default {
   'GET /club-house/club-member/:id': commnityMember,
   'DELETE /club-house/club': noResponse,
   'DELETE /club-house/club-activity': noResponse,
-  'DELETE /club-house/club-member/:id': noResponse,
+  'DELETE /club-house/club-member': noResponse,
   'POST /club-house/club': noResponse,
   'PUT /club-house/club/:id': noResponse,
   'POST /club-house/club-activity': noResponse,

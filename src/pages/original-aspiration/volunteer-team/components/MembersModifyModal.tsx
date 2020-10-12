@@ -1,69 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import Detail from './form/Detail';
+import TableMembersModify from './TableMembersModify';
 
-const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, deedsType }) => {
-  const [detailId, setDetailId] = useState('');
-  const showModal = item => {
-    setDetailId(item.id);
+const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
+  const [infoId, setInfoId] = useState('');
+
+  const showModal = id => {
+    setInfoId(id);
     dispatch({
       type: 'oaVolunteerTeam/save',
       payload: {
-        detailModalVisible: true,
+        memberModifyModalVisible: true,
       },
     });
   };
+
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
     }
-
     if (actionRef && typeof actionRef !== 'function') {
       actionRef.current = { showModal };
     }
   }, []);
+
   const hideModal = () => {
     dispatch({
       type: 'oaVolunteerTeam/save',
       payload: {
-        detailModalVisible: false,
+        memberModifyModalVisible: false,
       },
     });
   };
 
   return (
     <Modal
-      title={deedsType === 'personal' ? '基本志愿服务详情' : '专项志愿服务详情'}
+      title="编辑志愿团队成员"
       centered
-      destroyOnClose
-      width="900px"
+      width="80vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={detailModalVisible}
-      footer={null}
-      forceRender
-      confirmLoading={loading}
+      visible={memberModifyModalVisible}
+      destroyOnClose
       onCancel={hideModal}
+      footer={[]}
     >
-      <div
-        style={{
-          height: 'calc(100% - 36px)',
-          padding: '20px 0',
-          overflow: 'auto',
-          boxSizing: 'border-box',
-        }}
-      >
-        <Detail id={detailId} deedsType={deedsType} />
-      </div>
+      <TableMembersModify id={infoId} />
     </Modal>
   );
 };
 
 export default connect(({ oaVolunteerTeam, loading }) => ({
-  detailModalVisible: oaVolunteerTeam.detailModalVisible,
+  memberModifyModalVisible: oaVolunteerTeam.memberModifyModalVisible,
   loading: loading.models.oaVolunteerTeam,
-}))(DetailModal);
+}))(TeamModifyModal);

@@ -2,8 +2,8 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const TableCommunityMember = ({ oaCommunity, enums, dispatch, id }) => {
-  const { tableRef } = oaCommunity;
+const TableMember = ({ oaVolunteerTeam, enums, dispatch, id }) => {
+  const { tableRef } = oaVolunteerTeam;
 
   const columns = [
     {
@@ -75,7 +75,7 @@ const TableCommunityMember = ({ oaCommunity, enums, dispatch, id }) => {
   const getMemberList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'oaCommunity/getMemberList',
+        type: 'oaVolunteerTeam/getMemberList',
         payload: { ...params, clubId: id },
         resolve,
       });
@@ -94,7 +94,7 @@ const TableCommunityMember = ({ oaCommunity, enums, dispatch, id }) => {
   );
 };
 
-export default connect(({ oaCommunity, global }) => ({
-  oaCommunity,
+export default connect(({ oaVolunteerTeam, global }) => ({
+  oaVolunteerTeam,
   enums: global.enums,
-}))(TableCommunityMember);
+}))(TableMember);

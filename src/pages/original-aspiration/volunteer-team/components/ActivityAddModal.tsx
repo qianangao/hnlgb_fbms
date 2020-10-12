@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import DeedsForm from './form/DeedsForm';
+import ActivityForm from './form/ActivityForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsType }) => {
-  const [form] = DeedsForm.useForm();
-  const [achievementId, setAchievementId] = useState('');
-  const showModal = item => {
-    setAchievementId(item.id);
+const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
+  const [form] = ActivityForm.useForm();
+  const showModal = () => {
+    form.resetFields();
     dispatch({
       type: 'oaVolunteerTeam/save',
       payload: {
-        modifyModalVisible: true,
+        activityAddModalVisible: true,
       },
     });
   };
+
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
     }
-
     if (actionRef && typeof actionRef !== 'function') {
       actionRef.current = { showModal };
     }
@@ -29,45 +28,38 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsTy
     dispatch({
       type: 'oaVolunteerTeam/save',
       payload: {
-        modifyModalVisible: false,
+        activityAddModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
-
-  const handleOk = publishStatus => {
+  const handleOk = status => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type:
-            deedsType === 'personal'
-              ? 'oaVolunteerTeam/updatePersonal'
-              : 'oaVolunteerTeam/updateCollective',
+          type: `oaVolunteerTeam/addActivity`,
           payload: {
             ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: achievementId,
+            publishState: status ? 0 : 1,
           },
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .catch();
   };
+
   return (
     <Modal
-      title={deedsType === 'personal' ? '编辑基本志愿服务' : '编辑专项志愿服务'}
+      title="发布活动"
       centered
-      destroyOnClose
       width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={modifyModalVisible}
+      visible={activityAddModalVisible}
+      onOk={handleOk}
+      forceRender
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
@@ -78,12 +70,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsTy
       ]}
       onCancel={hideModal}
     >
-      <DeedsForm form={form} id={achievementId} deedsType={deedsType} />
+      <ActivityForm size="middle" column={1} form={form} />
     </Modal>
   );
 };
 
 export default connect(({ oaVolunteerTeam, loading }) => ({
-  modifyModalVisible: oaVolunteerTeam.modifyModalVisible,
-  loading: loading.effects['oaVolunteerTeam/updateAchievement'],
-}))(ModifyModal);
+  activityAddModalVisible: oaVolunteerTeam.activityAddModalVisible,
+  loading: loading.effects['oaVolunteerTeam/addActivity'],
+}))(ActivityAddModal);

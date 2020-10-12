@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
-import DeedsForm from './form/DeedsForm';
+import { Modal } from 'antd';
+import TeamForm from './form/TeamForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) => {
-  const [form] = DeedsForm.useForm();
+  const [form] = TeamForm.useForm();
   const showModal = () => {
     dispatch({
       type: 'oaVolunteerTeam/save',
@@ -35,18 +35,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type:
-            deedsType === 'personal'
-              ? 'oaVolunteerTeam/addPersonal'
-              : 'oaVolunteerTeam/addCollective',
+          type: 'oaVolunteerTeam/addTeam',
           payload: {
             ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
         form.resetFields();
@@ -58,7 +54,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
 
   return (
     <Modal
-      title={deedsType === 'personal' ? '新增基本志愿服务' : '新增专项志愿服务'}
+      title="新增志愿团队"
       centered
       width="900px"
       style={{ paddingBottom: 0 }}
@@ -67,24 +63,17 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
+      onOk={handleOk}
+      forceRender
+      confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DeedsForm form={form} deedsType={deedsType} />
+      <TeamForm form={form} deedsType={deedsType} />
     </Modal>
   );
 };
 
 export default connect(({ oaVolunteerTeam, loading }) => ({
   addModalVisible: oaVolunteerTeam.addModalVisible,
-  loading:
-    loading.effects['oaVolunteerTeam/addPersonal'] ||
-    loading.effects['oaVolunteerTeam/addCollective'],
+  loading: loading.effects['oaVolunteerTeam/addTeam'],
 }))(AddModal);

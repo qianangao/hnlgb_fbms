@@ -24,7 +24,7 @@ const Model = {
     communityDetailData: {},
     activityDetailData: {},
     tableRef: {},
-    memberIds: {},
+    memberIds: [],
     selectedOrgId: undefined, // 选择的组织id
     communityDetailModalVisible: false, // 社区详情modal visible
     communityModifyModalVisible: false, // 社区编辑modal visible
@@ -257,21 +257,14 @@ const Model = {
       const response = yield call(addMember, payload);
 
       if (!response.error) {
-        // message.success('添加成功！');
-        // yield put({
-        //   type: 'tableReload',
-        // });
         resolve && resolve(response);
       }
     },
-    *deleteMember({ payload }, { call, put }) {
+    *deleteMember({ payload, resolve }, { call }) {
       const response = yield call(deleteMember, payload);
 
       if (!response.error) {
-        message.success('移除成功！');
-        yield put({
-          type: 'tableReload',
-        });
+        resolve && resolve(response);
       }
     },
   },

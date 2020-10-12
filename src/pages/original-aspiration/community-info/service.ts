@@ -130,7 +130,7 @@ export async function addMember(params) {
  * @param {*} params
  */
 export async function deleteMember(params) {
-  return request(`/club-house/club-member/${params.id}`, {
+  return request(`/club-house/club-member`, {
     method: 'DELETE',
     data: params,
   });

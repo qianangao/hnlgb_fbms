@@ -27,8 +27,23 @@ const TableCommunityMember = ({ dispatch, id }) => {
         resolve,
       });
     });
+  const deleteLgb = param =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'oaCommunity/deleteMember',
+        payload: { clubId: id, ...param },
+        resolve,
+      });
+    });
 
-  return <LgbSyncMultiSelect getLgbs={getMemberList} getSelectIds={getMemberIds} addLgb={addLgb} />;
+  return (
+    <LgbSyncMultiSelect
+      getLgbs={getMemberList}
+      getSelectIds={getMemberIds}
+      addLgb={addLgb}
+      deleteLgb={deleteLgb}
+    />
+  );
 };
 
 export default connect(({ oaCommunity }) => ({

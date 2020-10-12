@@ -1,37 +1,51 @@
 import { message } from 'antd';
 import {
-  getPersonalList,
-  getCollectiveList,
-  addPersonal,
-  addCollective,
-  updatePersonal,
-  updateCollective,
-  deletePersonal,
-  deleteCollective,
+  getTeamList,
+  getActivityList,
+  getMemberList,
+  getRegisteredList,
+  addTeam,
+  getActivityDetail,
+  addActivity,
+  updateActivity,
+  updateTeam,
+  deleteActivity,
+  deleteTeam,
   detailPersonal,
-  detailCollective,
+  detailTeam,
+  getMemberIds,
+  addMember,
+  deleteMember,
 } from './service';
 
 const Model = {
   namespace: 'oaVolunteerTeam',
   state: {
-    PersonalListData: {},
-    CollectiveListData: {},
-    addModalVisible: false, // 新增modal visible
+    teamListData: {},
+    activityListData: {},
+    memberListData: {},
+    addModalVisible: false,
+    activityDetailData: {},
+    activityAddModalVisible: false,
+    activityModifyModalVisible: false,
+    teamModifyModalVisible: false,
+    registeredModalVisible: false,
     tableRef: {},
+    memberIds: {},
     selectedOrgId: undefined, // 选择的组织id
     detailDeedsData: {},
   },
   effects: {
-    *getPersonalList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.oaVolunteerTeam.selectedOrgId);
+    *getTeamList({ payload, resolve }, { call, put, select }) {
+      const selectedOrgId = yield select(state => state.oaVolunteerTeam.selectedOrgId);
+      const { organizationId } = yield select(state => state.user.userInfo);
       const params = {
         ...payload,
-        orgIdForDataSelect,
+        orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
-      const response = yield call(getPersonalList, params);
+      const response = yield call(getTeamList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -49,13 +63,13 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            PersonalListData: result,
+            teamListData: result,
           },
         });
       }
     },
 
-    *getCollectiveList({ payload, resolve }, { call, put, select }) {
+    *getActivityList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.oaVolunteerTeam.selectedOrgId);
       const params = {
         ...payload,
@@ -63,7 +77,7 @@ const Model = {
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
-      const response = yield call(getCollectiveList, params);
+      const response = yield call(getActivityList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -81,9 +95,95 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            CollectiveListData: result,
+            activityListData: result,
           },
         });
+      }
+    },
+    *getMemberList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const response = yield call(getMemberList, params);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            memberListData: result,
+          },
+        });
+      }
+    },
+    *getMemberIds({ payload, resolve }, { call, put }) {
+      const response = yield call(getMemberIds, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            memberIds: response,
+          },
+        });
+      }
+    },
+    *getRegisteredList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const response = yield call(getRegisteredList, params);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            memberListData: result,
+          },
+        });
+      }
+    },
+
+    *addMember({ payload, resolve }, { call }) {
+      const response = yield call(addMember, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *deleteMember({ payload, resolve }, { call }) {
+      const response = yield call(deleteMember, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
       }
     },
 
@@ -99,10 +199,8 @@ const Model = {
         type: 'tableReload',
       });
     },
-
-    *addPersonal({ payload }, { call, put }) {
-      const response = yield call(addPersonal, payload);
-      const { isPublished } = payload;
+    *addTeam({ payload }, { call, put }) {
+      const response = yield call(addTeam, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -110,79 +208,91 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(isPublished === 0 ? '基本志愿服务新增成功！' : '基本志愿服务发布成功！');
+        message.success('新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *addCollective({ payload }, { call, put }) {
-      const response = yield call(addCollective, payload);
-      const { isPublished } = payload;
+    *getActivityDetail({ payload, resolve }, { call, put }) {
+      const response = yield call(getActivityDetail, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            activityDetailData: response,
+          },
+        });
+      }
+    },
+    *addActivity({ payload }, { call, put }) {
+      const response = yield call(addActivity, payload);
+      const { publishState } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
           payload: {
-            addModalVisible: false,
+            activityAddModalVisible: false,
           },
         });
-        message.success(isPublished === 0 ? '专项志愿服务新增成功！' : '专项志愿服务发布成功！');
+        message.success(publishState === 0 ? '新增成功！' : '发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updatePersonal({ payload }, { call, put }) {
-      const response = yield call(updatePersonal, payload);
-      const { isPublished } = payload;
+    *updateActivity({ payload }, { call, put }) {
+      const response = yield call(updateActivity, payload);
+      const { publishState } = payload;
       if (!response.error) {
         yield put({
           type: 'save',
           payload: {
-            modifyModalVisible: false,
+            activityModifyModalVisible: false,
           },
         });
 
-        message.success(isPublished === 0 ? '基本志愿服务修改成功！' : '基本志愿服务发布成功！');
+        message.success(publishState === 0 ? '修改成功！' : '发布成功！');
 
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateCollective({ payload }, { call, put }) {
-      const response = yield call(updateCollective, payload);
-      const { isPublished } = payload;
+    *updateTeam({ payload }, { call, put }) {
+      const response = yield call(updateTeam, payload);
       if (!response.error) {
         yield put({
           type: 'save',
           payload: {
-            modifyModalVisible: false,
+            teamModifyModalVisible: false,
           },
         });
 
-        message.success(isPublished === 0 ? '专项志愿服务修改成功！' : '专项志愿服务发布成功！');
+        message.success('修改成功！');
 
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deletePersonal({ payload }, { call, put }) {
-      const response = yield call(deletePersonal, payload);
+    *deleteActivity({ payload }, { call, put }) {
+      const response = yield call(deleteActivity, payload);
 
       if (!response.error) {
-        message.success('基本志愿服务删除成功！');
+        message.success('删除成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deleteCollective({ payload }, { call, put }) {
-      const response = yield call(deleteCollective, payload);
+    *deleteTeam({ payload }, { call, put }) {
+      const response = yield call(deleteTeam, payload);
 
       if (!response.error) {
-        message.success('专项志愿服务删除成功！');
+        message.success('删除成功！');
         yield put({
           type: 'tableReload',
         });
@@ -201,8 +311,8 @@ const Model = {
         });
       }
     },
-    *detailCollective({ payload, resolve }, { call, put }) {
-      const response = yield call(detailCollective, payload);
+    *detailTeam({ payload, resolve }, { call, put }) {
+      const response = yield call(detailTeam, payload);
 
       if (!response.error) {
         resolve && resolve(response);
@@ -222,7 +332,7 @@ const Model = {
     tableReload(state) {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
