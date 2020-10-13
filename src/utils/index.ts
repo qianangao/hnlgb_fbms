@@ -169,8 +169,9 @@ export function printElement(element) {
  * @param {*} filename 文件名
  */
 export function downloadFileByUrl(url, filename) {
-  const FILES_SERVER = '/files_server/';
-  return request(FILES_SERVER + url, {
+  // TODO
+  // const FILES_SERVER = '/files_server/';
+  return request(url, {
     responseType: 'blob',
   }).then(blob => {
     const a = document.createElement('a');

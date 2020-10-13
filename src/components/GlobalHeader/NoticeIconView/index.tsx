@@ -14,14 +14,14 @@ import styles from './index.less';
 class NoticeIconView extends Component {
   refreshDownloadFilesFlag = -1;
 
-  // componentDidMount() {
-  //   const { dispatch } = this.props;
-  //   if (dispatch) {
-  //     dispatch({
-  //       type: 'global/refreshDownloadFiles',
-  //     });
-  //   }
-  // }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    if (dispatch) {
+      dispatch({
+        type: 'global/refreshDownloadFiles',
+      });
+    }
+  }
 
   UNSAFE_componentWillUpdate() {
     const { dispatch, filesStatus } = this.props;
