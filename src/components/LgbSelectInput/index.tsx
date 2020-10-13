@@ -17,7 +17,7 @@ interface LgbDataType {
 
 let tempdata: LgbDataType;
 
-const LgbSelectInput = ({ enums, dispatch, onChange }) => {
+const LgbSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [lgbData, setLgbData] = useState<LgbDataType>({});
 
@@ -89,7 +89,7 @@ const LgbSelectInput = ({ enums, dispatch, onChange }) => {
     });
   }, []);
 
-  const getEmployeeList = params =>
+  const getLgbList = params =>
     new Promise(resolve => {
       dispatch({
         type: 'globalLgb/getLgbList',
@@ -169,7 +169,7 @@ const LgbSelectInput = ({ enums, dispatch, onChange }) => {
             },
           }}
           scroll={{ x: 'max-content' }}
-          request={async params => getEmployeeList(params)}
+          request={getLgbs || (async params => getLgbList(params))}
           columns={columns}
         />
       </Modal>

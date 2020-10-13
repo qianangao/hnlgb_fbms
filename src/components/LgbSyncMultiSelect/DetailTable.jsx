@@ -39,7 +39,7 @@ const DetailTable = ({ enums, actionRef, openAddModal, reloadDataHandler, getLgb
   };
 
   const deleteItems = keys => {
-    const params = { userIds: keys };
+    const params = { ids: keys };
     deleteLgb &&
       deleteLgb(params).then(_ => {
         reloadDataHandler();

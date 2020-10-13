@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 
 import DetailTable from './DetailTable';
@@ -30,6 +30,8 @@ const LgbSyncMultiSelect = ({
         ],
       },
     });
+
+    getCheckedIds();
   }, []);
 
   const getCheckedIds = () => {
