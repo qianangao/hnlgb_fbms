@@ -49,7 +49,7 @@ const errorHandler = error => {
       });
 
       history.replace({
-        pathname: '/user/login',
+        pathname: '/white/login',
       });
 
       return { data, error: true };

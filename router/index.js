@@ -13,16 +13,16 @@ const router = [
     component: '../layouts/BlankLayout',
     routes: [
       {
-        path: '/user',
+        path: '/white',
         component: '../layouts/UserLayout',
         routes: [
           {
-            path: '/user',
-            redirect: '/user/login',
+            path: '/white',
+            redirect: '/white/login',
           },
           {
             name: 'login',
-            path: '/user/login',
+            path: '/white/login',
             remark: '登录',
             component: './user/login',
           },
