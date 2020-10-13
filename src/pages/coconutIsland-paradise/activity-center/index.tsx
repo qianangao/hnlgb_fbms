@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
+import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import ModifyModal from './components/ModifyModal';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
-import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import DetailModal from './components/DetailModal';
 
 const ActivityCenterInfo = ({ dispatch, tableRef }) => {

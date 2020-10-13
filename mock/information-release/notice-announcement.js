@@ -32,6 +32,7 @@ for (let i = 0; i < 20; i++) {
     organizationId: 'string', //单位id
     organizationName: 'string', //单位名称
     subject: '通知通告', //通知主题
+    title: '通知通告home', //通知主题
   });
 }
 
