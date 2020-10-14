@@ -49,7 +49,7 @@ const errorHandler = error => {
       });
 
       history.replace({
-        pathname: '/user/login',
+        pathname: '/white/login',
       });
 
       return { data, error: true };
@@ -77,7 +77,7 @@ export const BASE_URL = '/hnlgb-server';
 export const requestConfig = extend({
   // ’prefix‘ 前缀，统一设置 url 前缀
   // ( e.g. request('/user/save', { prefix: '/api/v1' }) => request('/api/v1/user/save') )
-  prefix: process.env.USE_MOCK ? '' : BASE_URL,
+  prefix: process.env.USE_MOCK ? '' : `${BASE_URL}/lgbsmp/api/v1`,
   headers: {
     token: getCookie(TOKEN_KEY) || '',
     appMark: 'PC',
