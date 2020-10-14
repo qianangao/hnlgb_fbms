@@ -4,7 +4,7 @@ import OrgTree from '@/components/OrgTree';
 
 let tempOrg = {};
 
-const OrgSelectInput = ({ value, actionRef, onChange }) => {
+const OrgSelectInput = ({ value = '', actionRef = {}, onChange = () => {} }) => {
   const [orgSelectModalVisible, setVisible] = useState(false);
   const [valueName, setValueName] = useState('');
   const [orgId, setOrgId] = useState('');
