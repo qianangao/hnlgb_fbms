@@ -64,12 +64,12 @@ const routes = {
       component: './coconutIsland-paradise/medical-policy',
       remark: '医疗政策',
     },
-    // {
-    //   path: '/coconutIsland-paradise/education-module',
-    //   name: 'coconutIsland-paradise-education-module',
-    //   component: './coconutIsland-paradise/education-module',
-    //   remark: '教育模块',
-    // },
+    {
+      path: '/coconutIsland-paradise/health-education',
+      name: 'coconutIsland-paradise-health-education',
+      component: './coconutIsland-paradise/health-education',
+      remark: '保健教育',
+    },
     {
       path: '/coconutIsland-paradise/socialSecurity-certification',
       name: 'coconutIsland-paradise-socialSecurity-certification',
