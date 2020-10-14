@@ -59,6 +59,18 @@ const routes = {
       remark: '网络报名',
     },
     {
+      path: '/coconutIsland-paradise/medical-policy',
+      name: 'coconutIsland-paradise-medical-policy',
+      component: './coconutIsland-paradise/medical-policy',
+      remark: '医疗政策',
+    },
+    // {
+    //   path: '/coconutIsland-paradise/education-module',
+    //   name: 'coconutIsland-paradise-education-module',
+    //   component: './coconutIsland-paradise/education-module',
+    //   remark: '教育模块',
+    // },
+    {
       path: '/coconutIsland-paradise/socialSecurity-certification',
       name: 'coconutIsland-paradise-socialSecurity-certification',
       remark: '社保认证',
