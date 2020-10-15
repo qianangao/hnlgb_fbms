@@ -42,8 +42,15 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         dispatch({
           type: `branchActivity/addBranchActivity`,
           payload: {
-            ...values,
+            activityAdd: values.activityAdd,
+            activityDate: values.activityDate,
+            activityName: values.activityName,
+            context: values.context,
+            host: values.host,
+            partyName: values.partyName,
             isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
+            fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
           },
         });
         form.resetFields();

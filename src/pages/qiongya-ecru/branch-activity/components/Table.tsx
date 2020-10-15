@@ -91,7 +91,7 @@ const Table = ({
           key={`${employeeData.id}del`}
           title="确认删除支部活动吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteBranchActivity([employeeData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -100,7 +100,7 @@ const Table = ({
   ];
 
   // 列表
-  const getEmployeeList = params =>
+  const branchActivityList = params =>
     new Promise(resolve => {
       dispatch({
         type: 'branchActivity/branchActivityList',
@@ -109,7 +109,7 @@ const Table = ({
       });
     });
   // 删除
-  const deleteReturnworkPerson = ids => {
+  const deleteBranchActivity = ids => {
     dispatch({
       type: 'branchActivity/deleteBranchActivity',
       payload: {
@@ -125,7 +125,7 @@ const Table = ({
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getEmployeeList(params)}
+      request={async params => branchActivityList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
         publishStatus === 0 ? (
           <Button type="primary" onClick={() => openAddModal()}>
@@ -139,7 +139,7 @@ const Table = ({
                 title: '确认删除支部活动？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteReturnworkPerson(selectedRowKeys);
+                  deleteBranchActivity(selectedRowKeys);
                 },
               });
             }}

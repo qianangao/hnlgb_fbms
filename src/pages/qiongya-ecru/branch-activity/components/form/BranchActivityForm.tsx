@@ -74,6 +74,24 @@ const BranchActivityForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          picAttachmentInfo:
+            data.picAttachmentInfo.id && data.picAttachmentInfo.url
+              ? {
+                  uid: data.picAttachmentInfo.id,
+                  name: data.picAttachmentInfo.fileName,
+                  url: data.picAttachmentInfo.url,
+                  status: 'done',
+                }
+              : null,
+          attachmentInfo:
+            data.attachmentInfo.id && data.attachmentInfo.url
+              ? {
+                  uid: data.attachmentInfo.id,
+                  name: data.attachmentInfo.fileName,
+                  url: data.attachmentInfo.url,
+                  status: 'done',
+                }
+              : null,
         };
         form.setFieldsValue(fields);
       });

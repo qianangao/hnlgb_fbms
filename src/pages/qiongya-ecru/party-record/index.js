@@ -4,12 +4,10 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
-import MembersModifyModal from './components/MembersModifyModal';
 
-const BranchInformation = ({ dispatch }) => {
+const PartyRecord = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
-  const membersModifyModelRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -30,7 +28,7 @@ const BranchInformation = ({ dispatch }) => {
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'branchInformation/selectOrgChange',
+      type: 'partyRecord/selectOrgChange',
       payload: orgId,
     });
   };
@@ -40,24 +38,16 @@ const BranchInformation = ({ dispatch }) => {
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
   };
-  const openMembersModifyModal = item => {
-    membersModifyModelRef.current.showModal(item.id);
-  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table
-        openAddModal={openAddModal}
-        openModifyModal={openModifyModal}
-        openMembersModifyModal={openMembersModifyModal}
-      />
+      <Table openAddModal={openAddModal} openModifyModal={openModifyModal} />
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
-      <MembersModifyModal actionRef={membersModifyModelRef} />
     </OrgTreeLayout>
   );
 };
 
-export default connect(({ branchInformation }) => ({
-  branchInformation,
-}))(BranchInformation);
+export default connect(({ partyRecord }) => ({
+  partyRecord,
+}))(PartyRecord);

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import NewsDynamicForm from './form/NewsDynamicForm';
+import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
+import PartyRecordForm from './form/PartyRecordForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = NewsDynamicForm.useForm();
-  const [lgbId, setLgbId] = useState('');
+  const [form] = PartyRecordForm.useForm();
+  const [id, setId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setId(item.id);
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'partyRecord/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -27,7 +28,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'partyRecord/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -36,19 +37,15 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `newsDynamic/updateNewsDynamic`,
+          type: `partyRecord/updatePartyRecord`,
           payload: {
-            id: lgbId,
-            headline: values.headline,
-            context: values.context,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            attachmentId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
+            ...values,
+            id,
           },
         });
       })
@@ -58,7 +55,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改新闻动态"
+      title="修改党费管理"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -68,11 +65,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk()}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender
@@ -87,13 +81,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <NewsDynamicForm form={form} id={lgbId} />
+        <PartyRecordForm form={form} id={id} />
+        <LgbSyncMultiSelect getSelectLgbs={[]} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ newsDynamic, loading }) => ({
-  modifyModalVisible: newsDynamic.modifyModalVisible,
-  loading: loading.models.newsDynamic,
+export default connect(({ partyRecord, loading }) => ({
+  modifyModalVisible: partyRecord.modifyModalVisible,
+  loading: loading.models.partyRecord,
 }))(ModifyModal);

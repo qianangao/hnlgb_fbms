@@ -26,6 +26,17 @@ const StudyRecordForm = ({ form, id, dispatch, loading }) => {
       enumsLabel: 'dictPartyType',
       rules: [{ required: true, message: '请输入学习形式!', whitespace: true }],
     },
+    {
+      key: 'firstLine',
+      type: 'segmentation',
+    },
+    {
+      label: '学习要点',
+      name: 'points',
+      type: 'editor',
+      rules: [{ required: true, message: '请输入学习要点!', whitespace: true }],
+      span: 2,
+    },
   ];
   useEffect(() => {
     if (id) {

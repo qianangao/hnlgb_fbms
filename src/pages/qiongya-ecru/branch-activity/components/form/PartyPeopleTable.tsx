@@ -4,6 +4,7 @@ import { connect } from 'umi';
 
 const PartyPeopleTable = ({ branchActivity, enums, dispatch, id }) => {
   const { tableRef } = branchActivity;
+
   const columns = [
     {
       title: '序号',
@@ -13,7 +14,7 @@ const PartyPeopleTable = ({ branchActivity, enums, dispatch, id }) => {
       fixed: 'left',
       width: 64,
     },
-    { title: '姓名', align: 'center', dataIndex: 'realName', hideInSearch: true },
+    { title: '姓名', align: 'center', dataIndex: 'memberName', hideInSearch: true },
     {
       title: '性别',
       align: 'center',
@@ -35,6 +36,7 @@ const PartyPeopleTable = ({ branchActivity, enums, dispatch, id }) => {
 
   return (
     <ProTable
+      headerTitle="成员"
       actionRef={tableRef}
       options={false}
       search={false}

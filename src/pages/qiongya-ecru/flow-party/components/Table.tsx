@@ -3,15 +3,8 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({
-  openAddModal,
-  openModifyModal,
-  branchInformation,
-  dispatch,
-  enums,
-  openMembersModifyModal,
-}) => {
-  const { tableRef } = branchInformation;
+const Table = ({ openAddModal, openModifyModal, flowParty, enums, dispatch }) => {
+  const { tableRef } = flowParty;
   const columns = [
     {
       title: '序号',
@@ -22,51 +15,64 @@ const Table = ({
       width: 64,
     },
     {
-      title: `支部名称`,
+      title: '姓名',
       align: 'center',
-      dataIndex: 'partyName',
+      dataIndex: 'realName',
     },
     {
-      title: '支部类型',
+      title: '性别',
       align: 'center',
-      dataIndex: 'dictPartyType',
-      valueEnum: enums.dictPartyType,
+      dataIndex: 'sex',
+      valueEnum: enums.dictSex,
       hideInSearch: true,
     },
     {
-      title: '支部类别',
+      title: '年龄',
       align: 'center',
-      dataIndex: 'dictPartyCategory',
-      valueEnum: enums.dictPartyCategory,
+      dataIndex: 'age',
       hideInSearch: true,
     },
     {
-      title: '书记',
+      title: '民族',
       align: 'center',
-      dataIndex: 'branchSecretaryName',
-    },
-    {
-      title: '副书记',
-      align: 'center',
-      dataIndex: 'branchDeputySecretaryOneName',
-    },
-    {
-      title: '换届时间',
-      valueType: 'date',
-      align: 'center',
-      dataIndex: 'dateForChangingLeaders',
+      dataIndex: 'dictNation',
+      valueEnum: enums.dictNation,
       hideInSearch: true,
     },
     {
-      title: '换届地点',
+      title: '原工作单位及职务',
       align: 'center',
-      dataIndex: 'venues',
+      dataIndex: 'originalUnitAndPosition',
       hideInSearch: true,
     },
     {
-      title: '党员数量',
+      title: '入党时间',
       align: 'center',
-      dataIndex: 'partyMemberNum',
+      dataIndex: 'partyTime',
+      hideInSearch: true,
+    },
+    {
+      title: '现居住市县',
+      align: 'center',
+      dataIndex: 'addressDiy',
+      hideInSearch: true,
+    },
+    {
+      title: '详细住址',
+      align: 'center',
+      dataIndex: 'homeAddressDiy',
+      hideInSearch: true,
+    },
+    {
+      title: '开始流动时间',
+      align: 'center',
+      dataIndex: 'startTime',
+      hideInSearch: true,
+    },
+    {
+      title: '结束流动时间',
+      align: 'center',
+      dataIndex: 'endTime',
       hideInSearch: true,
     },
     {
@@ -83,21 +89,13 @@ const Table = ({
             openModifyModal(employeeData);
           }}
         >
-          编辑支部
-        </a>,
-        <a
-          key={`${employeeData.id}up`}
-          onClick={() => {
-            openMembersModifyModal(employeeData);
-          }}
-        >
-          编辑成员
+          编辑
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除支部信息吗？"
+          title="确认删除该流动党员登记信息吗？"
           placement="topRight"
-          onConfirm={() => deleteBranchInformation([employeeData.id])}
+          onConfirm={() => deleteFlowParty([employeeData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -106,32 +104,30 @@ const Table = ({
   ];
 
   // 列表
-  const getEmployeeList = params =>
+  const getFlowPartyList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'branchInformation/branchInformationList',
+        type: 'flowParty/flowPartyList',
         payload: { ...params },
         resolve,
       });
     });
-  // 删除
-  const deleteBranchInformation = ids => {
+  const deleteFlowParty = ids => {
     dispatch({
-      type: 'branchInformation/deleteBranchInformation',
+      type: 'flowParty/deleteFlowParty',
       payload: {
         ids,
       },
     });
   };
-
   return (
     <ProTable
       rowKey="id"
-      headerTitle="支部信息"
+      headerTitle="流动党员登记"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getEmployeeList(params)}
+      request={async params => getFlowPartyList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
         <Button type="primary" onClick={() => openAddModal()}>
           新增
@@ -140,10 +136,10 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除支部信息？',
+                title: '确认删除选择流动党员登记信息？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteBranchInformation(selectedRowKeys);
+                  deleteFlowParty(selectedRowKeys);
                 },
               });
             }}
@@ -157,7 +153,7 @@ const Table = ({
   );
 };
 
-export default connect(({ branchInformation, global }) => ({
-  branchInformation,
+export default connect(({ flowParty, global }) => ({
+  flowParty,
   enums: global.enums,
 }))(Table);

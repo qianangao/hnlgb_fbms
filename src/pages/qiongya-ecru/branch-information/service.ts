@@ -65,3 +65,14 @@ export async function partyUserList(params) {
     params,
   });
 }
+
+/**
+ * 新增-支部信息
+ * @param {*} params
+ */
+export async function addPartyUser(params) {
+  return request(`/partyUser`, {
+    method: 'POST',
+    data: params,
+  });
+}

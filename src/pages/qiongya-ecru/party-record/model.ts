@@ -1,34 +1,32 @@
 import { message } from 'antd';
 import {
-  addBranchInformation,
-  deleteBranchInformation,
-  updateBranchInformation,
-  branchInformationList,
-  detailBranchInformation,
-  partyUserList,
-  addPartyUser,
+  addPartyRecord,
+  deletePartyRecord,
+  updatePartyRecord,
+  partyRecordList,
+  detailPartyRecord,
+  exportPartyRecord,
 } from './service';
 
 const Model = {
-  namespace: 'branchInformation',
+  namespace: 'partyRecord',
   state: {
-    branchInformationData: {},
+    partyRecordData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    detailbranchInformationData: {},
-    partyUserListData: {},
+    detailPartyRecordData: {},
   },
   effects: {
-    *branchInformationList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.branchInformation.selectedOrgId);
+    *partyRecordList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.partyRecord.selectedOrgId);
       const params = {
         ...payload,
         orgIdForDataSelect,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
-      const response = yield call(branchInformationList, params);
+      const response = yield call(partyRecordList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -46,7 +44,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            branchInformationData: result,
+            partyRecordData: result,
           },
         });
       }
@@ -65,8 +63,8 @@ const Model = {
       });
     },
 
-    *addBranchInformation({ payload }, { call, put }) {
-      const response = yield call(addBranchInformation, payload);
+    *addPartyRecord({ payload }, { call, put }) {
+      const response = yield call(addPartyRecord, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -74,14 +72,14 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success('支部信息新增成功！');
+        message.success('党费记录新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateBranchInformation({ payload }, { call, put }) {
-      const response = yield call(updateBranchInformation, payload);
+    *updatePartyRecord({ payload }, { call, put }) {
+      const response = yield call(updatePartyRecord, payload);
       if (!response.error) {
         yield put({
           type: 'save',
@@ -89,67 +87,41 @@ const Model = {
             modifyModalVisible: false,
           },
         });
-        message.success('支部信息修改成功！');
+        message.success('党费记录修改成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deleteBranchInformation({ payload }, { call, put }) {
-      const response = yield call(deleteBranchInformation, payload);
+    *deletePartyRecord({ payload }, { call, put }) {
+      const response = yield call(deletePartyRecord, payload);
       if (!response.error) {
-        message.success('支部信息新增删除成功！');
+        message.success('党费记录新增删除成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *detailBranchInformation({ payload, resolve }, { call, put }) {
-      const response = yield call(detailBranchInformation, payload);
+    *detailPartyRecord({ payload, resolve }, { call, put }) {
+      const response = yield call(detailPartyRecord, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            detailBranchInformationData: response,
+            detailPartyRecordData: response,
           },
         });
       }
     },
-    *getPartyUserList({ payload, resolve }, { call, put }) {
-      const response = yield call(partyUserList, payload);
-
+    *exportPartyRecord({ payload, resolve }, { call, put }) {
+      const response = yield call(exportPartyRecord, payload);
       if (!response.error) {
-        const { items, currentPage, totalNum } = response;
-        const result = {
-          data: items,
-          page: currentPage,
-          pageSize: payload.pageSize,
-          success: true,
-          total: totalNum,
-        };
-        resolve && resolve(result);
+        resolve && resolve(response);
+        message.success('党费记录导出成功！');
         yield put({
           type: 'save',
-          payload: {
-            partyUserListData: result,
-          },
-        });
-      }
-    },
-    *addPartyUser({ payload }, { call, put }) {
-      const response = yield call(addPartyUser, payload);
-      if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-        message.success('支部成员新增成功！');
-        yield put({
-          type: 'tableReload',
         });
       }
     },

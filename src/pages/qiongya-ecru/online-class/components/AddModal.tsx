@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
-import StudyRecordForm from './form/StudyRecordForm';
+import OnlineClassForm from './form/OnlineClassForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = StudyRecordForm.useForm();
+  const [form] = OnlineClassForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'onlineClass/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'onlineClass/save',
       payload: {
         addModalVisible: false,
       },
@@ -41,9 +40,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `studyRecord/addStudyRecord`,
+          type: `onlineClass/addOnlineClass`,
           payload: {
-            ...values,
+            name: values.name,
+            type: values.type,
+            url: values.url,
+            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
           },
         });
         form.resetFields();
@@ -53,11 +55,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       });
   };
 
-  const addLgbFatch = () => {};
-
   return (
     <Modal
-      title="新增学习记录"
+      title="新增网络课堂"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -67,7 +67,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk()}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
         </Button>,
       ]}
@@ -75,13 +75,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <StudyRecordForm form={form} />
-      <LgbSyncMultiSelect addLgb={addLgbFatch} />
+      <OnlineClassForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ studyRecord, loading }) => ({
-  addModalVisible: studyRecord.addModalVisible,
-  loading: loading.models.studyRecord,
+export default connect(({ onlineClass, loading }) => ({
+  addModalVisible: onlineClass.addModalVisible,
+  loading: loading.models.onlineClass,
 }))(AddModal);

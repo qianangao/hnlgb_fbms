@@ -203,8 +203,8 @@ const detailOrgLife = (req, res) => {
       activityDate: '2020-08-25T02:17:07.027Z', //时间
       activityName: '活动名称', //活动名称
       attachmentInfo: {
-        name: '测试附件', //附件名称
-        uid: '8adcf70a73b359ff0173b365abfb', //附件id
+        fileName: '测试附件', //附件名称
+        id: '8adcf70a73b359ff0173b365abfb', //附件id
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', //附件url
       },
       context: '活动详情活动详情', //活动详情
@@ -220,8 +220,8 @@ const detailOrgLife = (req, res) => {
       partyId: '8adcf70a73b359', //支部id
       photoAttachmentId: 'string', //缩略图id
       picAttachmentInfo: {
-        name: '测试图片', ////缩略图名称
-        uid: '8adcf70a73b359ff0173b365abfb', //缩略图id
+        fileName: '测试图片', ////缩略图名称
+        id: '8adcf70a73b359ff0173b365abfb', //缩略图id
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png', ////缩略图url
       },
       picUrl: 'string', //缩略图url

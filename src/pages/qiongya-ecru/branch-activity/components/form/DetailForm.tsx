@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions } from 'antd';
-import PartyPeopleTable from './PartyPeopleTable';
 
 const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
   useEffect(() => {
@@ -43,11 +42,6 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         </Descriptions.Item>
         <Descriptions.Item label="活动简介" span={22}>
           {detailBranchActivityData.context}
-        </Descriptions.Item>
-      </Descriptions>
-      <Descriptions size="middle" title="活动成员">
-        <Descriptions.Item span={22}>
-          <PartyPeopleTable id={detailBranchActivityData.partyId} />
         </Descriptions.Item>
       </Descriptions>
     </div>

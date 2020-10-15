@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
-import StudyRecordForm from './form/StudyRecordForm';
+import PartyRecordForm from './form/PartyRecordForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = StudyRecordForm.useForm();
+  const [form] = PartyRecordForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'partyRecord/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'partyRecord/save',
       payload: {
         addModalVisible: false,
       },
@@ -41,7 +41,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `studyRecord/addStudyRecord`,
+          type: `partyRecord/addPartyRecord`,
           payload: {
             ...values,
           },
@@ -57,7 +57,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增学习记录"
+      title="新增党费记录"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -75,13 +75,13 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <StudyRecordForm form={form} />
+      <PartyRecordForm form={form} />
       <LgbSyncMultiSelect addLgb={addLgbFatch} />
     </Modal>
   );
 };
 
-export default connect(({ studyRecord, loading }) => ({
-  addModalVisible: studyRecord.addModalVisible,
-  loading: loading.models.studyRecord,
+export default connect(({ partyRecord, loading }) => ({
+  addModalVisible: partyRecord.addModalVisible,
+  loading: loading.models.partyRecord,
 }))(AddModal);

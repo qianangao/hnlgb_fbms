@@ -41,6 +41,15 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          attachmentInfo:
+            data.attachmentInfo.id && data.attachmentInfo.url
+              ? {
+                  uid: data.attachmentInfo.id,
+                  name: data.attachmentInfo.fileName,
+                  url: data.attachmentInfo.url,
+                  status: 'done',
+                }
+              : null,
         };
         form.setFieldsValue(fields);
       });

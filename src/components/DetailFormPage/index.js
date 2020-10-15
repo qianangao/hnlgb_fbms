@@ -27,7 +27,7 @@ const DetailFormPage = ({ title, releaseTime, orgName, content, extraFile }) => 
               href={extraFile.url}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'block' }}
+              style={{ display: 'inlinBlock' }}
               download="下载"
             >
               {extraFile.fileName}

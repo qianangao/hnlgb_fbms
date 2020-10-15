@@ -51,7 +51,7 @@ const detailNewsDynamic = (req, res) => {
       createOrgName: '省委老干部局11',
       attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        uid: '呵呵呵呵哒',
+        id: '呵呵呵呵哒',
         fileName: 'demo图片',
       },
       createTime: '',

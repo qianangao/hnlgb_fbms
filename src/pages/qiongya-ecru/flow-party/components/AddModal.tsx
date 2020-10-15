@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
-import StudyRecordForm from './form/StudyRecordForm';
+import FlowPartyFrom from './form/FlowPartyFrom';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = StudyRecordForm.useForm();
+  const [form] = FlowPartyFrom.useForm();
   const showModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'flowParty/save',
       payload: {
         addModalVisible: true,
       },
@@ -27,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'studyRecord/save',
+      type: 'flowParty/save',
       payload: {
         addModalVisible: false,
       },
@@ -41,29 +40,26 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `studyRecord/addStudyRecord`,
+          type: `flowParty/addFlowParty`,
           payload: {
             ...values,
           },
         });
-        form.resetFields();
       })
       .catch(info => {
         console.error('新增错误', info);
       });
   };
 
-  const addLgbFatch = () => {};
-
   return (
     <Modal
-      title="新增学习记录"
+      title="新增流动党员登记"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflowX: 'hidden',
+        overflow: 'auto',
       }}
       visible={addModalVisible}
       footer={[
@@ -75,13 +71,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <StudyRecordForm form={form} />
-      <LgbSyncMultiSelect addLgb={addLgbFatch} />
+      <FlowPartyFrom form={form} />
     </Modal>
   );
 };
 
-export default connect(({ studyRecord, loading }) => ({
-  addModalVisible: studyRecord.addModalVisible,
-  loading: loading.models.studyRecord,
+export default connect(({ flowParty, loading }) => ({
+  addModalVisible: flowParty.addModalVisible,
+  loading: loading.models.flowParty,
 }))(AddModal);
