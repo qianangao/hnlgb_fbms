@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Descriptions } from 'antd';
 import DetailForm from './form/OnlineRegistrationDetailForm';
 
-const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
+const DetailModal = ({
+  dispatch,
+  detailModalVisible,
+  loading,
+  actionRef,
+  detailOnlineRegistrationData,
+}) => {
   const [DetailId, setDetailId] = useState('');
+  const [registrationMembers, setRegistrationMembers] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
@@ -23,6 +30,21 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
       actionRef.current = { showModal };
     }
   }, []);
+  useEffect(() => {
+    if (DetailId) {
+      dispatch({
+        type: 'onlineRegistration/detailOnlineRegistrationInfo',
+        payload: { id: DetailId },
+      });
+      const membersArray =
+        detailOnlineRegistrationData.memberItems &&
+        detailOnlineRegistrationData.memberItems.map((Item, index) => {
+          return ` ${index + 1}、${Item.realName}`;
+        });
+      const members = membersArray && membersArray.join();
+      setRegistrationMembers(members);
+    }
+  }, [DetailId]);
   const hideModal = () => {
     dispatch({
       type: 'onlineRegistration/save',
@@ -44,16 +66,20 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
       }}
       visible={detailModalVisible}
       footer={null}
-      forceRender
+      destroyOnClose
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DetailForm id={DetailId} />
+      <DetailForm id={DetailId} detailOnlineRegistrationData={detailOnlineRegistrationData} />
+      <Descriptions size="middle" column={1}>
+        <Descriptions.Item label="已选成员">{registrationMembers}</Descriptions.Item>
+      </Descriptions>
     </Modal>
   );
 };
 
 export default connect(({ onlineRegistration, loading }) => ({
   detailModalVisible: onlineRegistration.detailModalVisible,
+  detailOnlineRegistrationData: onlineRegistration.detailOnlineRegistrationData,
   loading: loading.models.onlineRegistration,
 }))(DetailModal);

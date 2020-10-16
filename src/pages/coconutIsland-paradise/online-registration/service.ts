@@ -54,3 +54,46 @@ export async function updateOnlineRegistrationInfo(params) {
     data: params,
   });
 }
+
+/**
+ * 添加成员
+ * @param {*} params
+ */
+export async function addMember(params) {
+  return request(`/online_registration/user`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
+ * 移除成员
+ * @param {*} params
+ */
+export async function deleteMember(params) {
+  return request(`/online_registration/user/${params.activityId}`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
+ * 获取成员列表
+ * @param {*} params
+ */
+export async function getMemberList(params) {
+  return request(`/online_registration/user/${params.activityId}`, {
+    method: 'GET',
+    params,
+  });
+}
+/**
+ * 获取成员Ids
+ * @param {*} params
+ */
+export async function getMemberIds(params) {
+  return request(`/online_registration/users/${params.activityId}`, {
+    method: 'GET',
+    params,
+  });
+}

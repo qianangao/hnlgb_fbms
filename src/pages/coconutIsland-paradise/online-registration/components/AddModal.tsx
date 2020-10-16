@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import OnlineRegistrationForm from './form/OnlineRegistrationForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
@@ -36,7 +36,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
@@ -44,7 +44,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `onlineRegistration/addOnlineRegistrationInfo`,
           payload: {
             ...values,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -64,14 +63,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
+      onOk={handleOk}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}

@@ -1,29 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'umi';
 import DetailFormPage from '@/components/DetailFormPage';
 
-const DetailForm = ({ id, dispatch, detailOnlineRegistrationData }) => {
-  useEffect(() => {
-    if (id) {
-      dispatch({
-        type: 'onlineRegistration/detailOnlineRegistrationInfo',
-        payload: { id },
-      });
-    }
-  }, [id]);
-
+const DetailForm = ({ detailOnlineRegistrationData }) => {
   return (
-    <DetailFormPage
-      title={detailOnlineRegistrationData.title}
-      releaseTime={detailOnlineRegistrationData.releaseTime}
-      orgName={detailOnlineRegistrationData.organizationName}
-      content={detailOnlineRegistrationData.context}
-      extraFile={detailOnlineRegistrationData.attachmentInfo}
-    />
+    <>
+      <DetailFormPage
+        title={detailOnlineRegistrationData.title}
+        releaseTime={detailOnlineRegistrationData.releaseTime}
+        orgName={detailOnlineRegistrationData.organizationName}
+        content={detailOnlineRegistrationData.context}
+        extraFile={detailOnlineRegistrationData.attachmentInfo}
+      />
+    </>
   );
 };
 
-export default connect(({ onlineRegistration, loading }) => ({
-  detailOnlineRegistrationData: onlineRegistration.detailOnlineRegistrationData,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineRegistration,
 }))(DetailForm);

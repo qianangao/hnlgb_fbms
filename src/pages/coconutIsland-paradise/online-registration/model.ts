@@ -5,6 +5,10 @@ import {
   updateOnlineRegistrationInfo,
   onlineRegistrationInfoList,
   detailOnlineRegistrationInfo,
+  getMemberIds,
+  addMember,
+  deleteMember,
+  getMemberList,
 } from './service';
 
 const Model = {
@@ -15,6 +19,8 @@ const Model = {
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailOnlineRegistrationData: {},
+    memberListData: {},
+    memberIds: {},
   },
   effects: {
     *onlineRegistrationInfoList({ payload, resolve }, { call, put, select }) {
@@ -64,7 +70,6 @@ const Model = {
     },
     *addOnlineRegistrationInfo({ payload }, { call, put }) {
       const response = yield call(addOnlineRegistrationInfo, payload);
-      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -73,7 +78,7 @@ const Model = {
           },
         });
 
-        message.success(publishStatus === 0 ? '网络报名新增成功！' : '网络报名发布成功！');
+        message.success('网络报名新增成功！');
 
         yield put({
           type: 'tableReload',
@@ -88,6 +93,7 @@ const Model = {
           type: 'save',
           payload: {
             modifyModalVisible: false,
+            selectModalVisible: false,
           },
         });
 
@@ -117,6 +123,70 @@ const Model = {
           type: 'save',
           payload: {
             detailOnlineRegistrationData: response,
+          },
+        });
+      }
+    },
+    *addMember({ payload, resolve }, { call }) {
+      const response = yield call(addMember, payload);
+
+      if (!response.error) {
+        // message.success('添加成功！');
+        // yield put({
+        //   type: 'tableReload',
+        // });
+        resolve && resolve(response);
+      }
+    },
+    *deleteMember({ payload }, { call, put }) {
+      const response = yield call(deleteMember, payload);
+
+      if (!response.error) {
+        message.success('移除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *getMemberIds({ payload, resolve }, { call, put }) {
+      const response = yield call(getMemberIds, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            memberIds: response,
+          },
+        });
+      }
+    },
+
+    *getMemberList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const response = yield call(getMemberList, params);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            memberListData: result,
           },
         });
       }

@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import ModifyModal from './components/ModifyModal';
-// import SelectModal from './components/SelectModal';
+import SelectModal from './components/SelectModal';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
 import DetailModal from './components/DetailModal';
@@ -12,7 +12,7 @@ const OnlineRegistrationInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
-  // const selectModalRef = useRef({});
+  const selectModalRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
   useEffect(() => {
     dispatch({
@@ -39,9 +39,9 @@ const OnlineRegistrationInfo = ({ dispatch, tableRef }) => {
   const openDetailModal = item => {
     detailModalRef.current.showModal(item);
   };
-  // const openSelectModal = item => {
-  //   selectModalRef.current.showModal(item);
-  // };
+  const openSelectModal = item => {
+    selectModalRef.current.showModal(item);
+  };
   const onPublishStatusChange = statusChange => {
     // 控制：新增、编辑按钮
     // publishStatus 0 草稿箱 ， 1 已发布
@@ -55,14 +55,14 @@ const OnlineRegistrationInfo = ({ dispatch, tableRef }) => {
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           openDetailModal={openDetailModal}
-          // openSelectModal={openSelectModal}
+          openSelectModal={openSelectModal}
           publishStatus={publishStatus}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
-      {/* <SelectModal actionRef={selectModalRef} /> */}
+      <SelectModal actionRef={selectModalRef} />
     </OrgTreeLayout>
   );
 };
