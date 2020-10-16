@@ -11,7 +11,7 @@ const visitInfo = [];
 for (let i = 0; i < 8; i++) {
   visitInfo.push({
     id: '402883e973e5c2ce0173e5c2ce9' + i, //id
-    userId: '4028b23f739458e201739458e263', //userId
+    userId: '4028b23f739458e201739458e263' + i, //userId
     userRealName: '走访慰问', //姓名
     type: '402883ea73c687ef0173c687ef71', //走访类型
     address: '海南', //地址
