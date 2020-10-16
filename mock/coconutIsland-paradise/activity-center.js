@@ -52,6 +52,12 @@ const detailActivityCenterInfo = (req, res) => {
       urlId: 'urlId', //缩略图
       urlName: '我是缩略图',
       createOrgId: 'createOrgId',
+      releaseTime: '2020-09-18',
+      attachmentInfo: {
+        id: 'id',
+        url: 'url',
+        fileName: 'fileName',
+      },
     },
   });
 };

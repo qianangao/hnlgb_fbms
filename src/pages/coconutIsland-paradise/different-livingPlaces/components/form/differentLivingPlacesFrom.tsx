@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form } from 'antd';
+import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
 import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
@@ -34,6 +34,7 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
+      <Descriptions title="异地居住地址" size="middle" />
     </>
   );
   const formItems = [

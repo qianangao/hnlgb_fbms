@@ -10,7 +10,7 @@ const ElderPolicyForm = ({ id, loading, dispatch, form }) => {
       name: 'title',
       rules: [
         { required: true, message: '请输入标题名称!', whitespace: true },
-        { max: 128, message: '活动中心名称请小于128位!', whitespace: true },
+        { max: 128, message: '涉老政策名称请小于128位!', whitespace: true },
       ],
     },
     {

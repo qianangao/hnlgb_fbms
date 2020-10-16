@@ -14,6 +14,7 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
+    detailActivityCenterData: {},
   },
   effects: {
     *activityCenterInfoList({ payload, resolve }, { call, put, select }) {
@@ -63,6 +64,7 @@ const Model = {
     },
     *addActivityCenterInfo({ payload }, { call, put }) {
       const response = yield call(addActivityCenterInfo, payload);
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -71,7 +73,7 @@ const Model = {
           },
         });
 
-        message.success('新增活动中心成功！');
+        message.success(publishStatus === 0 ? '活动中心新增成功！' : '活动中心发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -80,7 +82,7 @@ const Model = {
     },
     *updateActivityCenterInfo({ payload }, { call, put }) {
       const response = yield call(updateActivityCenterInfo, payload);
-
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -89,7 +91,7 @@ const Model = {
           },
         });
 
-        message.success('修改活动中心成功！');
+        message.success(publishStatus === 0 ? '活动中心修改成功！' : '活动中心发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -106,11 +108,17 @@ const Model = {
         });
       }
     },
-    *detailActivityCenterInfo({ payload, resolve }, { call }) {
+    *detailActivityCenterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(detailActivityCenterInfo, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailActivityCenterData: response,
+          },
+        });
       }
     },
   },

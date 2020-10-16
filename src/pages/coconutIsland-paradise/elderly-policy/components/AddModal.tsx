@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import ElderlyPolicyForm from './form/ElderlyPolicyForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
@@ -64,7 +64,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}

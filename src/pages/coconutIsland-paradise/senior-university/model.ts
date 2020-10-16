@@ -14,19 +14,16 @@ const Model = {
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    publishStatus: 1, // type  0 草稿箱 ， 1 已发布
     detailSeniorUniversityData: {},
   },
   effects: {
     *seniorUniversityInfoList({ payload, resolve }, { call, put, select }) {
       const selectedOrgId = yield select(state => state.seniorUniversity.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
-      const publishStatus = yield select(state => state.seniorUniversity.publishStatus);
       const params = {
         ...payload,
         orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
-        pushStatus: publishStatus,
         pageSize: payload.pageSize,
       };
       const response = yield call(seniorUniversityInfoList, params);
@@ -67,6 +64,7 @@ const Model = {
     },
     *addSeniorUniversityInfo({ payload }, { call, put }) {
       const response = yield call(addSeniorUniversityInfo, payload);
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -75,7 +73,7 @@ const Model = {
           },
         });
 
-        message.success('新增老年大学成功！');
+        message.success(publishStatus === 0 ? '老年大学新增成功！' : '老年大学发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -84,7 +82,7 @@ const Model = {
     },
     *updateSeniorUniversityInfo({ payload }, { call, put }) {
       const response = yield call(updateSeniorUniversityInfo, payload);
-
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -93,8 +91,7 @@ const Model = {
           },
         });
 
-        message.success('修改老年大学成功！');
-
+        message.success(publishStatus === 0 ? '老年大学修改成功！' : '老年大学发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -122,18 +119,6 @@ const Model = {
           },
         });
       }
-    },
-    *publishStatusChange({ payload }, { put }) {
-      yield put({
-        type: 'save',
-        payload: {
-          publishStatus: payload,
-        },
-      });
-
-      yield put({
-        type: 'tableReload',
-      });
     },
   },
   reducers: {

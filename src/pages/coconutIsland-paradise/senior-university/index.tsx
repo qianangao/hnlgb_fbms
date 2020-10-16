@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
@@ -7,10 +7,11 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import DetailModal from './components/DetailModal';
 
-const SeniorUniversityInfo = ({ dispatch }) => {
+const SeniorUniversityInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
+  const [publishStatus, setPublishStatus] = useState(1);
   const orgChangeHander = orgId => {
     dispatch({
       type: 'seniorUniversity/selectOrgChange',
@@ -27,13 +28,11 @@ const SeniorUniversityInfo = ({ dispatch }) => {
   const opendetailModal = item => {
     detailModalRef.current.showModal(item);
   };
-  const onPublishStatusChange = publishStatus => {
+  const onPublishStatusChange = statusChange => {
     // 控制：新增、编辑按钮
     // publishStatus 0 草稿箱 ， 1 已发布
-    dispatch({
-      type: 'seniorUniversity/publishStatusChange',
-      payload: publishStatus,
-    });
+    setPublishStatus(statusChange);
+    tableRef.current.reload();
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -42,6 +41,7 @@ const SeniorUniversityInfo = ({ dispatch }) => {
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
+          publishStatus={publishStatus}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
@@ -52,5 +52,5 @@ const SeniorUniversityInfo = ({ dispatch }) => {
 };
 
 export default connect(({ seniorUniversity }) => ({
-  seniorUniversity,
+  tableRef: seniorUniversity.tableRef,
 }))(SeniorUniversityInfo);

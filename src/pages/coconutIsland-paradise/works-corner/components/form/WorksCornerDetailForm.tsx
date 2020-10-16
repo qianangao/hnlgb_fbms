@@ -14,12 +14,11 @@ const DetailForm = ({ id, dispatch, detailWorksCornerData }) => {
 
   return (
     <DetailFormPage
-      detailData={detailWorksCornerData}
-      // title={detailWorksCornerData.headline}
-      // releaseTime={detailWorksCornerData.releaseTime}
-      // orgName={detailWorksCornerData.createOrgName}
-      // content={detailWorksCornerData.context}
-      // extraFile={detailWorksCornerData.attachmentInfo}
+      title={detailWorksCornerData.headline}
+      releaseTime={detailWorksCornerData.releaseTime}
+      orgName={detailWorksCornerData.createOrgName}
+      content={detailWorksCornerData.context}
+      extraFile={detailWorksCornerData.attachmentInfo}
     />
   );
 };

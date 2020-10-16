@@ -72,9 +72,9 @@ const detailWorksCornerInfo = (req, res) => {
       createUserId: 'createUserId', //创建人id
       createOrgId: 'createOrgId', //创建单位id
       createOrgName: 'createOrgName', //创建单位
-      gmtCreate: '', //创建时间
-      gmtModified: '', //保存时间
-      releaseTime: '', //发布时间
+      gmtCreate: '2020-3-28', //创建时间
+      gmtModified: '2020-3-28', //保存时间
+      releaseTime: '2020-3-28', //发布时间
       attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         id: '234567788997543',

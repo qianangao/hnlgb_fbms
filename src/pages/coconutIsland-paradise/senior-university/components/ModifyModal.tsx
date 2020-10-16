@@ -67,11 +67,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       visible={modifyModalVisible}
       forceRender
       footer={[
-        <Button key="cancel" onClick={hideModal}>
-          取消
-        </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
         </Button>,
       ]}
       maskClosable={false}
