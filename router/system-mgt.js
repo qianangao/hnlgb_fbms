@@ -11,6 +11,12 @@ const routes = {
       remark: '单位管理',
     },
     {
+      path: '/system-mgt/staff-mgt',
+      name: 'system-mgt-staff-mgt',
+      component: './system-mgt/staff-mgt',
+      remark: '工作人员管理',
+    },
+    {
       path: '/system-mgt/role-mgt',
       name: 'system-mgt-role-mgt',
       component: './system-mgt/role-mgt',

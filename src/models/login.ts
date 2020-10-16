@@ -98,16 +98,16 @@ const Model = {
         },
       });
 
-      if (window.location.pathname !== '/user/login' && !redirect) {
+      if (window.location.pathname !== '/white/login' && !redirect) {
         yield history.replace({
-          pathname: '/user/login',
+          pathname: '/white/login',
           search: stringify({
             redirect: window.location.href,
           }),
         });
       } else {
         yield history.replace({
-          pathname: '/user/login',
+          pathname: '/white/login',
         });
       }
     },

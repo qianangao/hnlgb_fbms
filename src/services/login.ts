@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, { BASE_URL } from '@/utils/request';
 /**
  * 账户登录
  * @param {*} params 登陆信息
@@ -6,6 +6,7 @@ import request from '@/utils/request';
 export async function accountLogin(params) {
   return request('/login', {
     method: 'POST',
+    prefix: BASE_URL,
     data: params,
   });
 }
@@ -17,6 +18,7 @@ export async function accountLogin(params) {
 export async function accountLogout(params) {
   return request('/logout', {
     method: 'POST',
+    prefix: BASE_URL,
     data: params,
   });
 }

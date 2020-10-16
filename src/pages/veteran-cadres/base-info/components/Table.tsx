@@ -71,7 +71,6 @@ const Table = ({
     },
     { title: '身份证号', align: 'center', dataIndex: 'idCard' },
     { title: '现管单位', align: 'center', dataIndex: 'nowThePipeUnits' },
-    { title: '现管单位id', align: 'center', dataIndex: 'nowThePipeUnitsId' },
     { title: '支部名称', align: 'center', dataIndex: 'partyName' },
     {
       title: '操作',
