@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
 import PartyRecordForm from './form/PartyRecordForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
@@ -53,6 +52,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         console.error('修改错误', info);
       });
   };
+
   return (
     <Modal
       title="修改党费管理"
@@ -82,7 +82,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         }}
       >
         <PartyRecordForm form={form} id={id} />
-        <LgbSyncMultiSelect getSelectLgbs={[]} />
       </div>
     </Modal>
   );

@@ -4,10 +4,12 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
+import MembersModifyModal from './components/form/MembersModifyModal';
 
 const PartyRecord = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
+  const membersModifyModelRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -38,12 +40,19 @@ const PartyRecord = ({ dispatch }) => {
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
   };
-
+  const openMembersModifyModal = item => {
+    membersModifyModelRef.current.showModal(item.id);
+  };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openAddModal={openAddModal} openModifyModal={openModifyModal} />
+      <Table
+        openAddModal={openAddModal}
+        openModifyModal={openModifyModal}
+        openMembersModifyModal={openMembersModifyModal}
+      />
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
+      <MembersModifyModal actionRef={membersModifyModelRef} />
     </OrgTreeLayout>
   );
 };

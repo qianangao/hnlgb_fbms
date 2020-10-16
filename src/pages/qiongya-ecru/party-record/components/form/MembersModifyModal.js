@@ -36,7 +36,7 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
 
   return (
     <Modal
-      title="编辑支部成员信息"
+      title="编辑党费管理成员信息"
       centered
       width="80vw"
       style={{ paddingBottom: 0 }}

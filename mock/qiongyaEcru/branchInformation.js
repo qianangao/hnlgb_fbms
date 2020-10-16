@@ -89,7 +89,7 @@ const partyUserlist = [];
 for (let i = 0; i < 20; i++) {
   partyUserlist.push({
     id: '402883e973e5c2ce0173e5c2ce91',
-    realName: '成员' + i, //姓名
+    realName: '支部成员' + i, //姓名
     dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
     dateOfBirth: '2020-09-15', //出生日期
     dictNation: '8adcf7c96a48fae4016a49260741', //民族
@@ -122,4 +122,6 @@ export default {
   'PUT /branchInformation/:id': noResponse,
   'GET /branchInformation/:id': detailBranchInformation,
   'GET /partyUser/:id': partyUser,
+  'POST /partyUser': noResponse,
+  'DELETE /partyUser': noResponse,
 };

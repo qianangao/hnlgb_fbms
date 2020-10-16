@@ -7,6 +7,8 @@ import {
   detailBranchInformation,
   partyUserList,
   addPartyUser,
+  deletePartyUser,
+  politicalStatusLgbs,
 } from './service';
 
 const Model = {
@@ -18,6 +20,7 @@ const Model = {
     selectedOrgId: undefined, // 选择的组织id
     detailbranchInformationData: {},
     partyUserListData: {},
+    politicalStatusLgbsData: {},
   },
   effects: {
     *branchInformationList({ payload, resolve }, { call, put, select }) {
@@ -138,18 +141,35 @@ const Model = {
         });
       }
     },
-    *addPartyUser({ payload }, { call, put }) {
+    *addPartyUser({ payload }, { call }) {
       const response = yield call(addPartyUser, payload);
       if (!response.error) {
+        message.success('支部成员新增成功！');
+      }
+    },
+    *deletePartyUser({ payload }, { call }) {
+      const response = yield call(deletePartyUser, payload);
+      if (!response.error) {
+        message.success('支部成员删除成功！');
+      }
+    },
+    *politicalStatusLgbs({ payload, resolve }, { call, put }) {
+      const response = yield call(politicalStatusLgbs, payload);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
         yield put({
           type: 'save',
           payload: {
-            addModalVisible: false,
+            politicalStatusLgbsData: result,
           },
-        });
-        message.success('支部成员新增成功！');
-        yield put({
-          type: 'tableReload',
         });
       }
     },

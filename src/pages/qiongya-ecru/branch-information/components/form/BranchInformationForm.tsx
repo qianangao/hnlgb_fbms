@@ -36,7 +36,7 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     {
       label: '书记',
       name: 'branchSecretaryId',
-      render: <LgbSingleSelectInput />,
+      render: <LgbSingleSelectInput getLgbs={getPoliticalStatusLgbs} />,
     },
     {
       label: '副书记',
@@ -76,6 +76,22 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       });
     }
   }, [id]);
+
+  // 获取所有党员
+  const getPoliticalStatusLgbs = politicalStatusParam =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/politicalStatusLgbs',
+        payload: {
+          ...politicalStatusParam,
+          current: 1,
+          pageSize: 20,
+          currentPage: 1,
+          dictPoliticalStatus: '8adcf7c96a48fae4016a4925f283',
+        },
+        resolve,
+      });
+    });
 
   return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };

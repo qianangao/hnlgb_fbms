@@ -3,7 +3,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) => {
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  partyRecord,
+  dispatch,
+  enums,
+  openMembersModifyModal,
+}) => {
   const { tableRef } = partyRecord;
   const columns = [
     {
@@ -60,7 +67,15 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
             openModifyModal(employeeData);
           }}
         >
-          编辑
+          编辑党费
+        </a>,
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openMembersModifyModal(employeeData);
+          }}
+        >
+          编辑成员
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}

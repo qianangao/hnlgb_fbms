@@ -67,12 +67,34 @@ export async function partyUserList(params) {
 }
 
 /**
- * 新增-支部信息
+ * 新增-支部成员
  * @param {*} params
  */
 export async function addPartyUser(params) {
   return request(`/partyUser`, {
     method: 'POST',
     data: params,
+  });
+}
+
+/**
+ * 删除-支部成员
+ * @param {*} params
+ */
+export async function deletePartyUser(params) {
+  return request(`/partyUser`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
+ * 支部成员列表
+ * @param {*} params
+ */
+export async function politicalStatusLgbs(params) {
+  return request(`/users`, {
+    method: 'GET',
+    params,
   });
 }
