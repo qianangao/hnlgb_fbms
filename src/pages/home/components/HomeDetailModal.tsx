@@ -4,16 +4,16 @@ import { Modal } from 'antd';
 import HomeDetailForm from './form/HomeDetailForm';
 
 const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
-  const [DetailId, setDetailId] = useState(''); // id
-  const [BlockType, setBlockType] = useState(''); // 区域类型
-  const [BlockTypeUrl, setBlockTypeUrl] = useState(''); // 分区域请求详情Url
+  const [detailId, setDetailId] = useState(''); // id
+  const [blockTypeName, setBlockTypeName] = useState(''); // 区域类型名
+  const [blockTypeUrl, setBlockTypeUrl] = useState(''); // 分区域请求详情Url
   const showModal = (item, blockType) => {
     if (blockType === '图片新闻') {
       setDetailId(item);
     } else {
       setDetailId(item.id);
     }
-    setBlockType(blockType);
+    setBlockTypeName(blockType);
     switch (blockType) {
       case '图片新闻':
         setBlockTypeUrl('detailPicture');
@@ -60,7 +60,7 @@ const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) =
 
   return (
     <Modal
-      title={BlockType}
+      title={blockTypeName}
       centered
       width="70vw"
       style={{ paddingBottom: 0 }}
@@ -82,7 +82,7 @@ const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) =
           boxSizing: 'border-box',
         }}
       >
-        <HomeDetailForm id={DetailId} blockTypeUrl={BlockTypeUrl} />
+        <HomeDetailForm id={detailId} blockTypeUrl={blockTypeUrl} />
       </div>
     </Modal>
   );

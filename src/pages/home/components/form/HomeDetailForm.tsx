@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import DetailFormPage from '@/components/DetailFormPage';
 
 const HomeDetailForm = ({ id, dispatch, blockTypeUrl }) => {
-  const [DetailData, setDetailData] = useState('');
+  const [detailData, setDetailData] = useState('');
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -22,11 +22,11 @@ const HomeDetailForm = ({ id, dispatch, blockTypeUrl }) => {
   }, [id]);
   return (
     <DetailFormPage
-      title={DetailData.title}
-      releaseTime={DetailData.pushTime}
-      orgName={DetailData.createOrgName}
-      content={DetailData.context}
-      extraFile={DetailData.attachmentInfo}
+      title={detailData.title}
+      releaseTime={detailData.pushTime}
+      orgName={detailData.createOrgName}
+      content={detailData.context}
+      extraFile={detailData.attachmentInfo}
     />
   );
 };
