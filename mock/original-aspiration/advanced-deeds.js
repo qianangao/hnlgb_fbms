@@ -79,6 +79,7 @@ const getUnitDetail = (req, res) => {
       pushTime: '2020-08-25', //发布时间
       realName: '请勿删除', //老同志
       organizationName: '省委老干部局', //发布单位
+      teamType: ['1-1', '2-1-2'],
     },
   });
 };

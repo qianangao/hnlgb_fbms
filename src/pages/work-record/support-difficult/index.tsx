@@ -1,62 +1,72 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
+import AddModal from './components/AddModal';
+import Table from './components/Table';
+import ModifyModal from './components/ModifyModal';
 
-const AAAAAAA = ({ dispatch }) => {
+const AcadvancedDeeds = ({ dispatch }) => {
+  const [tableType, setTableType] = useState('1');
+  const addModelRef = useRef({});
+  const modifyModelRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [],
+        names: [
+          'helpMode', // 帮扶形式
+          'helpReason', // 帮扶原因
+        ],
       },
     });
   }, []);
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'vcBasicInfo/selectOrgChange',
+      type: 'wrSupportDifficult/selectOrgChange',
       payload: orgId,
     });
   };
 
-  // Temp demo演示，稍后删除
   const tabs = [
     {
-      id: '231421',
-      label: '问卷草稿',
+      id: '1',
+      label: '特困补助申请管理',
     },
     {
-      id: '43241341',
-      label: '问卷进行中',
-    },
-    {
-      id: '32432421',
-      label: '问卷统计',
+      id: '2',
+      label: '遗孀补助申请管理',
     },
   ];
 
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onPublishStatusChange = status => {
-    // status 0 草稿箱 ， 1 已发布
-    // Do Something
+  const onTabChange = id => {
+    setTableType(id);
   };
 
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onTabChange = id => {
-    // Do Something
+  const openAddModal = item => {
+    addModelRef.current.showModal(item);
+  };
+  const openModifyModal = id => {
+    modifyModelRef.current.showModal(id);
   };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <TypeSelectLayout
-        tabs={tabs}
-        onPublishStatusChange={onPublishStatusChange}
-        onTabChange={onTabChange}
-      />
+      <TypeSelectLayout hidePublish tabs={tabs} onTabChange={onTabChange}>
+        <Table
+          tableType={tableType}
+          openAddModal={openAddModal}
+          openModifyModal={openModifyModal}
+        />
+      </TypeSelectLayout>
+      <AddModal actionRef={addModelRef} tableType={tableType} />
+      <ModifyModal actionRef={modifyModelRef} tableType={tableType} />
     </OrgTreeLayout>
   );
 };
 
-export default connect(() => ({}))(AAAAAAA);
+export default connect(({ wrSupportDifficult }) => ({
+  wrSupportDifficult,
+}))(AcadvancedDeeds);

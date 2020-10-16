@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button, Descriptions } from 'antd';
+import { Modal, Button } from 'antd';
+import DetailFormPage from '@/components/DetailFormPage';
 
 const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailData, actionRef }) => {
   const [trendsId, setTrendsId] = useState('');
@@ -58,22 +59,12 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
         </Button>,
       ]}
     >
-      <Descriptions size="middle">
-        <div style={{ margin: '5px' }}>
-          <h2 style={{ textAlign: 'center' }}>{trendsDetailData.theme}</h2>
-          <div style={{ textAlign: 'center' }}>
-            发布单位：{trendsDetailData.organizationName}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-            {trendsDetailData.createTime}
-          </div>
-          <hr style={{ color: '#CCCCCC' }} />
-          <div
-            dangerouslySetInnerHTML={{
-              __html: trendsDetailData.content,
-            }}
-          />
-        </div>
-      </Descriptions>
+      <DetailFormPage
+        title={trendsDetailData.theme}
+        orgName={trendsDetailData.organizationName}
+        releaseTime={trendsDetailData.createTime}
+        content={trendsDetailData.content}
+      />
     </Modal>
   );
 };

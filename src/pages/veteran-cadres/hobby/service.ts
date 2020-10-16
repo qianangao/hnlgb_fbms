@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getHobbyList(params) {
-  return request('/user/hobby', {
+  return request('/hobby', {
     method: 'GET',
     params,
   });
