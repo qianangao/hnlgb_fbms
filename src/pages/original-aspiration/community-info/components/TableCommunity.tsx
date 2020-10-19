@@ -10,6 +10,7 @@ const Table = ({
   openModifyModal,
   openAddCommnityModal,
   openAddActivityModal,
+  openMembersModifyModal,
   enums,
 }) => {
   const { tableRef } = oaCommunity;
@@ -46,7 +47,10 @@ const Table = ({
           查看
         </a>,
         <a key={`${Data.id}up`} onClick={() => openModifyModal(Data)}>
-          编辑
+          编辑社团
+        </a>,
+        <a key={`${Data.id}up`} onClick={() => openMembersModifyModal(Data)}>
+          编辑成员
         </a>,
         <a key={`${Data.id}release`} onClick={() => openAddActivityModal(Data.id)}>
           发布活动

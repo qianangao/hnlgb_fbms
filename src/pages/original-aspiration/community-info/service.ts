@@ -32,6 +32,16 @@ export async function getMemberList(params) {
   });
 }
 /**
+ * 获取成员Ids
+ * @param {*} params
+ */
+export async function getMemberIds(params) {
+  return request(`/club-house/club-member/user-ids/club`, {
+    method: 'GET',
+    params,
+  });
+}
+/**
  * 获取社团详情
  * @param {*} params
  */
@@ -109,7 +119,7 @@ export async function addActivity(params) {
  * @param {*} params
  */
 export async function addMember(params) {
-  return request(`/care-generation/member`, {
+  return request(`/club-house/club-member`, {
     method: 'POST',
     data: params,
   });
@@ -120,7 +130,7 @@ export async function addMember(params) {
  * @param {*} params
  */
 export async function deleteMember(params) {
-  return request(`/club-house/club-member/${params.id}`, {
+  return request(`/club-house/club-member`, {
     method: 'DELETE',
     data: params,
   });

@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getBirthdayList(params) {
-  return request('/user/birthday', {
+  return request('/birthday-reminder', {
     method: 'GET',
     params,
   });

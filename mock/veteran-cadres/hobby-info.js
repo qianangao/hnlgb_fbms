@@ -50,5 +50,5 @@ const list = (req, res) => {
 };
 
 export default {
-  'GET /user/hobby': list,
+  'GET /hobby': list,
 };

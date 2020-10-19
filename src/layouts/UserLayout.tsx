@@ -47,7 +47,7 @@ const UserLayout = props => {
                 <span className={styles.title}>{props.title}</span>
               </Link>
             </div>
-            <div className={styles.desc}>{props.description}</div>
+            {/* <div className={styles.desc}>{props.description}</div> */}
           </div>
           {children}
         </div>

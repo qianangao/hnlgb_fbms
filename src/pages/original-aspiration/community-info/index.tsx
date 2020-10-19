@@ -9,11 +9,13 @@ import CommunityModifyModal from './components/CommunityModifyModal';
 import ActivityDetailModal from './components/ActivityDetailModal';
 import CommunityAddModal from './components/CommunityAddModal';
 import ActivityAddModal from './components/ActivityAddModal';
+import MembersModifyModal from './components/MembersModifyModal';
 
 const Community = ({ dispatch }) => {
   const detailModelRef = useRef({});
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
+  const membersModifyModelRef = useRef({});
   const activityDetailModelRef = useRef({});
   const activityAddModelRef = useRef({});
   const [tableType, setTableType] = useState('community');
@@ -60,6 +62,9 @@ const Community = ({ dispatch }) => {
   const openModifyModal = item => {
     modifyModelRef.current.showModal(item.id);
   };
+  const openMembersModifyModal = item => {
+    membersModifyModelRef.current.showModal(item.id);
+  };
   const openAddCommnityModal = () => {
     addModelRef.current.showModal();
   };
@@ -79,6 +84,7 @@ const Community = ({ dispatch }) => {
             openModifyModal={openModifyModal}
             openAddCommnityModal={openAddCommnityModal}
             openAddActivityModal={openAddActivityModal}
+            openMembersModifyModal={openMembersModifyModal}
           />
         ) : (
           <TableActivity openActivityDetailModal={openActivityDetailModal} />
@@ -88,6 +94,7 @@ const Community = ({ dispatch }) => {
         <CommunityAddModal actionRef={addModelRef} />
         <ActivityDetailModal actionRef={activityDetailModelRef} />
         <ActivityAddModal actionRef={activityAddModelRef} />
+        <MembersModifyModal actionRef={membersModifyModelRef} />
       </TypeSelectLayout>
     </OrgTreeLayout>
   );

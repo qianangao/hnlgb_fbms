@@ -47,6 +47,11 @@ const detailElderlyPolicyInfo = (req, res) => {
       fileName: 'fileName',
       fileUrl: 'fileUrl',
       createOrgName: '市委老干部局',
+      attachmentInfo: {
+        id: 'id',
+        url: 'url',
+        fileName: 'fileName',
+      },
     },
   });
 };

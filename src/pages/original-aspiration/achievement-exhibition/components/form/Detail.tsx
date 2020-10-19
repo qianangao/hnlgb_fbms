@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Descriptions } from 'antd';
+import DetailFormPage from '@/components/DetailFormPage';
 
 const Detail = ({ id, dispatch, detailAchievementData }) => {
   useEffect(() => {
@@ -13,22 +13,12 @@ const Detail = ({ id, dispatch, detailAchievementData }) => {
   }, [id]);
 
   return (
-    <Descriptions size="middle">
-      <div style={{ margin: '5px' }}>
-        <h2 style={{ textAlign: 'center' }}>{detailAchievementData.title}</h2>
-        <div style={{ textAlign: 'center' }}>
-          发布单位：{detailAchievementData.organizationName}
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 发布时间：
-          {detailAchievementData.pushTime}
-        </div>
-        <hr style={{ color: '#CCCCCC' }} />
-        <div
-          dangerouslySetInnerHTML={{
-            __html: detailAchievementData.resultSummary,
-          }}
-        />
-      </div>
-    </Descriptions>
+    <DetailFormPage
+      title={detailAchievementData.title}
+      orgName={detailAchievementData.organizationName}
+      releaseTime={detailAchievementData.pushTime}
+      content={detailAchievementData.resultSummary}
+    />
   );
 };
 

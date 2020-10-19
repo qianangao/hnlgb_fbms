@@ -52,6 +52,45 @@ const routes = {
       component: './coconutIsland-paradise/help-elderly',
       remark: '助老志愿',
     },
+    {
+      path: '/coconutIsland-paradise/online-registration',
+      name: 'coconutIsland-paradise-online-registration',
+      component: './coconutIsland-paradise/online-registration',
+      remark: '网络报名',
+    },
+    {
+      path: '/coconutIsland-paradise/medical-policy',
+      name: 'coconutIsland-paradise-medical-policy',
+      component: './coconutIsland-paradise/medical-policy',
+      remark: '医疗政策',
+    },
+    {
+      path: '/coconutIsland-paradise/health-education',
+      name: 'coconutIsland-paradise-health-education',
+      component: './coconutIsland-paradise/health-education',
+      remark: '保健教育',
+    },
+    {
+      path: '/coconutIsland-paradise/health-assessment',
+      name: 'coconutIsland-paradise-health-assessment',
+      component: './coconutIsland-paradise/health-assessment',
+      remark: '健康测评',
+    },
+    {
+      path: 'https://www.baidu.com',
+      target: '_blank',
+      remark: '社保认证',
+    },
+    {
+      path: 'https://www.baidu.com',
+      target: '_blank',
+      remark: '社保查询',
+    },
+    {
+      path: 'https://www.baidu.com',
+      target: '_blank',
+      remark: '医保查询',
+    },
   ],
 };
 export default routes;
