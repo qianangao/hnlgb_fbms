@@ -5,7 +5,7 @@
   "description": "Hainan Province Retired cadres Service management platform",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
-    "build": "node --max_old_space_size=4096 node_modules/.bin/umi build",
+    "build": "node --max_old_space_size=4096",
     "deploy": "npm run site && npm run gh-pages",
     "dev": "npm run start:dev",
     "fetch:blocks": "pro fetch-blocks && npm run prettier",
