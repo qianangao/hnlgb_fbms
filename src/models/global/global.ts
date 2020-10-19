@@ -42,7 +42,7 @@ const GlobalModel = {
 
       const response = yield call(getDictionary, payload);
 
-      if (!response.error) {
+      if (!response.error && response[0]) {
         const isCommon = response[0].isCommonlyUsed;
         const items = {};
         response.forEach(item => {

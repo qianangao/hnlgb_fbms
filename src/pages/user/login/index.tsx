@@ -30,7 +30,7 @@ const Login = props => {
     const { dispatch } = props;
     // 对称加密算法
     const encrypt = word => {
-      const key = CryptoJS.enc.Utf8.parse('liantong20200805');
+      const key = CryptoJS.enc.Utf8.parse('liantong20190410');
       const srcs = CryptoJS.enc.Utf8.parse(word);
       const encrypted = CryptoJS.AES.encrypt(srcs, key, {
         mode: CryptoJS.mode.ECB,
