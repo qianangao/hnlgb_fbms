@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, { noErrorRequest } from '@/utils/request';
 
 /**
  * 删除老干部
@@ -17,6 +17,39 @@ export async function deleteLgb(params) {
  */
 export async function getLgbList(params) {
   return request('/users', {
+    method: 'GET',
+    params,
+  });
+}
+/**
+ * 老干部数据导出
+ * @param {*} params
+ */
+export async function importLgbs(params) {
+  return request('/users/excel', {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 老干部数据导出
+ * @param {*} params
+ */
+export async function exportLgbs(params) {
+  return noErrorRequest('/users/export_excel', {
+    method: 'GET',
+    responseType: 'blob',
+    params,
+  });
+}
+
+/**
+ * 老干部数据异步导出
+ * @param {*} params
+ */
+export async function exportLgbsAsync(params) {
+  return request('/users/export', {
     method: 'GET',
     params,
   });

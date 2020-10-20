@@ -3,6 +3,9 @@ import {
   addLgb,
   deleteLgb,
   getLgbList,
+  importLgbs,
+  exportLgbsAsync,
+  exportLgbs,
   updateLgbOrg,
   resetLgbPwd,
   getLgbDetail,
@@ -14,6 +17,8 @@ import {
   getHealthyLgb,
   updateHealthyLgb,
 } from './service';
+import moment from 'moment';
+import { downloadXlsFile } from '@/utils';
 
 const Model = {
   namespace: 'vcBasicInfo',
@@ -71,6 +76,69 @@ const Model = {
             lgbListData: result,
           },
         });
+      }
+    },
+    *importLgbs({ payload }, { call, put }) {
+      if (!payload) {
+        return;
+      }
+
+      const response = yield call(importLgbs, {
+        excelName: payload.fileUrl.slice(payload.fileUrl.lastIndexOf('/') + 1),
+        path: payload.path,
+      });
+
+      if (!response.error) {
+        if (response && response.length > 0) {
+          message.warning('导入数据格式有误，请确认并更正数据后重新导入！');
+        } else {
+          message.success('复工员工信息批量导入成功！');
+
+          yield put({
+            type: 'tableReload',
+          });
+        }
+      }
+    },
+    *exportList({ payload }, { call, put, select }) {
+      const MAX_EXPORT_VALUE = 50; // 同步导出数据的最大条数
+      const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const { total } = yield select(state => state.vcBasicInfo.lgbListData);
+      const { organizationId } = yield select(state => state.user.userInfo);
+
+      const params = {
+        ...payload,
+        orgIdForDataSelect: selectedOrgId || organizationId,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const { dateOfBirth } = params;
+
+      if (dateOfBirth && dateOfBirth.length === 2) {
+        [params.dateOfBirthStart, params.dateOfBirthEnd] = dateOfBirth;
+      }
+
+      delete params.dateOfBirth;
+
+      if (params.ids || total < MAX_EXPORT_VALUE) {
+        const response = yield call(exportLgbs, params);
+
+        if (!response.error) {
+          yield downloadXlsFile(response, '条件查询人员列表');
+        }
+      } else {
+        const fileName = `人员列表${moment().format('MM-DD HH:mm:ss')}.xlsx`;
+        params.name = fileName;
+        const response = yield call(exportLgbsAsync, params);
+
+        message.info('文件导出中，请在用户信息栏通知中查看');
+
+        if (!response.error) {
+          yield put({
+            type: 'global/refreshDownloadFiles',
+          });
+        }
       }
     },
     *selectOrgChange({ payload }, { put }) {

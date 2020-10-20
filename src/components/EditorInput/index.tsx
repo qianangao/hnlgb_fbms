@@ -36,7 +36,7 @@ const EditorInput = ({ value, onChange, disabled, dispatch }) => {
         dispatch({
           type: 'global/uploadFile',
           payload: {
-            files: files[0],
+            file: files[0],
           },
           resolve,
         });

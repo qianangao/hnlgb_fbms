@@ -114,9 +114,9 @@ const detailRelocated = (req, res) => {
 };
 
 export default {
-  'GET /relocated': list,
-  'POST /relocated': noResponse,
-  'DELETE /relocated': noResponse,
-  'PUT /relocated/:id': noResponse,
-  'GET /relocated/:id': detailRelocated,
+  'GET /relocation': list,
+  'POST /relocation': noResponse,
+  'DELETE /relocation': noResponse,
+  'PUT /relocation/:id': noResponse,
+  'GET /relocation/:id': detailRelocated,
 };

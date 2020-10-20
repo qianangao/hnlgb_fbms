@@ -175,6 +175,8 @@ const getCommunity = (req, res) => {
     data: [
       {
         id: id + '-1', //单位id
+        value: id + '-1', //单位id
+        label: '区域' + id + '-1', // 社区名称
         organizationName: '区域' + id + '-1', // 社区名称
         parentEmployerId: id, //父组织id
         parentOrganizationName: '北京', //父组织名称
@@ -183,6 +185,8 @@ const getCommunity = (req, res) => {
       },
       {
         id: id + '-2', //单位id
+        value: id + '-2', //单位id
+        label: '区域' + id + '-2', // 社区名称
         organizationName: '区域' + id + '-2', // 社区名称
         parentEmployerId: id, //父组织id
         parentOrganizationName: '北京', //父组织名称
@@ -191,6 +195,8 @@ const getCommunity = (req, res) => {
       },
       {
         id: id + '-3', //单位id
+        value: id + '-3', //单位id
+        label: '区域' + id + '-3', // 社区名称
         organizationName: '区域' + id + '-3', // 社区名称
         parentEmployerId: id, //父组织id
         parentOrganizationName: '北京', //父组织名称
@@ -222,7 +228,7 @@ const getExportFiles = (req, res) => {
 
 export default {
   'GET /dictionary': getDictionary,
-  'POST /attachmentsftpto': uploadFile,
-  'GET /communityAddress/child/:id': getCommunity,
+  'POST /ceph': uploadFile,
+  'GET /communityAddress/directly_child/:id': getCommunity,
   'GET /download_center/user': getExportFiles,
 };

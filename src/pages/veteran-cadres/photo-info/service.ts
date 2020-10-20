@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function photoInfoList(params) {
-  return request('/photoInfo', {
+  return request('/user_album', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function photoInfoList(params) {
  * @param {*} params
  */
 export async function deletePhotoInfo(params) {
-  return request(`/photoInfo`, {
+  return request(`/user_album`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deletePhotoInfo(params) {
  * @param {*} params
  */
 export async function addPhotoInfo(params) {
-  return request(`/photoInfo`, {
+  return request(`/user_album`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addPhotoInfo(params) {
  * @param {*} params
  */
 export async function detailPhotoInfo(params) {
-  return request(`/photoInfo/${params.id}`, {
+  return request(`/user_album/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailPhotoInfo(params) {
  * @param {*} params
  */
 export async function updatePhotoInfo(params) {
-  return request(`/photoInfo/${params.id}`, {
+  return request(`/user_album/${params.id}`, {
     method: 'PUT',
     data: params,
   });
