@@ -8,7 +8,7 @@ const getDictionary = (req, res) => {
     msg: 'success',
     'data|10': [
       {
-        chineseName: '@name',
+        remarks: '@name',
         code: /[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][A-Z]/,
         isCommonlyUsed: 1,
       },
@@ -16,7 +16,7 @@ const getDictionary = (req, res) => {
   });
 
   a.data.push({
-    chineseName: '男',
+    remarks: '男',
     code: '8adcf7c96a48fae4016a4925e34b',
     isCommonlyUsed: 1,
   });
@@ -211,7 +211,7 @@ const getExportFiles = (req, res) => {
         {
           id: '8a7e0113739882b101739882f721', //id
           fileName: '全部信息20200622101957.xls', //文件名
-          fileUrl: 'http://10.92.119.138:9091/attachment/91/d3/40dee3268a3f69246377636cce.xls', //文件地址
+          fileUrl: 'http://10.92.120.138:9091/attachment/91/d3/40dee3268a3f69246377636cce.xls', //文件地址
           status: 1, //状态 0-导出中，1-可下载，2-导出失败
           userType: 1, //0-老同志，1-工作人员
         },
