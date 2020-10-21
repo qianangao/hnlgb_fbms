@@ -25,7 +25,7 @@ const Table = ({
     {
       title: `活动名称`,
       align: 'center',
-      dataIndex: 'activityNoticeName',
+      dataIndex: 'activityName',
     },
     {
       title: '活动时间',

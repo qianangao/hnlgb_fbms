@@ -44,7 +44,6 @@ const Table = ({
       title: '支部名称',
       align: 'center',
       dataIndex: 'partyName',
-      valueEnum: enums.dictNation,
     },
     {
       title: '缴纳状态',
