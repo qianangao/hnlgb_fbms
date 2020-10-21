@@ -82,12 +82,12 @@ const routes = {
       remark: '社保认证',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'https://www.hao123.com',
       target: '_blank',
       remark: '社保查询',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'https://www.huaban.com',
       target: '_blank',
       remark: '医保查询',
     },
