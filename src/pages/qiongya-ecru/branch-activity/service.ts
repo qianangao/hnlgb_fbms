@@ -38,7 +38,7 @@ export async function addBranchActivity(params) {
  * @param {*} params
  */
 export async function detailBranchActivity(params) {
-  return request(`/orgLife/${params.id}`, {
+  return request(`/orgLife/isInput`, {
     method: 'GET',
     params,
   });
