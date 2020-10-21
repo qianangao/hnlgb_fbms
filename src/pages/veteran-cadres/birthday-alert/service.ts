@@ -27,7 +27,7 @@ export async function remindTime(params) {
  * @param {*} params
  */
 export async function isReminder(params) {
-  return request(`/user/isReminder`, {
+  return request(`/birthday-reminder/reminder/${params.id}`, {
     method: 'PUT',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function isReminder(params) {
  * @param {*} params
  */
 export async function reminderCron(params) {
-  return request(`/user/change_cron`, {
+  return request(`/birthday-reminder/change_cron`, {
     method: 'PUT',
     data: params,
   });

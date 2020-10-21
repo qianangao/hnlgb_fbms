@@ -294,5 +294,5 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
 BasicInfoForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
-  loading: loading.models.vcBasicInfo,
+  loading: loading.effects['vcBasicInfo/getLgbDetail'],
 }))(BasicInfoForm);

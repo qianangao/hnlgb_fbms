@@ -11,7 +11,6 @@ const Model = {
   namespace: 'specialty',
   state: {
     specialtyListData: {},
-    modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -68,17 +67,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addSpecialty({ payload }, { call, put }) {
+    *addSpecialty({ payload, resolve }, { call, put }) {
       const response = yield call(addSpecialty, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增银色人才成功！');
 
         yield put({
@@ -86,17 +79,11 @@ const Model = {
         });
       }
     },
-    *updateSpecialty({ payload }, { call, put }) {
+    *updateSpecialty({ payload, resolve }, { call, put }) {
       const response = yield call(updateSpecialty, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('银色人才修改成功！');
 
         yield put({

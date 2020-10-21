@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import PhotoInfoForm from './form/PhotoInfoForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = PhotoInfoForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'photoInfo/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,12 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'photoInfo/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
+    setAddModalVisible(false);
 
     form.resetFields();
   };
@@ -39,13 +30,19 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `photoInfo/addPhotoInfo`,
-          payload: {
-            ...values,
-            fileId: values.file.id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `photoInfo/addPhotoInfo`,
+            payload: {
+              ...values,
+              fileId: values.file.uid,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -73,7 +70,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ photoInfo, loading }) => ({
-  addModalVisible: photoInfo.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.photoInfo,
 }))(AddModal);
