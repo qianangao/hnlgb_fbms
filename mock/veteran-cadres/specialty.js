@@ -119,9 +119,9 @@ const detailSpecialty = (req, res) => {
 };
 
 export default {
-  'GET /specialty': list,
-  'POST /specialty': noResponse,
-  'DELETE /specialty': noResponse,
-  'PUT /specialty/:id': noResponse,
-  'GET /specialty/:id': detailSpecialty,
+  'GET /silverTalent': list,
+  'POST /silverTalent': noResponse,
+  'DELETE /silverTalent': noResponse,
+  'PUT /silverTalent/:id': noResponse,
+  'GET /silverTalent/:id': detailSpecialty,
 };

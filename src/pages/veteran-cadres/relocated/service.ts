@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function relocatedList(params) {
-  return request('/relocated', {
+  return request('/relocation', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function relocatedList(params) {
  * @param {*} params
  */
 export async function deleteRelocated(params) {
-  return request(`/relocated`, {
+  return request(`/relocation`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteRelocated(params) {
  * @param {*} params
  */
 export async function addRelocated(params) {
-  return request(`/relocated`, {
+  return request(`/relocation`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addRelocated(params) {
  * @param {*} params
  */
 export async function detailRelocated(params) {
-  return request(`/relocated/${params.id}`, {
+  return request(`/relocation/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailRelocated(params) {
  * @param {*} params
  */
 export async function updateRelocated(params) {
-  return request(`/relocated/${params.id}`, {
+  return request(`/relocation/${params.id}`, {
     method: 'PUT',
     data: params,
   });

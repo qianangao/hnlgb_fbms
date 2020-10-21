@@ -117,6 +117,7 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '配偶性别',
       name: 'dictSpouseSex',
+      enumsLabel: 'dictSpouseSex',
     },
     {
       label: '配偶出生日期',

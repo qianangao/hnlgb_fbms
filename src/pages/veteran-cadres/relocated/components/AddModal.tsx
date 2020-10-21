@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import RelocatedForm from './form/RelocatedForm';
 
-const AddModal = ({ dispatch, addModalVisible, loading, actionRef }) => {
+const AddModal = ({ dispatch, loading, actionRef }) => {
   const [form] = RelocatedForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   const showModal = () => {
-    dispatch({
-      type: 'relocated/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'relocated/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,12 +29,18 @@ const AddModal = ({ dispatch, addModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `relocated/addRelocated`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `relocated/addRelocated`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -70,7 +66,6 @@ const AddModal = ({ dispatch, addModalVisible, loading, actionRef }) => {
     </Modal>
   );
 };
-export default connect(({ relocated, loading }) => ({
-  addModalVisible: relocated.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.relocated,
 }))(AddModal);

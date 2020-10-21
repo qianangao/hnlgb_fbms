@@ -46,7 +46,7 @@ const GlobalModel = {
         const isCommon = response[0].isCommonlyUsed;
         const items = {};
         response.forEach(item => {
-          items[item.code] = item.chineseName;
+          items[item.code] = item.remarks || '';
         });
 
         yield put({

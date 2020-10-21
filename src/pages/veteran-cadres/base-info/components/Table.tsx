@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
@@ -13,9 +13,9 @@ const Table = ({
   dispatch,
 }) => {
   const { tableRef } = vcBasicInfo;
+  const uploadLgbListRef = useRef();
+  const formRef = useRef();
 
-  // "id": "402883e973e5c2ce0173e5c2ce9d", //id
-  // "organizationId": "1000", //单位id
   const columns = [
     {
       title: '序号',
@@ -106,6 +106,27 @@ const Table = ({
     },
   ];
 
+  const exportDetailData = selectedRowKeys => {
+    if (selectedRowKeys && selectedRowKeys.length) {
+      dispatch({
+        type: 'vcBasicInfo/exportList',
+        payload: {
+          ids: selectedRowKeys,
+        },
+      });
+      return;
+    }
+
+    tableRef.current.reload();
+
+    dispatch({
+      type: 'vcBasicInfo/exportList',
+      payload: {
+        formData: formRef.current.getFieldsValue(),
+      },
+    });
+  };
+
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
@@ -114,6 +135,28 @@ const Table = ({
         resolve,
       });
     });
+
+  const importLgbs = e => {
+    const file = e.target.files[0];
+
+    new Promise(resolve => {
+      dispatch({
+        type: 'global/uploadFile',
+        payload: {
+          file,
+          type: 'excel',
+        },
+        resolve,
+      });
+    }).then(data => {
+      dispatch({
+        type: 'vcBasicInfo/importLgbs',
+        payload: data,
+      });
+    });
+
+    e.target.value = '';
+  };
 
   const deleteReturnworkPerson = ids => {
     dispatch({
@@ -138,6 +181,7 @@ const Table = ({
       rowKey="id"
       headerTitle="人员信息"
       actionRef={tableRef}
+      formRef={formRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
@@ -151,10 +195,27 @@ const Table = ({
           新增
         </Button>,
         <Button onClick={() => {}}>模版下载</Button>,
-        <Button type="primary" onClick={() => {}}>
+        <Button
+          type="primary"
+          onClick={() => {
+            uploadLgbListRef.current.click();
+          }}
+        >
+          <input
+            type="file"
+            name="file"
+            onChange={importLgbs}
+            style={{ display: 'none' }}
+            ref={uploadLgbListRef}
+          />
           导入
         </Button>,
-        <Button type="primary" onClick={() => {}}>
+        <Button
+          type="primary"
+          onClick={() => {
+            exportDetailData(selectedRowKeys);
+          }}
+        >
           导出
         </Button>,
         selectedRowKeys && selectedRowKeys.length && (
