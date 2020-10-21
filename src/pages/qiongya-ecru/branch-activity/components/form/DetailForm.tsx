@@ -2,12 +2,20 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions } from 'antd';
 
-const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
+const DetailForm = ({ dispatch, item, detailBranchActivityData }) => {
+  const { context } = detailBranchActivityData;
+  const { id } = item;
   useEffect(() => {
+    const ids = `${item.id}+${item.holdActivityId}+${item.noticeId}`;
+    const payload = {
+      deleteNotice: true,
+      split: '+',
+    };
+    payload.idsArr = [ids];
     if (id) {
       dispatch({
         type: 'branchActivity/detailBranchActivity',
-        payload: { id },
+        payload,
       });
     }
   }, [id]);
@@ -41,7 +49,11 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
           )}
         </Descriptions.Item>
         <Descriptions.Item label="活动简介" span={22}>
-          {detailBranchActivityData.context}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: context,
+            }}
+          />
         </Descriptions.Item>
       </Descriptions>
     </div>
