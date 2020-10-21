@@ -6,6 +6,9 @@ import {
   branchInformationList,
   detailBranchInformation,
   partyUserList,
+  addPartyUser,
+  deletePartyUser,
+  getUsersNoParty,
 } from './service';
 
 const Model = {
@@ -17,6 +20,8 @@ const Model = {
     selectedOrgId: undefined, // 选择的组织id
     detailbranchInformationData: {},
     partyUserListData: {},
+    politicalStatusLgbsData: {},
+    partyData: {},
   },
   effects: {
     *branchInformationList({ payload, resolve }, { call, put, select }) {
@@ -31,7 +36,6 @@ const Model = {
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
-
         const result = {
           data: items,
           page: currentPage,
@@ -41,11 +45,16 @@ const Model = {
         };
 
         resolve && resolve(result);
-
+        const partyData = {};
+        response.items.length > 0 &&
+          response.items.forEach(item => {
+            partyData[item.id] = item.partyName;
+          });
         yield put({
           type: 'save',
           payload: {
             branchInformationData: result,
+            partyData,
           },
         });
       }
@@ -97,7 +106,7 @@ const Model = {
     *deleteBranchInformation({ payload }, { call, put }) {
       const response = yield call(deleteBranchInformation, payload);
       if (!response.error) {
-        message.success('支部信息新增删除成功！');
+        message.success('支部信息删除成功！');
         yield put({
           type: 'tableReload',
         });
@@ -116,15 +125,57 @@ const Model = {
         });
       }
     },
-    *partyUserList({ payload, resolve }, { call, put }) {
+    *getPartyUserList({ payload, resolve }, { call, put }) {
       const response = yield call(partyUserList, payload);
 
       if (!response.error) {
-        resolve && resolve(response);
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
         yield put({
           type: 'save',
           payload: {
-            partyUserListData: response,
+            partyUserListData: result,
+          },
+        });
+      }
+    },
+    *addPartyUser({ payload, resolve }, { call }) {
+      const response = yield call(addPartyUser, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('支部成员新增成功！');
+      }
+    },
+    *deletePartyUser({ payload, resolve }, { call }) {
+      const response = yield call(deletePartyUser, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('支部成员删除成功！');
+      }
+    },
+    *getUsersNoParty({ payload, resolve }, { call, put }) {
+      const response = yield call(getUsersNoParty, payload);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            politicalStatusLgbsData: result,
           },
         });
       }
