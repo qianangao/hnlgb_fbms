@@ -11,7 +11,6 @@ const Model = {
   namespace: 'photoInfo',
   state: {
     photoInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -60,16 +59,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addPhotoInfo({ payload }, { call, put }) {
+    *addPhotoInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addPhotoInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增照片信息成功！');
 
         yield put({
@@ -77,17 +70,11 @@ const Model = {
         });
       }
     },
-    *updatePhotoInfo({ payload }, { call, put }) {
+    *updatePhotoInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updatePhotoInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改照片信息成功！');
 
         yield put({

@@ -40,9 +40,9 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
           file: {
-            uid: data.fileId,
-            name: data.fileName,
-            url: data.fileUrl,
+            url: data.attachmentInfo.url,
+            uid: data.attachmentInfo.id,
+            name: data.attachmentInfo.fileName,
             status: 'done',
           },
         };

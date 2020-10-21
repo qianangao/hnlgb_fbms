@@ -3,7 +3,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, branchInformation, dispatch, enums }) => {
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  branchInformation,
+  dispatch,
+  enums,
+  openMembersModifyModal,
+}) => {
   const { tableRef } = branchInformation;
   const columns = [
     {
@@ -76,13 +83,21 @@ const Table = ({ openAddModal, openModifyModal, branchInformation, dispatch, enu
             openModifyModal(employeeData);
           }}
         >
-          编辑
+          编辑支部
+        </a>,
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openMembersModifyModal(employeeData);
+          }}
+        >
+          编辑成员
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
           title="确认删除支部信息吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteBranchInformation([employeeData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -100,7 +115,7 @@ const Table = ({ openAddModal, openModifyModal, branchInformation, dispatch, enu
       });
     });
   // 删除
-  const deleteReturnworkPerson = ids => {
+  const deleteBranchInformation = ids => {
     dispatch({
       type: 'branchInformation/deleteBranchInformation',
       payload: {
@@ -128,7 +143,7 @@ const Table = ({ openAddModal, openModifyModal, branchInformation, dispatch, enu
                 title: '确认删除支部信息？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteReturnworkPerson(selectedRowKeys);
+                  deleteBranchInformation(selectedRowKeys);
                 },
               });
             }}

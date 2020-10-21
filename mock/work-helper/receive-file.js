@@ -52,7 +52,7 @@ const detailReceiveFile = (req, res) => {
       attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         uid: '8adcf70a73b359ff0173b365abfb',
-        name: '测试',
+        fileName: '测试',
       },
       content: '<p>大大飒飒大阿斯顿撒的撒大飒飒大阿萨的撒大飒飒大啊撒大师萨的</p>',
       releaseTime: '2020-08-13 03:00:16',

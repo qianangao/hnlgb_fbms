@@ -32,8 +32,10 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
       name: 'nearHospital',
     },
     {
-      label: '医疗照顾',
+      label: '是否有医疗照顾',
       name: 'caregivers',
+      type: 'switch',
+      initialValue: 0,
     },
     {
       label: '享受医疗待遇情况',

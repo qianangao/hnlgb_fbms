@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function branchInformationList(params) {
-  return request('/branchInformation', {
+  return request('/partyOr', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function branchInformationList(params) {
  * @param {*} params
  */
 export async function deleteBranchInformation(params) {
-  return request(`/branchInformation`, {
+  return request(`/party`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteBranchInformation(params) {
  * @param {*} params
  */
 export async function addBranchInformation(params) {
-  return request(`/branchInformation`, {
+  return request(`/party`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addBranchInformation(params) {
  * @param {*} params
  */
 export async function detailBranchInformation(params) {
-  return request(`/branchInformation/${params.id}`, {
+  return request(`/party/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailBranchInformation(params) {
  * @param {*} params
  */
 export async function updateBranchInformation(params) {
-  return request(`/branchInformation/${params.id}`, {
+  return request(`/party/${params.id}`, {
     method: 'PUT',
     data: params,
   });
@@ -61,6 +61,39 @@ export async function updateBranchInformation(params) {
  */
 export async function partyUserList(params) {
   return request(`/partyUser/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 新增-支部成员
+ * @param {*} params
+ */
+export async function addPartyUser(params) {
+  return request(`/partyUser`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
+ * 删除-支部成员
+ * @param {*} params
+ */
+export async function deletePartyUser(params) {
+  return request(`/partyUser/${params.partyId}`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
+ * 支部-新增成員
+ * @param {*} params
+ */
+export async function getUsersNoParty(params) {
+  return request(`/getUsersNoParty`, {
     method: 'GET',
     params,
   });

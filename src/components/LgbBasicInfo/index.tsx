@@ -20,7 +20,7 @@ const LgbBasicInfo = ({ userId, dispatch, enums, lgbDetailData }) => {
     if (userId) {
       dispatch({
         type: 'vcBasicInfo/getLgbDetail',
-        payload: { userId },
+        payload: { id: userId },
       });
     }
   }, [userId]);

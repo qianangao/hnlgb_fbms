@@ -27,8 +27,8 @@ for (let i = 0; i < 20; i++) {
     resettlementUnit: '哈哈', //安置单位
     hobby: 'hobby	', //爱好
     achievements: 'achievements', //成果
-    administrativeRank: 'administrativeRank', //类型
-    titleGrade: 'titleGrade', //等级
+    dictAdministrativeRank: 'dictAdministrativeRank', //类型
+    dictTitleGrade: 'dictTitleGrade', //等级
   });
 }
 
@@ -111,17 +111,17 @@ const detailSpecialty = (req, res) => {
       specialContribution: '特殊贡献', //特殊贡献
       hobby: 'hobby', //爱好
       achievements: 'achievements', //成果
-      administrativeRank: 'administrativeRank', //类型
-      titleGrade: 'titleGrade', //等级
+      dictAdministrativeRank: 'dictAdministrativeRank', //类型
+      dictTitleGrade: 'dictTitleGrade', //等级
       dateOfBirth: 'dateOfBirth',
     },
   });
 };
 
 export default {
-  'GET /specialty': list,
-  'POST /specialty': noResponse,
-  'DELETE /specialty': noResponse,
-  'PUT /specialty/:id': noResponse,
-  'GET /specialty/:id': detailSpecialty,
+  'GET /silverTalent': list,
+  'POST /silverTalent': noResponse,
+  'DELETE /silverTalent': noResponse,
+  'PUT /silverTalent/:id': noResponse,
+  'GET /silverTalent/:id': detailSpecialty,
 };

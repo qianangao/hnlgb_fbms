@@ -70,12 +70,12 @@ const routes = {
       component: './coconutIsland-paradise/health-education',
       remark: '保健教育',
     },
-    {
-      path: '/coconutIsland-paradise/health-assessment',
-      name: 'coconutIsland-paradise-health-assessment',
-      component: './coconutIsland-paradise/health-assessment',
-      remark: '健康测评',
-    },
+    // {
+    //   path: '/coconutIsland-paradise/health-assessment',
+    //   name: 'coconutIsland-paradise-health-assessment',
+    //   component: './coconutIsland-paradise/health-assessment',
+    //   remark: '健康测评',
+    // },
     {
       path: 'https://www.baidu.com',
       target: '_blank',

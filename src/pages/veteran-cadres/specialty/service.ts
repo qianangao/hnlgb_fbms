@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function specialtyList(params) {
-  return request('/specialty', {
+  return request('/silverTalent', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function specialtyList(params) {
  * @param {*} params
  */
 export async function addSpecialty(params) {
-  return request(`/specialty`, {
+  return request(`/silverTalent`, {
     method: 'POST',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function addSpecialty(params) {
  * @param {*} params
  */
 export async function deleteSpecialty(params) {
-  return request(`/specialty`, {
+  return request(`/silverTalent`, {
     method: 'DELETE',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function deleteSpecialty(params) {
  * @param {*} params
  */
 export async function detailSpecialty(params) {
-  return request(`/specialty/${params.id}`, {
+  return request(`/silverTalent/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailSpecialty(params) {
  * @param {*} params
  */
 export async function updateSpecialty(params) {
-  return request(`/specialty/${params.id}`, {
+  return request(`/silverTalent/${params.id}`, {
     method: 'PUT',
     data: params,
   });

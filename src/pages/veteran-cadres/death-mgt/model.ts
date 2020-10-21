@@ -5,7 +5,6 @@ const Model = {
   namespace: 'vcDeathInfo',
   state: {
     lgbListData: {},
-    modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -71,17 +70,11 @@ const Model = {
       });
     },
 
-    *updateLgb({ payload }, { call, put }) {
+    *updateLgb({ payload, resolve }, { call, put }) {
       const response = yield call(updateLgb, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改老干部离世信息成功！');
 
         yield put({

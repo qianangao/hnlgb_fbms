@@ -55,13 +55,14 @@ const Table = ({ openAddModal, openModifyModal, specialty, enums, dispatch }) =>
     {
       title: '类型',
       align: 'center',
-      dataIndex: 'administrativeRank',
-      valueEnum: enums.dictTreatmentNow,
+      dataIndex: 'dictAdministrativeRank',
+      valueEnum: enums.dictAdministrativeRank,
     },
     {
       title: '职称等级',
       align: 'center',
-      dataIndex: 'titleGrade',
+      dataIndex: 'dictTitleGrade',
+      valueEnum: enums.dictTitleGrade,
     },
     {
       title: '操作',

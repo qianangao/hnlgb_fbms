@@ -4,18 +4,14 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import DeathInfoForm from './DeathInfoForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = DeathInfoForm.useForm();
   const [deathValues, setDeathValues] = useState();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
   const showModal = deathFormValues => {
     setDeathValues(deathFormValues);
-    dispatch({
-      type: 'vcDeathInfo/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -29,13 +25,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'vcDeathInfo/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -43,13 +33,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `vcDeathInfo/updateLgb`,
-          payload: {
-            ...values,
-            id: deathValues.id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `vcDeathInfo/updateLgb`,
+            payload: {
+              ...values,
+              id: deathValues.id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -79,7 +75,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ vcDeathInfo, loading }) => ({
-  modifyModalVisible: vcDeathInfo.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.vcDeathInfo,
 }))(ModifyModal);

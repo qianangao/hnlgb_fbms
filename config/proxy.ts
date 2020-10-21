@@ -8,7 +8,7 @@
 export default {
   dev: {
     '/hnlgb-server': {
-      target: 'http://10.92.119.138:11111/lgbsmp/api/v1',
+      target: 'http://192.168.40.17:18944/',
       changeOrigin: true,
       pathRewrite: {
         '^/hnlgb-server': '',
