@@ -45,7 +45,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           payload: {
             ...values,
             id: lgbId,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -58,7 +58,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     <Modal
       title="修改涉老政策信息"
       centered
-      width="95vw"
+      width="70vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
@@ -67,11 +67,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       visible={modifyModalVisible}
       forceRender
       footer={[
-        <Button key="cancel" onClick={hideModal}>
-          取消
-        </Button>,
-        <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
         </Button>,
       ]}
       maskClosable={false}
@@ -82,7 +82,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'auto',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >

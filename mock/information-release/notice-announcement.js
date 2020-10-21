@@ -32,6 +32,7 @@ for (let i = 0; i < 20; i++) {
     organizationId: 'string', //单位id
     organizationName: 'string', //单位名称
     subject: '通知通告', //通知主题
+    title: '通知通告home', //通知主题
   });
 }
 
@@ -58,7 +59,7 @@ const detailNoticeAnnouncement = (req, res) => {
     data: {
       id: '402883e973e5c2ce0173e5c2ce9d', //userId
 
-      attachmentId: {
+      attachmentInfo: {
         url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
         uid: '呵呵呵呵哒',
         name: 'demo图片',
@@ -76,6 +77,7 @@ const detailNoticeAnnouncement = (req, res) => {
       noticeStatus: 0, //通知状态
       organizationId: 1000, //单位id
       organizationName: '省委老干部局11', //单位名称
+      createOrgName: '省委老干部局', //创建单位
       subject: '通知通告', //通知主题
       releaseTime: '2020-08-13 03:00:16',
     },

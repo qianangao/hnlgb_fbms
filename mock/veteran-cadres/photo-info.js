@@ -117,9 +117,9 @@ const detailPhotoInfo = (req, res) => {
 };
 
 export default {
-  'GET /photoInfo': list,
-  'POST /photoInfo': noResponse,
-  'DELETE /photoInfo': noResponse,
-  'PUT /photoInfo/:id': noResponse,
-  'GET /photoInfo/:id': detailPhotoInfo,
+  'GET /user_album': list,
+  'POST /user_album': noResponse,
+  'DELETE /user_album': noResponse,
+  'PUT /user_album/:id': noResponse,
+  'GET /user_album/:id': detailPhotoInfo,
 };

@@ -1,11 +1,4 @@
-import { message } from 'antd';
-import {
-  addDailyBroadcast,
-  deleteDailyBroadcast,
-  updateDailyBroadcast,
-  dailyBroadcastList,
-  detailDailyBroadcast,
-} from './service';
+import { dailyBroadcastList, detailDailyBroadcast } from './service';
 
 const Model = {
   namespace: 'dailyBroadcast',
@@ -65,64 +58,6 @@ const Model = {
       });
     },
 
-    *publishStatusChange({ payload }, { put }) {
-      yield put({
-        type: 'save',
-        payload: {
-          publishStatus: payload,
-        },
-      });
-
-      yield put({
-        type: 'tableReload',
-      });
-    },
-
-    *addDailyBroadcast({ payload }, { call, put }) {
-      const response = yield call(addDailyBroadcast, payload);
-      if (!response.error) {
-        const { publishStatus } = payload;
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-        message.success(publishStatus === 0 ? '每日播报新增成功！' : '每日播报发布成功！');
-
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *updateDailyBroadcast({ payload }, { call, put }) {
-      const response = yield call(updateDailyBroadcast, payload);
-      const { publishStatus } = payload;
-      if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
-        message.success(publishStatus === 0 ? '每日播报修改成功！' : '每日播报发布成功！');
-
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *deleteDailyBroadcast({ payload }, { call, put }) {
-      const response = yield call(deleteDailyBroadcast, payload);
-
-      if (!response.error) {
-        message.success('新闻每日播报成功！');
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
     *detailDailyBroadcast({ payload, resolve }, { call, put }) {
       const response = yield call(detailDailyBroadcast, payload);
 

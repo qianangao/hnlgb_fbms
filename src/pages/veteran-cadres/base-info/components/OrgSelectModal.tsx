@@ -7,8 +7,8 @@ const OrgSelectModal = ({ dispatch, vcBasicInfo, actionRef, loading }) => {
   const { orgSelectModalVisible } = vcBasicInfo;
   const [form] = Form.useForm();
 
-  const showModal = ids => {
-    form.setFieldsValue({ ids });
+  const showModal = userIdList => {
+    form.setFieldsValue({ userIdList });
 
     dispatch({
       type: 'vcBasicInfo/save',
@@ -69,10 +69,10 @@ const OrgSelectModal = ({ dispatch, vcBasicInfo, actionRef, loading }) => {
       onCancel={hideModal}
     >
       <Form form={form}>
-        <Form.Item name="ids" hidden>
+        <Form.Item name="userIdList" hidden>
           <Input />
         </Form.Item>
-        <Form.Item name="organizationId" rules={[{ required: true, message: '请选择具体单位!' }]}>
+        <Form.Item name="orgId" rules={[{ required: true, message: '请选择具体单位!' }]}>
           <OrgTree />
         </Form.Item>
       </Form>

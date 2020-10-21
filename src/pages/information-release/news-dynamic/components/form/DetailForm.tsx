@@ -12,7 +12,15 @@ const DetailForm = ({ id, dispatch, detailNewsDynamicData }) => {
     }
   }, [id]);
 
-  return <DetailFormPage detailData={detailNewsDynamicData} />;
+  return (
+    <DetailFormPage
+      title={detailNewsDynamicData.headline}
+      releaseTime={detailNewsDynamicData.releaseTime}
+      orgName={detailNewsDynamicData.createOrgName}
+      content={detailNewsDynamicData.context}
+      extraFile={detailNewsDynamicData.attachmentInfo}
+    />
+  );
 };
 
 export default connect(({ newsDynamic, loading }) => ({

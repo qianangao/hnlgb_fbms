@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { request } from 'umi';
+import request from 'umi-request';
 
 export function parseTime(timeArg, cFormat) {
   let time = timeArg;
@@ -169,15 +169,21 @@ export function printElement(element) {
  * @param {*} filename 文件名
  */
 export function downloadFileByUrl(url, filename) {
-  const FILES_SERVER = '/files_server/';
-  return request(FILES_SERVER + url, {
+  // TODO
+  // const FILES_SERVER = '/files_server/';
+  return request(url, {
     responseType: 'blob',
-  }).then(blob => {
-    const a = document.createElement('a');
-    const blobUrl = window.URL.createObjectURL(blob);
-    a.href = blobUrl;
-    a.download = filename;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  });
+  })
+    .then(blob => {
+      const a = document.createElement('a');
+      const blobUrl = window.URL.createObjectURL(blob);
+      a.href = blobUrl;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(err => {
+      message.error('文件下载异常，请稍后重试！');
+      throw err;
+    });
 }

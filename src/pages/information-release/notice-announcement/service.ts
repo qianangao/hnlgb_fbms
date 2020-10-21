@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function noticeAnnouncementList(params) {
-  return request('/noticeAnnouncement', {
+  return request('/notice', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function noticeAnnouncementList(params) {
  * @param {*} params
  */
 export async function deleteNoticeAnnouncement(params) {
-  return request(`/noticeAnnouncement`, {
+  return request(`/notice`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteNoticeAnnouncement(params) {
  * @param {*} params
  */
 export async function addNoticeAnnouncement(params) {
-  return request(`/noticeAnnouncement`, {
+  return request(`/notice`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addNoticeAnnouncement(params) {
  * @param {*} params
  */
 export async function detailNoticeAnnouncement(params) {
-  return request(`/noticeAnnouncement/${params.id}`, {
+  return request(`/notice/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailNoticeAnnouncement(params) {
  * @param {*} params
  */
 export async function updateNoticeAnnouncement(params) {
-  return request(`/noticeAnnouncement/${params.id}`, {
+  return request(`/notice/${params.id}`, {
     method: 'PUT',
     data: params,
   });

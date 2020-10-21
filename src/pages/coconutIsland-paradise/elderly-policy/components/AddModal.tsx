@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import ElderlyPolicyForm from './form/ElderlyPolicyForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
@@ -44,7 +44,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `elderlyPolicy/addElderlyPolicyInfo`,
           payload: {
             ...values,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
       })
@@ -57,14 +57,21 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     <Modal
       title="新增涉老政策"
       centered
-      width="95vw"
+      width="70vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
       visible={addModalVisible}
-      onOk={handleOk}
+      footer={[
+        <Button loading={loading} onClick={() => handleOk(true)}>
+          保存
+        </Button>,
+        <Button loading={loading} onClick={() => handleOk(false)}>
+          发布
+        </Button>,
+      ]}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}

@@ -20,7 +20,7 @@ const noMatch = (
     subTitle="对不起，您没有权限访问此页。"
     extra={
       <Button type="primary">
-        <Link to="/user/login">返回登陆页</Link>
+        <Link to="/white/login">返回登陆页</Link>
       </Button>
     }
   />
@@ -83,7 +83,6 @@ const BasicLayout = props => {
         if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
           return defaultDom;
         }
-
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
       breadcrumbRender={(routers = []) => [

@@ -61,8 +61,8 @@ const list = (req, res) => {
 };
 
 export default {
-  'GET  /user/birthday': list,
+  'GET  /birthday-reminder': list,
   'GET  /birthday-reminder/cron': reminTime,
-  'POST /user/isReminder': noResponse,
-  'POST /user/change_cron': noResponse,
+  'PUT /user/isReminder': noResponse,
+  'PUT /user/change_cron': noResponse,
 };

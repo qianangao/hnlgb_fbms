@@ -60,7 +60,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={addModalVisible}
       onOk={handleOk}

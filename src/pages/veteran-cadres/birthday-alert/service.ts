@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getBirthdayList(params) {
-  return request('/user/birthday', {
+  return request('/birthday-reminder', {
     method: 'GET',
     params,
   });
@@ -28,7 +28,7 @@ export async function remindTime(params) {
  */
 export async function isReminder(params) {
   return request(`/user/isReminder`, {
-    method: 'POST',
+    method: 'PUT',
     data: params,
   });
 }
@@ -39,7 +39,7 @@ export async function isReminder(params) {
  */
 export async function reminderCron(params) {
   return request(`/user/change_cron`, {
-    method: 'POST',
+    method: 'PUT',
     data: params,
   });
 }

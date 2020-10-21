@@ -34,7 +34,7 @@ const errorHandler = error => {
 
   if (response && response.status) {
     const errorText = msg || codeMessage[response.status];
-    if (response.status === 403 && data.code === 10050) {
+    if (response.status === 403 || data.code === 10050 || data.code === 10021) {
       // token过期
       removeCookie(TOKEN_KEY);
       requestConfig.extendOptions({
@@ -44,18 +44,20 @@ const errorHandler = error => {
       });
 
       notification.error({
+        key: `${response.status}-${data.code}`,
         message: `请重新登录`, // ${status}: ${url}
         description: '您的账号已过期或在其他设备登录',
       });
 
       history.replace({
-        pathname: '/user/login',
+        pathname: '/white/login',
       });
 
       return { data, error: true };
     }
 
     notification.error({
+      key: `${response.status}-${data.code}`,
       message: `请求错误`, // ${status}: ${url}
       description: errorText,
     });
@@ -69,7 +71,7 @@ const errorHandler = error => {
   return { data, error: true };
 };
 
-export const BASE_URL = '/hnlgb-server';
+export const BASE_URL = process.env.USE_MOCK ? '' : '/hnlgb-server';
 
 /**
  * 配置request请求时的默认参数
@@ -77,7 +79,7 @@ export const BASE_URL = '/hnlgb-server';
 export const requestConfig = extend({
   // ’prefix‘ 前缀，统一设置 url 前缀
   // ( e.g. request('/user/save', { prefix: '/api/v1' }) => request('/api/v1/user/save') )
-  prefix: process.env.USE_MOCK ? '' : BASE_URL,
+  prefix: process.env.USE_MOCK ? '' : `${BASE_URL}/lgbsmp/api/v1`,
   headers: {
     token: getCookie(TOKEN_KEY) || '',
     appMark: 'PC',
@@ -94,7 +96,31 @@ const request = (...params) =>
     return res;
   });
 
-requestConfig.interceptors.response.use(async response => {
+export const noErrorRequest = (url, config) =>
+  requestConfig(url, {
+    errorHandler: null,
+    ...config,
+  }).then(res => {
+    if (res.code === 0) {
+      return res.data || {};
+    }
+    return res;
+  });
+requestConfig.interceptors.request.use(async (url, options) => {
+  // PC端默认全部携带allIndex： all
+  options.params && (options.params.allIndex = 'all');
+  return {
+    url: `${url}`,
+    options,
+  };
+});
+
+requestConfig.interceptors.response.use(async (response, options) => {
+  // noErrorRequest跳过拦截器逻辑
+  if (!options.errorHandler) {
+    return response;
+  }
+
   // 非2XX请求，默认进入异常处理流程
   if (!response.ok) {
     return response;

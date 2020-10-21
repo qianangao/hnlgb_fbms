@@ -10,8 +10,9 @@ const Table = ({
   enums,
   dispatch,
   opendetailModal,
+  publishStatus,
 }) => {
-  const { tableRef, publishStatus } = noticeAnnouncement;
+  const { tableRef } = noticeAnnouncement;
   const columns = [
     {
       title: '序号',
@@ -83,7 +84,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'noticeAnnouncement/noticeAnnouncementList',
-        payload: { ...params },
+        payload: { ...params, dictPublishStatus: publishStatus },
         resolve,
       });
     });

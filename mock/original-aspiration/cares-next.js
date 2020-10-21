@@ -23,8 +23,9 @@ for (let i = 0; i < 8; i++) {
   trendsInfo.push({
     id: '402883e973e5c2ce0173e5c2ce9' + i, //id
     theme: '关工动态' + i,
+    mechanismName: '关工组织1',
     organizationName: '海南省委老干部局',
-    releaseTime: '2020-08-0' + (i + 1),
+    createTime: '2020-08-0' + (i + 1),
   });
 }
 

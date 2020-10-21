@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import DailyBroadcastForm from './form/DailyBroadcastForm';
+import DeedsForm from './form/DeedsForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
-  const [form] = DailyBroadcastForm.useForm();
-  const [lgbId, setLgbId] = useState('');
+const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsType }) => {
+  const [form] = DeedsForm.useForm();
+  const [achievementId, setAchievementId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setAchievementId(item.id);
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'oaAdvancedDeeds/save',
       payload: {
         modifyModalVisible: true,
       },
@@ -27,7 +27,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'oaAdvancedDeeds/save',
       payload: {
         modifyModalVisible: false,
       },
@@ -41,14 +41,15 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `dailyBroadcast/updateDailyBroadcast`,
+          type: `oaAdvancedDeeds/${
+            deedsType === 'personal' ? 'updatePersonal' : 'updateCollective'
+          }`,
           payload: {
             ...values,
-            id: lgbId,
-            status: publishStatus ? 0 : 1,
+            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            id: achievementId,
           },
         });
-        form.resetFields();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -56,18 +57,16 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改每日播报"
+      title={deedsType === 'personal' ? '编辑个人先进事迹' : '编辑集体先进事迹'}
       centered
-      width="95vw"
+      destroyOnClose
+      width="900px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      forceRender
-      confirmLoading={loading}
-      onCancel={hideModal}
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
@@ -76,22 +75,14 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           发布
         </Button>,
       ]}
+      onCancel={hideModal}
     >
-      <div
-        style={{
-          height: 'calc(100% - 36px)',
-          padding: '20px 0',
-          overflow: 'auto',
-          boxSizing: 'border-box',
-        }}
-      >
-        <DailyBroadcastForm form={form} id={lgbId} />
-      </div>
+      <DeedsForm form={form} id={achievementId} deedsType={deedsType} />
     </Modal>
   );
 };
 
-export default connect(({ dailyBroadcast, loading }) => ({
-  modifyModalVisible: dailyBroadcast.modifyModalVisible,
-  loading: loading.models.dailyBroadcast,
+export default connect(({ oaAdvancedDeeds, loading }) => ({
+  modifyModalVisible: oaAdvancedDeeds.modifyModalVisible,
+  loading: loading.effects['oaAdvancedDeeds/updateAchievement'],
 }))(ModifyModal);

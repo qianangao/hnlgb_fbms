@@ -3,23 +3,26 @@ import VeteranCadresRoutes from './veteran-cadres';
 import CoconutIslandParadiseRoutes from './coconutIsland-paradise';
 import OriginalAspirationRoutes from './original-aspiration';
 import WorkRecordRoutes from './work-record';
-
+import InformationRelease from './information-release';
+import WorkHelper from './work-helper';
+import SystemMgt from './system-mgt';
+import QiongyaEcru from './qiongya-ecru';
 const router = [
   {
     path: '/',
     component: '../layouts/BlankLayout',
     routes: [
       {
-        path: '/user',
+        path: '/white',
         component: '../layouts/UserLayout',
         routes: [
           {
-            path: '/user',
-            redirect: '/user/login',
+            path: '/white',
+            redirect: '/white/login',
           },
           {
             name: 'login',
-            path: '/user/login',
+            path: '/white/login',
             remark: '登录',
             component: './user/login',
           },
@@ -48,6 +51,10 @@ const router = [
               CoconutIslandParadiseRoutes,
               OriginalAspirationRoutes,
               WorkRecordRoutes,
+              InformationRelease,
+              WorkHelper,
+              QiongyaEcru,
+              SystemMgt,
               {
                 component: './404',
               },

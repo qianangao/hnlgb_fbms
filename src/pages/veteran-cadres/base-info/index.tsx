@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { connect } from 'umi';
 
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
+import PageLoading from '@/components/PageLoading';
 import Table from './components/Table';
-import OrgSelectModal from './components/OrgSelectModal';
-import AddModal from './components/AddModal';
-import DetailModal from './components/DetailModal';
-import ModifyModal from './components/ModifyModal';
+
+const OrgSelectModal = React.lazy(() => import('./components/OrgSelectModal'));
+const AddModal = React.lazy(() => import('./components/AddModal'));
+const DetailModal = React.lazy(() => import('./components/DetailModal'));
+const ModifyModal = React.lazy(() => import('./components/ModifyModal'));
 
 const BaseInfo = ({ dispatch }) => {
   const addModelRef = useRef({});
@@ -39,6 +41,25 @@ const BaseInfo = ({ dispatch }) => {
         ],
       },
     });
+
+    return () => {
+      dispatch({
+        type: 'vcBasicInfo/save',
+        payload: {
+          lgbListData: {},
+          lgbDetailData: {},
+          lgbFamilyData: {},
+          lgbPartTimeData: {},
+          lgbHealthyData: {},
+          addModalVisible: false, // 新增modal visible
+          modifyModalVisible: false, // 修改modal visible
+          detailModalVisible: false, // 详情modal visible
+          orgSelectModalVisible: false, // 单位选择modal visible
+          tableRef: {},
+          selectedOrgId: undefined, // 选择的组织id
+        },
+      });
+    };
   }, []);
 
   const orgChangeHander = orgId => {
@@ -66,16 +87,18 @@ const BaseInfo = ({ dispatch }) => {
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table
-        openAddModal={openAddModal}
-        openDetailModal={openDetailModal}
-        openModifyModal={openModifyModal}
-        openOrgSelectModal={openOrgSelectModal}
-      />
-      <OrgSelectModal actionRef={orgSelectRef} />
-      <AddModal actionRef={addModelRef} />
-      <DetailModal actionRef={detailModelRef} />
-      <ModifyModal actionRef={modifyModelRef} />
+      <Suspense fallback={<PageLoading />}>
+        <Table
+          openAddModal={openAddModal}
+          openDetailModal={openDetailModal}
+          openModifyModal={openModifyModal}
+          openOrgSelectModal={openOrgSelectModal}
+        />
+        <OrgSelectModal actionRef={orgSelectRef} />
+        <AddModal actionRef={addModelRef} />
+        <DetailModal actionRef={detailModelRef} />
+        <ModifyModal actionRef={modifyModelRef} />
+      </Suspense>
     </OrgTreeLayout>
   );
 };

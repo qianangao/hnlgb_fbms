@@ -23,6 +23,7 @@ const AdvancedFormItem = ({
   visible = true,
   render,
   enumsLabel,
+  enumsItems,
   switchEnums,
   hidden,
   disabled,
@@ -48,6 +49,17 @@ const AdvancedFormItem = ({
 
   if (render) {
     fieldInput = render;
+  } else if (enumsItems) {
+    fieldInput = (
+      <Select disabled={disabled}>
+        {enumsItems &&
+          Object.keys(enumsItems).map(key => (
+            <Select.Option key={key} value={key}>
+              {enumsItems[key]}
+            </Select.Option>
+          ))}
+      </Select>
+    );
   } else if (enumsLabel) {
     fieldInput = (
       <Select disabled={disabled}>
@@ -118,6 +130,8 @@ const AdvancedFormInstance = ({
   fieldChange,
   enums,
   loading = false,
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  dispatch, // 为了将dispatch从props中移除
   ...props
 }) => {
   const onValuesChange = (changedValues, allValues) => {

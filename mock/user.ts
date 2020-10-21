@@ -6,7 +6,7 @@ export default {
     const { password, username } = req.body;
 
     const encrypt = word => {
-      const key = CryptoJS.enc.Utf8.parse('liantong20200805');
+      const key = CryptoJS.enc.Utf8.parse('liantong20190410');
       const srcs = CryptoJS.enc.Utf8.parse(word);
       const encrypted = CryptoJS.AES.encrypt(srcs, key, {
         mode: CryptoJS.mode.ECB,
@@ -45,7 +45,7 @@ export default {
             community: null,
             isAdmin: 1,
           },
-          authorityList: ['01', '01-01', '01-02'],
+          authorityList: ['01-01', '02', '02-02'],
           dataAuthSql: null,
           version: 'v1',
           isRefresh: 0,

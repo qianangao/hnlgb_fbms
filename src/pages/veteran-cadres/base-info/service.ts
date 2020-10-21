@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, { noErrorRequest } from '@/utils/request';
 
 /**
  * 删除老干部
@@ -21,6 +21,39 @@ export async function getLgbList(params) {
     params,
   });
 }
+/**
+ * 老干部数据导出
+ * @param {*} params
+ */
+export async function importLgbs(params) {
+  return request('/users/excel', {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 老干部数据导出
+ * @param {*} params
+ */
+export async function exportLgbs(params) {
+  return noErrorRequest('/users/export_excel', {
+    method: 'GET',
+    responseType: 'blob',
+    params,
+  });
+}
+
+/**
+ * 老干部数据异步导出
+ * @param {*} params
+ */
+export async function exportLgbsAsync(params) {
+  return request('/users/export', {
+    method: 'GET',
+    params,
+  });
+}
 
 /**
  * 重制老干部账号密码
@@ -28,6 +61,17 @@ export async function getLgbList(params) {
  */
 export async function resetLgbPwd(params) {
   return request(`/users/password/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+/**
+ * 编辑老干部所属部门
+ * @param {*} params
+ */
+export async function updateLgbOrg(params) {
+  return request(`/users/list/organization`, {
     method: 'PUT',
     data: params,
   });

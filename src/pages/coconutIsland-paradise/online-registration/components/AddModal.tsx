@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
-import DailyBroadcastForm from './form/DailyBroadcastForm';
+import { Modal } from 'antd';
+import OnlineRegistrationForm from './form/OnlineRegistrationForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
-  const [form] = DailyBroadcastForm.useForm();
+  const [form] = OnlineRegistrationForm.useForm();
+
   const showModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'onlineRegistration/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +27,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'dailyBroadcast/save',
+      type: 'onlineRegistration/save',
       payload: {
         addModalVisible: false,
       },
@@ -35,27 +36,25 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
         dispatch({
-          type: `dailyBroadcast/addDailyBroadcast`,
+          type: `onlineRegistration/addOnlineRegistrationInfo`,
           payload: {
             ...values,
-            status: publishStatus ? 0 : 1,
           },
         });
-        form.resetFields();
       })
       .catch(info => {
-        console.error('新增错误', info);
+        console.error('Validate Failed:', info);
       });
   };
 
   return (
     <Modal
-      title="新增每日播报"
+      title="新增网络报名"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -64,24 +63,17 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={addModalVisible}
+      onOk={handleOk}
       forceRender
       confirmLoading={loading}
       onCancel={hideModal}
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
     >
-      <DailyBroadcastForm form={form} />
+      <OnlineRegistrationForm form={form} />
     </Modal>
   );
 };
 
-export default connect(({ dailyBroadcast, loading }) => ({
-  addModalVisible: dailyBroadcast.addModalVisible,
-  loading: loading.models.dailyBroadcast,
+export default connect(({ onlineRegistration, loading }) => ({
+  addModalVisible: onlineRegistration.addModalVisible,
+  loading: loading.models.onlineRegistration,
 }))(AddModal);
