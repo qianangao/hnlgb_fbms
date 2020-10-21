@@ -9,9 +9,8 @@ const Table = ({
   branchActivity,
   dispatch,
   opendetailModal,
-  publishStatus,
+  publishState,
   tableType,
-  enums,
 }) => {
   const { tableRef } = branchActivity;
   const columns = [
@@ -51,13 +50,12 @@ const Table = ({
       title: '支部名称',
       align: 'center',
       dataIndex: 'partyName',
-      valueEnum: enums.dictNation,
     },
     {
-      title: publishStatus === 0 ? '保存时间' : '发布时间',
+      title: publishState === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'createTime' : 'releaseTime',
+      dataIndex: publishState === 0 ? 'createTime' : 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -68,7 +66,7 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        publishStatus === 0 ? (
+        publishState === 0 ? (
           <a
             key={`${employeeData.id}up`}
             onClick={() => {
@@ -104,7 +102,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'branchActivity/branchActivityList',
-        payload: { ...params, publishState: publishStatus, dictActivityChildType: tableType },
+        payload: { ...params, publishState, dictOrgLife: tableType },
         resolve,
       });
     });
@@ -127,7 +125,7 @@ const Table = ({
       scroll={{ x: 'max-content' }}
       request={async params => branchActivityList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        publishStatus === 0 ? (
+        publishState === 0 ? (
           <Button type="primary" onClick={() => openAddModal()}>
             新增
           </Button>

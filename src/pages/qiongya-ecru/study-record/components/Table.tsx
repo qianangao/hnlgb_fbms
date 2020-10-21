@@ -3,7 +3,14 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, studyRecord, dispatch, enums }) => {
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  studyRecord,
+  dispatch,
+  enums,
+  openMembersModifyModal,
+}) => {
   const { tableRef } = studyRecord;
   const columns = [
     {
@@ -48,20 +55,28 @@ const Table = ({ openAddModal, openModifyModal, studyRecord, dispatch, enums }) 
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, Data) => [
         <a
-          key={`${employeeData.id}up`}
+          key={`${Data.id}up`}
           onClick={() => {
-            openModifyModal(employeeData);
+            openModifyModal(Data);
           }}
         >
-          编辑
+          编辑学习
+        </a>,
+        <a
+          key={`${Data.id}up`}
+          onClick={() => {
+            openMembersModifyModal(Data);
+          }}
+        >
+          编辑成员
         </a>,
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${Data.id}del`}
           title="确认删除学习记录吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteReturnworkPerson([Data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

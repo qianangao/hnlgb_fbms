@@ -32,8 +32,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = () => {
@@ -44,7 +42,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `branchInformation/updateBranchInformation`,
           payload: {
             ...values,
-            id: lgbId,
+            id,
           },
         });
       })

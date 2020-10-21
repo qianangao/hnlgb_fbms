@@ -5,6 +5,10 @@ import {
   updateStudyRecord,
   studyRecordList,
   detailStudyRecord,
+  studyRecordUser,
+  addStudyRecordUser,
+  deleteStudyRecordUser,
+  getMemberIds,
 } from './service';
 
 const Model = {
@@ -15,7 +19,7 @@ const Model = {
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailStudyRecordData: {},
-    partyUserListData: {},
+    studyRecordUserData: {},
   },
   effects: {
     *studyRecordList({ payload, resolve }, { call, put, select }) {
@@ -115,15 +119,49 @@ const Model = {
         });
       }
     },
-    *partyUserList({ payload, resolve }, { call, put }) {
-      const response = yield call(partyUserList, payload);
+    *getStudyRecordUser({ payload, resolve }, { call, put }) {
+      const response = yield call(studyRecordUser, payload);
 
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            studyRecordUserData: result,
+          },
+        });
+      }
+    },
+    *addStudyRecordUser({ payload, resolve }, { call }) {
+      const response = yield call(addStudyRecordUser, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('学习记录成员新增成功！');
+      }
+    },
+    *deleteStudyRecordUser({ payload, resolve }, { call }) {
+      const response = yield call(deleteStudyRecordUser, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('学习记录成员删除成功！');
+      }
+    },
+    *getMemberIds({ payload, resolve }, { call, put }) {
+      const response = yield call(getMemberIds, payload);
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            partyUserListData: response,
+            getMemberIds: response,
           },
         });
       }

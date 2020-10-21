@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function studyRecordList(params) {
-  return request('/lgbsmp/api/learningRecord', {
+  return request('/learning_record', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function studyRecordList(params) {
  * @param {*} params
  */
 export async function deleteStudyRecord(params) {
-  return request(`/lgbsmp/api/learningRecord`, {
+  return request(`/learning_record`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteStudyRecord(params) {
  * @param {*} params
  */
 export async function addStudyRecord(params) {
-  return request(`/lgbsmp/api/learningRecord`, {
+  return request(`/learning_record`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addStudyRecord(params) {
  * @param {*} params
  */
 export async function detailStudyRecord(params) {
-  return request(`/lgbsmp/api/learningRecord/${params.id}`, {
+  return request(`/learning_record/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,8 +49,52 @@ export async function detailStudyRecord(params) {
  * @param {*} params
  */
 export async function updateStudyRecord(params) {
-  return request(`/lgbsmp/api/learningRecord/${params.id}`, {
+  return request(`/learning_record/${params.id}`, {
     method: 'PUT',
     data: params,
+  });
+}
+
+/**
+ * 学习记录-成员列表
+ * @param {*} params
+ */
+export async function studyRecordUser(params) {
+  return request(`/learning_record/learn_user/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 新增-学习记录成员
+ * @param {*} params
+ */
+export async function addStudyRecordUser(params) {
+  return request(`/learning_record/insert_lu`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
+ * 删除-学习记录成员
+ * @param {*} params
+ */
+export async function deleteStudyRecordUser(params) {
+  return request(`/learning_record/lu`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
+ * 学习记录-成员ids
+ * @param {*} params
+ */
+export async function getMemberIds(params) {
+  return request(`/learning_record/learn_user_id/${params.id}`, {
+    method: 'GET',
+    params,
   });
 }

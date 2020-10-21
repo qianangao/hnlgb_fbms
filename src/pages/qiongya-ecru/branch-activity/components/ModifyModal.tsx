@@ -34,7 +34,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     });
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = publishState => {
     form
       .validateFields()
       .then(values => {
@@ -48,7 +48,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             context: values.context,
             host: values.host,
             partyName: values.partyName,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
             photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
             fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
           },

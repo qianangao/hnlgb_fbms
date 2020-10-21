@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
 import StudyRecordForm from './form/StudyRecordForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
@@ -53,8 +52,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       });
   };
 
-  const addLgbFatch = () => {};
-
   return (
     <Modal
       title="新增学习记录"
@@ -76,7 +73,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       onCancel={hideModal}
     >
       <StudyRecordForm form={form} />
-      <LgbSyncMultiSelect addLgb={addLgbFatch} />
     </Modal>
   );
 };

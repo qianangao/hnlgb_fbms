@@ -2,12 +2,25 @@ import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 
-const BranchActivityForm = ({ form, id, dispatch, loading }) => {
+const BranchActivityForm = ({ form, id, dispatch, loading, partyData, noticeData }) => {
   const formItems = [
     {
       label: '活动名称',
       name: 'activityName',
+      enumsItems: noticeData,
       rules: [{ required: true, message: '请输入活动名称!', whitespace: true }],
+    },
+    {
+      label: '活动类型',
+      name: 'dictOrgLife',
+      enumsLabel: 'dictOrgLife',
+      rules: [{ required: true, message: '请选择活动类型!', whitespace: true }],
+    },
+    {
+      label: '支部名称',
+      name: 'partyId',
+      enumsItems: partyData,
+      rules: [{ required: true, message: '请选择支部名称!', whitespace: true }],
     },
     {
       label: '支持人',
@@ -26,12 +39,6 @@ const BranchActivityForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请输入活动地点!', whitespace: true }],
     },
     {
-      label: '支部名称',
-      name: 'partyName',
-      enumsLabel: 'dictNation',
-      rules: [{ required: true, message: '请选择支部名称!', whitespace: true }],
-    },
-    {
       key: 'firstLine',
       type: 'segmentation',
     },
@@ -39,7 +46,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading }) => {
       label: '缩略图',
       name: 'picAttachmentInfo',
       type: 'image',
-      rules: [{ required: true, message: '请上传图片!' }],
+      rules: [{ required: false, message: '请上传图片!' }],
     },
     {
       key: 'secondLine',
@@ -49,7 +56,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading }) => {
       label: '附件',
       name: 'attachmentInfo',
       type: 'upload',
-      rules: [{ required: true, message: '请上传附件!' }],
+      rules: [{ required: false, message: '请上传附件!' }],
     },
     {
       key: 'thirdlyLine',
@@ -98,12 +105,27 @@ const BranchActivityForm = ({ form, id, dispatch, loading }) => {
     }
   }, [id]);
 
+  useEffect(() => {
+    // 支部-列表
+    dispatch({
+      type: 'noticeAnnouncement/noticeAnnouncementList',
+      payload: { current: 1, pageSize: 10000 },
+    });
+    // 通知公告-列表
+    dispatch({
+      type: 'branchInformation/branchInformationList',
+      payload: { current: 1, pageSize: 10000 },
+    });
+  }, []);
   return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };
 
 BranchActivityForm.useForm = AdvancedForm.useForm;
 
-export default connect(({ loading, global }) => ({
+export default connect(({ loading, global, branchInformation, noticeAnnouncement }) => ({
   loading: loading.models.branchActivity,
   enums: global.enums,
+  branchInformationData: branchInformation.branchInformationData,
+  partyData: branchInformation.partyData,
+  noticeData: noticeAnnouncement.noticeAnnouncementList,
 }))(BranchActivityForm);

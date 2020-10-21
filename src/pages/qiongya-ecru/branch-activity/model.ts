@@ -66,7 +66,7 @@ const Model = {
 
     *addBranchActivity({ payload }, { call, put }) {
       const response = yield call(addBranchActivity, payload);
-      const publishStatus = payload.isRelease;
+      const publishState = payload.isRelease;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -74,7 +74,7 @@ const Model = {
             addModalVisible: false,
           },
         });
-        message.success(publishStatus === 0 ? '支部活动新增成功！' : '支部活动发布成功！');
+        message.success(publishState === 0 ? '支部活动新增成功！' : '支部活动发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -82,7 +82,7 @@ const Model = {
     },
     *updateBranchActivity({ payload }, { call, put }) {
       const response = yield call(updateBranchActivity, payload);
-      const publishStatus = payload.isRelease;
+      const publishState = payload.isRelease;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -91,7 +91,7 @@ const Model = {
           },
         });
 
-        message.success(publishStatus === 0 ? '支部活动修改成功！' : '支部活动发布成功！');
+        message.success(publishState === 0 ? '支部活动修改成功！' : '支部活动发布成功！');
 
         yield put({
           type: 'tableReload',

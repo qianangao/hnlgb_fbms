@@ -4,7 +4,7 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
-import MembersModifyModal from './components/form/MembersModifyModal';
+import MembersModifyModal from './components/MembersModifyModal';
 
 const PartyRecord = ({ dispatch }) => {
   const addModelRef = useRef({});
@@ -41,7 +41,7 @@ const PartyRecord = ({ dispatch }) => {
     modifyModelRef.current.showModal(ids);
   };
   const openMembersModifyModal = item => {
-    membersModifyModelRef.current.showModal(item.id);
+    membersModifyModelRef.current.showModal(item.partyId);
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>

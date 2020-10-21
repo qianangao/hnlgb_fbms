@@ -25,6 +25,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
+          'dictOrgLife',
         ],
       },
     });
@@ -93,7 +94,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
-          publishStatus={publishStatus}
+          publishState={publishStatus}
           tableType={tableType}
         />
       </TypeSelectLayout>

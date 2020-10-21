@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function branchActivityList(params) {
-  return request('/lgbsmp/api/orgLife', {
+  return request('/orgLife', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function branchActivityList(params) {
  * @param {*} params
  */
 export async function deleteBranchActivity(params) {
-  return request(`/lgbsmp/api/orgLife`, {
+  return request(`/orgLife`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteBranchActivity(params) {
  * @param {*} params
  */
 export async function addBranchActivity(params) {
-  return request(`/lgbsmp/api/orgLife`, {
+  return request(`/orgLife`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addBranchActivity(params) {
  * @param {*} params
  */
 export async function detailBranchActivity(params) {
-  return request(`/lgbsmp/api/orgLife/${params.id}`, {
+  return request(`/orgLife/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailBranchActivity(params) {
  * @param {*} params
  */
 export async function updateBranchActivity(params) {
-  return request(`/lgbsmp/api/orgLife/${params.id}`, {
+  return request(`/orgLife/${params.id}`, {
     method: 'PUT',
     data: params,
   });

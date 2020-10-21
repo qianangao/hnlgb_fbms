@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function partyRecordList(params) {
-  return request('/lgbsmp/api/partyDue', {
+  return request('/partyDue', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function partyRecordList(params) {
  * @param {*} params
  */
 export async function deletePartyRecord(params) {
-  return request(`/lgbsmp/api/partyDue`, {
+  return request(`/partyDue`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deletePartyRecord(params) {
  * @param {*} params
  */
 export async function addPartyRecord(params) {
-  return request(`/lgbsmp/api/partyDue`, {
+  return request(`/partyDue`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addPartyRecord(params) {
  * @param {*} params
  */
 export async function detailPartyRecord(params) {
-  return request(`/lgbsmp/api/partyDue/${params.id}`, {
+  return request(`/partyDue/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailPartyRecord(params) {
  * @param {*} params
  */
 export async function updatePartyRecord(params) {
-  return request(`/lgbsmp/api/partyDue/${params.id}`, {
+  return request(`/partyDue/${params.id}`, {
     method: 'PUT',
     data: params,
   });
@@ -60,7 +60,7 @@ export async function updatePartyRecord(params) {
  * @param {*} params
  */
 export async function exportPartyRecord(params) {
-  return request(`/lgbsmp/api/partyDueExport`, {
+  return request(`/partyDueExport`, {
     method: 'GET',
     params,
   });

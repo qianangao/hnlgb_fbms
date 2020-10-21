@@ -6,9 +6,11 @@ import FlowPartyFrom from './form/FlowPartyFrom';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = FlowPartyFrom.useForm();
-  const [lgbId, setLgbId] = useState();
+  const [id, setId] = useState('');
+  const [userId, setUserId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setId(item.id);
+    setUserId(item.userId);
     dispatch({
       type: 'flowParty/save',
       payload: {
@@ -45,13 +47,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `flowParty/updateFlowParty`,
           payload: {
             ...values,
-            id: lgbId,
+            id,
           },
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .catch(() => {});
   };
   return (
     <Modal
@@ -81,8 +81,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <LgbBasicInfo userId={lgbId} />
-        <FlowPartyFrom form={form} id={lgbId} />
+        <LgbBasicInfo userId={userId} />
+        <FlowPartyFrom form={form} id={id} />
       </div>
     </Modal>
   );

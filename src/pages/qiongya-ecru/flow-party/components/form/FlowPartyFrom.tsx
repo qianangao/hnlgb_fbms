@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form } from 'antd';
 import { connect } from 'umi';
-import LgbSelectInput from '@/components/LgbSelectInput';
 
-const FlowPartyFrom = ({ form, id, dispatch, loading }) => {
+const FlowPartyFrom = ({ form, id, dispatch, loading, partyData }) => {
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -25,16 +23,14 @@ const FlowPartyFrom = ({ form, id, dispatch, loading }) => {
           : null;
         form.setFieldsValue(fields);
       });
+
+      // 支部-列表
+      dispatch({
+        type: 'branchInformation/branchInformationList',
+        payload: { current: 1, pageSize: 10000 },
+      });
     }
   }, [id]);
-  const selectLgbInput = (
-    // 显示老干部信息-公共组件
-    <>
-      <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
-        <LgbSelectInput />
-      </Form.Item>
-    </>
-  );
   const formItems = [
     {
       label: '开始流动时间',
@@ -45,19 +41,16 @@ const FlowPartyFrom = ({ form, id, dispatch, loading }) => {
     {
       label: '支部名称',
       name: 'partyId',
-      enumsLabel: 'dictPoliticalStatus',
+      enumsItems: partyData,
       rules: [{ required: true, message: '请选择支部名称!' }],
     },
   ];
-  return id ? (
-    <AdvancedForm form={form} fields={formItems} loading={loading} />
-  ) : (
-    <AdvancedForm form={form} loading={loading} headerRender={selectLgbInput} fields={formItems} />
-  );
+  return <AdvancedForm form={form} fields={formItems} loading={loading} />;
 };
 
 FlowPartyFrom.useForm = AdvancedForm.useForm;
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, branchInformation }) => ({
   loading: loading.models.flowParty,
+  partyData: branchInformation.partyData,
 }))(FlowPartyFrom);

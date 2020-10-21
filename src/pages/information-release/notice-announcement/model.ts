@@ -15,6 +15,7 @@ const Model = {
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailNoticeAnnouncementData: {},
+    noticeData: {},
   },
   effects: {
     *noticeAnnouncementList({ payload, resolve }, { call, put, select }) {
@@ -29,7 +30,11 @@ const Model = {
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
-
+        const noticeData = {};
+        response.items.length > 0 &&
+          response.items.forEach(item => {
+            noticeData[item.id] = item.partyName;
+          });
         const result = {
           data: items,
           page: currentPage,

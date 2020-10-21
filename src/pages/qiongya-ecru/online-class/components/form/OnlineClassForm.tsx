@@ -25,7 +25,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
     {
       label: '类型',
       name: 'type',
-      enumsLabel: 'dictNation',
+      enumsLabel: 'dict_study_type',
       rules: [{ required: true, message: '请选择类型!', whitespace: true }],
     },
     {
@@ -37,7 +37,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
       label: '缩略图',
       name: 'picAttachmentInfo',
       type: 'image',
-      rules: [{ required: true, message: '请上传图片!' }],
+      rules: [{ required: false, message: '请上传图片!' }],
     },
   ];
 
@@ -53,7 +53,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
           picAttachmentInfo:
-            data.picAttachmentInfo.id && data.picAttachmentInfo.url
+            data.picAttachmentInfo && data.picAttachmentInfo.id && data.picAttachmentInfo.url
               ? {
                   uid: data.picAttachmentInfo.id,
                   name: data.picAttachmentInfo.fileName,

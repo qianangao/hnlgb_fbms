@@ -53,9 +53,9 @@ const detailOrgLife = (req, res) => {
 };
 
 export default {
-  'GET /lgbsmp/api/learningRecord': list,
-  'POST /lgbsmp/api/learningRecord': noResponse,
-  'DELETE /lgbsmp/api/learningRecord': noResponse,
-  'PUT /lgbsmp/api/learningRecord/:id': noResponse,
-  'GET /lgbsmp/api/learningRecord/:id': detailOrgLife,
+  'GET /lgbsmp/api/learning_record': list,
+  'POST /lgbsmp/api/learning_record': noResponse,
+  'DELETE /lgbsmp/api/learning_record': noResponse,
+  'PUT /lgbsmp/api/learning_record/:id': noResponse,
+  'GET /lgbsmp/api/learning_record/:id': detailOrgLife,
 };

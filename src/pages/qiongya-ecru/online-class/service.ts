@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function onlineClassList(params) {
-  return request('/lgbsmp/api/onlineStudy', {
+  return request('/onlineStudy', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function onlineClassList(params) {
  * @param {*} params
  */
 export async function deleteOnlineClass(params) {
-  return request(`/lgbsmp/api/onlineStudy`, {
+  return request(`/onlineStudy`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteOnlineClass(params) {
  * @param {*} params
  */
 export async function addOnlineClass(params) {
-  return request(`/lgbsmp/api/onlineStudy`, {
+  return request(`/onlineStudy`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addOnlineClass(params) {
  * @param {*} params
  */
 export async function updateOnlineClass(params) {
-  return request(`/lgbsmp/api/onlineStudy/${params.id}`, {
+  return request(`/onlineStudy`, {
     method: 'PUT',
     data: params,
   });
@@ -49,7 +49,7 @@ export async function updateOnlineClass(params) {
  * @param {*} params
  */
 export async function detailOnlineClass(params) {
-  return request(`/lgbsmp/api/onlineStudy/${params.id}`, {
+  return request(`/onlineStudy/${params.id}`, {
     method: 'GET',
     params,
   });

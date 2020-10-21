@@ -91,7 +91,7 @@ const Table = ({ openAddModal, openModifyModal, onlineClass, dispatch, tableType
     new Promise(resolve => {
       dispatch({
         type: 'onlineClass/onlineClassList',
-        payload: { ...params, dictActivityChildType: tableType },
+        payload: { ...params, type: tableType },
         resolve,
       });
     });

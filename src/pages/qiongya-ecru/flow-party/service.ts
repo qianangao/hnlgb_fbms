@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function flowPartyList(params) {
-  return request('/lgbsmp/api/flow_party', {
+  return request('/flow_party', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function flowPartyList(params) {
  * @param {*} params
  */
 export async function deleteFlowParty(params) {
-  return request(`/lgbsmp/api/flow_party`, {
+  return request(`/flow_party`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteFlowParty(params) {
  * @param {*} params
  */
 export async function addFlowParty(params) {
-  return request(`/lgbsmp/api/flow_party`, {
+  return request(`/flow_party`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addFlowParty(params) {
  * @param {*} params
  */
 export async function detailFlowParty(params) {
-  return request(`/lgbsmp/api/flow_party/${params.id}`, {
+  return request(`/flow_party/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailFlowParty(params) {
  * @param {*} params
  */
 export async function updateFlowParty(params) {
-  return request(`/lgbsmp/api/flow_party/${params.id}`, {
+  return request(`/flow_party/${params.id}`, {
     method: 'PUT',
     data: params,
   });

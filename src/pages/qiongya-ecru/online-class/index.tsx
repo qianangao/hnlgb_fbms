@@ -10,7 +10,7 @@ import ModifyModal from './components/ModifyModal';
 const OnlineClass = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
-  const [tableType, setTableType] = useState('8adcf7f96b54cab9016b54ceb77c');
+  const [tableType, setTableType] = useState('8adcf80a75303d66017545a96f5b');
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -22,6 +22,7 @@ const OnlineClass = ({ dispatch, tableRef }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
+          'dict_study_type',
         ],
       },
     });
@@ -35,19 +36,19 @@ const OnlineClass = ({ dispatch, tableRef }) => {
   };
   const tabs = [
     {
-      id: '8adcf7f96b54cab9016b54ceb77c',
+      id: '8adcf80a75303d66017545a96f5b',
       label: '学习专栏',
     },
     {
-      id: '8adcf7f96b54cab9016b54ced4fd',
+      id: '8adcf80a75303d66017545a9a4b4',
       label: '我的书架',
     },
     {
-      id: '8adcf7f96b54cab9016b54cf07bf',
+      id: '8adcf80a75303d66017545a9ccfd',
       label: '信息资讯',
     },
     {
-      id: '8adcf7f96b54cab9016b54cf27af',
+      id: '8adcf80a75303d66017545aa091b',
       label: '友情链接',
     },
   ];

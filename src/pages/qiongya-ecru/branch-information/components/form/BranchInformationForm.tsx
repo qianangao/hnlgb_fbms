@@ -1,9 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbSingleSelectInput from '@/components/LgbSingleSelectInput';
 
 const BranchInformationForm = ({ form, id, dispatch, loading }) => {
+  const secretaryRef = useRef({});
+  const deputyRef = useRef({});
+  const commissaryRef = useRef({});
+  const organRef = useRef({});
+  const publicityRef = useRef({});
+  // 获取-未加入支部的党员
+  const getUsersNoParty = politicalStatusParam => {
+    return new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/getUsersNoParty',
+        payload: {
+          ...politicalStatusParam,
+        },
+        resolve,
+      });
+    });
+  };
+
+  // 获取支部成员
+  const getMemberList = getMemberParams =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/getPartyUserList',
+        payload: { ...getMemberParams, id },
+        resolve,
+      });
+    });
+
+  const getLgbs = id ? getMemberList : getUsersNoParty;
   const formItems = [
     {
       label: '支部名称',
@@ -36,27 +65,27 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     {
       label: '书记',
       name: 'branchSecretaryId',
-      render: <LgbSingleSelectInput getLgbs={getPoliticalStatusLgbs} />,
+      render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={secretaryRef} />,
     },
     {
       label: '副书记',
-      name: 'branchDeputySecretaryOneName',
-      render: <LgbSingleSelectInput />,
+      name: 'branchDeputySecretaryOneId',
+      render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={deputyRef} />,
     },
     {
       label: '纪检委员',
       name: 'disciplineCommissaryId',
-      render: <LgbSingleSelectInput />,
+      render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={commissaryRef} />,
     },
     {
       label: '组织委员',
       name: 'organCommissaryId',
-      render: <LgbSingleSelectInput />,
+      render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={organRef} />,
     },
     {
       label: '宣传委员',
       name: 'publicityCommissaryId',
-      render: <LgbSingleSelectInput />,
+      render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={publicityRef} />,
     },
   ];
 
@@ -72,26 +101,15 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
+        secretaryRef.current.setLabel(data.branchSecretaryName);
+        deputyRef.current.setLabel(data.branchDeputySecretaryOneName);
+        commissaryRef.current.setLabel(data.disciplineCommissaryName);
+        organRef.current.setLabel(data.organCommissaryName);
+        publicityRef.current.setLabel(data.publicityCommissaryName);
         form.setFieldsValue(fields);
       });
     }
   }, [id]);
-
-  // 获取所有党员
-  const getPoliticalStatusLgbs = politicalStatusParam =>
-    new Promise(resolve => {
-      dispatch({
-        type: 'branchInformation/politicalStatusLgbs',
-        payload: {
-          ...politicalStatusParam,
-          current: 1,
-          pageSize: 20,
-          currentPage: 1,
-          dictPoliticalStatus: '8adcf7c96a48fae4016a4925f283',
-        },
-        resolve,
-      });
-    });
 
   return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };

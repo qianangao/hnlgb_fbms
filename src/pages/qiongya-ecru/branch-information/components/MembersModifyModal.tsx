@@ -56,5 +56,6 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
 
 export default connect(({ branchInformation, loading }) => ({
   memberModifyModalVisible: branchInformation.memberModifyModalVisible,
+  communityDetailData: branchInformation.communityDetailData,
   loading: loading.models.branchInformation,
 }))(CommunityModifyModal);

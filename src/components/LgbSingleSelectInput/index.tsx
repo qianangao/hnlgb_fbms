@@ -17,7 +17,7 @@ interface LgbDataType {
 
 let tempdata: LgbDataType;
 
-const LgbSingleSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
+const LgbSingleSelectInput = ({ value, enums, dispatch, getLgbs, actionRef, onChange }) => {
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [valueName, setValueName] = useState<string | undefined>('');
 
@@ -87,7 +87,20 @@ const LgbSingleSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
         ],
       },
     });
+
+    actionRef &&
+      (actionRef.current = {
+        setLabel: label => {
+          setValueName(label);
+
+          tempdata = {
+            ...tempdata,
+            realName: label,
+          };
+        },
+      });
   }, []);
+  useEffect(() => {}, [value]);
 
   const getLgbList = params =>
     new Promise(resolve => {
@@ -127,7 +140,7 @@ const LgbSingleSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
           overflow: 'auto',
         }}
         visible={lgbSelectModalVisible}
-        forceRender
+        destroyOnClose
         onOk={handleOk}
         onCancel={() => setVisible(false)}
       >

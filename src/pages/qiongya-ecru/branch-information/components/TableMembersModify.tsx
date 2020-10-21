@@ -12,11 +12,11 @@ const TableCommunityMember = ({ dispatch, id }) => {
         resolve,
       });
     });
-  const addMemberLgb = addMemberParam =>
+  const addMemberLgb = parme =>
     new Promise(resolve => {
       dispatch({
         type: 'branchInformation/addPartyUser',
-        payload: { ...addMemberParam, id },
+        payload: { ...parme, partyId: id },
         resolve,
       });
     });
@@ -24,21 +24,17 @@ const TableCommunityMember = ({ dispatch, id }) => {
     new Promise(resolve => {
       dispatch({
         type: 'branchInformation/deletePartyUser',
-        payload: { ...deleteMemberParam, id },
+        payload: { ...deleteMemberParam, partyId: id },
         resolve,
       });
     });
   // 获取所以党员
-  const getPoliticalStatusLgbs = politicalStatusParam =>
+  const getUsersNoParty = politicalStatusParam =>
     new Promise(resolve => {
       dispatch({
-        type: 'branchInformation/politicalStatusLgbs',
+        type: 'branchInformation/getUsersNoParty',
         payload: {
           ...politicalStatusParam,
-          current: 1,
-          pageSize: 20,
-          currentPage: 1,
-          dictPoliticalStatus: '8adcf7c96a48fae4016a4925f283',
         },
         resolve,
       });
@@ -49,7 +45,7 @@ const TableCommunityMember = ({ dispatch, id }) => {
       getLgbs={getMemberList}
       addLgb={addMemberLgb}
       deleteLgb={deleteMemberLgb}
-      getSelectLgbs={getPoliticalStatusLgbs}
+      getSelectLgbs={getUsersNoParty}
     />
   );
 };

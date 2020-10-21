@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, flowParty, enums, dispatch }) => {
+const Table = ({ openModifyModal, flowParty, enums, dispatch }) => {
   const { tableRef } = flowParty;
   const columns = [
     {
@@ -129,9 +129,6 @@ const Table = ({ openAddModal, openModifyModal, flowParty, enums, dispatch }) =>
       scroll={{ x: 'max-content' }}
       request={async params => getFlowPartyList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal()}>
-          新增
-        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
