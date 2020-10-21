@@ -10,7 +10,7 @@ const findData = (idArr, data) => {
 
   for (let i = 1; i < idArr.length; i++) {
     tempId = `${tempId}-${idArr[i]}`;
-    // eslint-disable-next-line no-loop-func
+    // eslint-disable-next-line no-loop-func ,@typescript-eslint/no-loop-func
     tempData = tempData.children.find(item => item.value === tempId);
     if (!tempData) break;
   }
