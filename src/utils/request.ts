@@ -44,6 +44,7 @@ const errorHandler = error => {
       });
 
       notification.error({
+        key: `${response.status}-${data.code}`,
         message: `请重新登录`, // ${status}: ${url}
         description: '您的账号已过期或在其他设备登录',
       });
@@ -56,6 +57,7 @@ const errorHandler = error => {
     }
 
     notification.error({
+      key: `${response.status}-${data.code}`,
       message: `请求错误`, // ${status}: ${url}
       description: errorText,
     });

@@ -1,4 +1,6 @@
 import { message } from 'antd';
+import moment from 'moment';
+import { downloadXlsFile } from '@/utils';
 import {
   addLgb,
   deleteLgb,
@@ -17,8 +19,6 @@ import {
   getHealthyLgb,
   updateHealthyLgb,
 } from './service';
-import moment from 'moment';
-import { downloadXlsFile } from '@/utils';
 
 const Model = {
   namespace: 'vcBasicInfo',
