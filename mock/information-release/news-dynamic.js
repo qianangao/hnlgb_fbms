@@ -58,8 +58,8 @@ const detailNewsDynamic = (req, res) => {
       attachmentInfo: {
         url:
           'https://hbimg.huabanimg.com/108ed08f2e761818e39c8b650c37359361c0c5375ef78-zL6o7A_fw658/format/webp',
-        uid: '呵呵呵呵哒',
-        name: '图片新闻',
+        id: '呵呵呵呵哒',
+        fileName: 'demo图片',
       },
       createTime: '',
       remark: '描述',

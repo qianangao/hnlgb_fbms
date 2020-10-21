@@ -6,7 +6,7 @@ export default {
     const { password, username } = req.body;
 
     const encrypt = word => {
-      const key = CryptoJS.enc.Utf8.parse('liantong20200805');
+      const key = CryptoJS.enc.Utf8.parse('liantong20190410');
       const srcs = CryptoJS.enc.Utf8.parse(word);
       const encrypted = CryptoJS.AES.encrypt(srcs, key, {
         mode: CryptoJS.mode.ECB,

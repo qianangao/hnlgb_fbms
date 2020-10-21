@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
-import BranchInformationPartyUserListTable from './form/BranchInformationPartyUserListTable';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = BranchInformationForm.useForm();
@@ -33,8 +32,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = () => {
@@ -45,7 +42,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `branchInformation/updateBranchInformation`,
           payload: {
             ...values,
-            id: lgbId,
+            id,
           },
         });
       })
@@ -82,7 +79,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         }}
       >
         <BranchInformationForm form={form} id={id} />
-        <BranchInformationPartyUserListTable id={id} />
       </div>
     </Modal>
   );

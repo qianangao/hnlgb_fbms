@@ -90,7 +90,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       }),
     },
     {
-      title: '工作信息',
+      title: '社会兼职',
       effect: 'updatePartTimeLgb',
       StepsForm: PartTimeForm,
       dataFormat: values => ({

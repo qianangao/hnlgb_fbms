@@ -218,6 +218,10 @@ export default {
   'GET /users': list,
   'POST /users': noResponse,
   'DELETE /users': noResponse,
+  'GET /users/excel': noResponse,
+  'GET /users/export': noResponse,
+  'GET /users/export_excel': noResponse,
+
   'GET /users/:id': getUserInfo,
   'PUT /users/:id': noResponse,
   'PUT /users/password/:id': noResponse,
