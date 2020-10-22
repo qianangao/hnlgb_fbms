@@ -35,7 +35,7 @@ useEffect(() => {
       {detailResultData.healthAssessToVo && 
         detailResultData.healthAssessToVo.map( item => (
           <Descriptions size="middle" column={1} style={{marginBottom: 16 }}>
-            <Descriptions.Item style={{fontWeight:"bold"}}>{`题目:${  item.subject}`}</Descriptions.Item>
+            <Descriptions.Item style={{fontWeight:"bold"}}>{`题目:${item.subject}`}</Descriptions.Item>
             <Descriptions.Item label="选项A">{item.optionA}</Descriptions.Item>
             <Descriptions.Item label="选项B">{item.optionB}</Descriptions.Item>
             <Descriptions.Item label="选项C">{item.optionC}</Descriptions.Item>

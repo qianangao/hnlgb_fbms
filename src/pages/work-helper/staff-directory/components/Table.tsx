@@ -30,24 +30,6 @@ const Table = ({ staffDirectory, dispatch }) => {
       align: 'center',
       dataIndex: 'phonenumber',
     },
-    // {
-    //   title: '操作',
-    //   valueType: 'option',
-    //   align: 'center',
-    //   dataIndex: 'id',
-    //   width: 180,
-    //   fixed: 'right',
-    //   render: (dom, employeeData) => [
-    //     <a
-    //       key={`${employeeData.id}up`}
-    //       onClick={() => {
-    //         openModifyModal(employeeData);
-    //       }}
-    //     >
-    //       详情
-    //     </a>,
-    //   ],
-    // },
   ];
 
   // 列表
