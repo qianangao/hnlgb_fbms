@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function staffDirectoryList(params) {
-  return request('/staffDirectory', {
+  return request('/staff_phonebook', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function staffDirectoryList(params) {
  * @param {*} params
  */
 export async function detailStaffDirectory(params) {
-  return request(`/staffDirectory/${params.id}`, {
+  return request(`/staff_phonebook/${params.id}`, {
     method: 'GET',
     params,
   });

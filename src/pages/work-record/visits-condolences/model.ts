@@ -6,6 +6,7 @@ import {
   deleteVisit,
   detailVisit,
   getVisitStatistics,
+  getDeathMemberList,
 } from './service';
 
 const Model = {
@@ -13,11 +14,12 @@ const Model = {
   state: {
     visitListData: {},
     visiStatisticsData: {},
+    memberListData: {},
     addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailVisitData: {},
-    visitTotalNumber: '',
+    totalNumber: '',
   },
   effects: {
     *getVisitList({ payload, resolve }, { call, put, select }) {
@@ -58,6 +60,35 @@ const Model = {
         });
       }
     },
+    *getDeathMemberList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const response = yield call(getDeathMemberList, params);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            memberListData: result,
+          },
+        });
+      }
+    },
 
     *getVisitStatistics({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.wrVisitsCondolences.selectedOrgId);
@@ -75,10 +106,10 @@ const Model = {
       const response = yield call(getVisitStatistics, params);
 
       if (!response.error) {
-        const { items, totalNum } = response;
+        const { statistics, totalNumber } = response;
 
         const result = {
-          data: items,
+          data: statistics,
           success: true,
         };
 
@@ -88,7 +119,7 @@ const Model = {
           type: 'save',
           payload: {
             visiStatisticsData: result,
-            visitTotalNumber: totalNum,
+            totalNumber,
           },
         });
       }

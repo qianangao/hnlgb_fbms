@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ActivityForm from './form/ActivityForm';
 
 const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
   const [form] = ActivityForm.useForm();
-  const showModal = () => {
+  const [activityId, setActivityId] = useState('');
+  const showModal = id => {
     form.resetFields();
+    setActivityId(id);
     dispatch({
       type: 'oaVolunteerTeam/save',
       payload: {
@@ -40,6 +42,7 @@ const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loadin
           type: `oaVolunteerTeam/addActivity`,
           payload: {
             ...values,
+            teamId: activityId,
             publishState: status ? 0 : 1,
           },
         });

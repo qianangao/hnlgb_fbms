@@ -2,7 +2,7 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openModifyModal, staffDirectory, dispatch, publishStatus }) => {
+const Table = ({ staffDirectory, dispatch }) => {
   const { tableRef } = staffDirectory;
   const columns = [
     {
@@ -16,30 +16,19 @@ const Table = ({ openModifyModal, staffDirectory, dispatch, publishStatus }) => 
     {
       title: `姓名`,
       align: 'center',
+      dataIndex: 'realName',
+      hideInSearch: true,
+    },
+    {
+      title: `姓名`,
+      align: 'center',
       dataIndex: 'name',
+      hideInTable: true,
     },
     {
       title: '电话',
       align: 'center',
-      dataIndex: 'telephone',
-    },
-    {
-      title: '操作',
-      valueType: 'option',
-      align: 'center',
-      dataIndex: 'id',
-      width: 180,
-      fixed: 'right',
-      render: (dom, employeeData) => [
-        <a
-          key={`${employeeData.id}up`}
-          onClick={() => {
-            openModifyModal(employeeData);
-          }}
-        >
-          详情
-        </a>,
-      ],
+      dataIndex: 'phonenumber',
     },
   ];
 
@@ -48,7 +37,7 @@ const Table = ({ openModifyModal, staffDirectory, dispatch, publishStatus }) => 
     new Promise(resolve => {
       dispatch({
         type: 'staffDirectory/staffDirectoryList',
-        payload: { ...params, isRelease: publishStatus },
+        payload: { ...params },
         resolve,
       });
     });

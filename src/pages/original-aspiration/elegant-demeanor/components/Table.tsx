@@ -31,7 +31,7 @@ const Table = ({
       title: '五老类型',
       align: 'center',
       dataIndex: 'type',
-      valueEnum: enums.dictResultType,
+      valueEnum: enums.dictFiveOldType,
       hideInTable: true,
     },
 
@@ -97,7 +97,7 @@ const Table = ({
     return new Promise(resolve => {
       dispatch({
         type: 'oaElegantDemeanor/getElegantDemeanorList',
-        payload: { ...params, isPublished: publishStatus },
+        payload: { ...params, pushStatus: publishStatus },
         resolve,
       });
     });

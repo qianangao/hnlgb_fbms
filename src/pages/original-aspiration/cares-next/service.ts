@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getCaresList(params) {
-  return request('/care-generation/mechanism', {
+  return request('/care-generation/mechanism/names', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function getCaresList(params) {
  * @param {*} params
  */
 export async function getTrendsList(params) {
-  return request('/care-generation/trends', {
+  return request('/care-generation/names', {
     method: 'GET',
     params,
   });
@@ -26,7 +26,7 @@ export async function getTrendsList(params) {
  * @param {*} params
  */
 export async function getMemberList(params) {
-  return request(`/care-generation/mechanism/member/${params.mechanismId}`, {
+  return request(`/care-generation/member/${params.mechanismId}`, {
     method: 'GET',
     params,
   });

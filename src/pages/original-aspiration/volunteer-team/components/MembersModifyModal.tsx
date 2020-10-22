@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TableMembersModify from './TableMembersModify';
+import TableMembers from './TableMembers';
 
 const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
   const [infoId, setInfoId] = useState('');
@@ -36,7 +36,7 @@ const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
 
   return (
     <Modal
-      title="编辑志愿团队成员"
+      title="查看志愿团队成员"
       centered
       width="80vw"
       style={{ paddingBottom: 0 }}
@@ -49,7 +49,7 @@ const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
       onCancel={hideModal}
       footer={[]}
     >
-      <TableMembersModify id={infoId} />
+      <TableMembers id={infoId} />
     </Modal>
   );
 };

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 

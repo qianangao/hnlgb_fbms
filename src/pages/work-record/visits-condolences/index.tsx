@@ -17,8 +17,9 @@ const AcadvancedDeeds = ({ dispatch }) => {
       type: 'global/getEnums',
       payload: {
         names: [
-          'dictPerson', // 个人先进事迹分类
-          'dictUnit', // 集体先进事迹分类
+          'dictVisitType', // 走访慰问
+          'dictSex',
+          'dictRetirementType',
         ],
       },
     });

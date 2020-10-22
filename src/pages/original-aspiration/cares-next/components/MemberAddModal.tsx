@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import MemberForm from './MemberForm';
 
-const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading }) => {
+const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading, id }) => {
   const [form] = MemberForm.useForm();
   const showModal = () => {
     dispatch({
@@ -40,6 +40,7 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading })
           type: `oaCaresNext/addMember`,
           payload: {
             ...values,
+            mechanismId: id,
           },
         });
       })

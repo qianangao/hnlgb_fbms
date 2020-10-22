@@ -25,7 +25,7 @@ const Table = ({
     { title: '团队名称', align: 'center', dataIndex: 'teamName' },
 
     { title: '创建时间', align: 'center', dataIndex: 'createDate', hideInSearch: true },
-    { title: '创建单位', align: 'center', dataIndex: 'createOrgId', hideInSearch: true },
+    { title: '创建单位', align: 'center', dataIndex: 'createOrgName', hideInSearch: true },
     { title: '成员数', align: 'center', dataIndex: 'signUpNumCurrent', hideInSearch: true },
 
     {
@@ -39,8 +39,8 @@ const Table = ({
         <a key={`${Data.id}up`} onClick={() => openModifyModal(Data)}>
           编辑团队
         </a>,
-        <a key={`${Data.id}up`} onClick={() => openMembersModifyModal(Data)}>
-          编辑成员
+        <a key={`${Data.id}detail`} onClick={() => openMembersModifyModal(Data)}>
+          查看成员
         </a>,
         <a key={`${Data.id}release`} onClick={() => openAddActivityModal(Data.id)}>
           发布活动

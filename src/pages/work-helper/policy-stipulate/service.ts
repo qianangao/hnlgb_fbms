@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function policyStipulateList(params) {
-  return request('/policyStipulate', {
+  return request('/policy_answer', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function policyStipulateList(params) {
  * @param {*} params
  */
 export async function deletePolicyStipulate(params) {
-  return request(`/policyStipulate`, {
+  return request(`/policy_answer`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deletePolicyStipulate(params) {
  * @param {*} params
  */
 export async function addPolicyStipulate(params) {
-  return request(`/policyStipulate`, {
+  return request(`/policy_answer`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addPolicyStipulate(params) {
  * @param {*} params
  */
 export async function detailPolicyStipulate(params) {
-  return request(`/policyStipulate/${params.id}`, {
+  return request(`/policy_answer/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailPolicyStipulate(params) {
  * @param {*} params
  */
 export async function updatePolicyStipulate(params) {
-  return request(`/policyStipulate/${params.id}`, {
+  return request(`/policy_answer/${params.id}`, {
     method: 'PUT',
     data: params,
   });

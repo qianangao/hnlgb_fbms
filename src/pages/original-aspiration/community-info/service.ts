@@ -36,7 +36,7 @@ export async function getMemberList(params) {
  * @param {*} params
  */
 export async function getMemberIds(params) {
-  return request(`/club-house/club-member/user-ids/club`, {
+  return request(`/club-house/club-member/user-ids/${params.clubId}`, {
     method: 'GET',
     params,
   });

@@ -48,10 +48,10 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '帮扶形式',
+      title: '帮扶原因',
       align: 'center',
-      dataIndex: 'helpMode',
-      valueEnum: enums.helpMode,
+      dataIndex: 'helpReason',
+      valueEnum: enums.helpReason,
       hideInTable: true,
     },
     {

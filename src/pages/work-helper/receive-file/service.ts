@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function receiveFileList(params) {
-  return request('/receiveFile', {
+  return request('/receive_file', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function receiveFileList(params) {
  * @param {*} params
  */
 export async function deleteReceiveFile(params) {
-  return request(`/receiveFile`, {
+  return request(`/receive_file`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteReceiveFile(params) {
  * @param {*} params
  */
 export async function addReceiveFile(params) {
-  return request(`/receiveFile`, {
+  return request(`/receive_file`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addReceiveFile(params) {
  * @param {*} params
  */
 export async function detailReceiveFile(params) {
-  return request(`/receiveFile/${params.id}`, {
+  return request(`/receive_file/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailReceiveFile(params) {
  * @param {*} params
  */
 export async function updateReceiveFile(params) {
-  return request(`/receiveFile/${params.id}`, {
+  return request(`/receive_file/${params.id}`, {
     method: 'PUT',
     data: params,
   });

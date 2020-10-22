@@ -31,11 +31,19 @@ const VisitForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '照片信息',
-      name: 'photoAttachmentId',
+      name: 'picAttachmentInfo',
       type: 'image',
       rules: [{ required: true, message: '请上传照片信息!' }],
     },
   ];
+  const getMemberList = params =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'wrVisitsCondolences/getDeathMemberList',
+        payload: { ...params },
+        resolve,
+      });
+    });
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -57,7 +65,7 @@ const VisitForm = ({ form, id, dispatch, loading }) => {
     // 显示老干部信息-公共组件
     <>
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
-        <LgbSelectInput />
+        <LgbSelectInput getLgbs={getMemberList} />
       </Form.Item>
       <Descriptions title="慰问详情" />
     </>

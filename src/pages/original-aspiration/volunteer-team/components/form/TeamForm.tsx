@@ -21,29 +21,29 @@ const TeamForm = ({ form, id, dispatch, loading }) => {
       render: (
         <TreeSelect style={{ width: '100%' }} allowClear multiple treeDefaultExpandAll>
           <TreeNode value="1" title="基本志愿团队" selectable={false}>
-            <TreeNode value="1-1" title="党内关怀" />
-            <TreeNode value="1-2" title="联系群众" />
+            <TreeNode value="8adcf7737544d522017545566264" title="党内关怀" />
+            <TreeNode value="8adcf7737544d522017545567bba" title="联系群众" />
           </TreeNode>
           <TreeNode value="2" title="专项志愿服务" selectable={false}>
-            <TreeNode value="2-1" title="红色传承" selectable={false}>
-              <TreeNode value="2-1-1" title="红色宣传" />
-              <TreeNode value="2-1-2" title="党建指导" />
-              <TreeNode value="2-1-3" title="成长关爱" />
+            <TreeNode value="8adcf7737544d52201754556a0f5" title="红色传承" selectable={false}>
+              <TreeNode value="8adcf7737544d52201754556bd7e" title="红色宣传" />
+              <TreeNode value="8adcf7737544d52201754556e1d9" title="党建指导" />
+              <TreeNode value="8adcf7737544d5220175455701e0" title="成长关爱" />
             </TreeNode>
             <TreeNode value="2-2" title="文明引导" selectable={false}>
-              <TreeNode value="2-2-1" title="交通疏导" />
-              <TreeNode value="2-2-2" title="卫生整治" />
-              <TreeNode value="2-2-3" title="生态保护" />
+              <TreeNode value="8adcf7737544d522017545573f51" title="交通疏导" />
+              <TreeNode value="8adcf7737544d52201754557587b" title="卫生整治" />
+              <TreeNode value="8adcf7737544d522017545577ad2" title="生态保护" />
             </TreeNode>
             <TreeNode value="2-3" title="专业帮扶" selectable={false}>
-              <TreeNode value="2-3-1" title="科技下乡" />
-              <TreeNode value="2-3-2" title="法律援助" />
-              <TreeNode value="2-3-3" title="义诊咨询" />
+              <TreeNode value="8adcf7737544d52201754557b792" title="科技下乡" />
+              <TreeNode value="8adcf7737544d52201754557d631" title="法律援助" />
+              <TreeNode value="8adcf7737544d52201754557f12d" title="义诊咨询" />
             </TreeNode>
             <TreeNode value="2-4" title="乐龄共享" selectable={false}>
-              <TreeNode value="2-4-1" title="消费扶贫" />
-              <TreeNode value="2-4-2" title="文墨传香" />
-              <TreeNode value="2-4-3" title="文体展演" />
+              <TreeNode value="8adcf7737544d522017545582797" title="消费扶贫" />
+              <TreeNode value="8adcf7737544d522017545584173" title="文墨传香" />
+              <TreeNode value="8adcf7737544d522017545586302" title="文体展演" />
             </TreeNode>
           </TreeNode>
         </TreeSelect>

@@ -18,7 +18,7 @@ const Statistics = ({ id, dispatch, healthAssessmentStatisticsData}) => {
       >
         <Coord type="theta"/>
         <Legend />
-        <Tooltip showTitle={true} />
+        <Tooltip showTitle />
         <Geom
           type="intervalStack"
           position="number"

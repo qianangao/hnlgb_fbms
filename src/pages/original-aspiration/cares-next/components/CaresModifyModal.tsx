@@ -84,12 +84,12 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
     >
       <CaresForm size="middle" column={1} form={form} caresFormData={caresDetailData} />
       <TableCaresMemberModify
-        id={caresDetailData.id}
+        id={caresId}
         openMemberModifyModel={openMemberModifyModel}
         openMemberAddModal={openMemberAddModal}
       />
-      <MemberModifyModal actionRef={memberModifyModelRef} />
-      <MemberAddModal actionRef={memberAddModelRef} />
+      <MemberModifyModal actionRef={memberModifyModelRef} mechanismId={caresId} />
+      <MemberAddModal actionRef={memberAddModelRef} id={caresId} />
     </Modal>
   );
 };

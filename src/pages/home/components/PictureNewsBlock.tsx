@@ -23,9 +23,9 @@ const PictureNewsBlock = ({ dispatch, pictureListData, openDetailModal }) => {
           >
             <img
               src={item.attachmentInfo && item.attachmentInfo.url}
-              alt={item.attachmentInfo.name}
+              alt={item.attachmentInfo && item.attachmentInfo.name}
             />
-            <div className={styles.carouselImgTitle}>{item.attachmentInfo.name}</div>
+            <div className={styles.carouselImgTitle}>{item.attachmentInfo && item.attachmentInfo.name}</div>
           </div>
         ))}
     </Carousel>

@@ -10,6 +10,16 @@ export async function getVisitList(params) {
     params,
   });
 }
+/**
+ * 获取成员列表
+ * @param {*} params
+ */
+export async function getDeathMemberList(params) {
+  return request(`/users/death`, {
+    method: 'GET',
+    params,
+  });
+}
 
 /**
  * 走访慰问统计列表

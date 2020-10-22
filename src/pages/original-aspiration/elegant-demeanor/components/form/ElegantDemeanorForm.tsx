@@ -13,7 +13,7 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
     {
       label: '五老类型',
       name: 'type',
-      enumsLabel: 'dictResultType',
+      enumsLabel: 'dictFiveOldType',
       rules: [{ required: true, message: '请选择五老类型!' }],
     },
     {
@@ -24,7 +24,7 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
       label: '缩略图',
       name: 'uploadInfo',
       type: 'image',
-      rules: [{ required: true, message: '请上传缩略图!' }],
+      // rules: [{ required: true, message: '请上传缩略图!' }],
     },
 
     {
@@ -47,7 +47,7 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
           uploadInfo:
-            data.attachmentInfo.id && data.attachmentInfo.url
+            data.attachmentInfo && data.attachmentInfo.id && data.attachmentInfo.url
               ? {
                   uid: data.attachmentInfo.id,
                   name: data.attachmentInfo.name,
