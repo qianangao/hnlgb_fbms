@@ -11,7 +11,7 @@ const HospitalRecord = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [],
+        names: ['dictRetirementType', 'dictApproveStatus', 'dictSex'],
       },
     });
   }, []);
@@ -28,7 +28,7 @@ const HospitalRecord = ({ dispatch }) => {
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'vcBasicInfo/selectOrgChange',
+      type: 'hospitalRegistration/selectOrgChange',
       payload: orgId,
     });
   };

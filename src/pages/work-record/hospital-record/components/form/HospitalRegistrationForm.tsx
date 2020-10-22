@@ -3,7 +3,6 @@ import AdvancedForm from '@/components/AdvancedForm';
 import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
-import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 
 const HospitalRegistrationFrom = ({ form, id, dispatch, loading }) => {
   useEffect(() => {
@@ -18,12 +17,6 @@ const HospitalRegistrationFrom = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
-        fields.address = data.addressCode
-          ? {
-              value: data.addressCode,
-              label: data.address,
-            }
-          : null;
         form.setFieldsValue(fields);
       });
     }
@@ -41,8 +34,7 @@ const HospitalRegistrationFrom = ({ form, id, dispatch, loading }) => {
     {
       label: '医院',
       name: 'hospitalName',
-      rules: [{ required: true, message: '请选择医院!' }],
-      render: <ProvinceCascaderInput />,
+      rules: [{ required: true, message: '请输入医院!' }],
     },
     {
       label: '住院时间',

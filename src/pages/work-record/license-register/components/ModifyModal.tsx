@@ -41,8 +41,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        values.addressCode = values.address.value;
-        values.address = values.address.label;
         dispatch({
           type: `licenseRegister/updateLicenseRegisterInfo`,
           payload: {

@@ -11,7 +11,7 @@ const OutRegister = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [],
+        names: ['dictRetirementType', 'dictTreatmentNow', 'dictSex'],
       },
     });
   }, []);
@@ -28,7 +28,7 @@ const OutRegister = ({ dispatch }) => {
 
   const orgChangeHander = orgId => {
     dispatch({
-      type: 'vcBasicInfo/selectOrgChange',
+      type: 'outRegister/selectOrgChange',
       payload: orgId,
     });
   };

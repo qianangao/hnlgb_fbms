@@ -17,12 +17,6 @@ const OutRegisterFrom = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
-        fields.address = data.addressCode
-          ? {
-              value: data.addressCode,
-              label: data.address,
-            }
-          : null;
         form.setFieldsValue(fields);
       });
     }
