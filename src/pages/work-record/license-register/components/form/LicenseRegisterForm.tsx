@@ -16,6 +16,18 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          passCheckPhoto: {
+            url: data.passCheckPhoto.url,
+            uid: data.passCheckPhoto.id,
+            name: data.passCheckPhoto.fileName,
+            status: 'done',
+          },
+          passportPhoto: {
+            url: data.passportPhoto.url,
+            uid: data.passportPhoto.id,
+            name: data.passportPhoto.fileName,
+            status: 'done',
+          },
         };
         form.setFieldsValue(fields);
       });
@@ -36,26 +48,16 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
       hidden: true,
     },
     {
-      label: '港澳台通行证照片名字',
-      name: 'passportPhotoFileName',
-      rules: [{ required: true, message: '请输入港澳台通行证照片名字!' }],
-    },
-    {
-      label: '附件1',
-      name: 'file',
+      label: '港澳台通行证照片',
+      name: 'passCheckPhoto',
       type: 'image',
-      rules: [{ required: true, message: '请上传附件!' }],
+      rules: [{ required: true, message: '请上传港澳台通行证照片!' }],
     },
     {
-      label: '护照照片名字',
-      name: 'passportPhotoFileName',
-      rules: [{ required: true, message: '请输入护照照片名字!' }],
-    },
-    {
-      label: '附件2',
-      name: 'file',
+      label: '护照照片',
+      name: 'passportPhoto',
       type: 'image',
-      rules: [{ required: true, message: '请上传附件!' }],
+      rules: [{ required: true, message: '请上传护照照片!' }],
     },
   ];
   return id ? (
