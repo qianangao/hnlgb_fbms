@@ -51,13 +51,11 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
       label: '港澳台通行证照片',
       name: 'passCheckPhoto',
       type: 'image',
-      rules: [{ required: true, message: '请上传港澳台通行证照片!' }],
     },
     {
       label: '护照照片',
       name: 'passportPhoto',
       type: 'image',
-      rules: [{ required: true, message: '请上传护照照片!' }],
     },
   ];
   return id ? (
