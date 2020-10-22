@@ -4,17 +4,13 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import PhotoInfoForm from './form/PhotoInfoForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PhotoInfoForm.useForm();
   const [lgbId, setLgbId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'photoInfo/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +23,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'photoInfo/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,13 +31,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `photoInfo/updatePhotoInfo`,
-          payload: {
-            ...values,
-            fileId: values.file.id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `photoInfo/updatePhotoInfo`,
+            payload: {
+              ...values,
+              fileId: values.file.uid,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -85,7 +81,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ photoInfo, loading }) => ({
-  modifyModalVisible: photoInfo.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.photoInfo,
 }))(ModifyModal);

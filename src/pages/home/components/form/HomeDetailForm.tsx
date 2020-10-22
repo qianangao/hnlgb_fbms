@@ -22,10 +22,10 @@ const HomeDetailForm = ({ id, dispatch, blockTypeUrl }) => {
   }, [id]);
   return (
     <DetailFormPage
-      title={detailData.title}
+      title={detailData.title || detailData.headline || detailData.subject}
       releaseTime={detailData.pushTime}
       orgName={detailData.createOrgName}
-      content={detailData.context}
+      content={detailData.context || detailData.resultSummary}
       extraFile={detailData.attachmentInfo}
     />
   );

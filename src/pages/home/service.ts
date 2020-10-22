@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function noticeAnnouncementList(params) {
-  return request('/noticeAnnouncement', {
+  return request('/notice', {
     method: 'GET',
     params,
   });
@@ -15,7 +15,7 @@ export async function noticeAnnouncementList(params) {
  * @param {*} params
  */
 export async function detailNoticeAnnouncement(params) {
-  return request(`/noticeAnnouncement/${params.id}`, {
+  return request(`/notice/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -47,7 +47,7 @@ export async function detailElegantDemeanor(params) {
  * @param {*} params
  */
 export async function pictureList(params) {
-  return request('/newsDynamic', {
+  return request('/news', {
     method: 'GET',
     params,
   });
@@ -57,7 +57,7 @@ export async function pictureList(params) {
  * @param {*} params
  */
 export async function detailPicture(params) {
-  return request(`/newsDynamic/${params.id}`, {
+  return request(`/news/${params.id}`, {
     method: 'GET',
     params,
   });

@@ -86,8 +86,10 @@ const detailNoticeAnnouncement = (req, res) => {
 
 export default {
   'GET /noticeAnnouncement': list,
+  'GET /notice': list,
   'POST /noticeAnnouncement': noResponse,
   'DELETE /noticeAnnouncement': noResponse,
   'PUT /noticeAnnouncement/:id': noResponse,
   'GET /noticeAnnouncement/:id': detailNoticeAnnouncement,
+  'GET /notice/:id': detailNoticeAnnouncement,
 };

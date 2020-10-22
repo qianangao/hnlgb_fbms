@@ -2,6 +2,7 @@ import { connect } from 'umi';
 import { Button, Upload, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+
 /**
  * 上传表单组件
  * @param value  {
@@ -27,15 +28,18 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
   };
 
   const beforeUpload = file => {
+    let shouldUpdate = true;
     if (type === 'image') {
-      return verifyImgFile(file);
+      shouldUpdate = verifyImgFile(file);
+    } else if (type === 'excel') {
+      shouldUpdate = verifyExcelFile(file);
+    } else {
+      shouldUpdate = verifyFile(file);
     }
 
-    if (type === 'excel') {
-      return verifyExcelFile(file);
-    }
+    shouldUpdate && uploadFile(file);
 
-    return verifyFile(file);
+    return false;
   };
 
   const verifyImgFile = file => {
@@ -102,35 +106,32 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
     }
   }, [value]);
 
-  const handleChange = ({ file, fileList }) => {
-    if (fileList.length > 0 && file.status) {
-      setLoading(true);
-      new Promise(resolve => {
-        dispatch({
-          type: 'global/uploadFile',
-          payload: {
-            file,
-          },
-          resolve,
-        });
+  const uploadFile = file => {
+    setLoading(true);
+    new Promise(resolve => {
+      dispatch({
+        type: 'global/uploadFile',
+        payload: {
+          file,
+        },
+        resolve,
+      });
+    })
+      .then(data => {
+        setLoading(false);
+        const tempFile = {
+          url: data.fileUrl,
+          uid: data.id,
+          name: data.fileName,
+          status: 'done',
+        };
+
+        setUpFileList([tempFile]);
+        onChange && onChange(tempFile);
       })
-        .then(data => {
-          setLoading(false);
-          const tempFile = {
-            url: data.fileUrl,
-            uid: data.id,
-            name: data.fileName,
-            status: 'done',
-          };
-
-          setUpFileList([tempFile]);
-
-          onChange && onChange(tempFile);
-        })
-        .catch(_ => {
-          setLoading(false);
-        });
-    }
+      .catch(_ => {
+        setLoading(false);
+      });
   };
 
   const handleRemove = () => {
@@ -152,7 +153,6 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
       fileList={upFileList}
       listType={type === 'image' ? 'picture-card' : 'text'}
       beforeUpload={beforeUpload}
-      onChange={handleChange}
       onRemove={handleRemove}
     >
       {type === 'image' ? (

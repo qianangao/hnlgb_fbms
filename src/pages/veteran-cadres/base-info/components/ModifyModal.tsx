@@ -31,6 +31,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
     }
   }, []);
 
+  const changeCurrent = index => {
+    form.resetFields();
+    setCurrent(index);
+  };
+
   const hideModal = () => {
     dispatch({
       type: 'vcBasicInfo/save',
@@ -38,7 +43,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         modifyModalVisible: false,
       },
     });
-    setCurrent(0);
+    changeCurrent(0);
   };
 
   const handleOk = () => {
@@ -55,7 +60,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
       })
       .then(_ => {
         if (stepCurrent < steps.length - 1) {
-          setCurrent(stepCurrent + 1);
+          changeCurrent(stepCurrent + 1);
         } else {
           dispatch({
             type: 'vcBasicInfo/save',
@@ -128,12 +133,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           取消
         </Button>,
         stepCurrent !== 0 && (
-          <Button key="pre" onClick={() => setCurrent(stepCurrent - 1)}>
+          <Button key="pre" onClick={() => changeCurrent(stepCurrent - 1)}>
             上一步
           </Button>
         ),
         stepCurrent < steps.length - 1 && (
-          <Button key="next" onClick={() => setCurrent(stepCurrent + 1)}>
+          <Button key="next" onClick={() => changeCurrent(stepCurrent + 1)}>
             跳过
           </Button>
         ),

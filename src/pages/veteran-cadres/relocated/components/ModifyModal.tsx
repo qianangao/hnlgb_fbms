@@ -4,17 +4,13 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import RelocatedForm from './form/RelocatedForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = RelocatedForm.useForm();
   const [lgbId, setLgbId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
-    setLgbId(item.id);
-    dispatch({
-      type: 'relocated/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setLgbId(item.userId);
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +23,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'relocated/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,13 +31,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `relocated/updateRelocated`,
-          payload: {
-            ...values,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `relocated/updateRelocated`,
+            payload: {
+              ...values,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -84,7 +80,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     </Modal>
   );
 };
-export default connect(({ relocated, loading }) => ({
-  modifyModalVisible: relocated.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.relocated,
 }))(ModifyModal);

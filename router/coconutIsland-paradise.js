@@ -70,24 +70,24 @@ const routes = {
       component: './coconutIsland-paradise/health-education',
       remark: '保健教育',
     },
-    // {
-    //   path: '/coconutIsland-paradise/health-assessment',
-    //   name: 'coconutIsland-paradise-health-assessment',
-    //   component: './coconutIsland-paradise/health-assessment',
-    //   remark: '健康测评',
-    // },
+    {
+      path: '/coconutIsland-paradise/health-assessment',
+      name: 'coconutIsland-paradise-health-assessment',
+      component: './coconutIsland-paradise/health-assessment',
+      remark: '健康测评',
+    },
     {
       path: 'https://www.baidu.com',
       target: '_blank',
       remark: '社保认证',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'https://www.hao123.com',
       target: '_blank',
       remark: '社保查询',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'https://www.huaban.com',
       target: '_blank',
       remark: '医保查询',
     },

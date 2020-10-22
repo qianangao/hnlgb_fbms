@@ -11,7 +11,6 @@ const Model = {
   namespace: 'relocated',
   state: {
     relocatedListData: {},
-    modifyModalVisible: false, // 编辑modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -73,17 +72,11 @@ const Model = {
         });
       }
     },
-    *updateRelocated({ payload }, { call, put }) {
+    *updateRelocated({ payload, resolve }, { call, put }) {
       const response = yield call(updateRelocated, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改异地安置成功！');
 
         yield put({
