@@ -76,7 +76,7 @@ const TableRegistered = ({ oaVolunteerTeam, enums, dispatch, id }) => {
     new Promise(resolve => {
       dispatch({
         type: 'oaVolunteerTeam/getRegisteredList',
-        payload: { ...params, id },
+        payload: { ...params, teamId: id },
         resolve,
       });
     });

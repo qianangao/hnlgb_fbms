@@ -8,7 +8,7 @@ const TopicFrom = ({ form, id, dispatch, loading }) => {
       new Promise(resolve => {
         dispatch({
           type: 'healthAssessment/detailHealthAssessmentTopic',
-          payload: { id:id },
+          payload: { id },
           resolve,
         });
       }).then(data => {

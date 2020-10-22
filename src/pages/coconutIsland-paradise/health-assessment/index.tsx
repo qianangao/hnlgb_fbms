@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
+import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import Statistics from './components/Statistics.tsx';
 import TableTopic from './components/TableTopic.tsx';
 import TableResult from './components/TableResult.tsx';
-import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import TopicModifyModal from './components/TopicModifyModal';
 import ResultDetailModal from './components/ResultDetailModal';
 
@@ -55,21 +55,30 @@ const HealthAssessment = ({ dispatch }) => {
   const onTabChange = id => {
     setTableType(id);
   };
+
+  const Element =() =>{
+    if(tableType === 'result'){
+      return(
+        <TableResult
+            openResultDetailModal={openResultDetailModal}
+          />
+      )
+    }if (tableType === 'topic'){
+      return(
+        <TableTopic 
+            openTopicModifyModal={openTopicModifyModal}
+          />
+      )
+    }
+      return(
+        <Statistics id={selectId}/>
+      )
+    
+  };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout tabs={tabs} hidePublish onTabChange={onTabChange}>
-        {tableType === 'result' ? (
-          <TableResult
-            openResultDetailModal={openResultDetailModal}
-          />
-        ) : (tableType === 'topic' ? (
-          <TableTopic 
-            openTopicModifyModal={openTopicModifyModal}
-          />
-        ) : (
-          <Statistics id={selectId}/>
-          )         
-        )}
+        {Element}
         <TopicModifyModal actionRef={topicModifyModal} />
         <ResultDetailModal actionRef={resultDetailModal} />
       </TypeSelectLayout>

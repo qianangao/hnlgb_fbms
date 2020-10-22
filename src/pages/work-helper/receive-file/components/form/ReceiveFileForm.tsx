@@ -13,11 +13,11 @@ const ReceiveFileForm = ({ form, id, dispatch, loading }) => {
       key: 'firstLine',
       type: 'segmentation',
     },
-    {
-      label: '附件',
-      name: 'attachmentInfo',
-      type: 'upload',
-    },
+    // {
+    //   label: '附件',
+    //   name: 'attachmentInfo',
+    //   type: 'upload',
+    // },
     {
       key: 'secondLine',
       type: 'segmentation',

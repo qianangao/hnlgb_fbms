@@ -64,6 +64,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
+      destroyOnClose
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存

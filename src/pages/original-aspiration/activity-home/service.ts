@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getActivityList(params) {
-  return request('/activity/information', {
+  return request('/exercise/message', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function getActivityList(params) {
  * @param {*} params
  */
 export async function deleteActivity(params) {
-  return request(`/activity/information`, {
+  return request(`/exercise/message`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteActivity(params) {
  * @param {*} params
  */
 export async function addActivity(params) {
-  return request(`/activity/information`, {
+  return request(`/exercise/message`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addActivity(params) {
  * @param {*} params
  */
 export async function detailActivity(params) {
-  return request(`/activity/information/${params.id}`, {
+  return request(`/exercise/message/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailActivity(params) {
  * @param {*} params
  */
 export async function updateActivity(params) {
-  return request(`/activity/information/${params.id}`, {
+  return request(`/exercise/message/${params.id}`, {
     method: 'PUT',
     data: params,
   });

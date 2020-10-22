@@ -45,7 +45,7 @@ export async function updateActivity(params) {
  * @param {*} params
  */
 export async function getMemberList(params) {
-  return request(`/team/user/${params.teamId}`, {
+  return request(`/team/user`, {
     method: 'GET',
     params,
   });
@@ -55,7 +55,7 @@ export async function getMemberList(params) {
  * @param {*} params
  */
 export async function getMemberIds(params) {
-  return request(`/team/user/Ids/${params.teamId}`, {
+  return request(`/team/users`, {
     method: 'GET',
     params,
   });
@@ -65,7 +65,7 @@ export async function getMemberIds(params) {
  * @param {*} params
  */
 export async function getRegisteredList(params) {
-  return request(`/team/registered/${params.id}`, {
+  return request(`/teamActivity/user`, {
     method: 'GET',
     params,
   });
@@ -97,7 +97,7 @@ export async function deleteMember(params) {
  * @param {*} params
  */
 export async function addActivity(params) {
-  return request(`/team`, {
+  return request(`/teamActivity`, {
     method: 'POST',
     data: params,
   });

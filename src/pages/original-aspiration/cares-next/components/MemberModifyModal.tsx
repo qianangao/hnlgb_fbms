@@ -3,7 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import MemberForm from './MemberForm';
 
-const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, loading }) => {
+const MemberModifyModal = ({
+  dispatch,
+  memberModifyModalVisible,
+  actionRef,
+  loading,
+  mechanismId,
+}) => {
   const [form] = MemberForm.useForm();
   const [formData, setformData] = useState();
   const showModal = formValues => {
@@ -43,6 +49,7 @@ const MemberModifyModal = ({ dispatch, memberModifyModalVisible, actionRef, load
           payload: {
             ...values,
             id: formData.id,
+            mechanismId,
           },
         });
       })

@@ -3,7 +3,7 @@ import { Progress } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, visitTotalNumber }) => {
+const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, totalNumber }) => {
   const { tableRef } = wrVisitsCondolences;
   const columns = [
     {
@@ -32,7 +32,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, visitTotalNumb
       title: '走访类型',
       align: 'center',
       dataIndex: 'type',
-      valueEnum: enums.dictTreatmentNow,
+      valueEnum: enums.dictVisitType,
       hideInSearch: true,
       width: 100,
     },
@@ -50,7 +50,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, visitTotalNumb
       hideInSearch: true,
       width: 300,
       render: (text, record) => {
-        let remark = (record.number / visitTotalNumber) * 100;
+        let remark = (record.number / totalNumber) * 100;
         remark = Math.round(remark * 100) / 100;
         return <Progress percent={remark} status="active" />;
       },
@@ -75,7 +75,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, visitTotalNumb
   return (
     <ProTable
       rowKey="id"
-      headerTitle={`走访总数:${visitTotalNumber}`}
+      headerTitle={`走访总数:${totalNumber}`}
       actionRef={tableRef}
       scroll={{ x: 'max-content' }}
       pagination={false}
@@ -87,6 +87,6 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType, visitTotalNumb
 
 export default connect(({ wrVisitsCondolences, global }) => ({
   wrVisitsCondolences,
-  visitTotalNumber: wrVisitsCondolences.visitTotalNumber,
+  totalNumber: wrVisitsCondolences.totalNumber,
   enums: global.enums,
 }))(Table);

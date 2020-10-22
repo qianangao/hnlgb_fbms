@@ -18,7 +18,7 @@ const ElegantDemeanorHome = ({ dispatch }) => {
       type: 'global/getEnums',
       payload: {
         names: [
-          'dictResultType', // 成果分类
+          'dictFiveOldType', // 五老类型
         ],
       },
     });

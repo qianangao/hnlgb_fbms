@@ -13,7 +13,7 @@ const ActivityDetailModal = ({
   const showModal = id => {
     setActivityId(id);
     dispatch({
-      type: 'oaCommunity/save',
+      type: 'oaVolunteerTeam/save',
       payload: {
         activityDetailModalVisible: true,
       },
@@ -30,7 +30,7 @@ const ActivityDetailModal = ({
 
     if (activityId) {
       dispatch({
-        type: 'oaCommunity/getActivityDetail',
+        type: 'oaVolunteerTeam/getActivityDetail',
         payload: { id: activityId },
       });
     }
@@ -38,7 +38,7 @@ const ActivityDetailModal = ({
 
   const hideModal = () => {
     dispatch({
-      type: 'oaCommunity/save',
+      type: 'oaVolunteerTeam/save',
       payload: {
         activityDetailModalVisible: false,
       },
@@ -65,17 +65,17 @@ const ActivityDetailModal = ({
       ]}
     >
       <DetailFormPage
-        title={activityDetailData.theme}
-        orgName={activityDetailData.organizationName}
-        releaseTime={activityDetailData.createTime}
-        content={activityDetailData.content}
+        title={activityDetailData.activityName}
+        orgName={activityDetailData.releaseOrganizationName}
+        releaseTime={activityDetailData.releaseTime}
+        content={activityDetailData.context}
       />
     </Modal>
   );
 };
 
-export default connect(({ oaCommunity, loading }) => ({
-  activityDetailModalVisible: oaCommunity.activityDetailModalVisible,
-  activityDetailData: oaCommunity.activityDetailData,
-  loading: loading.models.oaCommunity,
+export default connect(({ oaVolunteerTeam, loading }) => ({
+  activityDetailModalVisible: oaVolunteerTeam.activityDetailModalVisible,
+  activityDetailData: oaVolunteerTeam.activityDetailData,
+  loading: loading.models.oaVolunteerTeam,
 }))(ActivityDetailModal);

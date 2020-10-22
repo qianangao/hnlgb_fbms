@@ -38,14 +38,14 @@ const Table = ({
       title: publishStatus === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'releaseTime' : 'releaseTime',
+      dataIndex: publishStatus === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
     },
 
     {
       title: publishStatus === 0 ? '保存单位' : '发布单位',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'releaseOrganizationName' : 'releaseOrganizationName',
+      dataIndex: publishStatus === 0 ? 'organizationName' : 'releaseOrganizationName',
       hideInSearch: true,
     },
     {

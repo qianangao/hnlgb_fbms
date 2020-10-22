@@ -7,12 +7,12 @@ const StaffDirectoryForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
       label: '姓名',
-      name: 'name',
+      name: 'userName',
     },
 
     {
       label: '电话',
-      name: 'telephone',
+      name: 'phonenumber',
     },
     {
       key: 'firstLine',

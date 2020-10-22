@@ -66,7 +66,7 @@ const CaresDetailModal = ({ dispatch, caresDetailModalVisible, caresDetailData, 
         <Descriptions.Item label="联系方式">{caresDetailData.contactInformation}</Descriptions.Item>
         <Descriptions.Item label="简介">{caresDetailData.introduction}</Descriptions.Item>
       </Descriptions>
-      <TableCaresMember id={caresDetailData.id} />
+      <TableCaresMember id={caresId} />
     </Modal>
   );
 };

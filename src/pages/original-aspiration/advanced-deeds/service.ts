@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getPersonalList(params) {
-  return request('/person-advanced-deeds', {
+  return request('/person-advanced-deeds/names', {
     method: 'GET',
     params,
   });
@@ -15,7 +15,7 @@ export async function getPersonalList(params) {
  * @param {*} params
  */
 export async function getCollectiveList(params) {
-  return request('/unit-advanced-deeds', {
+  return request('/unit-advanced-deeds/names', {
     method: 'GET',
     params,
   });

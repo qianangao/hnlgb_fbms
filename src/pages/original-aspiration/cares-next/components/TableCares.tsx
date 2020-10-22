@@ -24,11 +24,11 @@ const Table = ({
     },
     { title: '组织名称', align: 'center', dataIndex: 'mechanismName' },
     { title: '发布单位', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
-    { title: '发布时间', align: 'center', dataIndex: 'releaseTime', hideInSearch: true },
+    { title: '发布时间', align: 'center', dataIndex: 'createTime', hideInSearch: true },
     {
       title: '姓名',
       align: 'center',
-      dataIndex: 'name',
+      dataIndex: 'memberName',
       hideInTable: true,
     },
     {

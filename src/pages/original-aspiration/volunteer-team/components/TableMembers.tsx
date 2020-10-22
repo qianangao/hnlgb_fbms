@@ -76,14 +76,14 @@ const TableMember = ({ oaVolunteerTeam, enums, dispatch, id }) => {
     new Promise(resolve => {
       dispatch({
         type: 'oaVolunteerTeam/getMemberList',
-        payload: { ...params, clubId: id },
+        payload: { ...params, teamId: id },
         resolve,
       });
     });
 
   return (
     <ProTable
-      headerTitle="社团成员"
+      headerTitle="志愿团队成员"
       actionRef={tableRef}
       options={false}
       search={false}

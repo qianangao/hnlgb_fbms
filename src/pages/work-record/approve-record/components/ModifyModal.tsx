@@ -7,8 +7,10 @@ import ApproveRecordForm from './form/ApproveRecordForm';
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = ApproveRecordForm.useForm();
   const [lgbId, setLgbId] = useState('');
+  const [detailId, setDetailId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setLgbId(item.userId);
+    setDetailId(item.id);
     dispatch({
       type: 'wrApproveRecord/save',
       payload: {
@@ -45,7 +47,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `wrApproveRecord/updateApproveRecord`,
           payload: {
             ...values,
-            id: lgbId,
+            id: detailId,
           },
         });
       })
@@ -79,7 +81,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="审批备案" size="middle" />
-        <ApproveRecordForm form={form} id={lgbId} />
+        <ApproveRecordForm form={form} id={detailId} />
       </div>
     </Modal>
   );
