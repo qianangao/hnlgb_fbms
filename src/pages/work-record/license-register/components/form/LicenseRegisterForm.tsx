@@ -32,33 +32,27 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
   );
   const formItems = [
     {
-      label: '港澳台通行证照片id',
-      name: 'passCheckPhotoId',
-      rules: [{ required: true, message: '港澳台通行证照片id!' }],
+      name: 'id',
+      hidden: true,
     },
     {
       label: '港澳台通行证照片名字',
       name: 'passportPhotoFileName',
-      rules: [{ required: true, message: '港澳台通行证照片id!' }],
+      rules: [{ required: true, message: '请输入港澳台通行证照片名字!' }],
     },
     {
-      label: '附件',
+      label: '附件1',
       name: 'file',
       type: 'image',
       rules: [{ required: true, message: '请上传附件!' }],
     },
     {
-      label: '护照照片id',
-      name: 'passportPhotoId',
-      rules: [{ required: false, message: '护照照片id!' }],
-    },
-    {
       label: '护照照片名字',
       name: 'passportPhotoFileName',
-      rules: [{ required: true, message: '港澳台通行证照片id!' }],
+      rules: [{ required: true, message: '请输入护照照片名字!' }],
     },
     {
-      label: '附件',
+      label: '附件2',
       name: 'file',
       type: 'image',
       rules: [{ required: true, message: '请上传附件!' }],

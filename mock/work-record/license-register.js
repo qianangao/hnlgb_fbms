@@ -10,8 +10,6 @@ const staffInfo = [];
 
 for (let i = 0; i < 20; i++) {
   staffInfo.push({
-
-
     id: '8adcf7ea7400c0bf017400d5c11a' + i, //id
     userId: '402883e973e5c2ce0173e5c2ce9d', //userId
     passCheckPhotoId: '402883e973e5c2ce0173e5c2c90e9', //港澳台通行证照片id

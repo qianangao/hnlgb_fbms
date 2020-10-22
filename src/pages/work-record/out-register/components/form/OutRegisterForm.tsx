@@ -46,12 +46,12 @@ const OutRegisterFrom = ({ form, id, dispatch, loading }) => {
       label: '返回时间',
       name: 'returnTime',
       type: 'date',
-      rules: [{ required: false, message: '请选择出院时间!' }],
+      rules: [{ required: false }],
     },
     {
       label: '事由',
       name: 'reason',
-      rules: [{ required: false, message: '请输入事由!' }],
+      rules: [{ required: false }],
     },
   ];
   return id ? (
