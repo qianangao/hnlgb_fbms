@@ -10,7 +10,7 @@ const Model = {
   },
   effects: {
     *getRoleList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.smRoleRule.selectedOrgId);
+      const orgIdForDataSelect = yield select(state => state.smRoleMgt.selectedOrgId);
 
       const params = {
         ...payload,
@@ -54,9 +54,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addRole({ payload }, { call, put }) {
+    *addRole({ payload, resolve }, { call, put }) {
       const response = yield call(addRole, payload);
       if (!response.error) {
+        resolve && resolve(response);
         message.success('角色新增成功！');
 
         yield put({
@@ -64,10 +65,11 @@ const Model = {
         });
       }
     },
-    *updateRole({ payload }, { call, put }) {
+    *updateRole({ payload, resolve }, { call, put }) {
       const response = yield call(updateRole, payload);
 
       if (!response.error) {
+        resolve && resolve(response);
         message.success('修改角色信息成功！');
 
         yield put({

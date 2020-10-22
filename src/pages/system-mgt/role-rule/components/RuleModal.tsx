@@ -53,6 +53,7 @@ const ModifyModal = ({ ruleData, dispatch, actionRef, loading, confirmLoading })
         type: `smRoleRule/updateRoleRules`,
         payload: {
           roleId,
+          ids: checkedKeys,
         },
         resolve,
       });
@@ -69,6 +70,8 @@ const ModifyModal = ({ ruleData, dispatch, actionRef, loading, confirmLoading })
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         padding: '20px',
+        maxHeight: 'calc(95vh - 108px)',
+        overflow: 'auto',
       }}
       visible={ruleModalVisible}
       onOk={handleOk}
