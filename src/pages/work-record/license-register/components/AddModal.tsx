@@ -43,6 +43,8 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `licenseRegister/addLicenseRegisterInfo`,
           payload: {
             ...values,
+            passCheckPhotoId: values.passCheckPhoto.uid,
+            passportPhotoId: values.passportPhoto.uid,
           },
         });
       })
