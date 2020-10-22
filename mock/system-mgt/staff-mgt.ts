@@ -82,7 +82,7 @@ const roleList = (req, res) => {
 };
 
 export default {
-  'GET /role-all': roleList,
+  'GET /role/nopage': roleList,
   'POST /user': noResponse,
   'PUT /user/:id': noResponse,
   'DELETE /user': noResponse,

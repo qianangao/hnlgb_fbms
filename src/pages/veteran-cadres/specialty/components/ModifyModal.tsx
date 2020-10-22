@@ -6,11 +6,13 @@ import SpecialtyForm from './form/SpecialtyForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = SpecialtyForm.useForm();
+  const [infoId, setInfoId] = useState('');
   const [lgbId, setLgbId] = useState('');
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
   const showModal = item => {
-    setLgbId(item.id);
+    setInfoId(item.id);
+    setLgbId(item.userId);
     setModifyModalVisible(true);
   };
   useEffect(() => {
@@ -24,6 +26,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setInfoId('');
+    setLgbId('');
     setModifyModalVisible(false);
     form.resetFields();
   };
@@ -76,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="银色人才" size="middle" />
-        <SpecialtyForm form={form} id={lgbId} />
+        <SpecialtyForm form={form} id={infoId} />
       </div>
     </Modal>
   );

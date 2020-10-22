@@ -14,7 +14,7 @@ const ModifyModal = ({ ruleData, dispatch, actionRef, loading, confirmLoading })
       dispatch({
         type: `smRoleRule/getRuleIds`,
         payload: {
-          roleId: id,
+          id,
         },
         resolve,
       });

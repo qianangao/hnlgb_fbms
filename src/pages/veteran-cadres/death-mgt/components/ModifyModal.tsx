@@ -26,6 +26,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    setDeathValues(undefined);
     form.resetFields();
   };
 

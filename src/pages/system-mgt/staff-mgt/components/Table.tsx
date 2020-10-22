@@ -37,7 +37,7 @@ const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
       valueType: 'date',
       hideInSearch: true,
     },
-    { title: '所属部门', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
+    { title: '所属单位', align: 'center', dataIndex: 'organizationName', hideInSearch: true },
     {
       title: '工作人员状态',
       align: 'center',

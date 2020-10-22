@@ -6,10 +6,12 @@ import PhotoInfoForm from './form/PhotoInfoForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PhotoInfoForm.useForm();
+  const [infoId, setInfoId] = useState('');
   const [lgbId, setLgbId] = useState('');
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
-    setLgbId(item.id);
+    setInfoId(item.id);
+    setLgbId(item.userId);
     setModifyModalVisible(true);
   };
   useEffect(() => {
@@ -23,6 +25,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setInfoId('');
+    setLgbId('');
     setModifyModalVisible(false);
     form.resetFields();
   };
@@ -75,7 +79,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="照片信息" size="middle" />
-        <PhotoInfoForm form={form} id={lgbId} />
+        <PhotoInfoForm form={form} id={infoId} />
       </div>
     </Modal>
   );

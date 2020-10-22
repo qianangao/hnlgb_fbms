@@ -6,9 +6,11 @@ import RelocatedForm from './form/RelocatedForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = RelocatedForm.useForm();
+  const [infoId, setInfoId] = useState('');
   const [lgbId, setLgbId] = useState('');
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
+    setInfoId(item.id);
     setLgbId(item.userId);
     setModifyModalVisible(true);
   };
@@ -23,6 +25,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setInfoId('');
+    setLgbId('');
     setModifyModalVisible(false);
     form.resetFields();
   };
@@ -75,7 +79,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="异地安置" size="middle" />
-        <RelocatedForm form={form} id={lgbId} />
+        <RelocatedForm form={form} id={infoId} />
       </div>
     </Modal>
   );

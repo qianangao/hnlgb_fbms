@@ -28,10 +28,6 @@ const Model = {
     lgbFamilyData: {},
     lgbPartTimeData: {},
     lgbHealthyData: {},
-    addModalVisible: false, // 新增modal visible
-    modifyModalVisible: false, // 修改modal visible
-    detailModalVisible: false, // 详情modal visible
-    orgSelectModalVisible: false, // 单位选择modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -153,17 +149,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *updateLgbOrg({ payload }, { call, put }) {
+    *updateLgbOrg({ payload, resolve }, { call, put }) {
       const response = yield call(updateLgbOrg, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            orgSelectModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改所选老干部单位成功！');
 
         yield put({
@@ -181,17 +171,11 @@ const Model = {
         });
       }
     },
-    *addLgb({ payload }, { call, put }) {
+    *addLgb({ payload, resolve }, { call, put }) {
       const response = yield call(addLgb, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增老干部成功！');
 
         yield put({

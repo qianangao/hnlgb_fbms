@@ -1,25 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Descriptions, Spin, Button } from 'antd';
 
-const DetailModal = ({
-  dispatch,
-  detailModalVisible,
-  actionRef,
-  lgbDetailData,
-  lgbFamilyData,
-  lgbPartTimeData,
-  lgbHealthyData,
-  enums,
-  loading,
-}) => {
+const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
+  const { lgbDetailData, lgbFamilyData, lgbPartTimeData, lgbHealthyData } = vcBasicInfo;
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = id => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
     if (id) {
       dispatch({
         type: 'vcBasicInfo/getLgbDetail',
@@ -37,24 +23,12 @@ const DetailModal = ({
         type: 'vcBasicInfo/getHealthyLgb',
         payload: { id },
       });
+
+      setDetailModalVisible(true);
     }
   };
 
   useEffect(() => {
-    dispatch({
-      type: 'global/getEnums',
-      payload: {
-        names: [
-          'dictNation',
-          'dictRetirementLevel',
-          'dictRetirementType',
-          'dictSex',
-          'dictTreatmentNow',
-          'dictPoliticalStatus',
-        ],
-      },
-    });
-
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
     }
@@ -65,12 +39,7 @@ const DetailModal = ({
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
   };
 
   return (
@@ -228,11 +197,7 @@ const DetailModal = ({
 };
 
 export default connect(({ vcBasicInfo, loading, global }) => ({
-  lgbDetailData: vcBasicInfo.lgbDetailData,
-  lgbFamilyData: vcBasicInfo.lgbFamilyData,
-  lgbPartTimeData: vcBasicInfo.lgbPartTimeData,
-  lgbHealthyData: vcBasicInfo.lgbHealthyData,
-  detailModalVisible: vcBasicInfo.detailModalVisible,
+  vcBasicInfo,
   loading: loading.models.vcBasicInfo,
   enums: global.enums,
 }))(DetailModal);

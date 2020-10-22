@@ -27,7 +27,7 @@ const StaffForm = ({ form, staffInfoData, roleData }) => {
       enumsLabel: 'dictSex',
     },
     {
-      label: '手机号码',
+      label: '手机号码（同用户名）',
       name: 'phonenumber',
       rules: [{ validator: checkPhone }],
     },
@@ -41,14 +41,6 @@ const StaffForm = ({ form, staffInfoData, roleData }) => {
       label: '角色',
       name: 'roleId',
       enumsItems: roleData,
-    },
-    {
-      label: '用户名',
-      name: 'userName',
-      rules: [
-        { required: true, message: '请输入用户名!', whitespace: true },
-        { max: 80, message: '用户名名称长度请小于80位!', whitespace: true },
-      ],
     },
     {
       label: '身份证号',

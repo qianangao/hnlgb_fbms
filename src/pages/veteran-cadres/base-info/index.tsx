@@ -35,6 +35,7 @@ const BaseInfo = ({ dispatch }) => {
           'dictSex',
           'dictTreatmentNow',
           'dictUnitNature',
+          'dictSpouseSex',
           'dictSpouseHealth',
           'hierarchy',
           'dictIdentity',

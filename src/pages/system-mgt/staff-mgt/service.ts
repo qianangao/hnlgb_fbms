@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getRoles(params) {
-  return request('/role-all', {
+  return request('/role/nopage', {
     method: 'GET',
     params,
   });

@@ -78,9 +78,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addStaff({ payload }, { call, put }) {
+    *addStaff({ payload, resolve }, { call, put }) {
       const response = yield call(addStaff, payload);
       if (!response.error) {
+        resolve && resolve(response);
         message.success('工作人员新增成功！');
 
         yield put({
@@ -88,10 +89,11 @@ const Model = {
         });
       }
     },
-    *updateStaff({ payload }, { call, put }) {
+    *updateStaff({ payload, resolve }, { call, put }) {
       const response = yield call(updateStaff, payload);
 
       if (!response.error) {
+        resolve && resolve(response);
         message.success('修改工作人员信息成功！');
 
         yield put({

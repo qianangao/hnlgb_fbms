@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import BasicInfoForm from './form/BasicInfoForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = BasicInfoForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   const showModal = () => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -40,12 +30,18 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `vcBasicInfo/addLgb`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `vcBasicInfo/addLgb`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -73,7 +69,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ vcBasicInfo, loading }) => ({
-  addModalVisible: vcBasicInfo.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.vcBasicInfo,
 }))(AddModal);

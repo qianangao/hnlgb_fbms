@@ -1,21 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal } from 'antd';
 import { connect } from 'umi';
 import OrgTree from '@/components/OrgTree';
 
-const OrgSelectModal = ({ dispatch, vcBasicInfo, actionRef, loading }) => {
-  const { orgSelectModalVisible } = vcBasicInfo;
+const OrgSelectModal = ({ dispatch, actionRef, loading }) => {
   const [form] = Form.useForm();
+  const [orgSelectModalVisible, setOrgSelectModalVisible] = useState(false);
 
   const showModal = userIdList => {
     form.setFieldsValue({ userIdList });
-
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        orgSelectModalVisible: true,
-      },
-    });
+    setOrgSelectModalVisible(true);
   };
 
   useEffect(() => {
@@ -29,24 +23,25 @@ const OrgSelectModal = ({ dispatch, vcBasicInfo, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        orgSelectModalVisible: false,
-      },
-    });
+    setOrgSelectModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `vcBasicInfo/updateLgbOrg`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `vcBasicInfo/updateLgbOrg`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -80,7 +75,6 @@ const OrgSelectModal = ({ dispatch, vcBasicInfo, actionRef, loading }) => {
   );
 };
 
-export default connect(({ vcBasicInfo, loading }) => ({
-  vcBasicInfo,
+export default connect(({ loading }) => ({
   loading: loading.models.vcBasicInfo,
 }))(OrgSelectModal);

@@ -6,19 +6,15 @@ import FamilyForm from './form/FamilyForm';
 import PartTimeForm from './form/PartTimeForm';
 import HealthyForm from './form/HealthyForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = BasicInfoForm.useForm();
   const [stepCurrent, setCurrent] = useState(0);
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
 
   const showModal = id => {
     setLgbId(id);
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -37,44 +33,9 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   };
 
   const hideModal = () => {
-    dispatch({
-      type: 'vcBasicInfo/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
     changeCurrent(0);
   };
-
-  const handleOk = () => {
-    form
-      .validateFields()
-      .then(values => {
-        return new Promise(resolve => {
-          dispatch({
-            type: `vcBasicInfo/${steps[stepCurrent].effect}`,
-            payload: steps[stepCurrent].dataFormat(values),
-            resolve,
-          });
-        });
-      })
-      .then(_ => {
-        if (stepCurrent < steps.length - 1) {
-          changeCurrent(stepCurrent + 1);
-        } else {
-          dispatch({
-            type: 'vcBasicInfo/save',
-            payload: {
-              modifyModalVisible: false,
-            },
-          });
-        }
-      })
-      .catch(info => {
-        console.error('Validate Failed:', info);
-      });
-  };
-
   const steps = [
     {
       title: '基本信息',
@@ -115,6 +76,30 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   ];
 
   const { StepsForm } = steps[stepCurrent];
+
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then(values => {
+        return new Promise(resolve => {
+          dispatch({
+            type: `vcBasicInfo/${steps[stepCurrent].effect}`,
+            payload: steps[stepCurrent].dataFormat(values),
+            resolve,
+          });
+        });
+      })
+      .then(_ => {
+        if (stepCurrent < steps.length - 1) {
+          changeCurrent(stepCurrent + 1);
+        } else {
+          hideModal();
+        }
+      })
+      .catch(info => {
+        console.error('Validate Failed:', info);
+      });
+  };
 
   return (
     <Modal
@@ -169,7 +154,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ vcBasicInfo, loading }) => ({
-  modifyModalVisible: vcBasicInfo.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.vcBasicInfo,
 }))(ModifyModal);
