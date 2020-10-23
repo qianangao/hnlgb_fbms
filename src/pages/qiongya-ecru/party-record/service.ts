@@ -49,7 +49,7 @@ export async function detailPartyRecord(params) {
  * @param {*} params
  */
 export async function updatePartyRecord(params) {
-  return request(`/partyDue/${params.id}`, {
+  return request(`/partyDue`, {
     method: 'PUT',
     data: params,
   });

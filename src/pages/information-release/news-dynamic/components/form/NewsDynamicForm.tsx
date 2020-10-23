@@ -42,11 +42,11 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
           attachmentInfo:
-            data.attachmentInfo.id && data.attachmentInfo.url
+            data.cephFile.id && data.cephFile.fileName
               ? {
-                  uid: data.attachmentInfo.id,
-                  name: data.attachmentInfo.fileName,
-                  url: data.attachmentInfo.url,
+                  uid: data.cephFile.id,
+                  name: data.cephFile.fileName,
+                  url: data.cephFile.fileUrl,
                   status: 'done',
                 }
               : null,

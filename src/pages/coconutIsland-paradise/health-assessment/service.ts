@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function healthAssessmentResultList(params) {
-  return request('/health_assess/user', {
+  return request('/health_assess/user/complete', {
     method: 'GET',
     params,
   });

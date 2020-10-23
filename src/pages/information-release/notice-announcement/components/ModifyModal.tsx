@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = NoticeAnnouncementForm.useForm();
   const [lgbId, setLgbId] = useState('');
+  const [userIds, setUserIds] = useState([]);
+  const [receivedType, setReceivedType] = useState(null);
   const showModal = item => {
     setLgbId(item.id);
     dispatch({
@@ -32,22 +34,52 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
+  // 获取-选择的成员id
+  const getUserId = keys => {
+    const getUserIds = [];
+    keys.forEach(item => {
+      if (item) {
+        getUserIds.push(item.id);
+      }
+    });
+    setUserIds(getUserIds);
+  };
+  // 获取-接收类型
+  const receivedTypeFn = value => {
+    setReceivedType(value);
+  };
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
+        const payload = {
+          subject: values.subject,
+          dictNoticeType: values.dictNoticeType,
+          content: values.content,
+          attachmentId: values.attachmentId ? values.attachmentId.uid : undefined,
+          id: lgbId,
+          dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+          userList: userIds, // 人员列表
+          receivedType,
+        };
+        // 转化单位数据格式
+        const orgArrId = [];
+        values.orgList &&
+          values.orgList.forEach(item => {
+            if (item) {
+              orgArrId.push(item.id);
+            }
+          });
+        payload.orgList = orgArrId;
+        if (orgArrId.length === 0 && userIds.length === 0) {
+          message.error('请传入接收单位或接收个人');
+          return;
+        }
         dispatch({
           type: `noticeAnnouncement/updateNoticeAnnouncement`,
-          payload: {
-            ...values,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
-            dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: lgbId,
-          },
+          payload,
         });
       })
       .catch(info => {
@@ -85,7 +117,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <NoticeAnnouncementForm form={form} id={lgbId} />
+        <NoticeAnnouncementForm
+          form={form}
+          id={lgbId}
+          getUserId={getUserId}
+          receivedTypeFn={receivedTypeFn}
+        />
       </div>
     </Modal>
   );

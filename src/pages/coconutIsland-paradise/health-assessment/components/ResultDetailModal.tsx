@@ -6,7 +6,7 @@ import ResultDetail from './ResultDetail';
 const ResultDetailModal = ({ dispatch, resultDetailModal, loading, actionRef }) => {
   const [resultId, setResultId] = useState();
   const showModal = item => {
-    setResultId(item.id);
+    setResultId(item.userId);
     dispatch({
       type: 'healthAssessment/save',
       payload: {

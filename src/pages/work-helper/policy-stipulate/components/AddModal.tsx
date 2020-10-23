@@ -42,7 +42,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         dispatch({
           type: `policyStipulate/addPolicyStipulate`,
           payload: {
-            ...values,
+            title: values.title,
+            content: values.content,
+            enclosureId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
             isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });

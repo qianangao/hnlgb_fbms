@@ -106,7 +106,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            modifyModalVisible: false,
+            topicModifyModal: false,
           },
         });
 
@@ -147,7 +147,6 @@ const Model = {
           selectedOrgId: payload,
         },
       });
-
       yield put({
         type: 'tableReload',
       });

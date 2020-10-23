@@ -2,7 +2,7 @@ import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const TableTopic = ({  openTopicModifyModal,healthAssessment, dispatch }) => {
+const TableTopic = ({ openTopicModifyModal, healthAssessment, dispatch }) => {
   const { tableRef } = healthAssessment;
   const columns = [
     {
@@ -42,7 +42,7 @@ const TableTopic = ({  openTopicModifyModal,healthAssessment, dispatch }) => {
       dataIndex: 'optionD',
       hideInSearch: true,
     },
-   
+
     {
       title: '操作',
       valueType: 'option',

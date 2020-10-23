@@ -7,7 +7,7 @@ const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
     if (id) {
       dispatch({
         type: 'noticeAnnouncement/detailNoticeAnnouncement',
-        payload: { id },
+        payload: { id, isApp: 0 },
       });
     }
   }, [id]);
@@ -16,9 +16,9 @@ const DetailForm = ({ id, dispatch, detailNoticeAnnouncementData }) => {
     <DetailFormPage
       title={detailNoticeAnnouncementData.subject}
       releaseTime={detailNoticeAnnouncementData.releaseTime}
-      orgName={detailNoticeAnnouncementData.createOrgName}
+      orgName={detailNoticeAnnouncementData.deliverOrgName}
       content={detailNoticeAnnouncementData.content}
-      extraFile={detailNoticeAnnouncementData.attachmentInfo}
+      extraFile={detailNoticeAnnouncementData.cephFile}
     />
   );
 };

@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function newsDynamicList(params) {
-  return request('/newsDynamic', {
+  return request('/news', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function newsDynamicList(params) {
  * @param {*} params
  */
 export async function deleteNewsDynamic(params) {
-  return request(`/newsDynamic`, {
+  return request(`/news`, {
     method: 'DELETE',
     data: params,
   });
@@ -27,7 +27,7 @@ export async function deleteNewsDynamic(params) {
  * @param {*} params
  */
 export async function addNewsDynamic(params) {
-  return request(`/newsDynamic`, {
+  return request(`/news`, {
     method: 'POST',
     data: params,
   });
@@ -38,7 +38,7 @@ export async function addNewsDynamic(params) {
  * @param {*} params
  */
 export async function detailNewsDynamic(params) {
-  return request(`/newsDynamic/${params.id}`, {
+  return request(`/news/${params.id}`, {
     method: 'GET',
     params,
   });
@@ -49,7 +49,7 @@ export async function detailNewsDynamic(params) {
  * @param {*} params
  */
 export async function updateNewsDynamic(params) {
-  return request(`/newsDynamic/${params.id}`, {
+  return request(`/news/${params.id}`, {
     method: 'PUT',
     data: params,
   });

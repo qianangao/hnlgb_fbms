@@ -65,7 +65,7 @@ const HealthAssessment = ({ dispatch }) => {
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout tabs={tabs} hidePublish onTabChange={onTabChange}>
-        {Element}
+        {Element()}
         <TopicModifyModal actionRef={topicModifyModal} />
         <ResultDetailModal actionRef={resultDetailModal} />
       </TypeSelectLayout>
