@@ -43,7 +43,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         dispatch({
           type: `activityCenter/addActivityCenterInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            coreAdd: values.coreAdd,
+            context: values.context,
+            phoneNumber: values.phoneNumber,
+            fileId: values.attachmentInfo.uid,
+            urlId: values.attachmentInfo2.uid,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });

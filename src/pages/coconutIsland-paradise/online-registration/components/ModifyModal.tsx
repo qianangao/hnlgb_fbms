@@ -42,7 +42,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         dispatch({
           type: `onlineRegistration/updateOnlineRegistrationInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            context: values.context,
+            coreAdd: values.coreAdd,
+            fileId: values.attachmentInfo.uid,
+            urlId: values.attachmentInfo2.uid,
             id: lgbId,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },

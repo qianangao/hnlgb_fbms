@@ -16,7 +16,7 @@ const LifeServiceInfo = ({ dispatch, tableRef }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: ['type'],
+        names: ['dictLifeServiceType'],
       },
     });
   }, []);

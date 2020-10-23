@@ -28,8 +28,12 @@ const AcadvancedDeeds = ({ dispatch }) => {
       type: 'global/getEnums',
       payload: {
         names: [
-          'dictPerson', // 基本志愿服务分类
-          'dictUnit', // 专项志愿服务分类
+          'dictSex', // 性别
+          'dictNation', // 民族
+          'dictRetirementLevel', // 职级
+          'dictRetirementType', // 离退休类型
+          'dictTreatmentNow', // 现享受待遇
+          'dictPoliticalStatus', // 政治面貌
         ],
       },
     });

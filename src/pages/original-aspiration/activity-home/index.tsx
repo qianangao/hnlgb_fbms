@@ -17,15 +17,7 @@ const ActivityHome = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [
-          'dictSex',
-          'dictNation',
-          'dictPoliticalStatus',
-          'dictRetirementLevel',
-          'dictRetirementType',
-          'dictTreatmentNow',
-          'dictActivityClassification',
-        ],
+        names: ['dictActivityClassification'],
       },
     });
   }, []);

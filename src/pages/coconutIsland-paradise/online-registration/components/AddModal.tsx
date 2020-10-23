@@ -43,7 +43,12 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         dispatch({
           type: `onlineRegistration/addOnlineRegistrationInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            context: values.context,
+            coreAdd: values.coreAdd,
+            fileId: values.attachmentInfo.uid,
+            urlId: values.attachmentInfo2.uid,
+            pushStatus: 0,
           },
         });
       })

@@ -3,12 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import CommunityForm from './CommunityForm';
 
-const CommunityModifyModal = ({
-  dispatch,
-  communityModifyModalVisible,
-  communityDetailData,
-  actionRef,
-}) => {
+const CommunityModifyModal = ({ dispatch, communityModifyModalVisible, actionRef }) => {
   const [form] = CommunityForm.useForm();
   const [communityId, setCommunityId] = useState('');
 
@@ -30,14 +25,6 @@ const CommunityModifyModal = ({
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (communityId) {
-      dispatch({
-        type: 'oaCommunity/getCommunityDetail',
-        payload: { id: communityId },
-      });
-    }
-  }, [communityId]);
 
   const hideModal = () => {
     dispatch({
@@ -51,19 +38,11 @@ const CommunityModifyModal = ({
     form
       .validateFields()
       .then(values => {
-        const userIds = [];
-        values.memberItems &&
-          values.memberItems.forEach(item => {
-            userIds.push(item.id);
-          });
         dispatch({
           type: `oaCommunity/updateCommunity`,
           payload: {
-            clubName: values.clubName,
-            dictClubType: values.dictClubType,
-            clubIntroduction: values.clubIntroduction,
+            ...values,
             id: communityId,
-            userIds,
           },
         });
       })
@@ -84,7 +63,7 @@ const CommunityModifyModal = ({
       onCancel={hideModal}
       onOk={handleOk}
     >
-      <CommunityForm size="middle" column={1} form={form} communityFormData={communityDetailData} />
+      <CommunityForm size="middle" column={1} form={form} id={communityId} />
     </Modal>
   );
 };

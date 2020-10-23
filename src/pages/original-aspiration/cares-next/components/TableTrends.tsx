@@ -42,7 +42,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
     },
   ];
 
-  const getHobbyList = params =>
+  const getList = params =>
     new Promise(resolve => {
       dispatch({
         type: 'oaCaresNext/getTrendsList',
@@ -67,7 +67,7 @@ const Table = ({ oaCaresNext, openTrendsDetailModal, dispatch }) => {
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getHobbyList(params)}
+      request={async params => getList(params)}
       columns={columns}
       toolBarRender={(_, { selectedRowKeys }) => [
         selectedRowKeys && selectedRowKeys.length && (

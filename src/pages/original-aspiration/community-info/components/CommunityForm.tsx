@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
 
-const CommunityForm = ({ form, communityFormData }) => {
+const CommunityForm = ({ form, dispatch, id }) => {
   const formItems = [
     {
       label: '社团名称',
@@ -25,8 +25,21 @@ const CommunityForm = ({ form, communityFormData }) => {
   ];
 
   useEffect(() => {
-    form.setFieldsValue(communityFormData);
-  }, [communityFormData]);
+    if (id) {
+      new Promise(resolve => {
+        dispatch({
+          type: 'oaCommunity/getCommunityDetail',
+          payload: { id },
+          resolve,
+        });
+      }).then(data => {
+        const fields = {
+          ...data,
+        };
+        form.setFieldsValue(fields);
+      });
+    }
+  }, [id]);
 
   return (
     <>

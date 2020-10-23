@@ -31,7 +31,7 @@ const Table = ({
       title: '作品类别',
       align: 'center',
       dataIndex: 'type',
-      valueEnum: enums.type,
+      valueEnum: enums.dictWorkCornerType,
     },
     {
       title: publishStatus === 0 ? '保存时间' : '发布时间',

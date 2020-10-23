@@ -4,7 +4,7 @@ import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
 
-const VisitForm = ({ form, id, dispatch, loading }) => {
+const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
   const formItems = [
     {
       label: '慰问时间',
@@ -33,7 +33,6 @@ const VisitForm = ({ form, id, dispatch, loading }) => {
       label: '照片信息',
       name: 'picAttachmentInfo',
       type: 'image',
-      rules: [{ required: true, message: '请上传照片信息!' }],
     },
   ];
   const getMemberList = params =>
@@ -55,6 +54,12 @@ const VisitForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          picAttachmentInfo: {
+            uid: data.picAttachmentInfo && data.picAttachmentInfo.id,
+            name: data.picAttachmentInfo && data.picAttachmentInfo.fileName,
+            url: data.picAttachmentInfo && data.picAttachmentInfo.url,
+            status: 'done',
+          },
         };
         form.setFieldsValue(fields);
       });
@@ -65,7 +70,7 @@ const VisitForm = ({ form, id, dispatch, loading }) => {
     // 显示老干部信息-公共组件
     <>
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
-        <LgbSelectInput getLgbs={getMemberList} />
+        {tableType === '遗属慰问' ? <LgbSelectInput getLgbs={getMemberList} /> : <LgbSelectInput />}
       </Form.Item>
       <Descriptions title="慰问详情" />
     </>
