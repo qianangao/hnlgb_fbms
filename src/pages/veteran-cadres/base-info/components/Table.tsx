@@ -15,7 +15,6 @@ const Table = ({
   const { tableRef } = vcBasicInfo;
   const uploadLgbListRef = useRef();
   const formRef = useRef();
-
   const columns = [
     {
       title: '序号',
