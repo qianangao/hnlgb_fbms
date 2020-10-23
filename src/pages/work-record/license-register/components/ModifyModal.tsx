@@ -45,6 +45,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `licenseRegister/updateLicenseRegisterInfo`,
           payload: {
             ...values,
+            passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
+            passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
             id: lgbId,
           },
         });

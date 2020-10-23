@@ -16,19 +16,23 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          passCheckPhoto: {
+        };
+
+        data.passCheckPhoto &&
+          (fields.passCheckPhoto = {
             url: data.passCheckPhoto.url,
             uid: data.passCheckPhoto.id,
             name: data.passCheckPhoto.fileName,
             status: 'done',
-          },
-          passportPhoto: {
+          });
+
+        data.passportPhoto &&
+          (fields.passportPhoto = {
             url: data.passportPhoto.url,
             uid: data.passportPhoto.id,
             name: data.passportPhoto.fileName,
             status: 'done',
-          },
-        };
+          });
         form.setFieldsValue(fields);
       });
     }
