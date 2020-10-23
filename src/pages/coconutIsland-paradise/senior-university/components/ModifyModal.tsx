@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import SeniorUniversityForm from './form/SeniorUniversityForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
@@ -65,18 +65,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      forceRender
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
+      onOk={handleOk}
+      confirmLoading={loading}
+      onCancel={hideModal}
       maskClosable={false}
       destroyOnClose
-      onCancel={hideModal}
     >
       <div
         style={{

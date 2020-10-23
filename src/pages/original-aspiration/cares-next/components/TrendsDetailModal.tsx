@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import DetailFormPage from '@/components/DetailFormPage';
 
-const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailData, actionRef }) => {
+const TrendsDetailModal = ({
+  dispatch,
+  trendsDetailModalVisible,
+  trendsDetailData,
+  actionRef,
+  loading,
+}) => {
   const [trendsId, setTrendsId] = useState('');
   const showModal = id => {
     setTrendsId(id);
@@ -53,11 +59,8 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
       visible={trendsDetailModalVisible}
       destroyOnClose
       onCancel={hideModal}
-      footer={[
-        <Button type="primary" onClick={hideModal}>
-          确认
-        </Button>,
-      ]}
+      confirmLoading={loading}
+      footer={[]}
     >
       <DetailFormPage
         title={trendsDetailData.theme}
@@ -72,5 +75,5 @@ const TrendsDetailModal = ({ dispatch, trendsDetailModalVisible, trendsDetailDat
 export default connect(({ oaCaresNext, loading }) => ({
   trendsDetailModalVisible: oaCaresNext.trendsDetailModalVisible,
   trendsDetailData: oaCaresNext.trendsDetailData,
-  loading: loading.models.oaCaresNext,
+  loading: loading.effects['oaCaresNext/getTrendsDetail'],
 }))(TrendsDetailModal);

@@ -6,20 +6,16 @@ import TableCaresMemberModify from './TableCaresMemberModify';
 import MemberModifyModal from './MemberModifyModal';
 import MemberAddModal from './MemberAddModal';
 
-const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, actionRef }) => {
+const CaresDetailModal = ({ dispatch, actionRef }) => {
   const [form] = CaresForm.useForm();
   const [caresId, setCaresId] = useState('');
+  const [caresModifyModalVisible, setCaresModifyModalVisible] = useState(false);
   const memberModifyModelRef = useRef({});
   const memberAddModelRef = useRef({});
 
   const showModal = id => {
     setCaresId(id);
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresModifyModalVisible: true,
-      },
-    });
+    setCaresModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -30,35 +26,29 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (caresId) {
-      dispatch({
-        type: 'oaCaresNext/getCaresDetail',
-        payload: { id: caresId },
-      });
-    }
-  }, [caresId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresModifyModalVisible: false,
-      },
-    });
+    setCaresModifyModalVisible(false);
   };
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCaresNext/updateCares`,
-          payload: {
-            ...values,
-            id: caresId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCaresNext/updateCares`,
+            payload: {
+              ...values,
+              id: caresId,
+            },
+            resolve,
+          });
         });
       })
+      .then(() => {
+        hideModal();
+      })
+
       .catch();
   };
   const openMemberModifyModel = item => {
@@ -82,7 +72,7 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
       onCancel={hideModal}
       onOk={handleOk}
     >
-      <CaresForm size="middle" column={1} form={form} caresFormData={caresDetailData} />
+      <CaresForm size="middle" column={1} form={form} id={caresId} />
       <TableCaresMemberModify
         id={caresId}
         openMemberModifyModel={openMemberModifyModel}
@@ -95,7 +85,6 @@ const CaresDetailModal = ({ dispatch, caresModifyModalVisible, caresDetailData, 
 };
 
 export default connect(({ oaCaresNext, loading }) => ({
-  caresModifyModalVisible: oaCaresNext.caresModifyModalVisible,
   caresDetailData: oaCaresNext.caresDetailData,
   loading: loading.models.oaCaresNext,
 }))(CaresDetailModal);

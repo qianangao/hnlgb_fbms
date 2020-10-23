@@ -17,7 +17,14 @@ const Table = ({ openAddModal, openModifyModal, differentLivingPlaces, enums, di
     {
       title: '姓名',
       align: 'center',
+      dataIndex: 'realName',
+      hideInSearch: true,
+    },
+    {
+      title: '姓名',
+      align: 'center',
       dataIndex: 'userName',
+      hideInTable: true,
     },
     {
       title: '性别',

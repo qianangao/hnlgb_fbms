@@ -67,9 +67,9 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
+      destroyOnClose
     >
       <div
         style={{

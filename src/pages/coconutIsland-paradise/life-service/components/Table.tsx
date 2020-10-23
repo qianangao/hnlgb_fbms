@@ -31,7 +31,7 @@ const Table = ({
       title: '类型',
       align: 'center',
       dataIndex: 'type',
-      valueEnum: enums.type,
+      valueEnum: enums.dictLifeServiceType,
       hideInSearch: true,
     },
     {

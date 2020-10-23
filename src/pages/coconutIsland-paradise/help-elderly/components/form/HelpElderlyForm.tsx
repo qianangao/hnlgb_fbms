@@ -15,7 +15,7 @@ const HelpElderlyForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '附件',
-      name: 'file',
+      name: 'attachmentInfo',
       type: 'upload',
       rules: [{ required: true, message: '请上传附件!' }],
     },
@@ -38,10 +38,10 @@ const HelpElderlyForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          file: {
-            url: data.attachmentInfo.url,
-            uid: data.attachmentInfo.id,
-            name: data.attachmentInfo.fileName,
+          attachmentInfo: {
+            uid: data.attachmentInfo && data.attachmentInfo.id,
+            name: data.attachmentInfo && data.attachmentInfo.fileName,
+            url: data.attachmentInfo && data.attachmentInfo.url,
             status: 'done',
           },
         };

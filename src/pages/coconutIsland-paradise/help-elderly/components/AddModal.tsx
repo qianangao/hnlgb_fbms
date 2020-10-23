@@ -44,6 +44,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `helpElderly/addHelpElderlyInfo`,
           payload: {
             ...values,
+            fileId: values.attachmentInfo.uid,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });

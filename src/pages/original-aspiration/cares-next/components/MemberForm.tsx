@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
+import { checkPhone } from '@/utils/validators';
 
 const MemberForm = ({ form, formData }) => {
   const formItems = [
@@ -20,6 +21,7 @@ const MemberForm = ({ form, formData }) => {
       label: '联系电话',
       span: 4,
       name: 'phoneNumber',
+      rules: [{ validator: checkPhone }],
     },
   ];
 

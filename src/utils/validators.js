@@ -190,7 +190,8 @@ export const checkCreditCode = (rule, value, callback) => {
  * @param {*} callback form回调函数
  */
 export const checkUrl = (rule, value, callback) => {
-  const strRegex = /[http|https]:\/\/.*\.[com|cn|org|net|gov|edu|pub]/;
+  // eslint-disable-next-line no-useless-escape
+  const strRegex = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
   if (value === '' || value === null || strRegex.test(value) === false) {
     callback('请输入以http://或者 https://开头的正确网址！');
   } else {
