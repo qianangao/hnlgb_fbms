@@ -17,16 +17,13 @@ const HealthAssessment = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [
-          'dictSex',
-          'dictAssessGrade'
-        ],
+        names: ['dictSex', 'dictAssessGrade'],
       },
     });
   }, []);
 
   const orgChangeHander = orgId => {
-    setSelectId(orgId)
+    setSelectId(orgId);
     dispatch({
       type: 'healthAssessment/selectOrgChange',
       payload: orgId,
@@ -56,24 +53,14 @@ const HealthAssessment = ({ dispatch }) => {
     setTableType(id);
   };
 
-  const Element =() =>{
-    if(tableType === 'result'){
-      return(
-        <TableResult
-            openResultDetailModal={openResultDetailModal}
-          />
-      )
-    }if (tableType === 'topic'){
-      return(
-        <TableTopic 
-            openTopicModifyModal={openTopicModifyModal}
-          />
-      )
+  const Element = () => {
+    if (tableType === 'result') {
+      return <TableResult openResultDetailModal={openResultDetailModal} />;
     }
-      return(
-        <Statistics id={selectId}/>
-      )
-    
+    if (tableType === 'topic') {
+      return <TableTopic openTopicModifyModal={openTopicModifyModal} />;
+    }
+    return <Statistics id={selectId} />;
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>

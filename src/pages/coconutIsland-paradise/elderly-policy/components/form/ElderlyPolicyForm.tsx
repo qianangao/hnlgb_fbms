@@ -15,7 +15,7 @@ const ElderPolicyForm = ({ id, loading, dispatch, form }) => {
     },
     {
       label: '附件',
-      name: 'file',
+      name: 'attachmentInfo',
       type: 'upload',
       rules: [{ required: true, message: '请上传附件!' }],
     },
@@ -38,10 +38,10 @@ const ElderPolicyForm = ({ id, loading, dispatch, form }) => {
       }).then(data => {
         const fields = {
           ...data,
-          file: {
-            uid: data.fileId,
-            name: data.fileName,
-            url: data.fileUrl,
+          attachmentInfo: {
+            uid: data.attachmentInfo && data.attachmentInfo.id,
+            name: data.attachmentInfo && data.attachmentInfo.fileName,
+            url: data.attachmentInfo && data.attachmentInfo.url,
             status: 'done',
           },
         };

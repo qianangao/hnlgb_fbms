@@ -43,7 +43,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         dispatch({
           type: `worksCorner/updateWorksCornerInfo`,
           payload: {
-            ...values,
+            headline: values.headline,
+            context: values.context,
+            type: values.type,
+            attachmentId: values.attachmentInfo.uid,
             id: lgbId,
             status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },

@@ -47,7 +47,7 @@ const ResultDetailModal = ({ dispatch, resultDetailModal, loading, actionRef }) 
       footer={null}
       onCancel={hideModal}
     >
-      <ResultDetail id={resultId}/>
+      <ResultDetail id={resultId} />
     </Modal>
   );
 };

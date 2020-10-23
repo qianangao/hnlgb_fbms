@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Descriptions } from 'antd';
+import { Modal } from 'antd';
 import DetailForm from './form/OnlineRegistrationDetailForm';
+import TableRegistered from './TableRegistered';
 
 const DetailModal = ({
   dispatch,
@@ -11,7 +12,6 @@ const DetailModal = ({
   detailOnlineRegistrationData,
 }) => {
   const [DetailId, setDetailId] = useState('');
-  const [registrationMembers, setRegistrationMembers] = useState('');
   const showModal = item => {
     setDetailId(item.id);
     dispatch({
@@ -36,13 +36,6 @@ const DetailModal = ({
         type: 'onlineRegistration/detailOnlineRegistrationInfo',
         payload: { id: DetailId },
       });
-      const membersArray =
-        detailOnlineRegistrationData.memberItems &&
-        detailOnlineRegistrationData.memberItems.map((Item, index) => {
-          return ` ${index + 1}、${Item.realName}`;
-        });
-      const members = membersArray && membersArray.join();
-      setRegistrationMembers(members);
     }
   }, [DetailId]);
   const hideModal = () => {
@@ -71,9 +64,7 @@ const DetailModal = ({
       onCancel={hideModal}
     >
       <DetailForm id={DetailId} detailOnlineRegistrationData={detailOnlineRegistrationData} />
-      <Descriptions size="middle" column={1}>
-        <Descriptions.Item label="已选成员">{registrationMembers}</Descriptions.Item>
-      </Descriptions>
+      <TableRegistered id={DetailId} />
     </Modal>
   );
 };

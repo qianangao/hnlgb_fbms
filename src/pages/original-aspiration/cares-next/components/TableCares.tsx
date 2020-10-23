@@ -11,7 +11,7 @@ const Table = ({
   openAddCaresModal,
   openAddTrendsModal,
 }) => {
-  const { tableRef } = oaCaresNext;
+  const { tableCaresRef } = oaCaresNext;
 
   const columns = [
     {
@@ -60,7 +60,7 @@ const Table = ({
     },
   ];
 
-  const getHobbyList = params =>
+  const getList = params =>
     new Promise(resolve => {
       dispatch({
         type: 'oaCaresNext/getCaresList',
@@ -82,10 +82,10 @@ const Table = ({
     <ProTable
       headerTitle="关工组织信息"
       rowKey="id"
-      actionRef={tableRef}
+      actionRef={tableCaresRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getHobbyList(params)}
+      request={async params => getList(params)}
       columns={columns}
       toolBarRender={(_, { selectedRowKeys }) => [
         <Button

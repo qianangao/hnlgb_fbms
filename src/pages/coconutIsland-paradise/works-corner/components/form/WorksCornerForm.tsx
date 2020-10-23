@@ -16,7 +16,7 @@ const WorksCornerForm = ({ id, loading, dispatch, form }) => {
     {
       label: '作品类型',
       name: 'type',
-      enumsLabel: 'type',
+      enumsLabel: 'dictWorkCornerType',
       rules: [{ required: true, message: '请选择作品类型!' }],
     },
     {
@@ -45,9 +45,9 @@ const WorksCornerForm = ({ id, loading, dispatch, form }) => {
         const fields = {
           ...data,
           attachmentInfo: {
-            uid: data.attachmentInfo.id,
-            name: data.attachmentInfo.fileName,
-            url: data.attachmentInfo.url,
+            uid: data.attachmentInfo && data.attachmentInfo.id,
+            name: data.attachmentInfo && data.attachmentInfo.fileName,
+            url: data.attachmentInfo && data.attachmentInfo.url,
             status: 'done',
           },
         };

@@ -42,7 +42,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         dispatch({
           type: `activityCenter/updateActivityCenterInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            coreAdd: values.coreAdd,
+            context: values.context,
+            phoneNumber: values.phoneNumber,
+            fileId: values.attachmentInfo.uid,
+            urlId: values.attachmentInfo2.uid,
             id: lgbId,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },

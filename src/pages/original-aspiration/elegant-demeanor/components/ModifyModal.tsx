@@ -46,8 +46,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             title: values.title,
             type: values.type,
             context: values.context,
-            fileId: values.uploadInfo && values.uploadInfo.uid,
-            fileUrl: values.uploadInfo && values.uploadInfo.url,
+            fileId: values.attachmentInfo && values.attachmentInfo.uid,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: elegantDemeanorId,
           },

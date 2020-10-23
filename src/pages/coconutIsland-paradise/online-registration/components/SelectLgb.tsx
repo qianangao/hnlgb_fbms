@@ -39,6 +39,7 @@ const SelectLgb = ({ id, dispatch }) => {
 
   return (
     <LgbSyncMultiSelect
+      orgTree
       getLgbs={getMemberList}
       getSelectIds={getMemberIds}
       addLgb={addLgb}

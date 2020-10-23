@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import DetailFormPage from '@/components/DetailFormPage';
 
 const ActivityDetailModal = ({
@@ -58,11 +58,7 @@ const ActivityDetailModal = ({
       visible={activityDetailModalVisible}
       destroyOnClose
       onCancel={hideModal}
-      footer={[
-        <Button type="primary" onClick={hideModal}>
-          确认
-        </Button>,
-      ]}
+      footer={[]}
     >
       <DetailFormPage
         title={activityDetailData.theme}

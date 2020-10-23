@@ -25,13 +25,13 @@ const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '附件',
-      name: 'file',
+      name: 'attachmentInfo',
       type: 'upload',
       rules: [{ required: true, message: '请上传附件!' }],
     },
     {
       label: '缩略图',
-      name: 'image',
+      name: 'attachmentInfo2',
       type: 'image',
       rules: [{ required: true, message: '请上传缩略图!' }],
     },
@@ -60,16 +60,16 @@ const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          file: {
-            url: data.fileUrl,
-            uid: data.id,
-            name: data.fileName,
+          attachmentInfo: {
+            uid: data.attachmentInfo && data.attachmentInfo.id,
+            name: data.attachmentInfo && data.attachmentInfo.fileName,
+            url: data.attachmentInfo && data.attachmentInfo.url,
             status: 'done',
           },
-          image: {
-            url: data.url,
-            uid: data.urlId,
-            name: data.urlName,
+          attachmentInfo2: {
+            uid: data.attachmentInfo2 && data.attachmentInfo2.id,
+            name: data.attachmentInfo2 && data.attachmentInfo2.fileName,
+            url: data.attachmentInfo2 && data.attachmentInfo2.url,
             status: 'done',
           },
         };
