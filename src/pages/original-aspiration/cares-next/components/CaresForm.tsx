@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
+import { checkPhone } from '@/utils/validators';
 
-const CaresForm = ({ form, caresFormData }) => {
+const CaresForm = ({ form, dispatch, id }) => {
   const formItems = [
     {
       label: '组织名称',
@@ -17,18 +18,33 @@ const CaresForm = ({ form, caresFormData }) => {
     {
       label: '联系方式',
       name: 'contactInformation',
+      rules: [{ validator: checkPhone }],
     },
     {
       label: '简介',
       name: 'introduction',
       type: 'textArea',
       span: 4,
+      rules: [{ required: true, message: '请输入简介!', whitespace: true }],
     },
   ];
 
   useEffect(() => {
-    form.setFieldsValue(caresFormData);
-  }, [caresFormData]);
+    if (id) {
+      new Promise(resolve => {
+        dispatch({
+          type: 'oaCaresNext/getCaresDetail',
+          payload: { id },
+          resolve,
+        });
+      }).then(data => {
+        const fields = {
+          ...data,
+        };
+        form.setFieldsValue(fields);
+      });
+    }
+  }, [id]);
 
   return <AdvancedForm form={form} loading={false} fields={formItems} />;
 };

@@ -22,9 +22,9 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '缩略图',
-      name: 'uploadInfo',
+      name: 'attachmentInfo',
       type: 'image',
-      // rules: [{ required: true, message: '请上传缩略图!' }],
+      rules: [{ required: true, message: '请上传缩略图!' }],
     },
 
     {
@@ -46,7 +46,7 @@ const ElegantDemeanorForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          uploadInfo:
+          attachmentInfo:
             data.attachmentInfo && data.attachmentInfo.id && data.attachmentInfo.url
               ? {
                   uid: data.attachmentInfo.id,

@@ -34,15 +34,9 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '联系电话',
-      align: 'center',
-      dataIndex: 'phoneNumber',
-      hideInSearch: true,
-    },
-    {
       title: '所属单位',
       align: 'center',
-      dataIndex: 'organizationName',
+      dataIndex: 'createOrgName',
       hideInSearch: true,
     },
     {
@@ -63,6 +57,7 @@ const Table = ({
             >
               编辑
             </a>
+
             <a
               key={`${employeeData.id}select`}
               onClick={() => {

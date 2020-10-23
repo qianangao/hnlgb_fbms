@@ -47,6 +47,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
           type: `wrVisitsCondolences/updateVisit`,
           payload: {
             ...values,
+            photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
             id: visitId,
           },
         });
@@ -68,7 +69,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
       }}
       visible={modifyModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >

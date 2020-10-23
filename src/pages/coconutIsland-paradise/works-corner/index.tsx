@@ -16,7 +16,7 @@ const WorksCornerInfo = ({ dispatch, tableRef }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: ['type'],
+        names: ['dictWorkCornerType'],
       },
     });
   }, []);

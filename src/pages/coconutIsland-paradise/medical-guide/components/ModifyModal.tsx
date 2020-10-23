@@ -43,6 +43,8 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
           type: `medicalGuide/updateMedicalGuideInfo`,
           payload: {
             ...values,
+            longitude: '108.97544873046874',
+            latitude: '33.910876053972466',
             id: lgbId,
           },
         });

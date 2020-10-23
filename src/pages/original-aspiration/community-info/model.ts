@@ -257,6 +257,7 @@ const Model = {
       const response = yield call(addMember, payload);
 
       if (!response.error) {
+        message.success('添加成功！');
         resolve && resolve(response);
       }
     },
@@ -264,6 +265,7 @@ const Model = {
       const response = yield call(deleteMember, payload);
 
       if (!response.error) {
+        message.success('移除成功！');
         resolve && resolve(response);
       }
     },

@@ -58,6 +58,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
           type: `wrVisitsCondolences/addVisit`,
           payload: {
             ...values,
+            photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
             type: visitType,
           },
         });
@@ -78,6 +79,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
+      destroyOnClose
       visible={addModalVisible}
       onOk={handleOk}
       confirmLoading={loading}

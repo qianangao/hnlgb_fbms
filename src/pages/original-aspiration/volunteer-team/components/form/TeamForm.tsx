@@ -3,6 +3,7 @@ import { TreeSelect } from 'antd';
 
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
+import { checkPhone } from '@/utils/validators';
 
 const { TreeNode } = TreeSelect;
 
@@ -57,7 +58,10 @@ const TeamForm = ({ form, id, dispatch, loading }) => {
     {
       label: '联系电话',
       name: 'phoneNumber',
-      rules: [{ required: true, message: '请输入联系电话!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入联系电话!', whitespace: true },
+        { validator: checkPhone },
+      ],
     },
     {
       label: '成立时间',

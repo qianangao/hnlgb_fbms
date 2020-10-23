@@ -16,7 +16,7 @@ const LifeServiceForm = ({ id, loading, dispatch, form }) => {
     {
       label: '类型',
       name: 'type',
-      enumsLabel: 'type',
+      enumsLabel: 'dictLifeServiceType',
       rules: [{ required: true, message: '请选择服务类型!' }],
     },
     {
