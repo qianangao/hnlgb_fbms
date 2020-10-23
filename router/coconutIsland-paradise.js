@@ -33,7 +33,6 @@ const routes = {
       authority: '04-04',
       remark: '生活服务',
     },
-
     {
       path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
