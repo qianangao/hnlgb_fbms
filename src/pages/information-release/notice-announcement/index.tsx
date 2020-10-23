@@ -24,6 +24,7 @@ const NoticeAnnouncement = ({ dispatch, tableRef }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
+          'dictNoticeType',
         ],
       },
     });

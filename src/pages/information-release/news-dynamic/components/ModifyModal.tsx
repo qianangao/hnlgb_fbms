@@ -32,8 +32,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = publishStatus => {

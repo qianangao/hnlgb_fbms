@@ -21,14 +21,14 @@ const Table = ({ dailyBroadcast, dispatch, opendetailModal }) => {
     {
       title: '创建单位',
       align: 'center',
-      dataIndex: 'createOrgName',
+      dataIndex: 'releaseDepartment',
       hideInSearch: true,
     },
     {
       title: '保存时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: 'createTime',
+      dataIndex: 'gmtCreate',
       hideInSearch: true,
     },
     {

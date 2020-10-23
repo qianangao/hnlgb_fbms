@@ -46,6 +46,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             ...values,
             isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             id: lgbId,
+            enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
           },
         });
       })

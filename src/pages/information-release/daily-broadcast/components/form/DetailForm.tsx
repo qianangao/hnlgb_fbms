@@ -15,8 +15,8 @@ const DetailForm = ({ id, dispatch, detailDailyBroadcastData }) => {
   return (
     <DetailFormPage
       title={detailDailyBroadcastData.headline}
-      releaseTime={detailDailyBroadcastData.releaseTime}
-      orgName={detailDailyBroadcastData.createOrgName}
+      releaseTime={detailDailyBroadcastData.gmtCreate}
+      orgName={detailDailyBroadcastData.releaseDepartment}
       content={detailDailyBroadcastData.context}
       extraFile={detailDailyBroadcastData.attachmentInfo}
     />

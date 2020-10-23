@@ -77,17 +77,17 @@ const routes = {
       remark: '健康测评',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       remark: '社保认证',
     },
     {
-      path: 'https://www.hao123.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       remark: '社保查询',
     },
     {
-      path: 'https://www.huaban.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       remark: '医保查询',
     },

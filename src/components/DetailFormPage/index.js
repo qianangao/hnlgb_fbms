@@ -20,11 +20,11 @@ const DetailFormPage = ({ title, releaseTime, orgName, content, extraFile }) => 
             __html: content,
           }}
         />
-        {extraFile && extraFile.url && (
+        {extraFile && (
           <div style={{ textAlign: 'left', margin: '20px 0px 10px 10px' }}>
             附件：
             <a
-              href={extraFile.url}
+              href={extraFile.url ? extraFile.url : extraFile.fileUrl}
               target="_blank"
               rel="noopener noreferrer"
               style={{ display: 'inlinBlock' }}

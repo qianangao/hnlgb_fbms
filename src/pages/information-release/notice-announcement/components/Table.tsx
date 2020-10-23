@@ -31,13 +31,13 @@ const Table = ({
       title: '通知类型',
       align: 'center',
       dataIndex: 'dictNoticeType',
-      valueEnum: enums.dictNation,
+      valueEnum: enums.dictNoticeType,
     },
     {
       title: publishStatus === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'createTime' : 'releaseTime',
+      dataIndex: publishStatus === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -84,7 +84,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'noticeAnnouncement/noticeAnnouncementList',
-        payload: { ...params, dictPublishStatus: publishStatus },
+        payload: { ...params, dictPublishStatus: publishStatus, type: 3 },
         resolve,
       });
     });
