@@ -14,10 +14,12 @@ const Model = {
 
       const params = {
         ...payload,
+        allIndex: 'ONLY',
         orgIdForDataSelect,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
+
       const response = yield call(getRoleList, params);
 
       if (!response.error) {

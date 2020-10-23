@@ -24,11 +24,12 @@ const Model = {
   },
   effects: {
     *getRoleList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.smRoleMgt.selectedOrgId);
+      const orgIdForDataSelect = yield select(state => state.smRoleRule.selectedOrgId);
 
       const params = {
         ...payload,
         orgIdForDataSelect,
+        allIndex: 'ONLY',
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };

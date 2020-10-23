@@ -107,8 +107,6 @@ export const noErrorRequest = (url, config) =>
     return res;
   });
 requestConfig.interceptors.request.use(async (url, options) => {
-  // PC端默认全部携带allIndex： all
-  options.params && (options.params.allIndex = 'all');
   return {
     url: `${url}`,
     options,
