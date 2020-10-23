@@ -34,7 +34,7 @@ const routes = {
       remark: '生活服务',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       authority: '04-05',
       remark: '社保认证',
