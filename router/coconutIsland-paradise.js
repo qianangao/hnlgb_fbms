@@ -108,39 +108,6 @@ const routes = {
       authority: '04-15',
       remark: '健康测评',
     },
-<<<<<<< .mine
-    {
-      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
-      target: '_blank',
-      remark: '社保认证',
-    },
-    {
-      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
-      target: '_blank',
-      remark: '社保查询',
-    },
-    {
-      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
-      target: '_blank',
-      remark: '医保查询',
-    },
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> .theirs
   ],
 };
 export default routes;
