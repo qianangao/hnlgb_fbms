@@ -49,7 +49,7 @@ export async function detailBranchInformation(params) {
  * @param {*} params
  */
 export async function updateBranchInformation(params) {
-  return request(`/party/${params.id}`, {
+  return request(`/party`, {
     method: 'PUT',
     data: params,
   });

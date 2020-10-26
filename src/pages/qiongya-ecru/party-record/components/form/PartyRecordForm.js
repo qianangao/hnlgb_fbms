@@ -5,11 +5,10 @@ import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import { Select } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 
-const PartyRecordForm = ({ form, id, dispatch, loading, partyData, getUserId }) => {
+const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
   const { Option } = Select;
   const [partyId, setPartyId] = useState('');
   const [detailPartyRecordData, setDetailPartyRecordData] = useState('');
-
   const formItems = [
     {
       label: '支部名称',
@@ -40,6 +39,18 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData, getUserId }) 
       name: 'paymentAmount',
       type: 'number',
       rules: [{ required: true, message: '请输入缴费金额!' }],
+    },
+    {
+      key: 'firstLine',
+      type: 'segmentation',
+    },
+    {
+      label: '选择成员',
+      name: 'userIds',
+      rules: [{ required: true, message: '请选择成员' }],
+      render: <LgbMultiSelectInput getLgbs={getPoliticalStatusLgbs} />,
+      visible: !id,
+      span: 2,
     },
   ];
   useEffect(() => {
@@ -85,11 +96,6 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData, getUserId }) 
       });
     });
 
-  // 拿到-选择人员id
-  const onChange = keys => {
-    getUserId(keys);
-  };
-
   return (
     <>
       {id && <LgbBasicInfo userId={detailPartyRecordData.userId} />}
@@ -99,7 +105,6 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData, getUserId }) 
         fields={formItems}
         fieldChange={fieldChangeHander}
       />
-      {id ? null : <LgbMultiSelectInput getLgbs={getPoliticalStatusLgbs} onChange={onChange} />}
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button, message } from 'antd';
+import { Modal, Button } from 'antd';
 import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
 
 const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
@@ -73,10 +73,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             }
           });
         payload.orgList = orgArrId;
-        if (orgArrId.length === 0 && userIds.length === 0) {
-          message.error('请传入接收单位或接收个人');
-          return;
-        }
+        // if (orgArrId.length === 0 && userIds.length === 0) {
+        //   message.error('请传入接收单位或接收个人');
+        //   return;
+        // }
         dispatch({
           type: `noticeAnnouncement/updateNoticeAnnouncement`,
           payload,

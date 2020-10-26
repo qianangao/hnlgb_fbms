@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import PartyRecordForm from './form/PartyRecordForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = PartyRecordForm.useForm();
-  const [userIds, setUserIds] = useState('');
   const showModal = () => {
     dispatch({
       type: 'partyRecord/save',
@@ -40,29 +39,22 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
+        // 获取userIds
+        const payload = { ...values };
+        const userIdsArr = [];
+        payload.userIds.forEach(item => {
+          userIdsArr.push(item.id);
+        });
+        payload.userIds = userIdsArr;
         dispatch({
           type: `partyRecord/addPartyRecord`,
-          payload: {
-            ...values,
-            userIds,
-          },
+          payload,
         });
         form.resetFields();
       })
       .catch(info => {
         console.error('新增错误', info);
       });
-  };
-
-  // 获取-选择的成员id
-  const getUserId = keys => {
-    const getUserIds = [];
-    keys.forEach(item => {
-      if (item) {
-        getUserIds.push(item.id);
-      }
-    });
-    setUserIds(getUserIds);
   };
 
   return (
@@ -85,7 +77,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <PartyRecordForm form={form} getUserId={getUserId} />
+      <PartyRecordForm form={form} />
     </Modal>
   );
 };

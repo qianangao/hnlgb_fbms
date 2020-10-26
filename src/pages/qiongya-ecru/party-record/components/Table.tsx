@@ -44,6 +44,7 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
       dataIndex: 'dictPaymentState',
       valueEnum: enums.dictNation,
       render: (_, record) => <span>{record ? '未缴纳' : '已缴纳'}</span>,
+      hideInSearch: true,
     },
     {
       title: '操作',
