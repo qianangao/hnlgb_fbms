@@ -15,7 +15,7 @@ const DetailForm = ({ id, dispatch, detailPolicyStipulateData }) => {
   return (
     <DetailFormPage
       title={detailPolicyStipulateData.title}
-      releaseTime={detailPolicyStipulateData.releaseTime}
+      releaseTime={detailPolicyStipulateData.gmtModified}
       orgName={detailPolicyStipulateData.createOrgName}
       content={detailPolicyStipulateData.content}
       extraFile={detailPolicyStipulateData.attachmentInfo}
