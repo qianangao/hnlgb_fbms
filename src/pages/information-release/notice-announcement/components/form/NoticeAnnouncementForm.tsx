@@ -20,22 +20,6 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
     },
     {
-      label: '附件',
-      name: 'attachmentId',
-      type: 'upload',
-    },
-    {
-      key: 'thirdlyLine',
-      type: 'segmentation',
-    },
-    {
-      label: '内容',
-      name: 'content',
-      type: 'editor',
-      rules: [{ required: true, message: '请输入内容!', whitespace: true }],
-      span: 2,
-    },
-    {
       key: 'firstLine',
       type: 'segmentation',
     },
@@ -51,7 +35,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       ),
     },
     {
-      key: 'threeLine',
+      key: 'thirdlyLine',
       type: 'segmentation',
     },
     {
@@ -67,6 +51,26 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请选择接收人员!' }],
       render: <LgbMultiSelectInput />,
       visible: receivedType === 1,
+    },
+    {
+      key: 'threeLine',
+      type: 'segmentation',
+    },
+    {
+      label: '附件',
+      name: 'attachmentId',
+      type: 'upload',
+    },
+    {
+      key: 'fourLine',
+      type: 'segmentation',
+    },
+    {
+      label: '内容',
+      name: 'content',
+      type: 'editor',
+      rules: [{ required: true, message: '请输入内容!', whitespace: true }],
+      span: 2,
     },
   ];
   useEffect(() => {
