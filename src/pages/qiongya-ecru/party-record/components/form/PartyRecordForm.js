@@ -9,6 +9,17 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
   const { Option } = Select;
   const [partyId, setPartyId] = useState('');
   const [detailPartyRecordData, setDetailPartyRecordData] = useState('');
+
+  // 获取-当前支部人员列表
+  const getPoliticalStatusLgbs = getMemberParams =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/getPartyUserList',
+        payload: { ...getMemberParams, id: partyId },
+        resolve,
+      });
+    });
+
   const formItems = [
     {
       label: '支部名称',
@@ -49,7 +60,7 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       name: 'userIds',
       rules: [{ required: true, message: '请选择成员' }],
       render: <LgbMultiSelectInput getLgbs={getPoliticalStatusLgbs} />,
-      visible: !id,
+      visible: partyId && !id,
       span: 2,
     },
   ];
@@ -85,16 +96,6 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       setPartyId(value);
     }
   };
-
-  // 获取-当前支部人员列表
-  const getPoliticalStatusLgbs = getMemberParams =>
-    new Promise(resolve => {
-      dispatch({
-        type: 'branchInformation/getPartyUserList',
-        payload: { ...getMemberParams, id: partyId },
-        resolve,
-      });
-    });
 
   return (
     <>
