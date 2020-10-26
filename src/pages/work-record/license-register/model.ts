@@ -11,7 +11,6 @@ const Model = {
   namespace: 'licenseRegister',
   state: {
     licenseRegisterInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -61,16 +60,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addLicenseRegisterInfo({ payload }, { call, put }) {
+    *addLicenseRegisterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addLicenseRegisterInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增证照登记成功！');
 
         yield put({

@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import LicenseRegisterForm from './form/LicenseRegisterForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = LicenseRegisterForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
+
   const showModal = () => {
-    dispatch({
-      type: 'licenseRegister/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'licenseRegister/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,14 +30,20 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `licenseRegister/addLicenseRegisterInfo`,
-          payload: {
-            ...values,
-            passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
-            passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `licenseRegister/addLicenseRegisterInfo`,
+            payload: {
+              ...values,
+              passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
+              passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -74,7 +71,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ licenseRegister, loading }) => ({
-  addModalVisible: licenseRegister.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.licenseRegister,
 }))(AddModal);

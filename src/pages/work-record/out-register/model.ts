@@ -11,7 +11,6 @@ const Model = {
   namespace: 'outRegister',
   state: {
     outRegisterInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -62,16 +61,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addOutRegisterInfo({ payload }, { call, put }) {
+    *addOutRegisterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addOutRegisterInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增外出登记成功！');
 
         yield put({
