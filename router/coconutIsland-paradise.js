@@ -34,7 +34,7 @@ const routes = {
       remark: '生活服务',
     },
     {
-      path: 'https://www.baidu.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       authority: '04-05',
       remark: '社保认证',
@@ -107,6 +107,13 @@ const routes = {
       component: './coconutIsland-paradise/health-assessment',
       authority: '04-15',
       remark: '健康测评',
+    },
+    {
+      path: '/coconutIsland-paradise/physical-examination',
+      name: 'coconutIsland-paradise-physical-examination',
+      component: './coconutIsland-paradise/physical-examination',
+      authority: '04-16',
+      remark: '体检管理',
     },
   ],
 };

@@ -6,12 +6,11 @@ import { connect } from 'umi';
 const Table = ({
   openAddModal,
   openModifyModal,
-  branchInformation,
+  opPhysicalExamination,
+  openRegisteredModal,
   dispatch,
-  enums,
-  openMembersModifyModal,
 }) => {
-  const { tableRef } = branchInformation;
+  const { tableRef } = opPhysicalExamination;
   const columns = [
     {
       title: '序号',
@@ -22,54 +21,31 @@ const Table = ({
       width: 64,
     },
     {
-      title: `支部名称`,
+      title: '标题',
       align: 'center',
-      dataIndex: 'partyName',
+      dataIndex: 'subject',
     },
     {
-      title: '支部类型',
+      title: '体检时间',
+      valueType: 'dateRange',
       align: 'center',
-      dataIndex: 'dictPartyType',
-      valueEnum: enums.dictPartyType,
-      hideInSearch: true,
+      dataIndex: 'activityDate',
+      hideInTable: true,
     },
     {
-      title: '支部类别',
-      align: 'center',
-      dataIndex: 'dictPartyCategory',
-      valueEnum: enums.dictPartyCategory,
-    },
-    {
-      title: '书记',
-      align: 'center',
-      dataIndex: 'branchSecretaryName',
-      hideInSearch: true,
-    },
-    {
-      title: '副书记',
-      align: 'center',
-      dataIndex: 'branchDeputySecretaryOneName',
-      hideInSearch: true,
-    },
-    {
-      title: '换届时间',
+      title: '体检时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: 'dateForChangingLeaders',
+      dataIndex: 'activityDate',
       hideInSearch: true,
     },
     {
-      title: '换届地点',
+      title: '体检地点',
       align: 'center',
-      dataIndex: 'venues',
+      dataIndex: 'activityAdd',
       hideInSearch: true,
     },
-    {
-      title: '党员数量',
-      align: 'center',
-      dataIndex: 'partyMemberNum',
-      hideInSearch: true,
-    },
+
     {
       title: '操作',
       valueType: 'option',
@@ -77,28 +53,28 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, data) => [
         <a
-          key={`${employeeData.id}up`}
+          key={`${data.id}up`}
           onClick={() => {
-            openModifyModal(employeeData);
+            openModifyModal(data);
           }}
         >
-          编辑支部
+          编辑
         </a>,
         <a
-          key={`${employeeData.id}up`}
+          key={`${data.id}up`}
           onClick={() => {
-            openMembersModifyModal(employeeData);
+            openRegisteredModal(data);
           }}
         >
-          编辑成员
+          报名列表
         </a>,
         <Popconfirm
-          key={`${employeeData.id}del`}
-          title="确认删除支部信息吗？"
+          key={`${data.id}del`}
+          title="确认删除？"
           placement="topRight"
-          onConfirm={() => deleteBranchInformation([employeeData.id])}
+          onConfirm={() => deleteReturnworkPerson([data.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -110,15 +86,15 @@ const Table = ({
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'branchInformation/branchInformationList',
-        payload: { ...params },
+        type: 'opPhysicalExamination/physicalExaminationList',
+        payload: { ...params, type: 3 },
         resolve,
       });
     });
   // 删除
-  const deleteBranchInformation = ids => {
+  const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'branchInformation/deleteBranchInformation',
+      type: 'opPhysicalExamination/deletePhysicalExamination',
       payload: {
         ids,
       },
@@ -128,7 +104,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="支部信息"
+      headerTitle="体检信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -141,10 +117,10 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除支部信息？',
+                title: '确认删除？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
-                  deleteBranchInformation(selectedRowKeys);
+                  deleteReturnworkPerson(selectedRowKeys);
                 },
               });
             }}
@@ -158,7 +134,7 @@ const Table = ({
   );
 };
 
-export default connect(({ branchInformation, global }) => ({
-  branchInformation,
+export default connect(({ opPhysicalExamination, global }) => ({
+  opPhysicalExamination,
   enums: global.enums,
 }))(Table);

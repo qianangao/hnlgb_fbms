@@ -31,6 +31,7 @@ const Table = ({
       align: 'center',
       valueType: 'date',
       dataIndex: 'time',
+      hideInSearch: true,
     },
     {
       title: '主持人',

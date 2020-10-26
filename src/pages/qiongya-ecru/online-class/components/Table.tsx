@@ -22,13 +22,15 @@ const Table = ({ openAddModal, openModifyModal, onlineClass, dispatch, tableType
     {
       title: '缩略图url地址',
       align: 'center',
-      dataIndex: 'picUrl',
+      dataIndex: 'cephFile',
       hideInSearch: true,
       render: text => {
         return (
-          <a title={text} href={text} target="_blank" rel="noopener noreferrer">
-            {text}
-          </a>
+          text && (
+            <a title={text.fileUrl} href={text} target="_blank" rel="noopener noreferrer">
+              {text.fileUrl}
+            </a>
+          )
         );
       },
     },

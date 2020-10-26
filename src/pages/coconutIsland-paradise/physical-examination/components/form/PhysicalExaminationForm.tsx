@@ -1,101 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
-import { Radio } from 'antd';
+import AdvancedForm from '@/components/AdvancedForm';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
+import { Radio } from 'antd';
 
-const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
+const PhysicalExaminationForm = ({
+  form,
+  id,
+  dispatch,
+  loading,
+  getUserId,
+  receivedTypeFn,
+  openStatus,
+}) => {
   const [receivedType, setReceivedType] = useState('false');
+  const [userObj, setUserObj] = useState([]);
   const formItems = [
     {
-      label: '通知主题',
+      label: '标题',
       name: 'subject',
-      rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
+      span: 2,
+      rules: [{ required: true, message: '请输入标题!', whitespace: true }],
     },
     {
-      label: '通知类型',
-      name: 'dictNoticeType',
-      enumsLabel: 'dictNoticeType',
-      rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
+      label: '体检时间',
+      name: 'activityDate',
+      type: 'date',
+      rules: [{ required: true, message: '请选择体检时间!' }],
     },
     {
-      key: 'firstLine',
-      type: 'segmentation',
-    },
-    {
-      label: '接收方式',
-      name: 'receivedType',
-      rules: [{ required: true, message: '请选择接收方式!' }],
-      render: (
-        <Radio.Group>
-          <Radio value={0}>单位</Radio>
-          <Radio value={1}>个人</Radio>
-        </Radio.Group>
-      ),
-    },
-    {
-      key: 'thirdlyLine',
-      type: 'segmentation',
-    },
-    {
-      label: '接收单位',
-      name: 'orgList',
-      rules: [{ required: true, message: '请选择接收单位!' }],
-      render: <OrgMultiSelectInput />,
-      visible: receivedType === 0,
-    },
-    {
-      label: '接收人员',
-      name: 'userList',
-      rules: [{ required: true, message: '请选择接收人员!' }],
-      render: <LgbMultiSelectInput />,
-      visible: receivedType === 1,
-    },
-    {
-      key: 'threeLine',
-      type: 'segmentation',
-    },
-    {
-      label: '附件',
-      name: 'attachmentId',
-      type: 'upload',
-    },
-    {
-      key: 'fourLine',
-      type: 'segmentation',
+      label: '体检地址',
+      name: 'activityAdd',
+      rules: [{ required: true, message: '请输入体检地址!', whitespace: true }],
     },
     {
       label: '内容',
       name: 'content',
       type: 'editor',
       rules: [{ required: true, message: '请输入内容!', whitespace: true }],
-      span: 2,
+      span: 4,
+    },
+    {
+      label: '接收方式',
+      name: 'receivedType',
+      rules: [{ required: true, message: '请选择接收方式!' }],
+
+      render: (
+        <Radio.Group disabled={openStatus === 'modify'}>
+          <Radio value={0}>单位</Radio>
+          <Radio value={1}>个人</Radio>
+        </Radio.Group>
+      ),
+    },
+    {
+      key: 'threeLine',
+      type: 'segmentation',
+    },
+    {
+      label: receivedType === 0 ? '接收单位' : null,
+      name: 'orgList',
+      rules: [{ required: receivedType === 0, message: '请选择接收单位!' }],
+      render: receivedType === 0 ? <OrgMultiSelectInput /> : <span style={{ display: 'none' }} />,
     },
   ];
+
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type: 'noticeAnnouncement/detailNoticeAnnouncement',
+          type: 'opPhysicalExamination/detailPhysicalExamination',
           payload: { id, isApp: 0 },
           resolve,
         });
       }).then(data => {
         const fields = {
           ...data,
-          attachmentId:
-            data.cephFile && data.cephFile.id && data.cephFile.fileName
-              ? {
-                  uid: data.cephFile.id,
-                  name: data.cephFile.fileName,
-                  url: data.cephFile.fileUrl,
-                  status: 'done',
-                }
-              : null,
         };
-        setReceivedType(fields.receivedType); // 接收类型初始化
-
+        form.setFieldsValue(fields);
+        setReceivedType(fields.receivedType); // 接收类型
         // 接收单位-数据转化
         if (fields.getOrgInformation) {
           const orgObj = JSON.parse(
@@ -117,7 +100,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
             ).replace(/getUserName/g, 'realName'),
           );
           form.setFieldsValue(fields);
-          form.setFieldsValue({ userList: userObjs });
+          setUserObj(userObjs);
         } else {
           form.setFieldsValue(fields);
         }
@@ -129,9 +112,16 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
   const fieldChangeHander = (label, value) => {
     if (label === 'receivedType') {
       setReceivedType(value);
-      form.setFieldsValue({ orgList: [] }); // 切换类型清空单位
-      form.setFieldsValue({ userList: [] }); // 切换类型清空人员
+      form.setFieldsValue({ orgList: [] }); // 切换类型清空
+      setUserObj([]);
+      receivedTypeFn(value); // 接收类型
     }
+  };
+
+  // 拿到-选择人员id
+  const onChange = keys => {
+    getUserId(keys);
+    setUserObj(keys);
   };
 
   return (
@@ -142,12 +132,13 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
         fields={formItems}
         fieldChange={fieldChangeHander}
       />
+      {receivedType === 1 ? <LgbMultiSelectInput onChange={onChange} value={userObj} /> : null}
     </>
   );
 };
 
-NoticeAnnouncementForm.useForm = AdvancedForm.useForm;
+PhysicalExaminationForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
-  loading: loading.models.noticeAnnouncement,
-}))(NoticeAnnouncementForm);
+  loading: loading.models.opPhysicalExamination,
+}))(PhysicalExaminationForm);
