@@ -12,7 +12,94 @@ const Table = ({
   tableType,
 }) => {
   const { tableRef } = wrVisitsCondolences;
-  const columns = [
+  const columns1 = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      align: 'center',
+      fixed: 'left',
+      width: 64,
+    },
+    {
+      title: `姓名`,
+      align: 'center',
+      dataIndex: 'userRealName',
+    },
+    {
+      title: '性别',
+      align: 'center',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
+      hideInSearch: true,
+    },
+    {
+      title: '离退休类型',
+      align: 'center',
+      dataIndex: 'dictRetirementType',
+      valueEnum: enums.dictRetirementType,
+      hideInSearch: true,
+    },
+    {
+      title: '出生日期',
+      valueType: 'date',
+      align: 'center',
+      dataIndex: 'birthday',
+      hideInSearch: true,
+    },
+    {
+      title: '看望时间',
+      valueType: 'dateRange',
+      align: 'center',
+      dataIndex: 'searchTime',
+      hideInTable: true,
+    },
+    { title: '看望领导', align: 'center', dataIndex: 'leader', hideInSearch: true },
+    {
+      title: tableType === '生日看望' ? '看望地点' : '看望医院',
+      align: 'center',
+      dataIndex: 'address',
+      hideInSearch: true,
+    },
+    {
+      title: '看望时间',
+      valueType: 'date',
+      align: 'center',
+      dataIndex: 'time',
+      hideInSearch: true,
+    },
+    { title: '陪同人员', align: 'center', dataIndex: 'entourage', hideInSearch: true },
+    { title: '慰问品', align: 'center', dataIndex: 'consolationGoods', hideInSearch: true },
+
+    {
+      title: '操作',
+      valueType: 'option',
+      align: 'center',
+      dataIndex: 'id',
+      width: 180,
+      fixed: 'right',
+      render: (dom, Data) => [
+        <a
+          key={`${Data.id}up`}
+          onClick={() => {
+            openModifyModal(Data);
+          }}
+        >
+          编辑
+        </a>,
+
+        <Popconfirm
+          key={`${Data.id}del`}
+          title="确认删除？"
+          placement="topRight"
+          onConfirm={() => deleteReturnworkPerson([Data.id])}
+        >
+          <a>删除</a>
+        </Popconfirm>,
+      ],
+    },
+  ];
+  const columns2 = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -54,10 +141,20 @@ const Table = ({
       dataIndex: 'searchTime',
       hideInTable: true,
     },
-    { title: '慰问领导', align: 'center', dataIndex: 'leader', hideInSearch: true },
-    { title: '慰问地点', align: 'center', dataIndex: 'address', hideInSearch: true },
     {
-      title: '慰问时间',
+      title: tableType === '日常走访' ? '走访领导' : '慰问领导',
+      align: 'center',
+      dataIndex: 'leader',
+      hideInSearch: true,
+    },
+    {
+      title: tableType === '日常走访' ? '走访地点' : '慰问地点',
+      align: 'center',
+      dataIndex: 'address',
+      hideInSearch: true,
+    },
+    {
+      title: tableType === '日常走访' ? '走访时间' : '慰问时间',
       valueType: 'date',
       align: 'center',
       dataIndex: 'time',
@@ -102,9 +199,9 @@ const Table = ({
   // 列表
   const getVisitList = params => {
     let visitType = '';
-    if (tableType === '生日慰问') {
+    if (tableType === '生日看望') {
       visitType = '402883ea73c687ef0173c687ef71';
-    } else if (tableType === '住院慰问') {
+    } else if (tableType === '住院看望') {
       visitType = '402883ea73c689120173c68912b9';
     } else if (tableType === '节日慰问') {
       visitType = '402883ea73c68c090173c68c09f4';
@@ -162,7 +259,7 @@ const Table = ({
           </Button>
         ),
       ]}
-      columns={columns}
+      columns={tableType === '生日看望' || tableType === '住院看望' ? columns1 : columns2}
     />
   );
 };

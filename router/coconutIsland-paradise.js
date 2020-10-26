@@ -108,6 +108,13 @@ const routes = {
       authority: '04-15',
       remark: '健康测评',
     },
+    {
+      path: '/coconutIsland-paradise/physical-examination',
+      name: 'coconutIsland-paradise-physical-examination',
+      component: './coconutIsland-paradise/physical-examination',
+      authority: '04-16',
+      remark: '体检管理',
+    },
   ],
 };
 export default routes;

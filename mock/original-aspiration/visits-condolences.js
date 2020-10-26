@@ -66,7 +66,7 @@ const statisticsVisit = (req, res) => {
           number: 12, //数量
         },
         {
-          type: '住院慰问',
+          type: '住院看望',
           number: 34,
         },
         {

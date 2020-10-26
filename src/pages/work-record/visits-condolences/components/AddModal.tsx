@@ -37,9 +37,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
 
   const handleOk = () => {
     let visitType = '';
-    if (tableType === '生日慰问') {
+    if (tableType === '生日看望') {
       visitType = '402883ea73c687ef0173c687ef71';
-    } else if (tableType === '住院慰问') {
+    } else if (tableType === '住院看望') {
       visitType = '402883ea73c689120173c68912b9';
     } else if (tableType === '节日慰问') {
       visitType = '402883ea73c68c090173c68c09f4';
