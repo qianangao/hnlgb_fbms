@@ -1,7 +1,7 @@
 const routes = {
   path: '/information-release',
   name: 'information-release',
-  icon: 'team',
+  icon: 'mail',
   authority: '07',
   remark: '信息发布',
   routes: [

@@ -1,7 +1,7 @@
 const routes = {
   path: '/work-record',
   name: 'work-record',
-  icon: 'team',
+  icon: 'file-text',
   authority: '05',
   remark: '工作记录',
   routes: [

@@ -14,7 +14,10 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const formItems = [
     {
       name: 'id',
-      label: 'userid',
+      hidden: true,
+    },
+    {
+      name: 'userid',
       hidden: true,
     },
     {
