@@ -5,12 +5,13 @@ const findData = (idArr, data) => {
     return { children: data };
   }
 
-  const tempData = { children: data };
+  let tempData = { children: data };
   let tempId = idArr[0];
 
   for (let i = 1; i < idArr.length; i++) {
     tempId = `${tempId}-${idArr[i]}`;
-
+    // eslint-disable-next-line no-loop-func
+    tempData = tempData.children.find(item => item.value === tempId);
     if (!tempData) break;
   }
 
