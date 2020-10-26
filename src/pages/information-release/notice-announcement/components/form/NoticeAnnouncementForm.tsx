@@ -5,9 +5,8 @@ import { Radio } from 'antd';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
 
-const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receivedTypeFn }) => {
+const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
   const [receivedType, setReceivedType] = useState('false');
-  const [userObj, setUserObj] = useState([]);
   const formItems = [
     {
       label: '通知主题',
@@ -19,22 +18,6 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
       name: 'dictNoticeType',
       enumsLabel: 'dictNoticeType',
       rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
-    },
-    {
-      label: '附件',
-      name: 'attachmentId',
-      type: 'upload',
-    },
-    {
-      key: 'thirdlyLine',
-      type: 'segmentation',
-    },
-    {
-      label: '内容',
-      name: 'content',
-      type: 'editor',
-      rules: [{ required: true, message: '请输入内容!', whitespace: true }],
-      span: 2,
     },
     {
       key: 'firstLine',
@@ -52,14 +35,42 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
       ),
     },
     {
+      key: 'thirdlyLine',
+      type: 'segmentation',
+    },
+    {
+      label: '接收单位',
+      name: 'orgList',
+      rules: [{ required: true, message: '请选择接收单位!' }],
+      render: <OrgMultiSelectInput />,
+      visible: receivedType === 0,
+    },
+    {
+      label: '接收人员',
+      name: 'userList',
+      rules: [{ required: true, message: '请选择接收人员!' }],
+      render: <LgbMultiSelectInput />,
+      visible: receivedType === 1,
+    },
+    {
       key: 'threeLine',
       type: 'segmentation',
     },
     {
-      label: receivedType === 0 ? '接收单位' : null,
-      name: 'orgList',
-      rules: [{ required: receivedType === 0, message: '请选择接收单位!' }],
-      render: receivedType === 0 ? <OrgMultiSelectInput /> : <span style={{ display: 'none' }} />,
+      label: '附件',
+      name: 'attachmentId',
+      type: 'upload',
+    },
+    {
+      key: 'fourLine',
+      type: 'segmentation',
+    },
+    {
+      label: '内容',
+      name: 'content',
+      type: 'editor',
+      rules: [{ required: true, message: '请输入内容!', whitespace: true }],
+      span: 2,
     },
   ];
   useEffect(() => {
@@ -83,7 +94,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
                 }
               : null,
         };
-        setReceivedType(fields.receivedType); // 接收类型
+        setReceivedType(fields.receivedType); // 接收类型初始化
 
         // 接收单位-数据转化
         if (fields.getOrgInformation) {
@@ -106,7 +117,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
             ).replace(/getUserName/g, 'realName'),
           );
           form.setFieldsValue(fields);
-          setUserObj(userObjs);
+          form.setFieldsValue({ userList: userObjs });
         } else {
           form.setFieldsValue(fields);
         }
@@ -118,16 +129,9 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
   const fieldChangeHander = (label, value) => {
     if (label === 'receivedType') {
       setReceivedType(value);
-      form.setFieldsValue({ orgList: [] }); // 切换类型清空
-      setUserObj([]);
-      receivedTypeFn(value); // 接收类型
+      form.setFieldsValue({ orgList: [] }); // 切换类型清空单位
+      form.setFieldsValue({ userList: [] }); // 切换类型清空人员
     }
-  };
-
-  // 拿到-选择人员id
-  const onChange = keys => {
-    getUserId(keys);
-    setUserObj(keys);
   };
 
   return (
@@ -138,7 +142,6 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading, getUserId, receiv
         fields={formItems}
         fieldChange={fieldChangeHander}
       />
-      {receivedType === 1 ? <LgbMultiSelectInput onChange={onChange} value={userObj} /> : null}
     </>
   );
 };

@@ -38,17 +38,18 @@ const Table = ({
       align: 'center',
       dataIndex: 'dictPartyCategory',
       valueEnum: enums.dictPartyCategory,
-      hideInSearch: true,
     },
     {
       title: '书记',
       align: 'center',
       dataIndex: 'branchSecretaryName',
+      hideInSearch: true,
     },
     {
       title: '副书记',
       align: 'center',
       dataIndex: 'branchDeputySecretaryOneName',
+      hideInSearch: true,
     },
     {
       title: '换届时间',

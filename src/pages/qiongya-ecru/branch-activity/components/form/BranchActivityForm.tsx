@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 
-const BranchActivityForm = ({ form, id, dispatch, loading, partyData, noticeData }) => {
+const BranchActivityForm = ({ form, id, dispatch, loading, partyData }) => {
   const formItems = [
     {
       label: '活动名称',
       name: 'activityName',
-      enumsItems: noticeData,
       rules: [{ required: true, message: '请输入活动名称!', whitespace: true }],
     },
     {
@@ -108,11 +107,6 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData, noticeData
   useEffect(() => {
     // 支部-列表
     dispatch({
-      type: 'noticeAnnouncement/noticeAnnouncementList',
-      payload: { current: 1, pageSize: 10000 },
-    });
-    // 通知公告-列表
-    dispatch({
       type: 'branchInformation/branchInformationList',
       payload: { current: 1, pageSize: 10000 },
     });
@@ -122,10 +116,9 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData, noticeData
 
 BranchActivityForm.useForm = AdvancedForm.useForm;
 
-export default connect(({ loading, global, branchInformation, noticeAnnouncement }) => ({
+export default connect(({ loading, global, branchInformation }) => ({
   loading: loading.models.branchActivity,
   enums: global.enums,
   branchInformationData: branchInformation.branchInformationData,
   partyData: branchInformation.partyData,
-  noticeData: noticeAnnouncement.noticeAnnouncementList,
 }))(BranchActivityForm);

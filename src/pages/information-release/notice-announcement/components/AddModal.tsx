@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button, message } from 'antd';
+import { Modal, Button } from 'antd';
 import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = NoticeAnnouncementForm.useForm();
-  const [userIds, setUserIds] = useState([]);
-  const [receivedType, setReceivedType] = useState(null);
   const showModal = () => {
     dispatch({
       type: 'noticeAnnouncement/save',
@@ -37,19 +35,15 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
-  // 获取-选择的成员id
-  const getUserId = keys => {
-    const getUserIds = [];
-    keys.forEach(item => {
+  // 获取userList
+  const changeFormat = params => {
+    const userArr = [];
+    params.forEach(item => {
       if (item) {
-        getUserIds.push(item.id);
+        userArr.push(item.id);
       }
     });
-    setUserIds(getUserIds);
-  };
-  // 获取-接收类型
-  const receivedTypeFn = value => {
-    setReceivedType(value);
+    return userArr;
   };
   const handleOk = publishStatus => {
     form
@@ -61,21 +55,14 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           content: values.content,
           attachmentId: values.attachmentId ? values.attachmentId.uid : undefined,
           dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          userList: userIds, // 人员列表
-          receivedType,
+          receivedType: values.receivedType,
         };
-        // 转化单位数据格式
-        const orgArrId = [];
-        values.orgList &&
-          values.orgList.forEach(item => {
-            if (item) {
-              orgArrId.push(item.id);
-            }
-          });
-        payload.orgList = orgArrId;
-        if (orgArrId.length === 0 && userIds.length === 0) {
-          message.error('请传入接收单位或接收个人');
-          return;
+        if (values.receivedType === 1) {
+          payload.userList = changeFormat(values.userList);
+          payload.orgList = [];
+        }
+        if (values.receivedType === 0) {
+          payload.orgList = changeFormat(values.orgList);
         }
         dispatch({
           type: `noticeAnnouncement/addNoticeAnnouncement`,
@@ -111,7 +98,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <NoticeAnnouncementForm form={form} getUserId={getUserId} receivedTypeFn={receivedTypeFn} />
+      <NoticeAnnouncementForm form={form} />
     </Modal>
   );
 };
