@@ -16,19 +16,22 @@ const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
       label: '帮扶原因',
       name: 'helpReason',
       enumsLabel: 'helpReason',
-      rules: [{ required: true, message: '请选择帮扶原因!', whitespace: true }],
+      rules: [{ required: true, message: '请选择帮扶原因!' }],
     },
     {
       label: '帮扶金额',
       name: 'helpMoney',
+      rules: [{ required: true, message: '请填写帮扶金额!', whitespace: true }],
     },
     {
       label: '发放人',
       name: 'helpPeople',
+      rules: [{ required: true, message: '请填写发放人!', whitespace: true }],
     },
     {
       label: '帮扶单位',
       name: 'helpOrganization',
+      rules: [{ required: true, message: '请填写帮扶单位!', whitespace: true }],
     },
   ];
   useEffect(() => {

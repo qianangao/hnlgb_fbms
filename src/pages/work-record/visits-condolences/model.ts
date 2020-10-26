@@ -60,9 +60,11 @@ const Model = {
         });
       }
     },
-    *getDeathMemberList({ payload, resolve }, { call, put }) {
+    *getDeathMemberList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.wrVisitsCondolences.selectedOrgId);
       const params = {
         ...payload,
+        orgIdForDataSelect,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };

@@ -9,7 +9,7 @@ import StatisticsTable from './components/StatisticsTable';
 import ModifyModal from './components/ModifyModal';
 
 const AcadvancedDeeds = ({ dispatch }) => {
-  const [tableType, setTableType] = useState('生日慰问');
+  const [tableType, setTableType] = useState('生日看望');
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   useEffect(() => {
@@ -34,12 +34,12 @@ const AcadvancedDeeds = ({ dispatch }) => {
 
   const tabs = [
     {
-      id: '生日慰问',
-      label: '生日慰问',
+      id: '生日看望',
+      label: '生日看望',
     },
     {
-      id: '住院慰问',
-      label: '住院慰问',
+      id: '住院看望',
+      label: '住院看望',
     },
     {
       id: '节日慰问',
