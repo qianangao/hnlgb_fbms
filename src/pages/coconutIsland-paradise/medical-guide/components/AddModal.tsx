@@ -44,6 +44,8 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `medicalGuide/addMedicalGuideInfo`,
           payload: {
             ...values,
+            longitude: '108.97544873046874',
+            latitude: '33.910876053972466',
           },
         });
       })

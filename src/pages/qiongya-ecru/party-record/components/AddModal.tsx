@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import PartyRecordForm from './form/PartyRecordForm';
 
 const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = PartyRecordForm.useForm();
+  const [userIds, setUserIds] = useState('');
   const showModal = () => {
     dispatch({
       type: 'partyRecord/save',
@@ -43,6 +44,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           type: `partyRecord/addPartyRecord`,
           payload: {
             ...values,
+            userIds,
           },
         });
         form.resetFields();
@@ -50,6 +52,17 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .catch(info => {
         console.error('新增错误', info);
       });
+  };
+
+  // 获取-选择的成员id
+  const getUserId = keys => {
+    const getUserIds = [];
+    keys.forEach(item => {
+      if (item) {
+        getUserIds.push(item.id);
+      }
+    });
+    setUserIds(getUserIds);
   };
 
   return (
@@ -72,7 +85,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <PartyRecordForm form={form} />
+      <PartyRecordForm form={form} getUserId={getUserId} />
     </Modal>
   );
 };

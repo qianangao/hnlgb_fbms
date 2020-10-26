@@ -23,10 +23,10 @@ const Model = {
     memberListData: {},
     caresDetailData: {},
     trendsDetailData: {},
+    tableCaresRef: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     caresDetailModalVisible: false, // 关工组织详情modal visible
-    caresModifyModalVisible: false, // 关工组织编辑modal visible
     caresAddModalVisible: false, // 新增关工组织modal visible
     trendsAddModalVisible: false, // 发布动态modal visible
     memberModifyModalVisible: false, // 编辑成员modal visible
@@ -142,16 +142,11 @@ const Model = {
         });
       }
     },
-    *updateCares({ payload }, { call, put }) {
+    *updateCares({ payload, resolve }, { call, put }) {
       const response = yield call(updateCares, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            caresModifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('关工组织修改成功！');
         yield put({
           type: 'tableReload',
@@ -287,8 +282,10 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
+      const tableCaresRef = state.tableCaresRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
+        tableCaresRef.current && tableCaresRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },

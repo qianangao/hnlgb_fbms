@@ -8,14 +8,7 @@ import styles from './index.less';
 
 let tempSelectData = [];
 
-const LgbSelectInput = ({
-  value,
-  enums,
-  orgTree = false,
-  extraParams = {},
-  dispatch,
-  onChange,
-}) => {
+const LgbSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onChange }) => {
   const tableRef = useRef({});
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -106,7 +99,7 @@ const LgbSelectInput = ({
       orgTree && (params.orgIdForDataSelect = selectedOrgId);
       dispatch({
         type: 'globalLgb/getLgbList',
-        payload: { ...params, ...extraParams },
+        payload: { ...params },
         resolve,
       });
     });
@@ -238,7 +231,7 @@ const LgbSelectInput = ({
                 selectedRowKeys,
               }}
               scroll={{ x: 'max-content' }}
-              request={async params => getEmployeeList(params)}
+              request={getLgbs || (async params => getEmployeeList(params))}
               columns={columns}
             />
           </section>

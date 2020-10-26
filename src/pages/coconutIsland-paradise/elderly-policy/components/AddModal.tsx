@@ -43,7 +43,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         dispatch({
           type: `elderlyPolicy/addElderlyPolicyInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            context: values.context,
+            fileId: values.attachmentInfo.uid,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
@@ -72,7 +74,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
           发布
         </Button>,
       ]}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >

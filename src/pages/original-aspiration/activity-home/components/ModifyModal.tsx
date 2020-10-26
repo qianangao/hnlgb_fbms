@@ -66,10 +66,10 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       visible={modifyModalVisible}
       destroyOnClose
       footer={[
-        <Button loading={loading} type="primary" onClick={() => handleOk(true)}>
+        <Button loading={loading} onClick={() => handleOk(true)}>
           保存
         </Button>,
-        <Button loading={loading} type="primary" onClick={() => handleOk(false)}>
+        <Button loading={loading} onClick={() => handleOk(false)}>
           发布
         </Button>,
       ]}

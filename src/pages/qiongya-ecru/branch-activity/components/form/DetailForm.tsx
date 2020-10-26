@@ -2,20 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions } from 'antd';
 
-const DetailForm = ({ dispatch, item, detailBranchActivityData }) => {
+const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
   const { context } = detailBranchActivityData;
-  const { id } = item;
   useEffect(() => {
-    const ids = `${item.id}+${item.holdActivityId}+${item.noticeId}`;
-    const payload = {
-      deleteNotice: true,
-      split: '+',
-    };
-    payload.idsArr = [ids];
     if (id) {
       dispatch({
         type: 'branchActivity/detailBranchActivity',
-        payload,
+        payload: { id, isInput: 1 },
       });
     }
   }, [id]);

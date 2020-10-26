@@ -71,10 +71,10 @@ const detailOrgLife = (req, res) => {
 };
 
 export default {
-  'GET /lgbsmp/api/partyDue': list,
-  'POST /lgbsmp/api/partyDue': noResponse,
-  'DELETE /lgbsmp/api/partyDue': noResponse,
-  'PUT /lgbsmp/api/partyDue/:id': noResponse,
-  'GET /lgbsmp/api/partyDue/:id': detailOrgLife,
-  'GET /lgbsmp/api/partyDueExport': noResponse,
+  'GET /partyDue': list,
+  'POST /partyDue': noResponse,
+  'DELETE /partyDue': noResponse,
+  'PUT /partyDue/:id': noResponse,
+  'GET /partyDue/:id': detailOrgLife,
+  'GET /partyDueExport': noResponse,
 };

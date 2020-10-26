@@ -34,23 +34,6 @@ const SelectModal = ({ dispatch, selectModalVisible, actionRef }) => {
     });
   };
 
-  const handleOk = () => {
-    // form
-    //   .validateFields()
-    //   .then(values => {
-    //     dispatch({
-    //       type: `onlineRegistration/updateOnlineRegistrationInfo`, // 选择人员接口待确定
-    //       payload: {
-    //         ...values,
-    //         id: lgbId,
-    //       },
-    //     });
-    //   })
-    //   .catch(info => {
-    //     console.error('Validate Failed:', info);
-    //   });
-  };
-
   return (
     <Modal
       title="选择人员/单位"
@@ -62,8 +45,8 @@ const SelectModal = ({ dispatch, selectModalVisible, actionRef }) => {
         overflow: 'auto',
       }}
       visible={selectModalVisible}
-      onOk={handleOk}
       maskClosable={false}
+      footer={[]}
       destroyOnClose
       onCancel={hideModal}
     >

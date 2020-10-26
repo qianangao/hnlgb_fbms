@@ -42,6 +42,14 @@ const PolicyStipulateForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
+
+        data.attachmentInfo &&
+          (fields.attachmentInfo = {
+            url: data.attachmentInfo.url,
+            uid: data.attachmentInfo.id,
+            name: data.attachmentInfo.fileName,
+            status: 'done',
+          });
         form.setFieldsValue(fields);
       });
     }

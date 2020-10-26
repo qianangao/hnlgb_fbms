@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function dailyBroadcastList(params) {
-  return request('/dailyBroadcast', {
+  return request('/daily-report', {
     method: 'GET',
     params,
   });
@@ -16,7 +16,7 @@ export async function dailyBroadcastList(params) {
  * @param {*} params
  */
 export async function detailDailyBroadcast(params) {
-  return request(`/dailyBroadcast/${params.id}`, {
+  return request(`/daily-report/${params.id}`, {
     method: 'GET',
     params,
   });

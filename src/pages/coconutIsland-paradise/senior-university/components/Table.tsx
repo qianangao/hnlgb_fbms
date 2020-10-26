@@ -3,14 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({
-  openAddModal,
-  openModifyModal,
-  seniorUniversity,
-  dispatch,
-  opendetailModal,
-  publishStatus,
-}) => {
+const Table = ({ openAddModal, openModifyModal, seniorUniversity, dispatch }) => {
   const { tableRef } = seniorUniversity;
   const columns = [
     {
@@ -41,12 +34,6 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '教学安排',
-      align: 'center',
-      dataIndex: 'teachingActivities',
-      hideInSearch: true,
-    },
-    {
       title: '联系电话',
       align: 'center',
       dataIndex: 'phone',
@@ -60,25 +47,14 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, Data) => [
-        publishStatus === 0 ? (
-          <a
-            key={`${Data.id}up`}
-            onClick={() => {
-              openModifyModal(Data);
-            }}
-          >
-            编辑
-          </a>
-        ) : (
-          <a
-            key={`${Data.id}detail`}
-            onClick={() => {
-              opendetailModal(Data);
-            }}
-          >
-            详情
-          </a>
-        ),
+        <a
+          key={`${Data.id}up`}
+          onClick={() => {
+            openModifyModal(Data);
+          }}
+        >
+          编辑
+        </a>,
         <Popconfirm
           key={`${Data.id}del`}
           title="确认删除该老年大学吗？"
@@ -96,7 +72,7 @@ const Table = ({
     new Promise(resolve => {
       dispatch({
         type: 'seniorUniversity/seniorUniversityInfoList',
-        payload: { ...params, pushStatus: publishStatus },
+        payload: { ...params },
         resolve,
       });
     });
@@ -117,11 +93,9 @@ const Table = ({
       scroll={{ x: 'max-content' }}
       request={async params => getSeniorUniversityList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        publishStatus === 0 ? (
-          <Button type="primary" onClick={() => openAddModal()}>
-            新增
-          </Button>
-        ) : null,
+        <Button type="primary" onClick={() => openAddModal()}>
+          新增
+        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {

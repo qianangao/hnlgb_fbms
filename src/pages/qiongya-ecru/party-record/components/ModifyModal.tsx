@@ -40,10 +40,12 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
+        const payload = { ...values };
+        delete payload.partyId;
         dispatch({
           type: `partyRecord/updatePartyRecord`,
           payload: {
-            ...values,
+            ...payload,
             id,
           },
         });

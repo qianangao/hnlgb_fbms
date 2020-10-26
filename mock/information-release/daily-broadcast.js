@@ -64,9 +64,9 @@ const detailDailyBroadcast = (req, res) => {
 };
 
 export default {
-  'GET /dailyBroadcast': list,
-  'POST /dailyBroadcast': noResponse,
-  'DELETE /dailyBroadcast': noResponse,
-  'PUT /dailyBroadcast/:id': noResponse,
-  'GET /dailyBroadcast/:id': detailDailyBroadcast,
+  'GET /daily-report': list,
+  'POST /daily-report': noResponse,
+  'DELETE /daily-report': noResponse,
+  'PUT /daily-report/:id': noResponse,
+  'GET /daily-report/:id': detailDailyBroadcast,
 };

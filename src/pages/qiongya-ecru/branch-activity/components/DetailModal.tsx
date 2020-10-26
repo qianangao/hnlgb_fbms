@@ -4,9 +4,9 @@ import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
-  const [item, setItem] = useState('');
-  const showModal = items => {
-    setItem(items);
+  const [detailId, setDetailId] = useState('');
+  const showModal = item => {
+    setDetailId(item.id);
     dispatch({
       type: 'branchActivity/save',
       payload: {
@@ -56,7 +56,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <DetailForm item={item} />
+        <DetailForm id={detailId} />
       </div>
     </Modal>
   );

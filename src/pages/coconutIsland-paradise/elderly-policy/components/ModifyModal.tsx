@@ -43,7 +43,9 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         dispatch({
           type: `elderlyPolicy/updateElderlyPolicyInfo`,
           payload: {
-            ...values,
+            title: values.title,
+            context: values.context,
+            fileId: values.attachmentInfo.uid,
             id: lgbId,
             pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },

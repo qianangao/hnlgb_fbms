@@ -18,7 +18,7 @@ const DetailForm = ({ id, dispatch, detailNewsDynamicData }) => {
       releaseTime={detailNewsDynamicData.releaseTime}
       orgName={detailNewsDynamicData.createOrgName}
       content={detailNewsDynamicData.context}
-      extraFile={detailNewsDynamicData.attachmentInfo}
+      extraFile={detailNewsDynamicData.cephFile}
     />
   );
 };
