@@ -8,7 +8,10 @@ const ActivityForm = ({ form, id, dispatch, loading }) => {
       label: '标题',
       name: 'activityTitle',
       span: 2,
-      rules: [{ required: true, message: '请输入标题!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入标题!', whitespace: true },
+        { max: 64, message: '标题不超过64个字!' },
+      ],
     },
     {
       label: '活动分类',

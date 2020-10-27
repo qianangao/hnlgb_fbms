@@ -13,7 +13,10 @@ const TeamForm = ({ form, id, dispatch, loading }) => {
       label: '团队名称',
       name: 'teamName',
       span: 2,
-      rules: [{ required: true, message: '请输入标题!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入标题!', whitespace: true },
+        { max: 64, message: '团队名称不超过64个字!' },
+      ],
     },
     {
       label: '团队类型',
@@ -53,7 +56,10 @@ const TeamForm = ({ form, id, dispatch, loading }) => {
     {
       label: '团队负责人',
       name: 'chargePerson',
-      rules: [{ required: true, message: '请输入团队负责人!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入团队负责人!', whitespace: true },
+        { max: 64, message: '团队负责人不超过64个字!' },
+      ],
     },
     {
       label: '联系电话',

@@ -19,19 +19,26 @@ const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请选择帮扶原因!' }],
     },
     {
-      label: '帮扶金额',
+      label: '帮扶金额(元)',
       name: 'helpMoney',
-      rules: [{ required: true, message: '请填写帮扶金额!', whitespace: true }],
+      type: 'number',
+      rules: [{ required: true, message: '请填写帮扶金额!' }],
     },
     {
       label: '发放人',
       name: 'helpPeople',
-      rules: [{ required: true, message: '请填写发放人!', whitespace: true }],
+      rules: [
+        { required: true, message: '请填写发放人!', whitespace: true },
+        { max: 64, message: '发放人不超过64个字!' },
+      ],
     },
     {
       label: '帮扶单位',
       name: 'helpOrganization',
-      rules: [{ required: true, message: '请填写帮扶单位!', whitespace: true }],
+      rules: [
+        { required: true, message: '请填写帮扶单位!', whitespace: true },
+        { max: 64, message: '帮扶单位不超过64个字!' },
+      ],
     },
   ];
   useEffect(() => {
