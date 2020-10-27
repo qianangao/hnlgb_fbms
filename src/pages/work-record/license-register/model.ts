@@ -71,17 +71,11 @@ const Model = {
         });
       }
     },
-    *updateLicenseRegisterInfo({ payload }, { call, put }) {
+    *updateLicenseRegisterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateLicenseRegisterInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改证照登记成功！');
 
         yield put({

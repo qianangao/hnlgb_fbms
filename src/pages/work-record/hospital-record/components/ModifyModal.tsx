@@ -4,17 +4,14 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import HospitalRegistrationForm from './form/HospitalRegistrationForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = HospitalRegistrationForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
+
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'hospitalRegistration/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +24,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'hospitalRegistration/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,13 +32,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `hospitalRegistration/updateHospitalRegistrationInfo`,
-          payload: {
-            ...values,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `hospitalRegistration/updateHospitalRegistrationInfo`,
+            payload: {
+              ...values,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -85,7 +82,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ hospitalRegistration, loading }) => ({
-  modifyModalVisible: hospitalRegistration.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.hospitalRegistration,
 }))(ModifyModal);
