@@ -14,10 +14,15 @@ const Model = {
     },
   },
   effects: {
-    *getSummaryData({ payload }, { call, put }) {
-      const response = yield call(getSummaryData, payload);
+    *getSummaryData({ payload }, { call, put, select }) {
+      const { organizationId } = yield select(state => state.user.userInfo);
 
-      if (!response || !response.error) {
+      const response = yield call(getSummaryData, {
+        orgIdForDataSelect: organizationId,
+        ...payload,
+      });
+
+      if (!response.error) {
         yield put({
           type: 'save',
           payload: {
@@ -56,7 +61,7 @@ const Model = {
 
       const response = yield call(getMonitorPersonList, params);
 
-      if (!response || !response.error) {
+      if (!response.error) {
         const { items, currentPage, totalNum } = response;
 
         const result = {
