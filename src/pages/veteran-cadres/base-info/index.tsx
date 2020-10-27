@@ -23,7 +23,7 @@ const BaseInfo = ({ dispatch }) => {
         names: [
           'dictAllergenUnitNaturel',
           'dictDegree',
-          'dictHealth',
+          'dictHealthStatus',
           'dictMedicalTreatment',
           'dictNation',
           'dictPoliticalStatus',
@@ -37,7 +37,7 @@ const BaseInfo = ({ dispatch }) => {
           'dictUnitNature',
           'dictSpouseSex',
           'dictSpouseHealth',
-          'hierarchy',
+          'dictHierarchy',
           'dictIdentity',
         ],
       },

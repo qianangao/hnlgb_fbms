@@ -84,7 +84,7 @@ const LgbMultiSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch,
     });
   }, []);
   useEffect(() => {
-    if (value && value.length > 0) {
+    if (value && Array.isArray(value)) {
       setListData(value);
       setSelectedRowKeys(value.map(item => item.id));
     }

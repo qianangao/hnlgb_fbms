@@ -32,14 +32,16 @@ const MonitorDetail = ({ getRef, getDetailData }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    getRef({
-      actionRef,
-      formRef,
-      showModal: item => {
-        setListTitle(item.title);
-        setModalVisible(true);
-      },
-    });
+    if (actionRef && typeof actionRef !== 'function') {
+      getRef.current = {
+        actionRef,
+        formRef,
+        showModal: item => {
+          setListTitle(item.title);
+          setModalVisible(true);
+        },
+      };
+    }
   }, []);
 
   const closeDetailDataModal = () => {

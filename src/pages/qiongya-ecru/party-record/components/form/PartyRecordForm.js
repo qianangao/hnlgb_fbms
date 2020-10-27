@@ -94,6 +94,7 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
   const fieldChangeHander = (label, value) => {
     if (label === 'partyId') {
       setPartyId(value);
+      form.setFieldsValue({ userIds: [] });
     }
   };
 
