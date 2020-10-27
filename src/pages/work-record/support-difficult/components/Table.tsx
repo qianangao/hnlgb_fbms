@@ -69,7 +69,7 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '帮扶金额',
+      title: '帮扶金额(元)',
       align: 'center',
       dataIndex: 'helpMoney',
       hideInSearch: true,
