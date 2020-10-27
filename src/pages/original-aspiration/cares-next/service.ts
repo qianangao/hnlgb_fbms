@@ -57,7 +57,7 @@ export async function deleteCares(params) {
  * @param {*} params
  */
 export async function deleteTrends(params) {
-  return request(`/care-generation/mechanism`, {
+  return request(`/care-generation`, {
     method: 'DELETE',
     data: params,
   });

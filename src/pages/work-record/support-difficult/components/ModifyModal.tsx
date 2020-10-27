@@ -57,7 +57,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
   };
   return (
     <Modal
-      title={`编辑${tableType === '1' ? '特困补助申请管理' : '遗孀补助申请管理'}`}
+      title={`编辑${tableType === '1' ? '特困补助申请' : '遗孀补助申请'}`}
       centered
       destroyOnClose
       width="900px"

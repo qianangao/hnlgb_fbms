@@ -9,7 +9,10 @@ const CaresForm = ({ form, dispatch, id }) => {
       label: '组织名称',
       name: 'mechanismName',
       span: 2,
-      rules: [{ required: true, message: '请输入组织机构!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入组织名称!', whitespace: true },
+        { max: 64, message: '组织名称不超过64个字!' },
+      ],
     },
     {
       label: '联系人',
@@ -23,7 +26,7 @@ const CaresForm = ({ form, dispatch, id }) => {
     {
       label: '简介',
       name: 'introduction',
-      type: 'textArea',
+      type: 'textarea',
       span: 4,
       rules: [{ required: true, message: '请输入简介!', whitespace: true }],
     },
