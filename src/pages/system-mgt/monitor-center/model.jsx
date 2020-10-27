@@ -33,6 +33,7 @@ const Model = {
     },
     *getMonitorPersonList({ payload, resolve }, { select, call, put }) {
       const selectMonitorItem = yield select(state => state.smMonitorCenter.selectMonitorItem);
+      const { organizationId } = yield select(state => state.user.userInfo);
       let type = 0;
       // 1-老同志月活跃数，2-工作人员月活跃数,3-老干部登陆总数，4-工作人员登陆总数
       switch (selectMonitorItem.field) {
@@ -59,6 +60,7 @@ const Model = {
         pageSize: payload.pageSize,
       };
 
+      params.orgIdForDataSelect || (params.orgIdForDataSelect = organizationId);
       const response = yield call(getMonitorPersonList, params);
 
       if (!response.error) {
