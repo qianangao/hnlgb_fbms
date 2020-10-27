@@ -15,7 +15,6 @@ const Model = {
   namespace: 'branchInformation',
   state: {
     branchInformationData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailbranchInformationData: {},
@@ -73,30 +72,20 @@ const Model = {
       });
     },
 
-    *addBranchInformation({ payload }, { call, put }) {
+    *addBranchInformation({ payload, resolve }, { call, put }) {
       const response = yield call(addBranchInformation, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('支部信息新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateBranchInformation({ payload }, { call, put }) {
+    *updateBranchInformation({ payload, resolve }, { call, put }) {
       const response = yield call(updateBranchInformation, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('支部信息修改成功！');
         yield put({
           type: 'tableReload',

@@ -62,31 +62,20 @@ const Model = {
       });
     },
 
-    *addOnlineClass({ payload }, { call, put }) {
+    *addOnlineClass({ payload, resolve }, { call, put }) {
       const response = yield call(addOnlineClass, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('网络课堂新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateOnlineClass({ payload }, { call, put }) {
+    *updateOnlineClass({ payload, resolve }, { call, put }) {
       const response = yield call(updateOnlineClass, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('网络课堂修改成功！');
 
         yield put({

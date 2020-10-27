@@ -15,19 +15,25 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
     {
       label: tableType === '生日看望' ? '看望地点' : '看望医院',
       name: 'address',
+      rules: [
+        { max: 64, message: `${tableType === '生日看望' ? '看望地点' : '看望医院'}不超过64个字` },
+      ],
     },
     {
       label: '看望领导',
       name: 'leader',
+      rules: [{ max: 64, message: `看望领导不超过64个字` }],
     },
     {
       label: '陪同人员',
       name: 'entourage',
+      rules: [{ max: 64, message: `陪同人员不超过64个字` }],
     },
 
     {
       label: '慰问品',
       name: 'consolationGoods',
+      rules: [{ max: 64, message: `慰问品不超过64个字` }],
     },
     {
       label: '照片信息',
@@ -37,7 +43,7 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
   ];
   const formItems2 = [
     {
-      label:  tableType === '日常走访' ? '走访时间' : '慰问时间',
+      label: tableType === '日常走访' ? '走访时间' : '慰问时间',
       name: 'time',
       type: 'date',
       rules: [{ required: true, message: '请选择时间!' }],
@@ -45,19 +51,27 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
     {
       label: tableType === '日常走访' ? '走访地点' : '慰问地点',
       name: 'address',
+      rules: [
+        { max: 64, message: `${tableType === '日常走访' ? '走访地点' : '慰问地点'}不超过64个字` },
+      ],
     },
     {
       label: tableType === '日常走访' ? '走访领导' : '慰问领导',
       name: 'leader',
+      rules: [
+        { max: 64, message: `${tableType === '日常走访' ? '走访领导' : '慰问领导'}不超过64个字` },
+      ],
     },
     {
       label: '陪同人员',
       name: 'entourage',
+      rules: [{ max: 64, message: `陪同人员不超过64个字` }],
     },
 
     {
       label: '慰问品',
       name: 'consolationGoods',
+      rules: [{ max: 64, message: `慰问品不超过64个字` }],
     },
     {
       label: '照片信息',
@@ -105,14 +119,23 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         {tableType === '遗属慰问' ? <LgbSelectInput getLgbs={getMemberList} /> : <LgbSelectInput />}
       </Form.Item>
-      <Descriptions title={`${tableType}详情` }/>
+      <Descriptions title={`${tableType}详情`} />
     </>
   );
 
   return id ? (
-    <AdvancedForm form={form} loading={loading} fields={tableType === '生日看望' || tableType === '住院看望' ? formItems1 : formItems2} />
+    <AdvancedForm
+      form={form}
+      loading={loading}
+      fields={tableType === '生日看望' || tableType === '住院看望' ? formItems1 : formItems2}
+    />
   ) : (
-    <AdvancedForm form={form} loading={loading} fields={tableType === '生日看望' || tableType === '住院看望' ? formItems1 : formItems2} headerRender={selectLgbInput} />
+    <AdvancedForm
+      form={form}
+      loading={loading}
+      fields={tableType === '生日看望' || tableType === '住院看望' ? formItems1 : formItems2}
+      headerRender={selectLgbInput}
+    />
   );
 };
 

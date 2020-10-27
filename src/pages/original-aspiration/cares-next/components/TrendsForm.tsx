@@ -8,7 +8,10 @@ const CaresForm = ({ form }) => {
       label: '主题',
       name: 'theme',
       span: 4,
-      rules: [{ required: true, message: '请输入主题!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入主题!', whitespace: true },
+        { max: 64, message: '主题不超过64个字!' },
+      ],
     },
 
     {

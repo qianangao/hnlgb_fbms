@@ -1,33 +1,36 @@
 import React, { useEffect } from 'react';
-import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
+import { connect } from 'umi';
 
-const ActivityForm = ({ form, id, dispatch, loading }) => {
+const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
-      label: '主题',
-      name: 'activityName',
-      span: 4,
-      rules: [
-        { required: true, message: '请输入主题!', whitespace: true },
-        { max: 64, message: '主题不超过64个字!' },
-      ],
+      label: '标题',
+      name: 'headline',
+      rules: [{ required: true, message: '请输入标题!', whitespace: true }],
+    },
+    {
+      key: 'firstLine',
+      type: 'segmentation',
     },
 
+    {
+      key: 'secondLine',
+      type: 'segmentation',
+    },
     {
       label: '内容',
       name: 'context',
       type: 'editor',
-      span: 4,
       rules: [{ required: true, message: '请输入内容!', whitespace: true }],
+      span: 2,
     },
   ];
-
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type: 'oaVolunteerTeam/getActivityDetail',
+          type: 'pictureNews/detailNewsDynamic',
           payload: { id },
           resolve,
         });
@@ -43,8 +46,8 @@ const ActivityForm = ({ form, id, dispatch, loading }) => {
   return <AdvancedForm form={form} loading={loading} fields={formItems} />;
 };
 
-ActivityForm.useForm = AdvancedForm.useForm;
+NewsDynamicForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
-  loading: loading.models.oaVolunteerTeam,
-}))(ActivityForm);
+  loading: loading.models.pictureNews,
+}))(NewsDynamicForm);

@@ -61,16 +61,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addFlowParty({ payload }, { call, put }) {
+    *addFlowParty({ payload, resolve }, { call, put }) {
       const response = yield call(addFlowParty, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增流动党员登记成功！');
 
         yield put({
@@ -78,17 +72,11 @@ const Model = {
         });
       }
     },
-    *updateFlowParty({ payload }, { call, put }) {
+    *updateFlowParty({ payload, resolve }, { call, put }) {
       const response = yield call(updateFlowParty, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改流动党员登记成功！');
 
         yield put({

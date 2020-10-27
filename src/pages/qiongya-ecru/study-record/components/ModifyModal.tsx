@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
 import StudyRecordForm from './form/StudyRecordForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = StudyRecordForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [id, setId] = useState('');
   const showModal = item => {
     setId(item.id);
-    dispatch({
-      type: 'studyRecord/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,27 +22,26 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'studyRecord/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
-    form.resetFields();
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `studyRecord/updateStudyRecord`,
-          payload: {
-            ...values,
-            id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `studyRecord/updateStudyRecord`,
+            payload: {
+              ...values,
+              id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -82,13 +76,11 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         }}
       >
         <StudyRecordForm form={form} id={id} />
-        <LgbSyncMultiSelect getSelectLgbs={[]} />
       </div>
     </Modal>
   );
 };
 
-export default connect(({ studyRecord, loading }) => ({
-  modifyModalVisible: studyRecord.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.studyRecord,
 }))(ModifyModal);

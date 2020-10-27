@@ -17,6 +17,7 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       label: '缩略图',
       name: 'attachmentInfo',
       type: 'image',
+      rules: [{ required: true, message: '请上传缩略图!' }],
     },
     {
       key: 'secondLine',
@@ -42,7 +43,7 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
           attachmentInfo:
-            data.cephFile.id && data.cephFile.fileName
+            data.cephFile && data.cephFile.id && data.cephFile.fileName
               ? {
                   uid: data.cephFile.id,
                   name: data.cephFile.fileName,

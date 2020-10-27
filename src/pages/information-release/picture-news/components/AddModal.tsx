@@ -7,7 +7,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   const [form] = NewsDynamicForm.useForm();
   const showModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'pictureNews/save',
       payload: {
         addModalVisible: true,
       },
@@ -26,7 +26,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'pictureNews/save',
       payload: {
         addModalVisible: false,
       },
@@ -40,12 +40,11 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `newsDynamic/addNewsDynamic`,
+          type: `pictureNews/addNewsDynamic`,
           payload: {
-            type: 2, // 类型 1: 图片新闻  2: 新闻动态
+            type: 1, // 类型 1: 图片新闻  2: 新闻动态
             status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             headline: values.headline,
-            attachmentId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
             context: values.context,
           },
         });
@@ -58,7 +57,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增新闻动态"
+      title="新增图片新闻"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -84,7 +83,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ newsDynamic, loading }) => ({
-  addModalVisible: newsDynamic.addModalVisible,
-  loading: loading.models.newsDynamic,
+export default connect(({ pictureNews, loading }) => ({
+  addModalVisible: pictureNews.addModalVisible,
+  loading: loading.models.pictureNews,
 }))(AddModal);

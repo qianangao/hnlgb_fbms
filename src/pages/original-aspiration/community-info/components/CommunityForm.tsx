@@ -8,7 +8,10 @@ const CommunityForm = ({ form, dispatch, id }) => {
       label: '社团名称',
       name: 'clubName',
       span: 2,
-      rules: [{ required: true, message: '请输入社团名称!', whitespace: true }],
+      rules: [
+        { required: true, message: '请输入社团名称!', whitespace: true },
+        { max: 64, message: '社团名称不超过64个字!' },
+      ],
     },
     {
       label: '社团类型',
@@ -19,8 +22,12 @@ const CommunityForm = ({ form, dispatch, id }) => {
     {
       label: '社团简介',
       name: 'clubIntroduction',
-      type: 'textArea',
+      type: 'textarea',
       span: 4,
+      rules: [
+        { required: true, message: '请输入社团简介!', whitespace: true },
+        { max: 2500, message: '社团简介不超过2500个字!' },
+      ],
     },
   ];
 

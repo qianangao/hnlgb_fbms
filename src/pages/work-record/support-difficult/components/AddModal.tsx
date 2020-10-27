@@ -55,7 +55,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
 
   return (
     <Modal
-      title={`新增${tableType === '1' ? '特困补助申请管理' : '遗孀补助申请管理'}`}
+      title={`新增${tableType === '1' ? '特困补助申请' : '遗孀补助申请'}`}
       centered
       width="80%"
       style={{ paddingBottom: 0 }}

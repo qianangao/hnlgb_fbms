@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchActivityForm from './form/BranchActivityForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = BranchActivityForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'branchActivity/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'branchActivity/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,22 +29,29 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `branchActivity/addBranchActivity`,
-          payload: {
-            activityAdd: values.activityAdd,
-            activityDate: values.activityDate,
-            activityName: values.activityName,
-            dictActivityChildType: values.dictOrgLife,
-            context: values.context,
-            host: values.host,
-            partyId: values.partyId,
-            publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
-            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
-            fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `branchActivity/addBranchActivity`,
+            payload: {
+              activityAdd: values.activityAdd,
+              activityDate: values.activityDate,
+              activityName: values.activityName,
+              dictActivityChildType: values.dictOrgLife,
+              context: values.context,
+              host: values.host,
+              partyId: values.partyId,
+              publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
+              photoAttachmentId: values.picAttachmentInfo
+                ? values.picAttachmentInfo.uid
+                : undefined,
+              fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -89,7 +86,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ branchActivity, loading }) => ({
-  addModalVisible: branchActivity.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.branchActivity,
 }))(AddModal);

@@ -44,7 +44,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
             id: lgbId,
             headline: values.headline,
             context: values.context,
-            type: values.attachmentId ? 1 : 2, // 类型 1: 图片新闻  2: 工作动态
+            type: 2, // 类型 1: 图片新闻  2: 新闻动态
             status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             attachmentId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
           },

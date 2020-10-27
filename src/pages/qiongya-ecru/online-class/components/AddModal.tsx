@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import OnlineClassForm from './form/OnlineClassForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = OnlineClassForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'onlineClass/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'onlineClass/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,16 +29,23 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `onlineClass/addOnlineClass`,
-          payload: {
-            name: values.name,
-            type: values.type,
-            url: values.url,
-            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `onlineClass/addOnlineClass`,
+            payload: {
+              name: values.name,
+              type: values.type,
+              url: values.url,
+              photoAttachmentId: values.picAttachmentInfo
+                ? values.picAttachmentInfo.uid
+                : undefined,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -80,7 +77,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ onlineClass, loading }) => ({
-  addModalVisible: onlineClass.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineClass,
 }))(AddModal);

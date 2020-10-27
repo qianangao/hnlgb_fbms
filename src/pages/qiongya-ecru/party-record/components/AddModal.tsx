@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import PartyRecordForm from './form/PartyRecordForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = PartyRecordForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'partyRecord/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'partyRecord/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,18 +29,23 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        // 获取userIds
-        const payload = { ...values };
-        const userIdsArr = [];
-        payload.userIds.forEach(item => {
-          userIdsArr.push(item.id);
+        return new Promise(resolve => {
+          // 获取userIds
+          const payload = { ...values };
+          const userIdsArr = [];
+          payload.userIds.forEach(item => {
+            userIdsArr.push(item.id);
+          });
+          payload.userIds = userIdsArr;
+          dispatch({
+            type: `partyRecord/addPartyRecord`,
+            payload,
+            resolve,
+          });
         });
-        payload.userIds = userIdsArr;
-        dispatch({
-          type: `partyRecord/addPartyRecord`,
-          payload,
-        });
-        form.resetFields();
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -82,7 +77,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ partyRecord, loading }) => ({
-  addModalVisible: partyRecord.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.partyRecord,
 }))(AddModal);
