@@ -12,7 +12,6 @@ const Model = {
   namespace: 'hospitalRegistration',
   state: {
     hospitalRegistrationInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -63,16 +62,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addHospitalRegistrationInfo({ payload }, { call, put }) {
+    *addHospitalRegistrationInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addHospitalRegistrationInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增住院登记成功！');
 
         yield put({

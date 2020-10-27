@@ -14,7 +14,10 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const formItems = [
     {
       name: 'id',
-      label: 'userid',
+      hidden: true,
+    },
+    {
+      name: 'userid',
       hidden: true,
     },
     {
@@ -171,14 +174,12 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       name: 'dictAllergenUnitNaturel',
       enumsLabel: 'dictAllergenUnitNaturel',
     },
-
     {
       label: '层级',
       name: 'hierarchy',
-      enumsLabel: 'hierarchy',
+      enumsLabel: 'dictHierarchy',
       rules: [{ required: true, message: '请选择层级!' }],
     },
-
     {
       label: '统计标志',
       name: 'statisticSymbol',
@@ -213,7 +214,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '健康状态',
       name: 'dictHealth',
-      enumsLabel: 'dictHealth',
+      enumsLabel: 'dictHealthStatus',
       rules: [{ required: true, message: '请选择健康状态!' }],
     },
     {

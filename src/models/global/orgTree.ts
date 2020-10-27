@@ -99,8 +99,13 @@ const model = {
         }
       }
     },
-    *searchOrgTree({ payload, orgSymbol }, { call, put }) {
-      const response = yield call(searchOrgTree, payload);
+    *searchOrgTree({ payload, orgSymbol }, { call, put, select }) {
+      const { organizationId } = yield select(state => state.user.userInfo);
+
+      const response = yield call(searchOrgTree, {
+        orgIdForDataSelect: organizationId,
+        ...payload,
+      });
 
       if (!response.error) {
         const parentIds = transformOrgTreeData(response);

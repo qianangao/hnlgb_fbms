@@ -17,7 +17,7 @@ interface LgbDataType {
 
 let tempdata: LgbDataType;
 
-const LgbSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
+const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange }) => {
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [lgbData, setLgbData] = useState<LgbDataType>({});
 
@@ -101,7 +101,7 @@ const LgbSelectInput = ({ enums, dispatch, getLgbs, onChange }) => {
   const handleOk = () => {
     if (tempdata && tempdata.id) {
       setLgbData(tempdata);
-      onChange && onChange(tempdata.id);
+      onChange && onChange(selectItem ? tempdata : tempdata.id);
       tempdata = {};
       setVisible(false);
     } else {

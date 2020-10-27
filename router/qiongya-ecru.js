@@ -1,7 +1,7 @@
 const routes = {
   path: '/qiongya-ecru',
   name: 'qiongya-ecru',
-  icon: 'team',
+  icon: 'flag',
   authority: '02',
   remark: '南海银辉',
   routes: [

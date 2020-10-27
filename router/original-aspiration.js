@@ -1,7 +1,7 @@
 const routes = {
   path: '/original-aspiration',
   name: 'original-aspiration',
-  icon: 'team',
+  icon: 'trophy',
   authority: '03',
   remark: '琼崖初心',
   routes: [

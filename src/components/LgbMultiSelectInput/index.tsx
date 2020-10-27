@@ -8,7 +8,7 @@ import styles from './index.less';
 
 let tempSelectData = [];
 
-const LgbSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onChange }) => {
+const LgbMultiSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onChange }) => {
   const tableRef = useRef({});
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -84,7 +84,7 @@ const LgbSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onCh
     });
   }, []);
   useEffect(() => {
-    if (value && value.length > 0) {
+    if (value && Array.isArray(value)) {
       setListData(value);
       setSelectedRowKeys(value.map(item => item.id));
     }
@@ -189,8 +189,8 @@ const LgbSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onCh
           overflow: 'auto',
         }}
         visible={lgbSelectModalVisible}
-        forceRender
         onOk={handleOk}
+        destroyOnClose
         okText="添加"
         onCancel={() => setVisible(false)}
       >
@@ -243,4 +243,4 @@ const LgbSelectInput = ({ value, enums, orgTree = false, getLgbs, dispatch, onCh
 
 export default connect(({ global }) => ({
   enums: global.enums,
-}))(LgbSelectInput);
+}))(LgbMultiSelectInput);
