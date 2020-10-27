@@ -72,17 +72,11 @@ const Model = {
         });
       }
     },
-    *updateOutRegisterInfo({ payload }, { call, put }) {
+    *updateOutRegisterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateOutRegisterInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改住院登记成功！');
 
         yield put({
