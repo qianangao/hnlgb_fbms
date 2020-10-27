@@ -33,7 +33,13 @@ const routes = {
       authority: '08-04',
       remark: '角色授权',
     },
-    // authority: '08-05',监测中心
+    {
+      path: '/system-mgt/monitor-center',
+      name: 'system-mgt-monitor-center',
+      component: './system-mgt/monitor-center',
+      authority: '08-05',
+      remark: '监测中心',
+    },
   ],
 };
 

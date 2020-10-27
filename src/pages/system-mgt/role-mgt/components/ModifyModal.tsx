@@ -25,6 +25,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
   const hideModal = () => {
     setModalVisible(false);
+    setRoleData(null);
     form.resetFields();
   };
 

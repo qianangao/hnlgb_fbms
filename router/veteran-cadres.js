@@ -2,7 +2,7 @@ const routes = {
   path: '/veteran-cadres',
   name: 'veteran-cadres',
   icon: 'team',
-  remark: '离退休老干部',
+  remark: '离退休干部',
   authority: '01',
   routes: [
     {

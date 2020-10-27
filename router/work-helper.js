@@ -1,7 +1,7 @@
 const routes = {
   path: '/work-helper',
   name: 'work-helper',
-  icon: 'team',
+  icon: 'robot',
   authority: '06',
   remark: '工作助手',
   routes: [
