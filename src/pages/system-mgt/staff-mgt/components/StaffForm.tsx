@@ -5,7 +5,7 @@ import OrgSelectInput from '@/components/OrgSelectInput';
 import { checkIdCard, checkPhone } from '@/utils/validators';
 import { connect } from 'umi';
 
-const StaffForm = ({ form, staffInfoData, roleData }) => {
+const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
   const orgSelect = useRef({});
 
   const formItems = [
@@ -93,10 +93,32 @@ const StaffForm = ({ form, staffInfoData, roleData }) => {
     if (staffInfoData) {
       orgSelect.current.setLabel(staffInfoData.organizationName || '');
       form.setFieldsValue({ ...staffInfoData });
+
+      dispatch({
+        type: 'smStaffMgt/getRoles',
+        payload: {
+          orgIdForDataSelect: staffInfoData.organizationId,
+        },
+      });
+    } else {
+      dispatch({
+        type: 'smStaffMgt/getRoles',
+      });
     }
   }, [staffInfoData]);
 
-  return <AdvancedForm form={form} fields={formItems} />;
+  const fieldChangeHander = (label, value) => {
+    if (label === 'organizationId') {
+      dispatch({
+        type: 'smStaffMgt/getRoles',
+        payload: {
+          orgIdForDataSelect: value,
+        },
+      });
+    }
+  };
+
+  return <AdvancedForm form={form} fields={formItems} fieldChange={fieldChangeHander} />;
 };
 
 StaffForm.useForm = AdvancedForm.useForm;

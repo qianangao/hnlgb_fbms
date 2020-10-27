@@ -47,7 +47,7 @@ const Table = ({
       dataIndex: 'dictPoliticalStatus',
       valueEnum: enums.dictPoliticalStatus,
     },
-    { title: '参加工作时间', align: 'center', dataIndex: 'startWorkTime' },
+    { title: '参加工作时间', align: 'center', dataIndex: 'startWorkTime', hideInSearch: true },
     { title: '原工作单位及职务', align: 'center', dataIndex: 'originalUnitAndPosition' },
     {
       title: '级别',
@@ -193,7 +193,14 @@ const Table = ({
         >
           新增
         </Button>,
-        <Button onClick={() => {}}>模版下载</Button>,
+        <Button
+          onClick={() => {
+            const url = './离退休干部职工信息收集模版.xlsx';
+            window.open(url);
+          }}
+        >
+          模版下载
+        </Button>,
         <Button
           type="primary"
           onClick={() => {

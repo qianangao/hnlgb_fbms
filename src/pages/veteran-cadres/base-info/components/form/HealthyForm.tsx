@@ -12,7 +12,7 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '健康状态',
       name: 'dictHealth',
-      enumsLabel: 'dictHealth',
+      enumsLabel: 'dictHealthStatus',
       rules: [{ required: true, message: '请选择健康状态!' }],
     },
     {

@@ -18,7 +18,11 @@ const Model = {
   },
   effects: {
     *getRoles({ payload }, { call, put }) {
-      const response = yield call(getRoles, payload);
+      const params = {
+        allIndex: 'ONLY',
+        ...payload,
+      };
+      const response = yield call(getRoles, params);
       if (!response.error) {
         const items = {};
         response.length > 0 &&
