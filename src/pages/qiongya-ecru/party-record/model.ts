@@ -12,7 +12,6 @@ const Model = {
   namespace: 'partyRecord',
   state: {
     partyRecordData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailPartyRecordData: {},
@@ -63,30 +62,20 @@ const Model = {
       });
     },
 
-    *addPartyRecord({ payload }, { call, put }) {
+    *addPartyRecord({ payload, resolve }, { call, put }) {
       const response = yield call(addPartyRecord, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('党费记录新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updatePartyRecord({ payload }, { call, put }) {
+    *updatePartyRecord({ payload, resolve }, { call, put }) {
       const response = yield call(updatePartyRecord, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('党费记录修改成功！');
         yield put({
           type: 'tableReload',

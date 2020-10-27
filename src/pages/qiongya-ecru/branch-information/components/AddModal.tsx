@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = BranchInformationForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,13 +29,18 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `branchInformation/addBranchInformation`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `branchInformation/addBranchInformation`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -77,7 +72,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ branchInformation, loading }) => ({
-  addModalVisible: branchInformation.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.branchInformation,
 }))(AddModal);

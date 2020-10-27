@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = BranchInformationForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [id, setId] = useState('');
   const showModal = item => {
     setId(item.id);
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,25 +22,26 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `branchInformation/updateBranchInformation`,
-          payload: {
-            ...values,
-            id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `branchInformation/updateBranchInformation`,
+            payload: {
+              ...values,
+              id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -84,7 +81,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ branchInformation, loading }) => ({
-  modifyModalVisible: branchInformation.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.branchInformation,
 }))(ModifyModal);

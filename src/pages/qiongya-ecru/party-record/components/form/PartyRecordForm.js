@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
-import { Select } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 
 const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
-  const { Option } = Select;
   const [partyId, setPartyId] = useState('');
   const [detailPartyRecordData, setDetailPartyRecordData] = useState('');
-
+  const paymentStateData = { 0: '未缴纳', 1: '已缴纳' };
   // 获取-当前支部人员列表
   const getPoliticalStatusLgbs = getMemberParams =>
     new Promise(resolve => {
@@ -37,13 +35,8 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
     {
       label: '缴纳状态',
       name: 'paymentState',
-      rules: [{ required: true, message: '请输入缴纳状态!' }],
-      render: (
-        <Select allowClear>
-          <Option value={0}>已缴纳</Option>
-          <Option value={1}>未缴纳</Option>
-        </Select>
-      ),
+      rules: [{ required: true, message: '请选择缴纳状态!' }],
+      enumsItems: paymentStateData,
     },
     {
       label: '缴费金额',
@@ -76,6 +69,8 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
         const fields = {
           ...data,
         };
+        const paymentState = toString(fields.paymentState);
+        form.setFieldsValue({ paymentState });
         setDetailPartyRecordData(fields);
         form.setFieldsValue(fields);
       });
@@ -97,7 +92,6 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       form.setFieldsValue({ userIds: [] });
     }
   };
-
   return (
     <>
       {id && <LgbBasicInfo userId={detailPartyRecordData.userId} />}
