@@ -13,11 +13,11 @@ const routes = {
       remark: '通知公告',
     },
     {
-      path: '/information-release/news-dynamic',
-      name: 'information-release-news-dynamic',
-      component: './information-release/news-dynamic',
+      path: '/information-release/picture-news',
+      name: 'information-release-picture-news',
+      component: './information-release/picture-news',
       authority: '07-02',
-      remark: '图片新闻（待修改）',
+      remark: '图片新闻',
     },
     {
       path: '/information-release/news-dynamic',

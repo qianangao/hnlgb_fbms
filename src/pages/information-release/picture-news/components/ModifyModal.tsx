@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import NewsDynamicForm from './form/NewsDynamicForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   const [form] = NewsDynamicForm.useForm();
-  const showModal = () => {
+  const [lgbId, setLgbId] = useState('');
+  const showModal = item => {
+    setLgbId(item.id);
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'pictureNews/save',
       payload: {
-        addModalVisible: true,
+        modifyModalVisible: true,
       },
     });
   };
-
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
@@ -26,13 +27,11 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
 
   const hideModal = () => {
     dispatch({
-      type: 'newsDynamic/save',
+      type: 'pictureNews/save',
       payload: {
-        addModalVisible: false,
+        modifyModalVisible: false,
       },
     });
-
-    form.resetFields();
   };
 
   const handleOk = publishStatus => {
@@ -40,25 +39,23 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         dispatch({
-          type: `newsDynamic/addNewsDynamic`,
+          type: `pictureNews/updateNewsDynamic`,
           payload: {
-            type: 2, // 类型 1: 图片新闻  2: 新闻动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            id: lgbId,
             headline: values.headline,
-            attachmentId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
             context: values.context,
+            type: 1, // 类型 1: 图片新闻  2: 新闻动态
+            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
           },
         });
-        form.resetFields();
       })
       .catch(info => {
-        console.error('新增错误', info);
+        console.error('修改错误', info);
       });
   };
-
   return (
     <Modal
-      title="新增新闻动态"
+      title="修改图片新闻"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -66,7 +63,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         height: 'calc(95vh - 108px)',
         overflowX: 'hidden',
       }}
-      visible={addModalVisible}
+      visible={modifyModalVisible}
       footer={[
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
@@ -79,12 +76,21 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <NewsDynamicForm form={form} />
+      <div
+        style={{
+          height: 'calc(100% - 36px)',
+          padding: '20px 0',
+          overflowX: 'hidden',
+          boxSizing: 'border-box',
+        }}
+      >
+        <NewsDynamicForm form={form} id={lgbId} />
+      </div>
     </Modal>
   );
 };
 
-export default connect(({ newsDynamic, loading }) => ({
-  addModalVisible: newsDynamic.addModalVisible,
-  loading: loading.models.newsDynamic,
-}))(AddModal);
+export default connect(({ pictureNews, loading }) => ({
+  modifyModalVisible: pictureNews.modifyModalVisible,
+  loading: loading.models.pictureNews,
+}))(ModifyModal);

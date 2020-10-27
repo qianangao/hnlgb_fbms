@@ -13,12 +13,7 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       key: 'firstLine',
       type: 'segmentation',
     },
-    {
-      label: '缩略图',
-      name: 'attachmentInfo',
-      type: 'image',
-      rules: [{ required: true, message: '请上传缩略图!' }],
-    },
+
     {
       key: 'secondLine',
       type: 'segmentation',
@@ -35,22 +30,13 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type: 'newsDynamic/detailNewsDynamic',
+          type: 'pictureNews/detailNewsDynamic',
           payload: { id },
           resolve,
         });
       }).then(data => {
         const fields = {
           ...data,
-          attachmentInfo:
-            data.cephFile && data.cephFile.id && data.cephFile.fileName
-              ? {
-                  uid: data.cephFile.id,
-                  name: data.cephFile.fileName,
-                  url: data.cephFile.fileUrl,
-                  status: 'done',
-                }
-              : null,
         };
         form.setFieldsValue(fields);
       });
@@ -63,5 +49,5 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
 NewsDynamicForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
-  loading: loading.models.newsDynamic,
+  loading: loading.models.pictureNews,
 }))(NewsDynamicForm);
