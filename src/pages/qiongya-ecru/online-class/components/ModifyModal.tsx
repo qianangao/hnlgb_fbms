@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import OnlineClassForm from './form/OnlineClassForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = OnlineClassForm.useForm();
   const [onlineClassId, setOnlineClassId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setOnlineClassId(item.id);
-    dispatch({
-      type: 'onlineClass/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,28 +22,31 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'onlineClass/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `onlineClass/updateOnlineClass`,
-          payload: {
-            id: onlineClassId,
-            name: values.name,
-            type: values.type,
-            url: values.url,
-            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `onlineClass/updateOnlineClass`,
+            payload: {
+              id: onlineClassId,
+              name: values.name,
+              type: values.type,
+              url: values.url,
+              photoAttachmentId: values.picAttachmentInfo
+                ? values.picAttachmentInfo.uid
+                : undefined,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -87,7 +86,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ onlineClass, loading }) => ({
-  modifyModalVisible: onlineClass.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineClass,
 }))(ModifyModal);

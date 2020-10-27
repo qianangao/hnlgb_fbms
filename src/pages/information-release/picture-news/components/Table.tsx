@@ -6,13 +6,13 @@ import { connect } from 'umi';
 const Table = ({
   openAddModal,
   openModifyModal,
-  newsDynamic,
+  pictureNews,
   enums,
   dispatch,
   opendetailModal,
   publishStatus,
 }) => {
-  const { tableRef } = newsDynamic;
+  const { tableRef } = pictureNews;
   const columns = [
     {
       title: '序号',
@@ -76,7 +76,7 @@ const Table = ({
         ),
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除新闻动态吗？"
+          title="确认删除图片新闻吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -90,15 +90,15 @@ const Table = ({
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'newsDynamic/newsDynamicList',
-        payload: { ...params, status: publishStatus, type: 2 },
+        type: 'pictureNews/newsDynamicList',
+        payload: { ...params, status: publishStatus, type: 1 },
         resolve,
       });
     });
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'newsDynamic/deleteNewsDynamic',
+      type: 'pictureNews/deleteNewsDynamic',
       payload: {
         ids,
       },
@@ -108,7 +108,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="新闻动态"
+      headerTitle="图片新闻"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -123,7 +123,7 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除新闻动态？',
+                title: '确认删除图片新闻？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -140,7 +140,7 @@ const Table = ({
   );
 };
 
-export default connect(({ newsDynamic, global }) => ({
-  newsDynamic,
+export default connect(({ pictureNews, global }) => ({
+  pictureNews,
   enums: global.enums,
 }))(Table);

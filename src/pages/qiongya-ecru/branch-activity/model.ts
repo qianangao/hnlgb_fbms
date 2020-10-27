@@ -12,7 +12,6 @@ const Model = {
   namespace: 'branchActivity',
   state: {
     branchActivityData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailBranchActivityData: {},
@@ -64,33 +63,22 @@ const Model = {
       });
     },
 
-    *addBranchActivity({ payload }, { call, put }) {
+    *addBranchActivity({ payload, resolve }, { call, put }) {
       const response = yield call(addBranchActivity, payload);
       const publishState = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(publishState === 0 ? '支部活动新增成功！' : '支部活动发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateBranchActivity({ payload }, { call, put }) {
+    *updateBranchActivity({ payload, resolve }, { call, put }) {
       const response = yield call(updateBranchActivity, payload);
       const publishState = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishState === 0 ? '支部活动修改成功！' : '支部活动发布成功！');
 
         yield put({

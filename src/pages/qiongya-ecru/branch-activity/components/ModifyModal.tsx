@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import BranchActivityForm from './form/BranchActivityForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = BranchActivityForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'branchActivity/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,33 +22,36 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'branchActivity/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = publishState => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `branchActivity/updateBranchActivity`,
-          payload: {
-            id: lgbId,
-            activityAdd: values.activityAdd,
-            activityDate: values.activityDate,
-            activityName: values.activityName,
-            context: values.context,
-            host: values.host,
-            partyName: values.partyName,
-            publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
-            photoAttachmentId: values.picAttachmentInfo ? values.picAttachmentInfo.uid : undefined,
-            fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `branchActivity/updateBranchActivity`,
+            payload: {
+              id: lgbId,
+              activityAdd: values.activityAdd,
+              activityDate: values.activityDate,
+              activityName: values.activityName,
+              context: values.context,
+              host: values.host,
+              partyName: values.partyName,
+              publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
+              photoAttachmentId: values.picAttachmentInfo
+                ? values.picAttachmentInfo.uid
+                : undefined,
+              fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);

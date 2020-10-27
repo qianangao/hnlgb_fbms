@@ -4,19 +4,15 @@ import { Modal, Button } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import FlowPartyFrom from './form/FlowPartyFrom';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = FlowPartyFrom.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [id, setId] = useState('');
   const [userId, setUserId] = useState('');
   const showModal = item => {
     setId(item.id);
     setUserId(item.userId);
-    dispatch({
-      type: 'flowParty/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -29,27 +25,26 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'flowParty/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
-    form.resetFields();
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `flowParty/updateFlowParty`,
-          payload: {
-            ...values,
-            id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `flowParty/updateFlowParty`,
+            payload: {
+              ...values,
+              id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(() => {});
   };
@@ -88,7 +83,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ flowParty, loading }) => ({
-  modifyModalVisible: flowParty.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.flowParty,
 }))(ModifyModal);

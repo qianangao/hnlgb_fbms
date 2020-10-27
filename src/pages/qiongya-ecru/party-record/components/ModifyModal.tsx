@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import PartyRecordForm from './form/PartyRecordForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PartyRecordForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [id, setId] = useState('');
   const showModal = item => {
     setId(item.id);
-    dispatch({
-      type: 'partyRecord/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,29 +22,28 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'partyRecord/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
-    form.resetFields();
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        const payload = { ...values };
-        delete payload.partyId;
-        dispatch({
-          type: `partyRecord/updatePartyRecord`,
-          payload: {
-            ...payload,
-            id,
-          },
+        return new Promise(resolve => {
+          const payload = { ...values };
+          delete payload.partyId;
+          dispatch({
+            type: `partyRecord/updatePartyRecord`,
+            payload: {
+              ...payload,
+              id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -89,7 +84,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ partyRecord, loading }) => ({
-  modifyModalVisible: partyRecord.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.partyRecord,
 }))(ModifyModal);

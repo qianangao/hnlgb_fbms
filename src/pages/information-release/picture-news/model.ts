@@ -1,31 +1,31 @@
 import { message } from 'antd';
 import {
-  addPartyRecord,
-  deletePartyRecord,
-  updatePartyRecord,
-  partyRecordList,
-  detailPartyRecord,
-  exportPartyRecord,
+  addNewsDynamic,
+  deleteNewsDynamic,
+  updateNewsDynamic,
+  newsDynamicList,
+  detailNewsDynamic,
 } from './service';
 
 const Model = {
-  namespace: 'partyRecord',
+  namespace: 'pictureNews',
   state: {
-    partyRecordData: {},
+    newsDynamicData: {},
+    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    detailPartyRecordData: {},
+    detailNewsDynamicData: {},
   },
   effects: {
-    *partyRecordList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.partyRecord.selectedOrgId);
+    *newsDynamicList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.newsDynamic.selectedOrgId);
       const params = {
         ...payload,
         orgIdForDataSelect,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
-      const response = yield call(partyRecordList, params);
+      const response = yield call(newsDynamicList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -43,7 +43,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            partyRecordData: result,
+            newsDynamicData: result,
           },
         });
       }
@@ -62,55 +62,60 @@ const Model = {
       });
     },
 
-    *addPartyRecord({ payload, resolve }, { call, put }) {
-      const response = yield call(addPartyRecord, payload);
+    *addNewsDynamic({ payload }, { call, put }) {
+      const response = yield call(addNewsDynamic, payload);
+      const publishStatus = payload.status;
       if (!response.error) {
-        resolve && resolve(response);
-        message.success('党费记录新增成功！');
+        yield put({
+          type: 'save',
+          payload: {
+            addModalVisible: false,
+          },
+        });
+        message.success(publishStatus === 0 ? '图片新闻新增成功！' : '图片新闻发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updatePartyRecord({ payload, resolve }, { call, put }) {
-      const response = yield call(updatePartyRecord, payload);
+    *updateNewsDynamic({ payload }, { call, put }) {
+      const response = yield call(updateNewsDynamic, payload);
+      const publishStatus = payload.status;
       if (!response.error) {
-        resolve && resolve(response);
-        message.success('党费记录修改成功！');
+        yield put({
+          type: 'save',
+          payload: {
+            modifyModalVisible: false,
+          },
+        });
+
+        message.success(publishStatus === 0 ? '图片新闻修改成功！' : '图片新闻发布成功！');
+
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *deletePartyRecord({ payload }, { call, put }) {
-      const response = yield call(deletePartyRecord, payload);
+    *deleteNewsDynamic({ payload }, { call, put }) {
+      const response = yield call(deleteNewsDynamic, payload);
+
       if (!response.error) {
-        message.success('党费记录新增删除成功！');
+        message.success('图片新闻删除成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *detailPartyRecord({ payload, resolve }, { call, put }) {
-      const response = yield call(detailPartyRecord, payload);
+    *detailNewsDynamic({ payload, resolve }, { call, put }) {
+      const response = yield call(detailNewsDynamic, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            detailPartyRecordData: response,
+            detailNewsDynamicData: response,
           },
-        });
-      }
-    },
-    *exportPartyRecord({ payload, resolve }, { call, put }) {
-      const response = yield call(exportPartyRecord, payload);
-      if (!response.error) {
-        resolve && resolve(response);
-        message.success('党费记录导出成功！');
-        yield put({
-          type: 'save',
         });
       }
     },
