@@ -4,17 +4,13 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import LicenseRegisterForm from './form/LicenseRegisterForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = LicenseRegisterForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'licenseRegister/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +23,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'licenseRegister/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,15 +31,21 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `licenseRegister/updateLicenseRegisterInfo`,
-          payload: {
-            ...values,
-            passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
-            passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `licenseRegister/updateLicenseRegisterInfo`,
+            payload: {
+              ...values,
+              passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
+              passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -87,7 +83,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ licenseRegister, loading }) => ({
-  modifyModalVisible: licenseRegister.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.licenseRegister,
 }))(ModifyModal);

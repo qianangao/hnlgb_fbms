@@ -4,17 +4,14 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import OutRegisterForm from './form/OutRegisterForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = OutRegisterForm.useForm();
   const [lgbId, setLgbId] = useState();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
+
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'outRegister/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +24,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'outRegister/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,13 +32,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `outRegister/updateOutRegisterInfo`,
-          payload: {
-            ...values,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `outRegister/updateOutRegisterInfo`,
+            payload: {
+              ...values,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -85,7 +82,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ outRegister, loading }) => ({
-  modifyModalVisible: outRegister.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.outRegister,
 }))(ModifyModal);
