@@ -7,11 +7,13 @@ import AddModal from './components/AddModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
+import MembersModifyModal from './components/MembersModifyModal';
 
 const BranchActivity = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
+  const membersModifyModelRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
   const [tableType, setTableType] = useState('8adcf7f96b54cab9016b54ceb77c');
   useEffect(() => {
@@ -82,6 +84,9 @@ const BranchActivity = ({ dispatch, tableRef }) => {
     setPublishStatus(changeStatus);
     tableRef.current.reload();
   };
+  const openMembersModifyModal = item => {
+    membersModifyModelRef.current.showModal(item);
+  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -94,6 +99,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
+          openMembersModifyModal={openMembersModifyModal}
           publishState={publishStatus}
           tableType={tableType}
         />
@@ -101,6 +107,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
+      <MembersModifyModal actionRef={membersModifyModelRef} />
     </OrgTreeLayout>
   );
 };

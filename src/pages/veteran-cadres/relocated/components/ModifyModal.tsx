@@ -40,7 +40,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
             type: `relocated/updateRelocated`,
             payload: {
               ...values,
-              id: lgbId,
+              id: infoId,
+              userId: lgbId,
             },
             resolve,
           });

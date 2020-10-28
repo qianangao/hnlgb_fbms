@@ -72,7 +72,7 @@ const Table = ({ openAddModal, openModifyModal, photoInfo, enums, dispatch }) =>
     new Promise(resolve => {
       dispatch({
         type: 'photoInfo/photoInfoList',
-        payload: { ...params },
+        payload: { ...params, userName: params.realName },
         resolve,
       });
     });

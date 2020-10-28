@@ -5,7 +5,8 @@ import {
   updateBranchActivity,
   branchActivityList,
   detailBranchActivity,
-  branchPartyUser,
+  branchActivityUser,
+  addBranchActivityUser,
 } from './service';
 
 const Model = {
@@ -109,17 +110,11 @@ const Model = {
         });
       }
     },
-    *branchPartyUser({ payload, resolve }, { call, put }) {
-      const params = {
-        ...payload,
-        currentPage: payload.current,
-        pageSize: payload.pageSize,
-      };
+    *getBranchActivityUser({ payload, resolve }, { call, put }) {
+      const response = yield call(branchActivityUser, payload);
 
-      const response = yield call(branchPartyUser, params);
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
-
         const result = {
           data: items,
           page: currentPage,
@@ -127,14 +122,22 @@ const Model = {
           success: true,
           total: totalNum,
         };
-
         resolve && resolve(result);
-
         yield put({
           type: 'save',
           payload: {
-            branchPartyUserList: result,
+            studyRecordUserData: result,
           },
+        });
+      }
+    },
+    *addBranchActivityUser({ payload, resolve }, { call, put }) {
+      const response = yield call(addBranchActivityUser, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('新增成功！');
+        yield put({
+          type: 'tableReload',
         });
       }
     },
