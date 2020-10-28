@@ -4,19 +4,15 @@ import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import ApproveRecordForm from './form/ApproveRecordForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = ApproveRecordForm.useForm();
   const [lgbId, setLgbId] = useState('');
   const [detailId, setDetailId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setLgbId(item.userId);
     setDetailId(item.id);
-    dispatch({
-      type: 'wrApproveRecord/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -29,13 +25,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrApproveRecord/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -43,17 +33,21 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrApproveRecord/updateApproveRecord`,
-          payload: {
-            ...values,
-            id: detailId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrApproveRecord/updateApproveRecord`,
+            payload: {
+              ...values,
+              id: detailId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -86,7 +80,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     </Modal>
   );
 };
-export default connect(({ wrApproveRecord, loading }) => ({
-  modifyModalVisible: wrApproveRecord.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.wrApproveRecord,
 }))(ModifyModal);

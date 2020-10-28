@@ -4,6 +4,7 @@ import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
 import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 import { Descriptions } from 'antd';
+import { checkPost, checkPhone, checkTelephone } from '@/utils/validators';
 
 const FamilyForm = ({ form, id, dispatch, loading }) => {
   const [spouseDeadTimeVisible, setSpouseDeadTimeVisible] = useState(false);
@@ -50,10 +51,12 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '住宅电话',
       name: 'telephone',
+      rules: [{ validator: checkTelephone }],
     },
     {
       label: '邮编',
       name: 'postCode',
+      rules: [{ validator: checkPost }],
     },
     {
       label: '购房情况',
@@ -62,6 +65,11 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '住房建筑面积（㎡）',
       name: 'structureArea',
+      type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000000000,
+      },
     },
     {
       label: '婚姻状况',
@@ -77,21 +85,37 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       label: '子女数',
       name: 'childrenNum',
       type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
     },
     {
       label: '无劳动能力子女数',
       name: 'noworkChildrenNum',
       type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
     },
     {
       label: '赡养人数',
       name: 'supportNum',
       type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
     },
     {
       label: '抚养人数',
       name: 'dependencyNum',
       type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
     },
     {
       label: '集团号码',
@@ -100,10 +124,12 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '固定电话1',
       name: 'telephone1',
+      rules: [{ validator: checkTelephone }],
     },
     {
       label: '固定电话2',
       name: 'telephone2',
+      rules: [{ validator: checkTelephone }],
     },
     {
       key: 'spouseTitle',
@@ -144,6 +170,7 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '配偶手机号码',
       name: 'spousePhone',
+      rules: [{ validator: checkPhone }],
     },
     {
       label: '配偶健康状态',

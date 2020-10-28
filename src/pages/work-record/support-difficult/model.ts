@@ -11,7 +11,6 @@ const Model = {
   namespace: 'wrSupportDifficult',
   state: {
     visitListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailSupportDifficultData: {},
@@ -69,15 +68,10 @@ const Model = {
       });
     },
 
-    *addSupportDifficult({ payload }, { call, put }) {
+    *addSupportDifficult({ payload, resolve }, { call, put }) {
       const response = yield call(addSupportDifficult, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('新增成功！');
 
@@ -87,15 +81,10 @@ const Model = {
       }
     },
 
-    *updateSupportDifficult({ payload }, { call, put }) {
+    *updateSupportDifficult({ payload, resolve }, { call, put }) {
       const response = yield call(updateSupportDifficult, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('修改成功！');
 

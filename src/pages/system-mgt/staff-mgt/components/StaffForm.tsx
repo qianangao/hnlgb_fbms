@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Radio } from 'antd';
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
 import { checkIdCard, checkPhone } from '@/utils/validators';
 import { connect } from 'umi';
 
-const StaffForm = ({ form, staffInfoData, roleData }) => {
+const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
   const orgSelect = useRef({});
+  const [roleVisible, setRoleVisible] = useState(false);
 
   const formItems = [
     {
@@ -40,6 +41,7 @@ const StaffForm = ({ form, staffInfoData, roleData }) => {
     {
       label: '角色',
       name: 'roleId',
+      visible: roleVisible,
       enumsItems: roleData,
     },
     {
@@ -93,10 +95,32 @@ const StaffForm = ({ form, staffInfoData, roleData }) => {
     if (staffInfoData) {
       orgSelect.current.setLabel(staffInfoData.organizationName || '');
       form.setFieldsValue({ ...staffInfoData });
+
+      setRoleVisible(!!staffInfoData.organizationId);
+
+      dispatch({
+        type: 'smStaffMgt/getRoles',
+        payload: {
+          orgIdForDataSelect: staffInfoData.organizationId,
+        },
+      });
     }
   }, [staffInfoData]);
 
-  return <AdvancedForm form={form} fields={formItems} />;
+  const fieldChangeHander = (label, value) => {
+    if (label === 'organizationId') {
+      dispatch({
+        type: 'smStaffMgt/getRoles',
+        payload: {
+          orgIdForDataSelect: value,
+        },
+      });
+
+      setRoleVisible(!!value);
+    }
+  };
+
+  return <AdvancedForm form={form} fields={formItems} fieldChange={fieldChangeHander} />;
 };
 
 StaffForm.useForm = AdvancedForm.useForm;

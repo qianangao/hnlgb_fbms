@@ -10,12 +10,13 @@ const ApproveRecordForm = ({ form, id, dispatch, loading }) => {
       label: '备案时间',
       name: 'recordDate',
       type: 'date',
+      rules: [{ required: true, message: '请选择备案时间!' }],
     },
     {
       label: '备案事项',
       name: 'recordItems',
       enumsLabel: 'recordItems',
-      rules: [{ required: true, message: '请选择备案事项!', whitespace: true }],
+      rules: [{ required: true, message: '请选择备案事项!' }],
     },
     {
       label: '备注',

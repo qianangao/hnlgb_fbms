@@ -16,7 +16,7 @@ const StaffMgt = ({ dispatch }) => {
       },
     });
     dispatch({
-      type: 'smStaffMgt/getRoles',
+      type: 'smStaffMgt/getSearchRoles',
     });
   }, []);
 

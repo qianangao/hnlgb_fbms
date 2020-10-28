@@ -2,14 +2,21 @@ import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
+import moment from 'moment';
 import LgbSelectInput from '@/components/LgbSelectInput';
 
 const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
+  const disabledDate = current => {
+    return current && current > moment().endOf('day');
+  };
   const formItems1 = [
     {
       label: '看望时间',
       name: 'time',
       type: 'date',
+      extraProps: {
+        disabledDate,
+      },
       rules: [{ required: true, message: '请选择时间!' }],
     },
     {

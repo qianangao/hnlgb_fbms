@@ -2,23 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button, Descriptions } from 'antd';
 
-const CommunityDetail = ({
-  dispatch,
-  communityDetailModalVisible,
-  communityDetailData,
-  actionRef,
-  enums,
-}) => {
+const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) => {
   const [communityId, setCommunityId] = useState('');
   const [communityMembers, setCommunityMembers] = useState('');
+  const [communityDetailModalVisible, setCommunityDetailModalVisible] = useState(false);
   const showModal = id => {
     setCommunityId(id);
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityDetailModalVisible: true,
-      },
-    });
+    setCommunityDetailModalVisible(true);
   };
 
   useEffect(() => {
@@ -46,12 +36,7 @@ const CommunityDetail = ({
   }, [communityId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityDetailModalVisible: false,
-      },
-    });
+    setCommunityDetailModalVisible(false);
   };
 
   return (
@@ -88,7 +73,6 @@ const CommunityDetail = ({
 };
 
 export default connect(({ oaCommunity, loading, global }) => ({
-  communityDetailModalVisible: oaCommunity.communityDetailModalVisible,
   communityDetailData: oaCommunity.communityDetailData,
   loading: loading.models.oaCommunity,
   enums: global.enums,

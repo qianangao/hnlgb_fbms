@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableRegistered from './TableRegistered';
 
-const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
+const RegisteredModal = ({ actionRef }) => {
   const [infoId, setInfoId] = useState('');
+  const [registeredModalVisible, setRegisteredModalVisible] = useState(false);
 
   const showModal = id => {
     setInfoId(id);
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        registeredModalVisible: true,
-      },
-    });
+    setRegisteredModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,12 +23,7 @@ const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        registeredModalVisible: false,
-      },
-    });
+    setRegisteredModalVisible(false);
   };
 
   return (
@@ -55,6 +46,4 @@ const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
   );
 };
 
-export default connect(({ oaVolunteerTeam }) => ({
-  registeredModalVisible: oaVolunteerTeam.registeredModalVisible,
-}))(RegisteredModal);
+export default connect()(RegisteredModal);

@@ -41,7 +41,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       title: '基本信息',
       effect: 'updateLgb',
       StepsForm: BasicInfoForm,
-      dataFormat: values => ({ ...values }),
+      dataFormat: values => ({ ...values, id: lgbId }),
     },
     {
       title: '家庭信息',
@@ -49,6 +49,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       StepsForm: FamilyForm,
       dataFormat: values => ({
         ...values,
+        id: lgbId,
         residentAddressVillage: values.residentAddress.value,
         residentAddressList: values.residentAddress.label,
         homeAddressVillage: values.homeAddress.value,
@@ -61,8 +62,9 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       StepsForm: PartTimeForm,
       dataFormat: values => ({
         ...values,
-        placeOfResidence: values.residence.value,
-        placeOfResidenceName: values.residence.label,
+        id: lgbId,
+        placeOfResidence: values.residence && values.residence.value,
+        placeOfResidenceName: values.residence && values.residence.label,
       }),
     },
     {
@@ -71,6 +73,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       StepsForm: HealthyForm,
       dataFormat: values => ({
         ...values,
+        id: lgbId,
       }),
     },
   ];

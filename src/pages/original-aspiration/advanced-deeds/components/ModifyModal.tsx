@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import DeedsForm from './form/DeedsForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsType }) => {
+const ModifyModal = ({ dispatch, loading, actionRef, deedsType }) => {
   const [form] = DeedsForm.useForm();
   const [achievementId, setAchievementId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setAchievementId(item.id);
-    dispatch({
-      type: 'oaAdvancedDeeds/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsTy
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaAdvancedDeeds/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,20 +30,24 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsTy
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaAdvancedDeeds/${
-            deedsType === 'personal' ? 'updatePersonal' : 'updateCollective'
-          }`,
-          payload: {
-            ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: achievementId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaAdvancedDeeds/${
+              deedsType === 'personal' ? 'updatePersonal' : 'updateCollective'
+            }`,
+            payload: {
+              ...values,
+              isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: achievementId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -82,7 +76,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, deedsTy
   );
 };
 
-export default connect(({ oaAdvancedDeeds, loading }) => ({
-  modifyModalVisible: oaAdvancedDeeds.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaAdvancedDeeds/updateAchievement'],
 }))(ModifyModal);

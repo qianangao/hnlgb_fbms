@@ -11,7 +11,6 @@ const Model = {
   namespace: 'wrApproveRecord',
   state: {
     approveRecordListData: {},
-    modifyModalVisible: false, // 新增修改modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -68,16 +67,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addApproveRecord({ payload }, { call, put }) {
+    *addApproveRecord({ payload, resolve }, { call, put }) {
       const response = yield call(addApproveRecord, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('新增成功！');
 
@@ -86,16 +80,11 @@ const Model = {
         });
       }
     },
-    *updateApproveRecord({ payload }, { call, put }) {
+    *updateApproveRecord({ payload, resolve }, { call, put }) {
       const response = yield call(updateApproveRecord, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('修改成功！');
 

@@ -78,7 +78,7 @@ const statisticsVisit = (req, res) => {
           number: 33,
         },
         {
-          type: '异地安置人员慰问',
+          type: '易地安置人员慰问',
           number: 12,
         },
         {

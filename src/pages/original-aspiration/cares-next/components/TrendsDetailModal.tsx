@@ -3,22 +3,12 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailFormPage from '@/components/DetailFormPage';
 
-const TrendsDetailModal = ({
-  dispatch,
-  trendsDetailModalVisible,
-  trendsDetailData,
-  actionRef,
-  loading,
-}) => {
+const TrendsDetailModal = ({ dispatch, trendsDetailData, actionRef, loading }) => {
   const [trendsId, setTrendsId] = useState('');
+  const [trendsDetailModalVisible, setTrendsDetailModalVisible] = useState(false);
   const showModal = id => {
     setTrendsId(id);
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        trendsDetailModalVisible: true,
-      },
-    });
+    setTrendsDetailModalVisible(true);
   };
 
   useEffect(() => {
@@ -38,12 +28,7 @@ const TrendsDetailModal = ({
   }, [trendsId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        trendsDetailModalVisible: false,
-      },
-    });
+    setTrendsDetailModalVisible(false);
   };
 
   return (
@@ -73,7 +58,6 @@ const TrendsDetailModal = ({
 };
 
 export default connect(({ oaCaresNext, loading }) => ({
-  trendsDetailModalVisible: oaCaresNext.trendsDetailModalVisible,
   trendsDetailData: oaCaresNext.trendsDetailData,
   loading: loading.effects['oaCaresNext/getTrendsDetail'],
 }))(TrendsDetailModal);

@@ -1,5 +1,5 @@
 import { connect } from 'umi';
-import { Button, Upload, message } from 'antd';
+import { Button, Upload, message, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
@@ -15,6 +15,7 @@ import { LoadingOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons
 const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, dispatch }) => {
   const [loading, setLoading] = useState(false);
   const [upFileList, setUpFileList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   const setFile = ({ fileName, fileUrl, id }) => {
     setUpFileList([
@@ -128,6 +129,7 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
 
         setUpFileList([tempFile]);
         onChange && onChange(tempFile);
+        message.success('文件上传成功！');
       })
       .catch(_ => {
         setLoading(false);
@@ -148,21 +150,36 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
     );
 
   return (
-    <Upload
-      disabled={disabled}
-      fileList={upFileList}
-      listType={type === 'image' ? 'picture-card' : 'text'}
-      beforeUpload={beforeUpload}
-      onRemove={handleRemove}
-    >
-      {type === 'image' ? (
-        imgUploadButton
-      ) : (
-        <Button key="normalUpload" icon={<UploadOutlined />}>
-          点击上传文件
-        </Button>
-      )}
-    </Upload>
+    <>
+      <Upload
+        disabled={disabled}
+        fileList={upFileList}
+        listType={type === 'image' ? 'picture-card' : 'text'}
+        beforeUpload={beforeUpload}
+        onPreview={file => {
+          type === 'image' ? setPreviewVisible(true) : window.open(file.url);
+        }}
+        onRemove={handleRemove}
+      >
+        {type === 'image' ? (
+          imgUploadButton
+        ) : (
+          <Button key="normalUpload" icon={<UploadOutlined />}>
+            点击上传文件
+          </Button>
+        )}
+      </Upload>
+
+      <Modal
+        visible={previewVisible}
+        footer={null}
+        onCancel={() => {
+          setPreviewVisible(false);
+        }}
+      >
+        <img alt="preview" style={{ width: '100%' }} src={upFileList[0] && upFileList[0].url} />
+      </Modal>
+    </>
   );
 };
 

@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ElegantDemeanorForm from './form/ElegantDemeanorForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = ElegantDemeanorForm.useForm();
   const [elegantDemeanorId, setElegantDemeanorId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = id => {
     setElegantDemeanorId(id);
-    dispatch({
-      type: 'oaElegantDemeanor/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaElegantDemeanor/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,21 +30,25 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaElegantDemeanor/updateElegantDemeanor`,
-          payload: {
-            title: values.title,
-            type: values.type,
-            context: values.context,
-            fileId: values.attachmentInfo && values.attachmentInfo.uid,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: elegantDemeanorId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaElegantDemeanor/updateElegantDemeanor`,
+            payload: {
+              title: values.title,
+              type: values.type,
+              context: values.context,
+              fileId: values.attachmentInfo && values.attachmentInfo.uid,
+              pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: elegantDemeanorId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -83,7 +77,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ oaElegantDemeanor, loading }) => ({
-  modifyModalVisible: oaElegantDemeanor.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaElegantDemeanor/updateElegantDemeanor'],
 }))(ModifyModal);

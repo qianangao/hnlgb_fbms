@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import { Statistic, Card, Row, Col, Spin } from 'antd';
@@ -17,6 +17,7 @@ const content = [
 ];
 const MonitorCenter = ({ loading, sumData, dispatch }) => {
   const monitorDetailRef = useRef({});
+  const [orgId, setOrgId] = useState('');
   useEffect(() => {
     dispatch({
       type: 'smMonitorCenter/getSummaryData',
@@ -41,17 +42,19 @@ const MonitorCenter = ({ loading, sumData, dispatch }) => {
         type: 'smMonitorCenter/getMonitorPersonList',
         payload: {
           ...params,
+          orgIdForDataSelect: orgId,
         },
         resolve,
       });
     });
   };
 
-  const orgChangeHander = orgId => {
+  const orgChangeHander = id => {
+    setOrgId(id);
     dispatch({
       type: 'smMonitorCenter/getSummaryData',
       payload: {
-        orgIdForDataSelect: orgId,
+        orgIdForDataSelect: id,
       },
     });
   };

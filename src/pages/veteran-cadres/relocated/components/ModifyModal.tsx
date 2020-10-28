@@ -25,9 +25,9 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setModifyModalVisible(false);
     setInfoId('');
     setLgbId('');
-    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,8 +40,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
             type: `relocated/updateRelocated`,
             payload: {
               ...values,
-              id: infoId,
-              userId: lgbId,
             },
             resolve,
           });
@@ -56,7 +54,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改异地安置"
+      title="修改易地安置"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -79,7 +77,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
         }}
       >
         <LgbBasicInfo userId={lgbId} />
-        <Descriptions title="异地安置" size="middle" />
+        <Descriptions title="易地安置" size="middle" />
         <RelocatedForm form={form} id={infoId} />
       </div>
     </Modal>

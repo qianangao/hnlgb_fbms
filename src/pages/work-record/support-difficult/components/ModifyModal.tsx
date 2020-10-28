@@ -4,19 +4,15 @@ import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import SupportDifficultForm from './form/SupportDifficultForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableType }) => {
+const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
   const [form] = SupportDifficultForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [visitId, setSupportDifficultId] = useState('');
   const [userId, setUserId] = useState('');
   const showModal = item => {
     setSupportDifficultId(item.id);
     setUserId(item.userId);
-    dispatch({
-      type: 'wrSupportDifficult/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -29,13 +25,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrSupportDifficult/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -43,17 +33,21 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrSupportDifficult/updateSupportDifficult`,
-          payload: {
-            ...values,
-            id: visitId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrSupportDifficult/updateSupportDifficult`,
+            payload: {
+              ...values,
+              id: visitId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal

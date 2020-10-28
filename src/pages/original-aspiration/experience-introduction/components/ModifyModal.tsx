@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ExperienceForm from './form/ExperienceForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = ExperienceForm.useForm();
   const [experienceId, setExperienceId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setExperienceId(item.id);
-    dispatch({
-      type: 'oaExperienceIntroduction/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaExperienceIntroduction/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,18 +30,22 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaExperienceIntroduction/updateExperience`,
-          payload: {
-            ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: experienceId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaExperienceIntroduction/updateExperience`,
+            payload: {
+              ...values,
+              isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: experienceId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -80,7 +74,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ oaExperienceIntroduction, loading }) => ({
-  modifyModalVisible: oaExperienceIntroduction.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaExperienceIntroduction/updateExperience'],
 }))(ModifyModal);
