@@ -11,7 +11,6 @@ const Model = {
   namespace: 'oaAchievementExhibition',
   state: {
     AchievementListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailAchievementData: {},
@@ -62,32 +61,22 @@ const Model = {
       });
     },
 
-    *addAchievement({ payload }, { call, put }) {
+    *addAchievement({ payload, resolve }, { call, put }) {
       const response = yield call(addAchievement, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '成果信息新增成功！' : '成果信息发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateAchievement({ payload }, { call, put }) {
+    *updateAchievement({ payload, resolve }, { call, put }) {
       const response = yield call(updateAchievement, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(isPublished === 0 ? '成果信息修改成功！' : '成果信息发布成功！');
 

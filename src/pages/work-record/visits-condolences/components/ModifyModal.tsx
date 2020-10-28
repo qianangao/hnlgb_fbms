@@ -4,19 +4,15 @@ import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import VisitForm from './form/VisitForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableType }) => {
+const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [form] = VisitForm.useForm();
   const [visitId, setVisitId] = useState('');
   const [userId, setUserId] = useState('');
   const showModal = item => {
     setVisitId(item.id);
     setUserId(item.userId);
-    dispatch({
-      type: 'wrVisitsCondolences/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -29,13 +25,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrVisitsCondolences/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -43,18 +33,22 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrVisitsCondolences/updateVisit`,
-          payload: {
-            ...values,
-            photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
-            id: visitId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrVisitsCondolences/updateVisit`,
+            payload: {
+              ...values,
+              photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
+              id: visitId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -79,7 +73,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef, tableTy
   );
 };
 
-export default connect(({ wrVisitsCondolences, loading }) => ({
-  modifyModalVisible: wrVisitsCondolences.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['wrVisitsCondolences/updateVisit'],
 }))(ModifyModal);

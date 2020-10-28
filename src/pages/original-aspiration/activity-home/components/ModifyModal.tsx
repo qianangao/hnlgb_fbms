@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ActivityForm from './form/ActivityForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = ActivityForm.useForm();
   const [activityId, setActivityId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setActivityId(item.id);
-    dispatch({
-      type: 'oaActivityHome/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,12 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaActivityHome/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
 
     form.resetFields();
   };
@@ -40,18 +31,22 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaActivityHome/updateActivity`,
-          payload: {
-            ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: activityId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaActivityHome/updateActivity`,
+            payload: {
+              ...values,
+              isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: activityId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -80,7 +75,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ oaActivityHome, loading }) => ({
-  modifyModalVisible: oaActivityHome.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaActivityHome/updateActivity'],
 }))(ModifyModal);

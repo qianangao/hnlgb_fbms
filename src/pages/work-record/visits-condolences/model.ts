@@ -15,7 +15,6 @@ const Model = {
     visitListData: {},
     visiStatisticsData: {},
     memberListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailVisitData: {},
@@ -140,15 +139,10 @@ const Model = {
       });
     },
 
-    *addVisit({ payload }, { call, put }) {
+    *addVisit({ payload, resolve }, { call, put }) {
       const response = yield call(addVisit, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('新增成功！');
 
@@ -158,15 +152,10 @@ const Model = {
       }
     },
 
-    *updateVisit({ payload }, { call, put }) {
+    *updateVisit({ payload, resolve }, { call, put }) {
       const response = yield call(updateVisit, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('修改成功！');
 

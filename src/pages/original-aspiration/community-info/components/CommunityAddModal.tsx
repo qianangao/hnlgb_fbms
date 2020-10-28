@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import CommunityForm from './CommunityForm';
 
-const CommunityAddModal = ({ dispatch, communityAddModalVisible, actionRef, loading }) => {
+const CommunityAddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = CommunityForm.useForm();
+  const [communityAddModalVisible, setCommunityAddModalVisible] = useState(false);
   const showModal = () => {
     form.resetFields();
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityAddModalVisible: true,
-      },
-    });
+    setCommunityAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,10 @@ const CommunityAddModal = ({ dispatch, communityAddModalVisible, actionRef, load
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityAddModalVisible: false,
-      },
-    });
+    setCommunityAddModalVisible(false);
+    form.resetFields();
   };
+
   const handleOk = () => {
     form
       .validateFields()
@@ -41,15 +34,21 @@ const CommunityAddModal = ({ dispatch, communityAddModalVisible, actionRef, load
           values.memberItems.forEach(item => {
             userIds.push(item.id);
           });
-        dispatch({
-          type: `oaCommunity/addCommunity`,
-          payload: {
-            clubName: values.clubName,
-            dictClubType: values.dictClubType,
-            clubIntroduction: values.clubIntroduction,
-            userIds,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCommunity/addCommunity`,
+            payload: {
+              clubName: values.clubName,
+              dictClubType: values.dictClubType,
+              clubIntroduction: values.clubIntroduction,
+              userIds,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -75,7 +74,6 @@ const CommunityAddModal = ({ dispatch, communityAddModalVisible, actionRef, load
   );
 };
 
-export default connect(({ oaCommunity, loading }) => ({
-  communityAddModalVisible: oaCommunity.communityAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCommunity/addCommunity'],
 }))(CommunityAddModal);

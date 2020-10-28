@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TrendsForm from './TrendsForm';
 
-const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading }) => {
+const TrendsAddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = TrendsForm.useForm();
   const [mechanismId, setMechanismId] = useState('');
+  const [trendsAddModalVisible, setTrendsAddModalVisible] = useState(false);
   const showModal = id => {
     form.resetFields();
     setMechanismId(id);
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        trendsAddModalVisible: true,
-      },
-    });
+    setTrendsAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,24 +23,28 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        trendsAddModalVisible: false,
-      },
-    });
+    form.resetFields();
+    setMechanismId('');
+    setTrendsAddModalVisible(false);
   };
+
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCaresNext/addTrends`,
-          payload: {
-            ...values,
-            mechanismId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCaresNext/addTrends`,
+            payload: {
+              ...values,
+              mechanismId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -70,7 +70,6 @@ const TrendsAddModal = ({ dispatch, trendsAddModalVisible, actionRef, loading })
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  trendsAddModalVisible: oaCaresNext.trendsAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCaresNext/addTrends'],
 }))(TrendsAddModal);

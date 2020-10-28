@@ -17,7 +17,6 @@ const Model = {
   state: {
     personalListData: {},
     collectiveListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailDeedsData: {},
@@ -100,49 +99,33 @@ const Model = {
       });
     },
 
-    *addPersonal({ payload }, { call, put }) {
+    *addPersonal({ payload, resolve }, { call, put }) {
       const response = yield call(addPersonal, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '个人先进事迹新增成功！' : '个人先进事迹发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *addCollective({ payload }, { call, put }) {
+    *addCollective({ payload, resolve }, { call, put }) {
       const response = yield call(addCollective, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '集体先进事迹新增成功！' : '集体先进事迹发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updatePersonal({ payload }, { call, put }) {
+    *updatePersonal({ payload, resolve }, { call, put }) {
       const response = yield call(updatePersonal, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '个人先进事迹修改成功！' : '个人先进事迹发布成功！');
 
         yield put({
@@ -150,16 +133,11 @@ const Model = {
         });
       }
     },
-    *updateCollective({ payload }, { call, put }) {
+    *updateCollective({ payload, resolve }, { call, put }) {
       const response = yield call(updateCollective, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(isPublished === 0 ? '集体先进事迹修改成功！' : '集体先进事迹发布成功！');
 

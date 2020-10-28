@@ -11,7 +11,6 @@ const Model = {
   namespace: 'oaActivityHome',
   state: {
     ActivityListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailActivityData: {},
@@ -62,32 +61,22 @@ const Model = {
       });
     },
 
-    *addActivity({ payload }, { call, put }) {
+    *addActivity({ payload, resolve }, { call, put }) {
       const response = yield call(addActivity, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '活动信息新增成功！' : '活动信息发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateActivity({ payload }, { call, put }) {
+    *updateActivity({ payload, resolve }, { call, put }) {
       const response = yield call(updateActivity, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(isPublished === 0 ? '活动信息修改成功！' : '活动信息发布成功！');
 

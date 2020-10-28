@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import VisitForm from './form/VisitForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) => {
+const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
   const [form] = VisitForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'wrVisitsCondolences/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrVisitsCondolences/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -50,23 +40,25 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
     } else if (tableType === '遗属慰问') {
       visitType = '402883ea73c68c3e0173c68c3e22';
     }
-
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrVisitsCondolences/addVisit`,
-          payload: {
-            ...values,
-            photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
-            type: visitType,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrVisitsCondolences/addVisit`,
+            payload: {
+              ...values,
+              photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
+              type: visitType,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
       })
-      .catch(info => {
-        console.error('新增错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
 
   return (
@@ -90,7 +82,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
   );
 };
 
-export default connect(({ wrVisitsCondolences, loading }) => ({
-  addModalVisible: wrVisitsCondolences.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['wrVisitsCondolences/addVisit'],
 }))(AddModal);

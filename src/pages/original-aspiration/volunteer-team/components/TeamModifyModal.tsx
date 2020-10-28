@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TeamForm from './form/TeamForm';
 
-const TeamModifyModal = ({ dispatch, teamModifyModalVisible, actionRef }) => {
+const TeamModifyModal = ({ dispatch, actionRef }) => {
   const [form] = TeamForm.useForm();
   const [teamId, setTeamId] = useState('');
+  const [teamModifyModalVisible, setTeamModifyModalVisible] = useState(false);
 
   const showModal = id => {
     setTeamId(id);
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        teamModifyModalVisible: true,
-      },
-    });
+    setTeamModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,34 +21,28 @@ const TeamModifyModal = ({ dispatch, teamModifyModalVisible, actionRef }) => {
       actionRef.current = { showModal };
     }
   }, []);
-  // useEffect(() => {
-  //   if (teamId) {
-  //     dispatch({
-  //       type: 'oaVolunteerTeam/detailTeam',
-  //       payload: { id: teamId },
-  //     });
-  //   }
-  // }, [teamId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        teamModifyModalVisible: false,
-      },
-    });
+    setTeamModifyModalVisible(false);
   };
+
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaVolunteerTeam/updateTeam`,
-          payload: {
-            ...values,
-            id: teamId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaVolunteerTeam/updateTeam`,
+            payload: {
+              ...values,
+              id: teamId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -77,7 +67,6 @@ const TeamModifyModal = ({ dispatch, teamModifyModalVisible, actionRef }) => {
 };
 
 export default connect(({ oaVolunteerTeam, loading }) => ({
-  teamModifyModalVisible: oaVolunteerTeam.teamModifyModalVisible,
   communityDetailData: oaVolunteerTeam.communityDetailData,
   loading: loading.models.oaVolunteerTeam,
 }))(TeamModifyModal);

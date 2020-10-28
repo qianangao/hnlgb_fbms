@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import CommunityForm from './CommunityForm';
 
-const CommunityModifyModal = ({ dispatch, communityModifyModalVisible, actionRef }) => {
+const CommunityModifyModal = ({ dispatch, actionRef }) => {
   const [form] = CommunityForm.useForm();
   const [communityId, setCommunityId] = useState('');
+  const [communityModifyModalVisible, setCommunityModifyModalVisible] = useState(false);
 
   const showModal = id => {
     setCommunityId(id);
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityModifyModalVisible: true,
-      },
-    });
+    setCommunityModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,24 +23,27 @@ const CommunityModifyModal = ({ dispatch, communityModifyModalVisible, actionRef
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        communityModifyModalVisible: false,
-      },
-    });
+    setCommunityModifyModalVisible(false);
+    form.resetFields();
   };
+
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCommunity/updateCommunity`,
-          payload: {
-            ...values,
-            id: communityId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCommunity/updateCommunity`,
+            payload: {
+              ...values,
+              id: communityId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -69,7 +68,6 @@ const CommunityModifyModal = ({ dispatch, communityModifyModalVisible, actionRef
 };
 
 export default connect(({ oaCommunity, loading }) => ({
-  communityModifyModalVisible: oaCommunity.communityModifyModalVisible,
   communityDetailData: oaCommunity.communityDetailData,
   loading: loading.models.oaCommunity,
 }))(CommunityModifyModal);
