@@ -86,7 +86,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
               enums.dictPoliticalStatus[lgbDetailData.dictPoliticalStatus]}
           </Descriptions.Item>
           <Descriptions.Item label="生日">
-            {lgbDetailData.birthday + (lgbDetailData.solarOrLunar === 0 ? '阳历' : '阴历')}
+            {lgbDetailData.birthday + (lgbDetailData.solarOrLunar === 1 ? '阴历' : '阳历')}
           </Descriptions.Item>
           <Descriptions.Item label="离退休类型">
             {enums.dictRetirementType && enums.dictRetirementType[lgbDetailData.dictRetirementType]}
@@ -133,7 +133,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
               enums.dictRevolutionPeriod[lgbDetailData.dictRevolutionPeriod]}
           </Descriptions.Item>
           <Descriptions.Item label="健康状态">
-            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealthStatus]}
+            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealth]}
           </Descriptions.Item>
           <Descriptions.Item label="享受医疗待遇情况">
             {enums.dictMedicalTreatment &&
