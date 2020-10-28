@@ -165,6 +165,20 @@ export const checkPhone = (rule, value, callback) => {
     callback();
   }
 };
+/**
+ * 固定电话表单校验
+ * @param {*} rule
+ * @param {*} value 需校验的值
+ * @param {*} callback form回调函数
+ */
+export const checkTelephone = (rule, value, callback) => {
+  const isTelephone = /^0\d{2,3}-\d{7,8}$/;
+  if (value && !isTelephone.test(value)) {
+    callback('固定电话输入不合法！');
+  } else {
+    callback();
+  }
+};
 
 /**
  * 统一社会编码校验
@@ -194,6 +208,21 @@ export const checkUrl = (rule, value, callback) => {
   const strRegex = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
   if (value === '' || value === null || strRegex.test(value) === false) {
     callback('请输入以http://或者 https://开头的正确网址！');
+  } else {
+    callback();
+  }
+};
+
+/**
+ * 邮编表单校验
+ * @param {*} rule
+ * @param {*} value 需校验的值
+ * @param {*} callback form回调函数
+ */
+export const checkPost = (rule, value, callback) => {
+  const reg = /^[0-9]{6}$/;
+  if (value && !reg.test(value)) {
+    callback('邮编格式不合法');
   } else {
     callback();
   }
