@@ -132,9 +132,6 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
             {enums.dictRevolutionPeriod &&
               enums.dictRevolutionPeriod[lgbDetailData.dictRevolutionPeriod]}
           </Descriptions.Item>
-          <Descriptions.Item label="健康状态">
-            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealth]}
-          </Descriptions.Item>
           <Descriptions.Item label="享受医疗待遇情况">
             {enums.dictMedicalTreatment &&
               enums.dictMedicalTreatment[lgbDetailData.dictMedicalTreatment]}
@@ -191,7 +188,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
 
         <Descriptions title="健康档案" column={{ xxl: 4, xl: 3, lg: 2 }}>
           <Descriptions.Item label="健康状态">
-            {enums.dictHealth && enums.dictHealth[lgbDetailData.dictHealth]}
+            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealth]}
           </Descriptions.Item>
           <Descriptions.Item label="疾病情况">{lgbHealthyData.disease}</Descriptions.Item>
           <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item>
