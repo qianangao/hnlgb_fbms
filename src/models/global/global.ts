@@ -2,6 +2,7 @@ import { message } from 'antd';
 import {
   getDictionary,
   uploadFile,
+  uploadLocalFile,
   getDownloadFiles,
   deleteDownloadFiles,
 } from '@/services/global';
@@ -60,8 +61,7 @@ const GlobalModel = {
       }
     },
     *uploadFile({ payload, resolve }, { call }) {
-      const { file } = payload;
-      const { type } = payload;
+      const { file, type, isLocal = false } = payload;
 
       if (type === 'image' && !/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(file.name)) {
         message.warning('仅支持上传图片，请重新上传！（图片类型：gif,jpeg,jpg,png）');
@@ -76,7 +76,7 @@ const GlobalModel = {
       const formData = new FormData();
       formData.append('file', payload.file);
 
-      const response = yield call(uploadFile, formData);
+      const response = yield call(isLocal ? uploadLocalFile : uploadFile, formData);
 
       if (!response.error) {
         resolve && resolve(response);

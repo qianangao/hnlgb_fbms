@@ -23,6 +23,17 @@ export async function uploadFile(params) {
 }
 
 /**
+ * 上传文件到本地服务器
+ * @param {*} params
+ */
+export async function uploadLocalFile(params) {
+  return request('/attachmentsftpto', {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
  * 获取用户下载文件列表
  * @param {*} params
  */
@@ -38,7 +49,7 @@ export async function getDownloadFiles(params) {
  * @param {*} params
  */
 export async function deleteDownloadFiles(params) {
-  return request('/lgbsmp/api/v1/download_center', {
+  return request('/download_center', {
     method: 'DELETE',
     data: params,
   });

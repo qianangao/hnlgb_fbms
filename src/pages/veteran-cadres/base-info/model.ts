@@ -80,8 +80,7 @@ const Model = {
       }
 
       const response = yield call(importLgbs, {
-        excelName: payload.fileUrl.slice(payload.fileUrl.lastIndexOf('/') + 1),
-        path: payload.fileUrl,
+        url: payload.url,
       });
 
       if (!response.error) {
