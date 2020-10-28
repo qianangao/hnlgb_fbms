@@ -67,32 +67,22 @@ const Model = {
       });
     },
 
-    *addNoticeAnnouncement({ payload }, { call, put }) {
+    *addNoticeAnnouncement({ payload, resolve }, { call, put }) {
       const response = yield call(addNoticeAnnouncement, payload);
       const publishStatus = payload.dictPublishStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '通知公告新增成功！' : '通知公告发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateNoticeAnnouncement({ payload }, { call, put }) {
+    *updateNoticeAnnouncement({ payload, resolve }, { call, put }) {
       const response = yield call(updateNoticeAnnouncement, payload);
       const publishStatus = payload.dictPublishStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(publishStatus === 0 ? '通知公告修改成功！' : '通知公告发布成功！');
 

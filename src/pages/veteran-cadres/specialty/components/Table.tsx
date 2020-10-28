@@ -104,7 +104,7 @@ const Table = ({ openAddModal, openModifyModal, specialty, enums, dispatch }) =>
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'specialty/specialtyDelete',
+      type: 'specialty/deleteSpecialty',
       payload: {
         ids,
       },

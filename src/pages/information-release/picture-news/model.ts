@@ -62,32 +62,22 @@ const Model = {
       });
     },
 
-    *addNewsDynamic({ payload }, { call, put }) {
+    *addNewsDynamic({ payload, resolve }, { call, put }) {
       const response = yield call(addNewsDynamic, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '图片新闻新增成功！' : '图片新闻发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateNewsDynamic({ payload }, { call, put }) {
+    *updateNewsDynamic({ payload, resolve }, { call, put }) {
       const response = yield call(updateNewsDynamic, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(publishStatus === 0 ? '图片新闻修改成功！' : '图片新闻发布成功！');
 

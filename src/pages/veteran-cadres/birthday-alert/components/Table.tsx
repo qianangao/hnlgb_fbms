@@ -75,29 +75,47 @@ const Table = ({
       dataIndex: 'countdown',
       hideInSearch: true,
       render: (text, record) => {
-        const birthdayDate = record.dateOfBirth && moment(record.dateOfBirth);
-        const MomentYear = new Date().getFullYear;
-        const month = birthdayDate.month();
-        const day = birthdayDate.date();
-        const birthdayYear = record.dateOfBirth.split('-')[0];
         let days = '';
-        if (record.dateOfBirth) {
-          days = getDaysToBirthday(month + 1, day);
-        }
-        if ((MomentYear - birthdayYear) % 10 === 5) {
+        if (record.birthday || record.dateOfBirth) {
+          const birthdayDate = record.birthday
+            ? moment(record.birthday)
+            : moment(record.dateOfBirth);
+          const MomentYear = Number(moment().format('YYYY'));
+          const month = birthdayDate.month();
+          const day = birthdayDate.date();
+          const birthdayYear = record.birthday
+            ? record.birthday.split('-')[0]
+            : record.dateOfBirth.split('-')[0];
+          days = getDaysToBirthday(month + 1, day) || '';
+
+          if (days === '今日最闪亮') {
+            if ((MomentYear - birthdayYear) % 10 === 5) {
+              return (
+                <div>
+                  <span style={{ color: 'red' }}>{days}（逢五）</span>
+                </div>
+              );
+            }
+            if ((MomentYear - birthdayYear) % 10 === 0) {
+              return (
+                <div>
+                  <span style={{ color: 'red' }}>{days}（逢十）</span>
+                </div>
+              );
+            }
+            return (
+              <div>
+                <span style={{ color: 'red' }}>{days}</span>
+              </div>
+            );
+          }
           return (
             <div>
               <span>{days}</span>
             </div>
           );
         }
-        if ((MomentYear - birthdayYear) % 10 === 0) {
-          return (
-            <div>
-              <span>{days}</span>
-            </div>
-          );
-        }
+
         return (
           <div>
             <span>{days}</span>

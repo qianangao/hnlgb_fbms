@@ -59,9 +59,19 @@ export async function updateBranchActivity(params) {
  * 支部成员-列表
  * @param {*} params
  */
-export async function branchPartyUser(params) {
-  return request(`/branchPartyUser/${params.id}`, {
+export async function branchActivityUser(params) {
+  return request(`/org_life_user/${params.id}`, {
     method: 'GET',
     params,
+  });
+}
+/**
+ * 新增-支部活动
+ * @param {*} params
+ */
+export async function addBranchActivityUser(params) {
+  return request(`/org_life_user`, {
+    method: 'POST',
+    data: params,
   });
 }

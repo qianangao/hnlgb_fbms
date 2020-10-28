@@ -18,13 +18,13 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '类型',
-      name: 'dictAdministrativeRank',
+      name: 'administrativeRank',
       enumsLabel: 'dictAdministrativeRank',
       rules: [{ required: true, message: '请选择类型!', whitespace: true }],
     },
     {
       label: '技术等级',
-      name: 'dictTitleGrade',
+      name: 'titleGrade',
       enumsLabel: 'dictTitleGrade',
       rules: [{ required: true, message: '请选择技术等级!', whitespace: true }],
     },

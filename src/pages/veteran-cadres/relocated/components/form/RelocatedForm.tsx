@@ -43,7 +43,7 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
   const selectLgbInput = (
     // 显示老干部信息-公共组件
     <>
-      <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
+      <Form.Item name="userId" rules={[{ required: true, message: '请选择老同志!' }]}>
         <LgbSelectInput />
       </Form.Item>
       <Descriptions title="易地安置" />

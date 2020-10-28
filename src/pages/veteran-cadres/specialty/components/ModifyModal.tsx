@@ -41,7 +41,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
             type: `specialty/updateSpecialty`,
             payload: {
               ...values,
-              id: lgbId,
+              id: infoId,
+              userId: lgbId,
             },
             resolve,
           });
