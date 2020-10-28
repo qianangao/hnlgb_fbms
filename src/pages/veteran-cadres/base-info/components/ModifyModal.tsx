@@ -63,8 +63,8 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       dataFormat: values => ({
         ...values,
         id: lgbId,
-        placeOfResidence: values.residence.value,
-        placeOfResidenceName: values.residence.label,
+        placeOfResidence: values.residence && values.residence.value,
+        placeOfResidenceName: values.residence && values.residence.label,
       }),
     },
     {

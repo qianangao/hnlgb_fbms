@@ -45,7 +45,7 @@ export async function detailPhotoInfo(params) {
 }
 
 /**
- * 编辑-异地安置
+ * 编辑-易地安置
  * @param {*} params
  */
 export async function updatePhotoInfo(params) {

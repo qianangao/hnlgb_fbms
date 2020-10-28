@@ -12,6 +12,7 @@ const Model = {
   namespace: 'smStaffMgt',
   state: {
     roleData: {},
+    searchRoleData: {},
     staffListData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -34,6 +35,26 @@ const Model = {
           type: 'save',
           payload: {
             roleData: items,
+          },
+        });
+      }
+    },
+    *getSearchRoles({ payload }, { call, put }) {
+      const params = {
+        ...payload,
+      };
+      const response = yield call(getRoles, params);
+      if (!response.error) {
+        const items = {};
+        response.length > 0 &&
+          response.forEach(item => {
+            items[item.id] = item.roleName;
+          });
+
+        yield put({
+          type: 'save',
+          payload: {
+            searchRoleData: items,
           },
         });
       }

@@ -96,7 +96,7 @@ const Table = ({ openAddModal, openModifyModal, relocated, dispatch }) => {
   return (
     <ProTable
       rowKey="id"
-      headerTitle="异地安置信息"
+      headerTitle="易地安置信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

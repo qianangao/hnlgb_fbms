@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 /**
- * 异地安置-列表
+ * 易地安置-列表
  * @param {*} params
  */
 export async function relocatedList(params) {
@@ -12,7 +12,7 @@ export async function relocatedList(params) {
 }
 
 /**
- * 删除-异地安置
+ * 删除-易地安置
  * @param {*} params
  */
 export async function deleteRelocated(params) {
@@ -23,7 +23,7 @@ export async function deleteRelocated(params) {
 }
 
 /**
- * 新增-异地安置
+ * 新增-易地安置
  * @param {*} params
  */
 export async function addRelocated(params) {
@@ -34,7 +34,7 @@ export async function addRelocated(params) {
 }
 
 /**
- * 异地安置-详情
+ * 易地安置-详情
  * @param {*} params
  */
 export async function detailRelocated(params) {
@@ -45,7 +45,7 @@ export async function detailRelocated(params) {
 }
 
 /**
- * 编辑-异地安置
+ * 编辑-易地安置
  * @param {*} params
  */
 export async function updateRelocated(params) {

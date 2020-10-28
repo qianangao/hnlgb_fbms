@@ -48,7 +48,7 @@ const AddModal = ({ dispatch, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="新增异地安置"
+      title="新增易地安置"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

@@ -49,6 +49,7 @@ const model = {
   state: {
     orgTreeData: [],
     multiOrgTreeData: [],
+    selectedOrgId: undefined, // 选择的组织id
     orgList: [],
     detailOrgData: {},
     tableRef: {},
@@ -151,9 +152,13 @@ const model = {
         orgSymbol,
       });
     },
-    *getOrgList({ payload, resolve }, { call, put }) {
+    *getOrgList({ payload, resolve }, { call, put, select }) {
+      const selectedOrgId = yield select(state => state.orgTree.selectedOrgId);
+      const { organizationId } = yield select(state => state.user.userInfo);
+
       const params = {
         ...payload,
+        orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
@@ -179,6 +184,18 @@ const model = {
           },
         });
       }
+    },
+    *selectOrgChange({ payload }, { put }) {
+      yield put({
+        type: 'save',
+        payload: {
+          selectedOrgId: payload,
+        },
+      });
+
+      yield put({
+        type: 'tableReload',
+      });
     },
     *addOrg({ payload, resolve }, { call, put }) {
       const response = yield call(addOrg, payload);

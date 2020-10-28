@@ -22,7 +22,7 @@ const EditorInput = ({ value, onChange, disabled, dispatch }) => {
       }
     };
     editor.current.customConfig.uploadFileName = 'file';
-    editor.current.customConfig.uploadImgServer = '/attachmentsftp';
+    editor.current.customConfig.uploadImgServer = '/ceph';
     editor.current.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
     editor.current.customConfig.customAlert = info => {
       message.error(`${info}！`);
