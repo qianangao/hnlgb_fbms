@@ -65,7 +65,7 @@ const Model = {
 
       if (!response.error) {
         resolve && resolve(response);
-        message.success('新增异地安置成功！');
+        message.success('新增易地安置成功！');
 
         yield put({
           type: 'tableReload',
@@ -77,7 +77,7 @@ const Model = {
 
       if (!response.error) {
         resolve && resolve(response);
-        message.success('修改异地安置成功！');
+        message.success('修改易地安置成功！');
 
         yield put({
           type: 'tableReload',
@@ -88,7 +88,7 @@ const Model = {
       const response = yield call(deleteRelocated, payload);
 
       if (!response.error) {
-        message.success('异地安置删除成功！');
+        message.success('易地安置删除成功！');
         yield put({
           type: 'tableReload',
         });

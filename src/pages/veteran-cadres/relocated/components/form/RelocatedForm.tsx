@@ -7,7 +7,11 @@ import AdvancedForm from '@/components/AdvancedForm';
 const RelocatedForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
-      label: '	安置单位',
+      hidden: true,
+      name: 'id',
+    },
+    {
+      label: '安置单位',
       name: 'resettlementUnit',
     },
     {
@@ -42,7 +46,7 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老同志!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="异地安置" />
+      <Descriptions title="易地安置" />
     </>
   );
   return id ? (

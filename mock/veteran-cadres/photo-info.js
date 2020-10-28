@@ -23,7 +23,7 @@ for (let i = 0; i < 20; i++) {
     dictRetirementLevel: '8adcf7c96a48fae4016a4925f71e', //职级
     dictTreatmentNow: '8adcf7c96a48fae4016a492643c9', //现享受待遇
     organizationId: '1000', //单位id
-    isRelocation: 0, //是否异地安置
+    isRelocation: 0, //是否易地安置
     resettlementUnit: '哈哈', //安置单位
     organizationName: '离退休老干部',
     createTime: '2020-05-01',

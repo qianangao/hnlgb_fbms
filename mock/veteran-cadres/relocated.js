@@ -11,7 +11,7 @@ const staffInfo = [];
 for (let i = 0; i < 20; i++) {
   staffInfo.push({
     id: '4028b23f73eae1b30173eae1b37b', //id
-    realName: '异地安置' + i, //姓名
+    realName: '易地安置' + i, //姓名
     dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
     dateOfBirth: '2020-08-12', //出生日期
     dictRetirementType: '8adcf7c96a48fae4016a4925f601', //离退休类型
@@ -23,7 +23,7 @@ for (let i = 0; i < 20; i++) {
     dictRetirementLevel: '8adcf7c96a48fae4016a4925f71e', //职级
     dictTreatmentNow: '8adcf7c96a48fae4016a492643c9', //现享受待遇
     organizationId: '1000', //单位id
-    isRelocation: 0, //是否异地安置
+    isRelocation: 0, //是否易地安置
     resettlementUnit: '哈哈', //安置单位
     organizationName: '离退休老干部',
     createTime: '2020-05-01',
@@ -107,7 +107,7 @@ const detailRelocated = (req, res) => {
       dictIdentity: '身份性质', //身份性质
       awardSituation: '奖罚情况', //奖罚情况
       specialContribution: '特殊贡献', //特殊贡献,
-      isRelocation: 0, //是否异地安置
+      isRelocation: 0, //是否易地安置
       resettlementUnit: '哈哈', //安置单位,
     },
   });

@@ -4,7 +4,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
-  const { tableRef, roleData } = smStaffMgt;
+  const { tableRef, searchRoleData } = smStaffMgt;
 
   const columns = [
     {
@@ -28,7 +28,8 @@ const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
       title: '角色',
       align: 'center',
       dataIndex: 'roleId',
-      valueEnum: roleData,
+      valueEnum: searchRoleData,
+      hideInSearch: true,
     },
     {
       title: '出生日期',
@@ -48,6 +49,7 @@ const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
         2: { text: '离职' },
         3: { text: '退休' },
       },
+      hideInSearch: true,
     },
     {
       title: '操作',

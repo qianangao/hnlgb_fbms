@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Radio } from 'antd';
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
@@ -7,6 +7,7 @@ import { connect } from 'umi';
 
 const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
   const orgSelect = useRef({});
+  const [roleVisible, setRoleVisible] = useState(false);
 
   const formItems = [
     {
@@ -40,6 +41,7 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
     {
       label: '角色',
       name: 'roleId',
+      visible: roleVisible,
       enumsItems: roleData,
     },
     {
@@ -94,15 +96,13 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
       orgSelect.current.setLabel(staffInfoData.organizationName || '');
       form.setFieldsValue({ ...staffInfoData });
 
+      setRoleVisible(!!staffInfoData.organizationId);
+
       dispatch({
         type: 'smStaffMgt/getRoles',
         payload: {
           orgIdForDataSelect: staffInfoData.organizationId,
         },
-      });
-    } else {
-      dispatch({
-        type: 'smStaffMgt/getRoles',
       });
     }
   }, [staffInfoData]);
@@ -115,6 +115,8 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
           orgIdForDataSelect: value,
         },
       });
+
+      setRoleVisible(!!value);
     }
   };
 

@@ -195,7 +195,7 @@ const Table = ({
         </Button>,
         <Button
           onClick={() => {
-            const url = './离退休干部职工信息收集模版.xlsx';
+            const url = '/离退休干部职工信息收集模版.xlsx';
             window.open(url);
           }}
         >

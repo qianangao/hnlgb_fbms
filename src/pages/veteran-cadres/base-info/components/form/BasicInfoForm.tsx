@@ -17,7 +17,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       hidden: true,
     },
     {
-      name: 'userid',
+      name: 'userId',
       hidden: true,
     },
     {
