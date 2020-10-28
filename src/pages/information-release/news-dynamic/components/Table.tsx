@@ -7,7 +7,6 @@ const Table = ({
   openAddModal,
   openModifyModal,
   newsDynamic,
-  enums,
   dispatch,
   opendetailModal,
   publishStatus,
@@ -26,13 +25,6 @@ const Table = ({
       title: `标题`,
       align: 'center',
       dataIndex: 'headline',
-    },
-    {
-      title: '类型',
-      align: 'center',
-      dataIndex: 'type',
-      valueEnum: enums.dictNation,
-      hideInSearch: true,
     },
     {
       title: '创建单位',

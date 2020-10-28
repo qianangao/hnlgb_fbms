@@ -11,6 +11,7 @@ const Table = ({
   opendetailModal,
   publishState,
   tableType,
+  openMembersModifyModal,
 }) => {
   const { tableRef } = branchActivity;
   const columns = [
@@ -67,14 +68,24 @@ const Table = ({
       fixed: 'right',
       render: (dom, employeeData) => [
         publishState === 0 ? (
-          <a
-            key={`${employeeData.id}up`}
-            onClick={() => {
-              openModifyModal(employeeData);
-            }}
-          >
-            编辑
-          </a>
+          [
+            <a
+              key={`${employeeData.id}up`}
+              onClick={() => {
+                openModifyModal(employeeData);
+              }}
+            >
+              编辑活动
+            </a>,
+            <a
+              key={`${employeeData.id}upUsers`}
+              onClick={() => {
+                openMembersModifyModal(employeeData);
+              }}
+            >
+              查看成员
+            </a>,
+          ]
         ) : (
           <a
             key={`${employeeData.id}up`}

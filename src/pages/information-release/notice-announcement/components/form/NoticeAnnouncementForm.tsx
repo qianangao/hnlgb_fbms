@@ -17,7 +17,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       label: '通知类型',
       name: 'dictNoticeType',
       enumsLabel: 'dictNoticeType',
-      rules: [{ required: true, message: '请输入通知主题!', whitespace: true }],
+      rules: [{ required: true, message: '请输入通知类型!', whitespace: true }],
     },
     {
       key: 'firstLine',
@@ -58,7 +58,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '附件',
-      name: 'attachmentId',
+      name: 'attachmentinfo',
       type: 'upload',
     },
     {
@@ -84,7 +84,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          attachmentId:
+          attachmentinfo:
             data.cephFile && data.cephFile.id && data.cephFile.fileName
               ? {
                   uid: data.cephFile.id,

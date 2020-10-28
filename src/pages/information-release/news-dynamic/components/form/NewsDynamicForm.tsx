@@ -14,16 +14,6 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       type: 'segmentation',
     },
     {
-      label: '缩略图',
-      name: 'attachmentInfo',
-      type: 'image',
-      rules: [{ required: true, message: '请上传缩略图!' }],
-    },
-    {
-      key: 'secondLine',
-      type: 'segmentation',
-    },
-    {
       label: '内容',
       name: 'context',
       type: 'editor',
@@ -42,15 +32,6 @@ const NewsDynamicForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          attachmentInfo:
-            data.cephFile && data.cephFile.id && data.cephFile.fileName
-              ? {
-                  uid: data.cephFile.id,
-                  name: data.cephFile.fileName,
-                  url: data.cephFile.fileUrl,
-                  status: 'done',
-                }
-              : null,
         };
         form.setFieldsValue(fields);
       });

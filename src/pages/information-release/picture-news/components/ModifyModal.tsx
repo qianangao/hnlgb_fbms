@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import NewsDynamicForm from './form/NewsDynamicForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = NewsDynamicForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'pictureNews/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,28 +22,29 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'pictureNews/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `pictureNews/updateNewsDynamic`,
-          payload: {
-            id: lgbId,
-            headline: values.headline,
-            context: values.context,
-            type: 1, // 类型 1: 图片新闻  2: 新闻动态
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `pictureNews/updateNewsDynamic`,
+            payload: {
+              ...values,
+              id: lgbId,
+              type: 1, // 类型 1: 图片新闻  2: 新闻动态
+              status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              attachmentId: values.attachmentInfo && values.attachmentInfo.uid,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -90,7 +87,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ pictureNews, loading }) => ({
-  modifyModalVisible: pictureNews.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.pictureNews,
 }))(ModifyModal);

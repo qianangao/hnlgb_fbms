@@ -76,6 +76,12 @@ const Table = ({ openModifyModal, flowParty, enums, dispatch }) => {
       hideInSearch: true,
     },
     {
+      title: '支部名称',
+      align: 'center',
+      dataIndex: 'partyName',
+      hideInSearch: true,
+    },
+    {
       title: '操作',
       valueType: 'option',
       align: 'center',
