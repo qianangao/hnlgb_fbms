@@ -3,16 +3,12 @@ import { connect } from 'umi';
 import { Modal, Button, Descriptions } from 'antd';
 import TableCaresMember from './TableCaresMember';
 
-const CaresDetailModal = ({ dispatch, caresDetailModalVisible, caresDetailData, actionRef }) => {
+const CaresDetailModal = ({ dispatch, caresDetailData, actionRef }) => {
   const [caresId, setCaresId] = useState('');
+  const [caresDetailModalVisible, setCaresDetailModalVisible] = useState(false);
   const showModal = id => {
     setCaresId(id);
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresDetailModalVisible: true,
-      },
-    });
+    setCaresDetailModalVisible(true);
   };
 
   useEffect(() => {
@@ -33,12 +29,7 @@ const CaresDetailModal = ({ dispatch, caresDetailModalVisible, caresDetailData, 
   }, [caresId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresDetailModalVisible: false,
-      },
-    });
+    setCaresDetailModalVisible(false);
   };
 
   return (
@@ -72,7 +63,6 @@ const CaresDetailModal = ({ dispatch, caresDetailModalVisible, caresDetailData, 
 };
 
 export default connect(({ oaCaresNext, loading }) => ({
-  caresDetailModalVisible: oaCaresNext.caresDetailModalVisible,
   caresDetailData: oaCaresNext.caresDetailData,
   loading: loading.models.oaCaresNext,
 }))(CaresDetailModal);

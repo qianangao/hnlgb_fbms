@@ -26,11 +26,6 @@ const Model = {
     tableCaresRef: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
-    caresDetailModalVisible: false, // 关工组织详情modal visible
-    caresAddModalVisible: false, // 新增关工组织modal visible
-    trendsAddModalVisible: false, // 发布动态modal visible
-    memberModifyModalVisible: false, // 编辑成员modal visible
-    memberAddModalVisible: false, // 新增成员modal visible
   },
   effects: {
     *getCaresList({ payload, resolve }, { call, put, select }) {
@@ -201,64 +196,44 @@ const Model = {
       });
     },
 
-    *addCares({ payload }, { call, put }) {
+    *addCares({ payload, resolve }, { call, put }) {
       const response = yield call(addCares, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            caresAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('新增关工组织成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *addTrends({ payload }, { call, put }) {
+    *addTrends({ payload, resolve }, { call, put }) {
       const response = yield call(addTrends, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            trendsAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('关工动态发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *addMember({ payload }, { call, put }) {
+    *addMember({ payload, resolve }, { call, put }) {
       const response = yield call(addMember, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            memberAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('成员新增成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateMember({ payload }, { call, put }) {
+    *updateMember({ payload, resolve }, { call, put }) {
       const response = yield call(updateMember, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            memberModifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('成员信息修改成功！');
         yield put({
           type: 'tableReload',

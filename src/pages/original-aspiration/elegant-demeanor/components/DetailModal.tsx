@@ -3,16 +3,12 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import Detail from './form/Detail';
 
-const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
+const DetailModal = ({ loading, actionRef }) => {
   const [detailId, setDetailId] = useState('');
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = id => {
     setDetailId(id);
-    dispatch({
-      type: 'oaElegantDemeanor/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
+    setDetailModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -24,12 +20,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
     }
   }, []);
   const hideModal = () => {
-    dispatch({
-      type: 'oaElegantDemeanor/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
   };
 
   return (
@@ -62,7 +53,6 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ oaElegantDemeanor, loading }) => ({
-  detailModalVisible: oaElegantDemeanor.detailModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.oaElegantDemeanor,
 }))(DetailModal);

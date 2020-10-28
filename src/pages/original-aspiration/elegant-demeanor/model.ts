@@ -11,7 +11,6 @@ const Model = {
   namespace: 'oaElegantDemeanor',
   state: {
     elegantDemeanorListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailElegantDemeanorData: {},
@@ -62,32 +61,22 @@ const Model = {
       });
     },
 
-    *addElegantDemeanor({ payload }, { call, put }) {
+    *addElegantDemeanor({ payload, resolve }, { call, put }) {
       const response = yield call(addElegantDemeanor, payload);
       const { pushStatus } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(pushStatus === 0 ? '五老风采新增成功！' : '五老风采发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateElegantDemeanor({ payload }, { call, put }) {
+    *updateElegantDemeanor({ payload, resolve }, { call, put }) {
       const response = yield call(updateElegantDemeanor, payload);
       const { pushStatus } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(pushStatus === 0 ? '五老风采修改成功！' : '五老风采发布成功！');
 

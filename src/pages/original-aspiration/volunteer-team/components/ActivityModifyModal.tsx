@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ActivityForm from './form/ActivityForm';
 
-const ActivityModifyModal = ({ dispatch, activityModifyModalVisible, actionRef, loading }) => {
+const ActivityModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ActivityForm.useForm();
   const [activityId, setActivityId] = useState('');
+  const [activityModifyModalVisible, setActivityModifyModalVisible] = useState(false);
   const showModal = id => {
     setActivityId(id);
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        activityModifyModalVisible: true,
-      },
-    });
+    setActivityModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,25 +22,28 @@ const ActivityModifyModal = ({ dispatch, activityModifyModalVisible, actionRef, 
   }, [activityId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        activityModifyModalVisible: false,
-      },
-    });
+    setActivityModifyModalVisible(false);
+    form.resetFields();
   };
+
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaVolunteerTeam/updateActivity`,
-          payload: {
-            ...values,
-            id: activityId,
-            publishState: publishStatus ? 0 : 1,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaVolunteerTeam/updateActivity`,
+            payload: {
+              ...values,
+              id: activityId,
+              publishState: publishStatus ? 0 : 1,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -77,7 +76,6 @@ const ActivityModifyModal = ({ dispatch, activityModifyModalVisible, actionRef, 
 };
 
 export default connect(({ oaVolunteerTeam, loading }) => ({
-  activityModifyModalVisible: oaVolunteerTeam.activityModifyModalVisible,
   activityDetailData: oaVolunteerTeam.activityDetailData,
   loading: loading.models.oaVolunteerTeam,
 }))(ActivityModifyModal);

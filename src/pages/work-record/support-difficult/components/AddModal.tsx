@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import SupportDifficultForm from './form/SupportDifficultForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) => {
+const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
   const [form] = SupportDifficultForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'wrSupportDifficult/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrSupportDifficult/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,18 +29,21 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrSupportDifficult/addSupportDifficult`,
-          payload: {
-            ...values,
-            helpType: tableType,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrSupportDifficult/addSupportDifficult`,
+            payload: {
+              ...values,
+              helpType: tableType,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
       })
-      .catch(info => {
-        console.error('新增错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
 
   return (
@@ -74,7 +67,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, tableType }) 
   );
 };
 
-export default connect(({ wrSupportDifficult, loading }) => ({
-  addModalVisible: wrSupportDifficult.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['wrSupportDifficult/addSupportDifficult'],
 }))(AddModal);

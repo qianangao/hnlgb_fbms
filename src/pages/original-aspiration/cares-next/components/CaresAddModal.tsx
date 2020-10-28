@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import CaresForm from './CaresForm';
 
-const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) => {
+const CaresAddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = CaresForm.useForm();
+  const [caresAddModalVisible, setCaresAddModalVisible] = useState(false);
   const showModal = () => {
     form.resetFields();
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresAddModalVisible: true,
-      },
-    });
+    setCaresAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,23 +21,25 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        caresAddModalVisible: false,
-      },
-    });
+    setCaresAddModalVisible(false);
+    form.resetFields();
   };
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCaresNext/addCares`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCaresNext/addCares`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -67,7 +65,6 @@ const CaresAddModal = ({ dispatch, caresAddModalVisible, actionRef, loading }) =
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  caresAddModalVisible: oaCaresNext.caresAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCaresNext/addCares'],
 }))(CaresAddModal);

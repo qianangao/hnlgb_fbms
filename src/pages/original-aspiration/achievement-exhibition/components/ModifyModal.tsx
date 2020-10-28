@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import AchievementForm from './form/AchievementForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = AchievementForm.useForm();
   const [achievementId, setAchievementId] = useState('');
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const showModal = item => {
     setAchievementId(item.id);
-    dispatch({
-      type: 'oaAchievementExhibition/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaAchievementExhibition/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,18 +30,22 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaAchievementExhibition/updateAchievement`,
-          payload: {
-            ...values,
-            isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: achievementId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaAchievementExhibition/updateAchievement`,
+            payload: {
+              ...values,
+              isPublished: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: achievementId,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('修改错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
   return (
     <Modal
@@ -80,7 +74,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ oaAchievementExhibition, loading }) => ({
-  modifyModalVisible: oaAchievementExhibition.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaAchievementExhibition/updateAchievement'],
 }))(ModifyModal);

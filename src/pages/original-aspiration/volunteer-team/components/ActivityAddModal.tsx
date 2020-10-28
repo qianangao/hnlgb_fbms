@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ActivityForm from './form/ActivityForm';
 
-const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
+const ActivityAddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ActivityForm.useForm();
   const [activityId, setActivityId] = useState('');
+  const [activityAddModalVisible, setActivityAddModalVisible] = useState(false);
   const showModal = id => {
     form.resetFields();
     setActivityId(id);
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        activityAddModalVisible: true,
-      },
-    });
+    setActivityAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,25 +23,28 @@ const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loadin
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        activityAddModalVisible: false,
-      },
-    });
+    setActivityAddModalVisible(false);
+    form.resetFields();
   };
+
   const handleOk = status => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaVolunteerTeam/addActivity`,
-          payload: {
-            ...values,
-            teamId: activityId,
-            publishState: status ? 0 : 1,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaVolunteerTeam/addActivity`,
+            payload: {
+              ...values,
+              teamId: activityId,
+              publishState: status ? 0 : 1,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -78,7 +77,6 @@ const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loadin
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  activityAddModalVisible: oaVolunteerTeam.activityAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaVolunteerTeam/addActivity'],
 }))(ActivityAddModal);

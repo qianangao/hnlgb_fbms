@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import ActivityForm from './ActivityForm';
 
-const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loading }) => {
+const ActivityAddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ActivityForm.useForm();
   const [clubId, setClubId] = useState('');
+  const [activityAddModalVisible, setActivityAddModalVisible] = useState(false);
   const showModal = id => {
     form.resetFields();
     setClubId(id);
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        activityAddModalVisible: true,
-      },
-    });
+    setActivityAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,24 +23,25 @@ const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loadin
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        activityAddModalVisible: false,
-      },
-    });
+    setActivityAddModalVisible(false);
   };
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCommunity/addActivity`,
-          payload: {
-            ...values,
-            clubId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCommunity/addActivity`,
+            payload: {
+              ...values,
+              clubId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -70,7 +67,6 @@ const ActivityAddModal = ({ dispatch, activityAddModalVisible, actionRef, loadin
   );
 };
 
-export default connect(({ oaCommunity, loading }) => ({
-  activityAddModalVisible: oaCommunity.activityAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCommunity/addActivity'],
 }))(ActivityAddModal);

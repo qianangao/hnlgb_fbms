@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import TeamForm from './form/TeamForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) => {
+const AddModal = ({ dispatch, actionRef, loading, deedsType }) => {
   const [form] = TeamForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,17 +29,20 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: 'oaVolunteerTeam/addTeam',
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: 'oaVolunteerTeam/addTeam',
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
-        form.resetFields();
       })
-      .catch(info => {
-        console.error('新增错误', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
 
   return (
@@ -73,7 +66,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading, deedsType }) 
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  addModalVisible: oaVolunteerTeam.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaVolunteerTeam/addTeam'],
 }))(AddModal);

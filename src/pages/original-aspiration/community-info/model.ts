@@ -26,12 +26,6 @@ const Model = {
     tableRef: {},
     memberIds: [],
     selectedOrgId: undefined, // 选择的组织id
-    communityDetailModalVisible: false, // 社区详情modal visible
-    communityModifyModalVisible: false, // 社区编辑modal visible
-    communityAddModalVisible: false, // 新增社团modal visible
-    activityAddModalVisible: false, // 发布活动modal visible
-    memberModifyModalVisible: false, // 编辑成员modal visible
-    memberAddModalVisible: false, // 新增成员modal visible
   },
   effects: {
     *getCommunityList({ payload, resolve }, { call, put, select }) {
@@ -157,16 +151,11 @@ const Model = {
         });
       }
     },
-    *updateCommunity({ payload }, { call, put }) {
+    *updateCommunity({ payload, resolve }, { call, put }) {
       const response = yield call(updateCommunity, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            communityModifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('社团信息修改成功！');
         yield put({
           type: 'tableReload',
@@ -221,32 +210,22 @@ const Model = {
       });
     },
 
-    *addCommunity({ payload }, { call, put }) {
+    *addCommunity({ payload, resolve }, { call, put }) {
       const response = yield call(addCommunity, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            communityAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('新增社团成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *addActivity({ payload }, { call, put }) {
+    *addActivity({ payload, resolve }, { call, put }) {
       const response = yield call(addActivity, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            activityAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('社团活动发布成功！');
         yield put({
           type: 'tableReload',

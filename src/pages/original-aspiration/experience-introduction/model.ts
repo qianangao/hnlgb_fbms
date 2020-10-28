@@ -11,7 +11,6 @@ const Model = {
   namespace: 'oaExperienceIntroduction',
   state: {
     experienceListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailExperienceData: {},
@@ -64,32 +63,22 @@ const Model = {
       });
     },
 
-    *addExperience({ payload }, { call, put }) {
+    *addExperience({ payload, resolve }, { call, put }) {
       const response = yield call(addExperience, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(isPublished === 0 ? '经验介绍新增成功！' : '经验介绍发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateExperience({ payload }, { call, put }) {
+    *updateExperience({ payload, resolve }, { call, put }) {
       const response = yield call(updateExperience, payload);
       const { isPublished } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(isPublished === 0 ? '经验介绍修改成功！' : '经验介绍发布成功！');
 

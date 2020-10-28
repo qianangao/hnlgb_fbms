@@ -24,12 +24,7 @@ const Model = {
     teamListData: {},
     activityListData: {},
     memberListData: {},
-    addModalVisible: false,
     activityDetailData: {},
-    activityAddModalVisible: false,
-    activityModifyModalVisible: false,
-    teamModifyModalVisible: false,
-    registeredModalVisible: false,
     tableRef: {},
     memberIds: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -199,15 +194,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addTeam({ payload }, { call, put }) {
+    *addTeam({ payload, resolve }, { call, put }) {
       const response = yield call(addTeam, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success('新增成功！');
         yield put({
           type: 'tableReload',
@@ -227,32 +217,22 @@ const Model = {
         });
       }
     },
-    *addActivity({ payload }, { call, put }) {
+    *addActivity({ payload, resolve }, { call, put }) {
       const response = yield call(addActivity, payload);
       const { publishState } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            activityAddModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(publishState === 0 ? '新增成功！' : '发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateActivity({ payload }, { call, put }) {
+    *updateActivity({ payload, resolve }, { call, put }) {
       const response = yield call(updateActivity, payload);
       const { publishState } = payload;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            activityModifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(publishState === 0 ? '修改成功！' : '发布成功！');
 
@@ -261,15 +241,10 @@ const Model = {
         });
       }
     },
-    *updateTeam({ payload }, { call, put }) {
+    *updateTeam({ payload, resolve }, { call, put }) {
       const response = yield call(updateTeam, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            teamModifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success('修改成功！');
 

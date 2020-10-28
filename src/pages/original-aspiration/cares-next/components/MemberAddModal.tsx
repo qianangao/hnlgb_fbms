@@ -3,15 +3,11 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import MemberForm from './MemberForm';
 
-const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading, id }) => {
+const MemberAddModal = ({ dispatch, actionRef, loading, id }) => {
   const [form] = MemberForm.useForm();
+  const [memberAddModalVisible, setMemberAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        memberAddModalVisible: true,
-      },
-    });
+    setMemberAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -24,25 +20,26 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading, i
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCaresNext/save',
-      payload: {
-        memberAddModalVisible: false,
-      },
-    });
+    setMemberAddModalVisible(false);
     form.resetFields();
   };
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `oaCaresNext/addMember`,
-          payload: {
-            ...values,
-            mechanismId: id,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `oaCaresNext/addMember`,
+            payload: {
+              ...values,
+              mechanismId: id,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch();
   };
@@ -68,7 +65,6 @@ const MemberAddModal = ({ dispatch, memberAddModalVisible, actionRef, loading, i
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  memberAddModalVisible: oaCaresNext.memberAddModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCaresNext/addCares'],
 }))(MemberAddModal);

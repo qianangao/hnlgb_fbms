@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import ApproveRecordForm from './form/ApproveRecordForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ApproveRecordForm.useForm();
-
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'wrApproveRecord/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'wrApproveRecord/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -40,16 +29,20 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `wrApproveRecord/addApproveRecord`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `wrApproveRecord/addApproveRecord`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
       })
-      .catch(info => {
-        console.error('新增报错', info);
-      });
+      .then(() => {
+        hideModal();
+      })
+      .catch();
   };
 
   return (
@@ -73,7 +66,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ wrApproveRecord, loading }) => ({
-  addModalVisible: wrApproveRecord.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.wrApproveRecord,
 }))(AddModal);

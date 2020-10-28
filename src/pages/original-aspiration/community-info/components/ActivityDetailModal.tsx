@@ -3,21 +3,12 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailFormPage from '@/components/DetailFormPage';
 
-const ActivityDetailModal = ({
-  dispatch,
-  activityDetailModalVisible,
-  activityDetailData,
-  actionRef,
-}) => {
+const ActivityDetailModal = ({ dispatch, activityDetailData, actionRef }) => {
   const [activityId, setActivityId] = useState('');
+  const [activityDetailModalVisible, setActivityDetailModalVisible] = useState(false);
   const showModal = id => {
     setActivityId(id);
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        activityDetailModalVisible: true,
-      },
-    });
+    setActivityDetailModalVisible(true);
   };
 
   useEffect(() => {
@@ -37,12 +28,7 @@ const ActivityDetailModal = ({
   }, [activityId]);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        activityDetailModalVisible: false,
-      },
-    });
+    setActivityDetailModalVisible(false);
   };
 
   return (
@@ -71,7 +57,6 @@ const ActivityDetailModal = ({
 };
 
 export default connect(({ oaCommunity, loading }) => ({
-  activityDetailModalVisible: oaCommunity.activityDetailModalVisible,
   activityDetailData: oaCommunity.activityDetailData,
   loading: loading.models.oaCommunity,
 }))(ActivityDetailModal);
