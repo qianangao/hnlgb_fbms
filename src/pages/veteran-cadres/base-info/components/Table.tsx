@@ -144,6 +144,7 @@ const Table = ({
         payload: {
           file,
           type: 'excel',
+          isLocal: true,
         },
         resolve,
       });

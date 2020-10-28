@@ -25,17 +25,21 @@ const Table = ({ smRoleMgt, openModifyModal, dispatch }) => {
       width: 180,
       fixed: 'right',
       render: (dom, roleData) => [
-        <a key={`${roleData.id}up`} onClick={() => openModifyModal(roleData)}>
-          编辑
-        </a>,
-        <Popconfirm
-          key={`${roleData.id}del`}
-          title="确认删除该角色吗？该操作不可恢复"
-          placement="topRight"
-          onConfirm={() => deleteRoles([roleData.id])}
-        >
-          <a>删除</a>
-        </Popconfirm>,
+        roleData.isEdit === 1 && (
+          <a key={`${roleData.id}up`} onClick={() => openModifyModal(roleData)}>
+            编辑
+          </a>
+        ),
+        roleData.isEdit === 1 && (
+          <Popconfirm
+            key={`${roleData.id}del`}
+            title="确认删除该角色吗？该操作不可恢复"
+            placement="topRight"
+            onConfirm={() => deleteRoles([roleData.id])}
+          >
+            <a>删除</a>
+          </Popconfirm>
+        ),
       ],
     },
   ];
