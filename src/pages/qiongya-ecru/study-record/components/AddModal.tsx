@@ -39,6 +39,9 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
           });
         });
       })
+      .then(() => {
+        hideModal();
+      })
       .catch(info => {
         console.error('新增错误', info);
       });

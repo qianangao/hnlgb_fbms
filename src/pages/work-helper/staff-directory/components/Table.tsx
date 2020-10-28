@@ -47,7 +47,6 @@ const Table = ({ staffDirectory, dispatch }) => {
       rowKey="id"
       headerTitle="工作人员电话簿"
       actionRef={tableRef}
-      rowSelection={[]}
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       columns={columns}

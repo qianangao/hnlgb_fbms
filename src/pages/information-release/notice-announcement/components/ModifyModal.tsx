@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = NoticeAnnouncementForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'noticeAnnouncement/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,12 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'noticeAnnouncement/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   // 获取-接收类型
@@ -53,26 +44,29 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        const payload = {
-          subject: values.subject,
-          dictNoticeType: values.dictNoticeType,
-          content: values.content,
-          attachmentId: values.attachmentId ? values.attachmentId.uid : undefined,
-          id: lgbId,
-          dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          receivedType: values.receivedType,
-        };
-        if (values.receivedType === 1) {
-          payload.userList = changeFormat(values.userList);
-          payload.orgList = [];
-        }
-        if (values.receivedType === 0) {
-          payload.orgList = changeFormat(values.orgList);
-        }
-        dispatch({
-          type: `noticeAnnouncement/updateNoticeAnnouncement`,
-          payload,
+        return new Promise(resolve => {
+          const payload = {
+            ...values,
+            id: lgbId,
+            attachmentId: values.attachmentinfo && values.attachmentinfo.uid,
+            dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+          };
+          if (values.receivedType === 1) {
+            payload.userList = changeFormat(values.userList);
+            payload.orgList = [];
+          }
+          if (values.receivedType === 0) {
+            payload.orgList = changeFormat(values.orgList);
+          }
+          dispatch({
+            type: `noticeAnnouncement/updateNoticeAnnouncement`,
+            payload,
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -115,7 +109,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ noticeAnnouncement, loading }) => ({
-  modifyModalVisible: noticeAnnouncement.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.noticeAnnouncement,
 }))(ModifyModal);

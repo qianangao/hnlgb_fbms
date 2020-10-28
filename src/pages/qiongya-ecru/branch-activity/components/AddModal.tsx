@@ -33,18 +33,10 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
           dispatch({
             type: `branchActivity/addBranchActivity`,
             payload: {
-              activityAdd: values.activityAdd,
-              activityDate: values.activityDate,
-              activityName: values.activityName,
-              dictActivityChildType: values.dictOrgLife,
-              context: values.context,
-              host: values.host,
-              partyId: values.partyId,
+              ...values,
               publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
-              photoAttachmentId: values.picAttachmentInfo
-                ? values.picAttachmentInfo.uid
-                : undefined,
-              fileId: values.attachmentInfo ? values.attachmentInfo.uid : undefined,
+              photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
+              fileId: values.attachmentInfo && values.attachmentInfo.uid,
             },
             resolve,
           });

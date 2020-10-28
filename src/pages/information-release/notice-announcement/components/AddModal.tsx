@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import NoticeAnnouncementForm from './form/NoticeAnnouncementForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = NoticeAnnouncementForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
-    dispatch({
-      type: 'noticeAnnouncement/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +21,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'noticeAnnouncement/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -49,26 +39,28 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        const payload = {
-          subject: values.subject,
-          dictNoticeType: values.dictNoticeType,
-          content: values.content,
-          attachmentId: values.attachmentId ? values.attachmentId.uid : undefined,
-          dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          receivedType: values.receivedType,
-        };
-        if (values.receivedType === 1) {
-          payload.userList = changeFormat(values.userList);
-          payload.orgList = [];
-        }
-        if (values.receivedType === 0) {
-          payload.orgList = changeFormat(values.orgList);
-        }
-        dispatch({
-          type: `noticeAnnouncement/addNoticeAnnouncement`,
-          payload,
+        return new Promise(resolve => {
+          const payload = {
+            ...values,
+            attachmentId: values.attachmentinfo && values.attachmentinfo.uid,
+            dictPublishStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+          };
+          if (values.receivedType === 1) {
+            payload.userList = changeFormat(values.userList);
+            payload.orgList = [];
+          }
+          if (values.receivedType === 0) {
+            payload.orgList = changeFormat(values.orgList);
+          }
+          dispatch({
+            type: `noticeAnnouncement/addNoticeAnnouncement`,
+            payload,
+            resolve,
+          });
         });
-        form.resetFields();
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -103,7 +95,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ noticeAnnouncement, loading }) => ({
-  addModalVisible: noticeAnnouncement.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.noticeAnnouncement,
 }))(AddModal);
