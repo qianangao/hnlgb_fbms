@@ -64,7 +64,7 @@ const Model = {
     },
     *addLifeServiceInfo({ payload }, { call, put }) {
       const response = yield call(addLifeServiceInfo, payload);
-      const publishStatus = payload.status;
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',
@@ -82,7 +82,7 @@ const Model = {
     },
     *updateLifeServiceInfo({ payload }, { call, put }) {
       const response = yield call(updateLifeServiceInfo, payload);
-      const publishStatus = payload.status;
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         yield put({
           type: 'save',

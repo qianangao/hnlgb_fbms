@@ -27,6 +27,7 @@ const AdvancedFormItem = ({
   switchEnums,
   hidden,
   disabled,
+  extraProps,
   ...resField
 }) => {
   let fieldInput = <Input disabled={disabled} />;
@@ -76,7 +77,14 @@ const AdvancedFormItem = ({
     resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD') : '');
     resField.getValueProps = str => ({ value: formatDate(str) });
 
-    fieldInput = <DatePicker disabled={disabled} style={{ width: '100%' }} format="YYYY-MM-DD" />;
+    fieldInput = (
+      <DatePicker
+        disabled={disabled}
+        style={{ width: '100%' }}
+        format="YYYY-MM-DD"
+        {...extraProps}
+      />
+    );
   } else if (type === 'time') {
     resField.valuePropName = 'value';
     resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');
@@ -100,7 +108,7 @@ const AdvancedFormItem = ({
   } else if (type === 'image') {
     fieldInput = <UploadInput type="image" disabled={disabled} />;
   } else if (type === 'number') {
-    fieldInput = <InputNumber disabled={disabled} />;
+    fieldInput = <InputNumber disabled={disabled} {...extraProps} />;
   } else if (type === 'textarea') {
     fieldInput = <Input.TextArea disabled={disabled} autoSize={{ minRows: 3, maxRows: 5 }} />;
   } else if (type === 'editor') {

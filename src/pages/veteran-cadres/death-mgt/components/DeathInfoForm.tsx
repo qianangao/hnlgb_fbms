@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
+import moment from 'moment';
 import AdvancedForm from '@/components/AdvancedForm';
 
 const DeathInfoForm = ({ form, deathValues }) => {
+  const disabledDate = current => {
+    return current && current > moment().endOf('day');
+  };
   const formItems = [
     {
       label: '离世时间',
       name: 'dieDate',
       type: 'date',
+      extraProps: {
+        disabledDate,
+      },
       rules: [{ required: true, message: '请选择离世时间!' }],
     },
     {
