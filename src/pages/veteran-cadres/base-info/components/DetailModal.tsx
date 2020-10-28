@@ -86,7 +86,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
               enums.dictPoliticalStatus[lgbDetailData.dictPoliticalStatus]}
           </Descriptions.Item>
           <Descriptions.Item label="生日">
-            {lgbDetailData.birthday + (lgbDetailData.solarOrLunar === 0 ? '阳历' : '阴历')}
+            {lgbDetailData.birthday + (lgbDetailData.solarOrLunar === 1 ? '阴历' : '阳历')}
           </Descriptions.Item>
           <Descriptions.Item label="离退休类型">
             {enums.dictRetirementType && enums.dictRetirementType[lgbDetailData.dictRetirementType]}
@@ -131,9 +131,6 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="参加革命工作时期">
             {enums.dictRevolutionPeriod &&
               enums.dictRevolutionPeriod[lgbDetailData.dictRevolutionPeriod]}
-          </Descriptions.Item>
-          <Descriptions.Item label="健康状态">
-            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealthStatus]}
           </Descriptions.Item>
           <Descriptions.Item label="享受医疗待遇情况">
             {enums.dictMedicalTreatment &&
@@ -191,7 +188,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
 
         <Descriptions title="健康档案" column={{ xxl: 4, xl: 3, lg: 2 }}>
           <Descriptions.Item label="健康状态">
-            {enums.dictHealth && enums.dictHealth[lgbDetailData.dictHealth]}
+            {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealth]}
           </Descriptions.Item>
           <Descriptions.Item label="疾病情况">{lgbHealthyData.disease}</Descriptions.Item>
           <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item>
