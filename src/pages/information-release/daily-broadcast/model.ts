@@ -4,7 +4,6 @@ const Model = {
   namespace: 'dailyBroadcast',
   state: {
     dailyBroadcastData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     publishStatus: 1, // type  0 草稿箱 ， 1 已发布

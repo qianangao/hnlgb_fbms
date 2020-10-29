@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import PhysicalExaminationForm from './form/PhysicalExaminationForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PhysicalExaminationForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const [userIds, setUserIds] = useState([]);
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +23,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
   // 获取-选择的成员id
@@ -71,12 +61,18 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
         payload.orgList = orgArrId;
         if (orgArrId.length === 0 && userIds.length === 0) {
           message.error('请传入接收单位或接收个人');
-          return;
+          throw new Error('请传入接收单位或接收个人');
         }
-        dispatch({
-          type: `opPhysicalExamination/updatePhysicalExamination`,
-          payload,
+        return new Promise(resolve => {
+          dispatch({
+            type: `opPhysicalExamination/updatePhysicalExamination`,
+            payload,
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -117,7 +113,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     </Modal>
   );
 };
-export default connect(({ opPhysicalExamination, loading }) => ({
-  modifyModalVisible: opPhysicalExamination.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.opPhysicalExamination,
 }))(ModifyModal);

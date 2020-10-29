@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import WorksCornerForm from './form/WorksCornerForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = WorksCornerForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
 
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'worksCorner/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -28,29 +24,30 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'worksCorner/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `worksCorner/updateWorksCornerInfo`,
-          payload: {
-            headline: values.headline,
-            context: values.context,
-            type: values.type,
-            attachmentId: values.attachmentInfo.uid,
-            id: lgbId,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `worksCorner/updateWorksCornerInfo`,
+            payload: {
+              headline: values.headline,
+              context: values.context,
+              type: values.type,
+              attachmentId: values.attachmentInfo.uid,
+              id: lgbId,
+              status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -86,7 +83,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ worksCorner, loading }) => ({
-  modifyModalVisible: worksCorner.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.worksCorner,
 }))(ModifyModal);

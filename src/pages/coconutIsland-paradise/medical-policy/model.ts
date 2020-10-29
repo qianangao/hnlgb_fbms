@@ -11,7 +11,6 @@ const Model = {
   namespace: 'medicalPolicy',
   state: {
     medicalPolicyInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -61,16 +60,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addMedicalPolicyInfo({ payload }, { call, put }) {
+    *addMedicalPolicyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addMedicalPolicyInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增医疗政策成功！');
 
         yield put({
@@ -78,17 +71,11 @@ const Model = {
         });
       }
     },
-    *updateMedicalPolicyInfo({ payload }, { call, put }) {
+    *updateMedicalPolicyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateMedicalPolicyInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改医疗政策成功！');
 
         yield put({

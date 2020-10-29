@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import HelpElderlyForm from './form/HelpElderlyForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = HelpElderlyForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
 
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'helpElderly/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -28,27 +24,28 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'helpElderly/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `helpElderly/updateHelpElderlyInfo`,
-          payload: {
-            ...values,
-            fileId: values.attachmentInfo.uid,
-            id: lgbId,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `helpElderly/updateHelpElderlyInfo`,
+            payload: {
+              ...values,
+              fileId: values.attachmentInfo.uid,
+              id: lgbId,
+              pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -84,7 +81,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ helpElderly, loading }) => ({
-  modifyModalVisible: helpElderly.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.helpElderly,
 }))(ModifyModal);

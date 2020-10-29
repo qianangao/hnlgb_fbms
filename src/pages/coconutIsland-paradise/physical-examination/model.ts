@@ -13,8 +13,6 @@ const Model = {
   namespace: 'opPhysicalExamination',
   state: {
     physicalExaminationListData: {},
-    modifyModalVisible: false, // 新增修改modal visible
-    registeredModalVisible: false,
     tableRef: {},
     memberListData: {},
     selectedOrgId: undefined, // 选择的组织id
@@ -102,17 +100,11 @@ const Model = {
         });
       }
     },
-    *addPhysicalExamination({ payload }, { call, put }) {
+    *addPhysicalExamination({ payload, resolve }, { call, put }) {
       const response = yield call(addPhysicalExamination, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增成功！');
 
         yield put({
@@ -132,17 +124,11 @@ const Model = {
         });
       }
     },
-    *updatePhysicalExamination({ payload }, { call, put }) {
+    *updatePhysicalExamination({ payload, resolve }, { call, put }) {
       const response = yield call(updatePhysicalExamination, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改成功！');
 
         yield put({

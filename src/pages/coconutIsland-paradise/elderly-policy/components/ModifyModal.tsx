@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ElderlyPolicyForm from './form/ElderlyPolicyForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ElderlyPolicyForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
 
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'elderlyPolicy/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -28,28 +24,29 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'elderlyPolicy/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `elderlyPolicy/updateElderlyPolicyInfo`,
-          payload: {
-            title: values.title,
-            context: values.context,
-            fileId: values.attachmentInfo.uid,
-            id: lgbId,
-            pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `elderlyPolicy/updateElderlyPolicyInfo`,
+            payload: {
+              title: values.title,
+              context: values.context,
+              fileId: values.attachmentInfo.uid,
+              id: lgbId,
+              pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -94,7 +91,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ elderlyPolicy, loading }) => ({
-  modifyModalVisible: elderlyPolicy.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.elderlyPolicy,
 }))(ModifyModal);

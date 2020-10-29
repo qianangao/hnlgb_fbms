@@ -11,7 +11,6 @@ const Model = {
   namespace: 'activityCenter',
   state: {
     activityCenterInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailActivityCenterData: {},
@@ -62,17 +61,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addActivityCenterInfo({ payload }, { call, put }) {
+    *addActivityCenterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addActivityCenterInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '活动中心新增成功！' : '活动中心发布成功！');
 
         yield put({
@@ -80,17 +73,11 @@ const Model = {
         });
       }
     },
-    *updateActivityCenterInfo({ payload }, { call, put }) {
+    *updateActivityCenterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateActivityCenterInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '活动中心修改成功！' : '活动中心发布成功！');
 
         yield put({

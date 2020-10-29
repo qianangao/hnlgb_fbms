@@ -3,16 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
-const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
+const DetailModal = ({ loading, actionRef }) => {
   const [DetailId, setDetailId] = useState('');
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
+
   const showModal = item => {
     setDetailId(item.id);
-    dispatch({
-      type: 'policyStipulate/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
+    setDetailModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -24,12 +21,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
     }
   }, []);
   const hideModal = () => {
-    dispatch({
-      type: 'policyStipulate/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
   };
 
   return (
@@ -62,7 +54,6 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ policyStipulate, loading }) => ({
-  detailModalVisible: policyStipulate.detailModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.policyStipulate,
 }))(DetailModal);

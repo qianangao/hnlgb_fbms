@@ -15,7 +15,6 @@ const Model = {
   namespace: 'onlineRegistration',
   state: {
     onlineRegistrationInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailOnlineRegistrationData: {},
@@ -68,16 +67,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addOnlineRegistrationInfo({ payload }, { call, put }) {
+    *addOnlineRegistrationInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addOnlineRegistrationInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('网络报名新增成功！');
 
         yield put({
@@ -85,18 +78,11 @@ const Model = {
         });
       }
     },
-    *updateOnlineRegistrationInfo({ payload }, { call, put }) {
+    *updateOnlineRegistrationInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateOnlineRegistrationInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-            selectModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '网络报名修改成功！' : '网络报名发布成功！');
 
         yield put({

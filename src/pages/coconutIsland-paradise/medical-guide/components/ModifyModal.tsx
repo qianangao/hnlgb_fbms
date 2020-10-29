@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import MedicalGuideForm from './form/MedicalGuideForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
+const ModifyModal = ({ dispatch, actionRef, loading }) => {
   const [form] = MedicalGuideForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'medicalGuide/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,27 +23,28 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'medicalGuide/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `medicalGuide/updateMedicalGuideInfo`,
-          payload: {
-            ...values,
-            longitude: '108.97544873046874',
-            latitude: '33.910876053972466',
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `medicalGuide/updateMedicalGuideInfo`,
+            payload: {
+              ...values,
+              longitude: '108.97544873046874',
+              latitude: '33.910876053972466',
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -83,7 +80,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ medicalGuide, loading }) => ({
-  modifyModalVisible: medicalGuide.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.medicalGuide,
 }))(ModifyModal);

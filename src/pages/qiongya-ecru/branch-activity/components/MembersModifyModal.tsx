@@ -3,16 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import ActivityUserTable from './ActivityUserTable';
 
-const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
+const CommunityModifyModal = ({ actionRef }) => {
   const [partyId, setPartyId] = useState('');
+  const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
+
   const showModal = item => {
     setPartyId(item.partyId);
-    dispatch({
-      type: 'studyRecord/save',
-      payload: {
-        memberModifyModalVisible: true,
-      },
-    });
+    setMemberModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,12 +22,7 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'studyRecord/save',
-      payload: {
-        memberModifyModalVisible: false,
-      },
-    });
+    setMemberModifyModalVisible(false);
   };
 
   return (
@@ -53,7 +45,6 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
   );
 };
 
-export default connect(({ studyRecord, loading }) => ({
-  memberModifyModalVisible: studyRecord.memberModifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.studyRecord,
 }))(CommunityModifyModal);

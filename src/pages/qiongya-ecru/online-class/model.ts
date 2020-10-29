@@ -11,7 +11,6 @@ const Model = {
   namespace: 'onlineClass',
   state: {
     onlineClassData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailOnlineClassData: {},
