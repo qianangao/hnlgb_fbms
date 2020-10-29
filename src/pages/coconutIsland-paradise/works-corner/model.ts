@@ -5,6 +5,7 @@ import {
   updateWorksCornerInfo,
   worksCornerInfoList,
   detailWorksCornerInfo,
+  approval,
 } from './service';
 
 const Model = {
@@ -60,6 +61,17 @@ const Model = {
       yield put({
         type: 'tableReload',
       });
+    },
+
+    *approval({ payload }, { call, put }) {
+      const response = yield call(approval, payload);
+
+      if (!response.error) {
+        message.success('作品审批成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
     },
     *addWorksCornerInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addWorksCornerInfo, payload);

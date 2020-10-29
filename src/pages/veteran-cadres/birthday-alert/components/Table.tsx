@@ -76,16 +76,12 @@ const Table = ({
       hideInSearch: true,
       render: (text, record) => {
         let days = '';
-        if (record.birthday || record.dateOfBirth) {
-          const birthdayDate = record.birthday
-            ? moment(record.birthday)
-            : moment(record.dateOfBirth);
+        if (record.dateOfBirth) {
+          const birthdayDate = moment(record.dateOfBirth);
           const MomentYear = Number(moment().format('YYYY'));
           const month = birthdayDate.month();
           const day = birthdayDate.date();
-          const birthdayYear = record.birthday
-            ? record.birthday.split('-')[0]
-            : record.dateOfBirth.split('-')[0];
+          const birthdayYear = record.dateOfBirth.split('-')[0];
           days = getDaysToBirthday(month + 1, day) || '';
 
           if (days === '今日最闪亮') {

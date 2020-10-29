@@ -7,7 +7,7 @@ import styles from '../style.less';
 const RetireBase = ({ sheetData, organizationName, sheetLoading, dispatch }) => {
   useEffect(() => {
     dispatch({
-      type: 'retiredCadresAnalysisSheet/getRetireBaseData',
+      type: 'vcAnalysisSheet/getRetireBaseData',
     });
   }, []);
 
@@ -139,8 +139,8 @@ const RetireBase = ({ sheetData, organizationName, sheetLoading, dispatch }) => 
   );
 };
 
-export default connect(({ user, retiredCadresAnalysisSheet, loading }) => ({
+export default connect(({ user, vcAnalysisSheet, loading }) => ({
   organizationName: user.userInfo.organizationName,
-  sheetData: retiredCadresAnalysisSheet.sheetData,
-  sheetLoading: loading.effects['retiredCadresAnalysisSheet/getRetireBaseData'],
+  sheetData: vcAnalysisSheet.sheetData,
+  sheetLoading: loading.effects['vcAnalysisSheet/getRetireBaseData'],
 }))(RetireBase);

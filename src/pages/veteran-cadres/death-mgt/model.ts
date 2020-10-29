@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import moment from 'moment';
 import { deleteLgb, updateLgb, getLgbList } from './service';
 
 const Model = {
@@ -22,14 +23,16 @@ const Model = {
       const { dateOfBirth } = params;
 
       if (dateOfBirth && dateOfBirth.length === 2) {
-        [params.dateOfBirthStart, params.dateOfBirthEnd] = dateOfBirth;
+        params.dateOfBirthStart = moment(dateOfBirth[0]).format('YYYY-MM-DD');
+        params.dateOfBirthEnd = moment(dateOfBirth[1]).format('YYYY-MM-DD');
       }
 
       delete params.dateOfBirth;
       const { dieDate } = params;
 
       if (dieDate && dieDate.length === 2) {
-        [params.dieDateStart, params.dieDateEnd] = dieDate;
+        params.dieDateStart = moment(dieDate[0]).format('YYYY-MM-DD');
+        params.dieDateEnd = moment(dieDate[1]).format('YYYY-MM-DD');
       }
 
       delete params.dieDate;

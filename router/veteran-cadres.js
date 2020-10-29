@@ -61,6 +61,13 @@ const routes = {
       authority: '01-08',
       remark: '统计分析',
     },
+    {
+      path: '/veteran-cadres/sheet',
+      name: 'veteran-cadres-sheet',
+      component: './veteran-cadres/sheet',
+      authority: '01-09',
+      remark: '年报统计',
+    },
 
     // "id": "01-09",年报统计
   ],

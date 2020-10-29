@@ -5,18 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function getRetireReBasicsData(params) {
-  return request(`/lgbsmp/api/v1/retirement-statment/itemsPage`, {
-    method: 'GET',
-    params,
-  });
-}
-
-/**
- * 退休干部两年数字变化情况统计表
- * @param {*} params
- */
-export async function getRetireTotalYearsData(params) {
-  return request(`/lgbsmp/api/v1/retirement-statment/twoYearItemsPage`, {
+  return request(`/statistic_report/retirement`, {
     method: 'GET',
     params,
   });
@@ -27,7 +16,7 @@ export async function getRetireTotalYearsData(params) {
  * @param {*} params
  */
 export async function getRetireReTotalYearsData(params) {
-  return request(`/lgbsmp/api/v1/statistic-report/retirement`, {
+  return request(`/statistic_report/retirement/two`, {
     method: 'GET',
     params,
   });
@@ -38,7 +27,18 @@ export async function getRetireReTotalYearsData(params) {
  * @param {*} params
  */
 export async function getRetireBaseData(params) {
-  return request(`/lgbsmp/api/v1/statistic-analysis/retireNumber`, {
+  return request(`/statistic_report/retire`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 退休干部两年数字变化情况统计表
+ * @param {*} params
+ */
+export async function getRetireTotalYearsData(params) {
+  return request(`/statistic_report/retire/two`, {
     method: 'GET',
     params,
   });

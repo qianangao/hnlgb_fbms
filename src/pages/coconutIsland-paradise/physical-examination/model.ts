@@ -1,4 +1,5 @@
 import { message } from 'antd';
+import moment from 'moment';
 import {
   addPhysicalExamination,
   deletePhysicalExamination,
@@ -30,7 +31,8 @@ const Model = {
       const { activityDate } = params;
 
       if (activityDate && activityDate.length === 2) {
-        [params.activityDateStart, params.activityDateEnd] = activityDate;
+        params.activityDateStart = moment(activityDate[0]).format('YYYY-MM-DD');
+        params.activityDateEnd = moment(activityDate[1]).format('YYYY-MM-DD');
       }
 
       delete params.activityDate;

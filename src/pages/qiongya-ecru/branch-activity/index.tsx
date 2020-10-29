@@ -61,6 +61,10 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       label: '主题党日活动',
     },
     {
+      id: '8adcf7f96b54cab9016b54cfb348',
+      label: '民主评议党员',
+    },
+    {
       id: '8adcf7f96b54cab9016b54cfe195',
       label: '其他',
     },

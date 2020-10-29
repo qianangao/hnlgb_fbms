@@ -23,6 +23,17 @@ export async function searchOrgTree(params) {
 }
 
 /**
+ * 根据id获取完整组织树结构
+ * @param {*} params
+ */
+export async function getAllOrgTree(params) {
+  return request(`/organization/child/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
  * 新增组织
  * @param {*} params
  */

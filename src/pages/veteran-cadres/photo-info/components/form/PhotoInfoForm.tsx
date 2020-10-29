@@ -25,7 +25,7 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       name: 'remark',
       type: 'textarea',
       rules: [{ required: true, message: '请输入描述!', whitespace: true }],
-      span: 2,
+      span: 4,
     },
   ];
   useEffect(() => {

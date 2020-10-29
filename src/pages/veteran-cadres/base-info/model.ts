@@ -46,7 +46,8 @@ const Model = {
       const { dateOfBirth } = params;
 
       if (dateOfBirth && dateOfBirth.length === 2) {
-        [params.dateOfBirthStart, params.dateOfBirthEnd] = dateOfBirth;
+        params.dateOfBirthStart = moment(dateOfBirth[0]).format('YYYY-MM-DD');
+        params.dateOfBirthEnd = moment(dateOfBirth[1]).format('YYYY-MM-DD');
       }
 
       delete params.dateOfBirth;
@@ -111,7 +112,8 @@ const Model = {
       const { dateOfBirth } = params;
 
       if (dateOfBirth && dateOfBirth.length === 2) {
-        [params.dateOfBirthStart, params.dateOfBirthEnd] = dateOfBirth;
+        params.dateOfBirthStart = moment(dateOfBirth[0]).format('YYYY-MM-DD');
+        params.dateOfBirthEnd = moment(dateOfBirth[1]).format('YYYY-MM-DD');
       }
 
       delete params.dateOfBirth;

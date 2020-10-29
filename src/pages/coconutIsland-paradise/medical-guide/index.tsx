@@ -8,6 +8,7 @@ import Table from './components/Table';
 const MedicalGuideInfo = ({ dispatch }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
+
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',

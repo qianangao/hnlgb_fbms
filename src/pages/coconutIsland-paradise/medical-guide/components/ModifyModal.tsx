@@ -35,8 +35,9 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
             type: `medicalGuide/updateMedicalGuideInfo`,
             payload: {
               ...values,
-              longitude: '108.97544873046874',
-              latitude: '33.910876053972466',
+              address: values.addressData.address,
+              longitude: values.addressData.longitude,
+              latitude: values.addressData.latitude,
               id: lgbId,
             },
             resolve,
@@ -62,7 +63,6 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
         overflow: 'auto',
       }}
       visible={modifyModalVisible}
-      forceRender
       footer={[
         <Button key="cancel" onClick={hideModal}>
           取消
