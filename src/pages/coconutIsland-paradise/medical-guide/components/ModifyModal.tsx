@@ -75,7 +75,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, actionRef, loading }) => {
         </Button>,
       ]}
       maskClosable={false}
-      // destroyOnClose
+      destroyOnClose
       onCancel={hideModal}
     >
       <MedicalGuideForm form={form} id={lgbId} />
