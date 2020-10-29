@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import StaffDirectoryForm from './form/StaffDirectoryForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ loading, actionRef }) => {
   const [form] = StaffDirectoryForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'staffDirectory/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,12 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'staffDirectory/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
   return (
     <Modal
@@ -63,7 +54,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ staffDirectory, loading }) => ({
-  modifyModalVisible: staffDirectory.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.staffDirectory,
 }))(ModifyModal);

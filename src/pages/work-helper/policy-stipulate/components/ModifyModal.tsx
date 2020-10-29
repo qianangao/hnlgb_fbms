@@ -3,17 +3,14 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import PolicyStipulateForm from './form/PolicyStipulateForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PolicyStipulateForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
+
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'policyStipulate/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +23,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'policyStipulate/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -40,15 +31,21 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `policyStipulate/updatePolicyStipulate`,
-          payload: {
-            ...values,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-            id: lgbId,
-            enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `rpolicyStipulate/updatePolicyStipulate`,
+            payload: {
+              ...values,
+              isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              id: lgbId,
+              enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -91,7 +88,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ policyStipulate, loading }) => ({
-  modifyModalVisible: policyStipulate.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.policyStipulate,
 }))(ModifyModal);

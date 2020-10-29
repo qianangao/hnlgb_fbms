@@ -11,7 +11,6 @@ const Model = {
   namespace: 'differentLivingPlaces',
   state: {
     differentLivingInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -61,16 +60,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addDifferentLivingInfo({ payload }, { call, put }) {
+    *addDifferentLivingInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addDifferentLivingInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增异地居住成功！');
 
         yield put({
@@ -78,17 +71,11 @@ const Model = {
         });
       }
     },
-    *updateDifferentLivingInfo({ payload }, { call, put }) {
+    *updateDifferentLivingInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateDifferentLivingInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改异地居住成功！');
 
         yield put({

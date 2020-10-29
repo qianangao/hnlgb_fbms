@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableMembersModify from './TableMembersModify';
 
-const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
+const CommunityModifyModal = ({ actionRef }) => {
   const [communityId, setCommunityId] = useState('');
+  const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
   const showModal = id => {
     setCommunityId(id);
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        memberModifyModalVisible: true,
-      },
-    });
+    setMemberModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,12 +22,7 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'branchInformation/save',
-      payload: {
-        memberModifyModalVisible: false,
-      },
-    });
+    setMemberModifyModalVisible(false);
   };
 
   return (
@@ -55,7 +46,6 @@ const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef })
 };
 
 export default connect(({ branchInformation, loading }) => ({
-  memberModifyModalVisible: branchInformation.memberModifyModalVisible,
   communityDetailData: branchInformation.communityDetailData,
   loading: loading.models.branchInformation,
 }))(CommunityModifyModal);

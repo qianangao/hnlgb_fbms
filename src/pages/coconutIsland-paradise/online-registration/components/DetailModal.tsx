@@ -4,22 +4,12 @@ import { Modal } from 'antd';
 import DetailForm from './form/OnlineRegistrationDetailForm';
 import TableRegistered from './TableRegistered';
 
-const DetailModal = ({
-  dispatch,
-  detailModalVisible,
-  loading,
-  actionRef,
-  detailOnlineRegistrationData,
-}) => {
+const DetailModal = ({ dispatch, loading, actionRef, detailOnlineRegistrationData }) => {
   const [DetailId, setDetailId] = useState('');
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
     setDetailId(item.id);
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
+    setDetailModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -39,12 +29,7 @@ const DetailModal = ({
     }
   }, [DetailId]);
   const hideModal = () => {
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
   };
 
   return (
@@ -69,8 +54,6 @@ const DetailModal = ({
   );
 };
 
-export default connect(({ onlineRegistration, loading }) => ({
-  detailModalVisible: onlineRegistration.detailModalVisible,
-  detailOnlineRegistrationData: onlineRegistration.detailOnlineRegistrationData,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineRegistration,
 }))(DetailModal);

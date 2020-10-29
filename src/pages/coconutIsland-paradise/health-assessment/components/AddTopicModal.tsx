@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import TopicForm from './form/TopicForm';
 
-const AddTopicModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddTopicModal = ({ dispatch, actionRef, loading }) => {
   const [form] = TopicForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
+
   const showModal = () => {
-    dispatch({
-      type: 'healthAssessment/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +22,7 @@ const AddTopicModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'healthAssessment/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -39,12 +30,18 @@ const AddTopicModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `healthAssessment/addHealthAssessmentTopic`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `healthAssessment/addHealthAssessmentTopic`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -72,7 +69,6 @@ const AddTopicModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ healthAssessment, loading }) => ({
-  addModalVisible: healthAssessment.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.healthAssessment,
 }))(AddTopicModal);

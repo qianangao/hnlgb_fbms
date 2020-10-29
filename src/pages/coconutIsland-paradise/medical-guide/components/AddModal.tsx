@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import MedicalGuideForm from './form/MedicalGuideForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = MedicalGuideForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   const showModal = () => {
-    dispatch({
-      type: 'medicalGuide/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'medicalGuide/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -40,15 +30,21 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `medicalGuide/addMedicalGuideInfo`,
-          payload: {
-            ...values,
-            address: values.addressData.address,
-            longitude: values.addressData.longitude,
-            latitude: values.addressData.latitude,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `medicalGuide/addMedicalGuideInfo`,
+            payload: {
+              ...values,
+              address: values.addressData.address,
+              longitude: values.addressData.longitude,
+              latitude: values.addressData.latitude,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -76,7 +72,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ medicalGuide, loading }) => ({
-  addModalVisible: medicalGuide.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.medicalGuide,
 }))(AddModal);

@@ -87,7 +87,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   );
 };
 
-export default connect(({ branchActivity, loading }) => ({
-  modifyModalVisible: branchActivity.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.branchActivity,
 }))(ModifyModal);

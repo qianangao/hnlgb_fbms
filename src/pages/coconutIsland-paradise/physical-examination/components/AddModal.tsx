@@ -3,18 +3,14 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import PhysicalExaminationForm from './form/PhysicalExaminationForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = PhysicalExaminationForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const [userIds, setUserIds] = useState([]);
   const [receivedType, setReceivedType] = useState(null);
 
   const showModal = () => {
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -28,13 +24,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -74,12 +64,22 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         payload.orgList = orgArrId;
         if (orgArrId.length === 0 && userIds.length === 0) {
           message.error('请传入接收单位或接收个人');
-          return;
+          throw new Error('请传入接收单位或接收个人');
         }
-        dispatch({
-          type: `opPhysicalExamination/addPhysicalExamination`,
-          payload,
+        return new Promise(resolve => {
+          dispatch({
+            type: `opPhysicalExamination/addPhysicalExamination`,
+            payload: {
+              ...values,
+              userList: userIds, // 人员列表
+              receivedType,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增报错', info);
@@ -107,7 +107,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ opPhysicalExamination, loading }) => ({
-  addModalVisible: opPhysicalExamination.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.opPhysicalExamination,
 }))(AddModal);

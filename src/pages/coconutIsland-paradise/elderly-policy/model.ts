@@ -11,7 +11,6 @@ const Model = {
   namespace: 'elderlyPolicy',
   state: {
     elderlyPolicyInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailElderlyPolicyData: {},
@@ -62,17 +61,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addElderlyPolicyInfo({ payload }, { call, put }) {
+    *addElderlyPolicyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addElderlyPolicyInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '涉老政策新增成功！' : '涉老政策发布成功！');
 
         yield put({
@@ -80,17 +73,11 @@ const Model = {
         });
       }
     },
-    *updateElderlyPolicyInfo({ payload }, { call, put }) {
+    *updateElderlyPolicyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateElderlyPolicyInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '涉老政策修改成功！' : '涉老政策发布成功！');
 
         yield put({

@@ -11,7 +11,6 @@ const Model = {
   namespace: 'helpElderly',
   state: {
     helpElderlyInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailHelpElderlyData: {},
@@ -62,17 +61,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addHelpElderlyInfo({ payload }, { call, put }) {
+    *addHelpElderlyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addHelpElderlyInfo, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '助老志愿新增成功！' : '助老志愿发布成功！');
 
         yield put({
@@ -80,17 +73,11 @@ const Model = {
         });
       }
     },
-    *updateHelpElderlyInfo({ payload }, { call, put }) {
+    *updateHelpElderlyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateHelpElderlyInfo, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '助老志愿修改成功！' : '助老志愿发布成功！');
 
         yield put({

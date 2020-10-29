@@ -11,7 +11,6 @@ const Model = {
   namespace: 'healthEducation',
   state: {
     healthEducationInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -61,16 +60,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addHealthEducationInfo({ payload }, { call, put }) {
+    *addHealthEducationInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addHealthEducationInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增保健教育成功！');
 
         yield put({
@@ -78,17 +71,11 @@ const Model = {
         });
       }
     },
-    *updateHealthEducationInfo({ payload }, { call, put }) {
+    *updateHealthEducationInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateHealthEducationInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改保健教育成功！');
 
         yield put({

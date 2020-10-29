@@ -11,7 +11,6 @@ const Model = {
   namespace: 'lifeService',
   state: {
     lifeServiceInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailLifeServiceData: {},
@@ -62,17 +61,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addLifeServiceInfo({ payload }, { call, put }) {
+    *addLifeServiceInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addLifeServiceInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '生活服务新增成功！' : '生活服务发布成功！');
 
         yield put({
@@ -80,17 +73,11 @@ const Model = {
         });
       }
     },
-    *updateLifeServiceInfo({ payload }, { call, put }) {
+    *updateLifeServiceInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateLifeServiceInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '生活服务修改成功！' : '生活服务发布成功！');
 
         yield put({

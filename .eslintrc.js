@@ -31,6 +31,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 0,
     'react/state-in-constructor': 0,
     'react/no-deprecated': 1,
+    '@typescript-eslint/no-loop-func': 0,
     '@typescript-eslint/no-unused-expressions': [
       2,
       { allowShortCircuit: true, allowTernary: true },

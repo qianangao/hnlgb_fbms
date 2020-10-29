@@ -11,7 +11,6 @@ const Model = {
   namespace: 'policyStipulate',
   state: {
     policyStipulateData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailPolicyStipulateData: {},
@@ -62,16 +61,11 @@ const Model = {
       });
     },
 
-    *addPolicyStipulate({ payload }, { call, put }) {
+    *addPolicyStipulate({ payload, resolve }, { call, put }) {
       const response = yield call(addPolicyStipulate, payload);
       const publishStatus = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(
           publishStatus === 0 ? '政策规定与解答新增成功！' : '政策规定与解答发布成功！',
         );
@@ -80,16 +74,11 @@ const Model = {
         });
       }
     },
-    *updatePolicyStipulate({ payload }, { call, put }) {
+    *updatePolicyStipulate({ payload, resolve }, { call, put }) {
       const response = yield call(updatePolicyStipulate, payload);
       const publishStatus = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
 
         message.success(
           publishStatus === 0 ? '政策规定与解答修改成功！' : '政策规定与解答发布成功！',
