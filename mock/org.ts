@@ -241,6 +241,7 @@ const getOrgItem = (req, res) => {
 export default {
   'GET /organization/directly-child/:id': getOrgTree,
   'GET /organization/all-child': searchOrgTree,
+  'GET /organization/child/:id': searchOrgTree,
   'POST /organization': noResponse,
   'PUT /organization/:id': noResponse,
   'DELETE /organization': noResponse,

@@ -3,6 +3,7 @@ import { message } from 'antd';
 import {
   getOrgTreeById,
   searchOrgTree,
+  getAllOrgTree,
   addOrg,
   updateOrg,
   deleteOrgs,
@@ -126,8 +127,8 @@ const model = {
       if (multiData.length > 0) return;
 
       const { organizationId } = yield select(state => state.user.userInfo);
-      const response = yield call(searchOrgTree, {
-        orgIdForDataSelect: organizationId,
+      const response = yield call(getAllOrgTree, {
+        id: organizationId,
       });
 
       if (!response.error) {
