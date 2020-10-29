@@ -11,7 +11,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData }) => {
     },
     {
       label: '活动类型',
-      name: 'dictOrgLife',
+      name: 'dictActivityChildType',
       enumsLabel: 'dictOrgLife',
       rules: [{ required: true, message: '请选择活动类型!', whitespace: true }],
     },
@@ -81,7 +81,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData }) => {
         const fields = {
           ...data,
           picAttachmentInfo:
-            data.picAttachmentInfo.id && data.picAttachmentInfo.url
+            data.picAttachmentInfo && data.picAttachmentInfo.id && data.picAttachmentInfo.url
               ? {
                   uid: data.picAttachmentInfo.id,
                   name: data.picAttachmentInfo.fileName,
@@ -90,7 +90,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData }) => {
                 }
               : null,
           attachmentInfo:
-            data.attachmentInfo.id && data.attachmentInfo.url
+            data.attachmentInfo && data.attachmentInfo.id && data.attachmentInfo.url
               ? {
                   uid: data.attachmentInfo.id,
                   name: data.attachmentInfo.fileName,

@@ -40,7 +40,8 @@ const Model = {
       }
     },
     *detailNoticeAnnouncement({ payload, resolve }, { call, put }) {
-      const response = yield call(detailNoticeAnnouncement, payload);
+      const payloadNotice = { ...payload, isApp: 0 };
+      const response = yield call(detailNoticeAnnouncement, payloadNotice);
 
       if (!response.error) {
         resolve && resolve(response);

@@ -23,9 +23,9 @@ const HomeDetailForm = ({ id, dispatch, blockTypeUrl }) => {
   return (
     <DetailFormPage
       title={detailData.title || detailData.headline || detailData.subject}
-      releaseTime={detailData.pushTime}
-      orgName={detailData.createOrgName}
-      content={detailData.context || detailData.resultSummary}
+      releaseTime={detailData.pushTime || detailData.releaseTime}
+      orgName={detailData.createOrgName || detailData.deliverOrgName}
+      content={detailData.context || detailData.resultSummary || detailData.content}
       extraFile={detailData.attachmentInfo}
     />
   );
