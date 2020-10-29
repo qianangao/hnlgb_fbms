@@ -1,4 +1,6 @@
 import { message } from 'antd';
+import moment from 'moment';
+
 import {
   getSupportDifficultList,
   updateSupportDifficult,
@@ -27,7 +29,8 @@ const Model = {
       const { searchTime } = params;
 
       if (searchTime && searchTime.length === 2) {
-        [params.searchTimeStart, params.searchTimeEnd] = searchTime;
+        params.searchTimeStart = moment(searchTime[0]).format('YYYY-MM-DD');
+        params.searchTimeEnd = moment(searchTime[1]).format('YYYY-MM-DD');
       }
 
       delete params.searchTime;
