@@ -53,7 +53,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     <Modal
       title="新增照片信息"
       centered
-      width="95vw"
+      width="90vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
