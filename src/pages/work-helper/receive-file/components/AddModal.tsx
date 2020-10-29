@@ -35,16 +35,34 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form.resetFields();
   };
 
+  // 获取userList
+  const changeFormat = params => {
+    const userArr = [];
+    params.forEach(item => {
+      if (item) {
+        userArr.push(item.id);
+      }
+    });
+    return userArr;
+  };
   const handleOk = publishStatus => {
     form
       .validateFields()
       .then(values => {
+        const payload = {
+          ...values,
+          isRelease: publishStatus ? 0 : 1,
+          enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
+        };
+        if (payload.userList) {
+          payload.strList = changeFormat(payload.userList);
+        }
+        if (payload.receiveList) {
+          payload.strList = changeFormat(payload.receiveList);
+        }
         dispatch({
           type: `receiveFile/addReceiveFile`,
-          payload: {
-            ...values,
-            isRelease: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+          payload,
         });
         form.resetFields();
       })
