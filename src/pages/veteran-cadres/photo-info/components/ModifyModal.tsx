@@ -57,7 +57,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
     <Modal
       title="修改照片信息"
       centered
-      width="95vw"
+      width="90vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
