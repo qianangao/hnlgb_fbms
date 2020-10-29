@@ -42,7 +42,7 @@ const EditorInput = ({ value, onChange, disabled, dispatch }) => {
         });
       })
         .then(data => {
-          insert(data.fileUrl);
+          insert(data.url);
         })
         .catch(_ => {});
     };

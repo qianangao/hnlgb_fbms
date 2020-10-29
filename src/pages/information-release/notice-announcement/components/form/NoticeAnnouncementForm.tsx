@@ -89,7 +89,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
               ? {
                   uid: data.cephFile.id,
                   name: data.cephFile.fileName,
-                  url: data.cephFile.fileUrl,
+                  url: data.cephFile.url,
                   status: 'done',
                 }
               : null,

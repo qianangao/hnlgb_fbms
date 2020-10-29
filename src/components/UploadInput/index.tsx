@@ -17,10 +17,10 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
   const [upFileList, setUpFileList] = useState([]);
   const [previewVisible, setPreviewVisible] = useState(false);
 
-  const setFile = ({ fileName, fileUrl, id }) => {
+  const setFile = ({ fileName, url, id }) => {
     setUpFileList([
       {
-        url: fileUrl,
+        url,
         uid: id,
         name: fileName,
         status: 'done',
@@ -121,7 +121,7 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
       .then(data => {
         setLoading(false);
         const tempFile = {
-          url: data.fileUrl,
+          url: data.url,
           uid: data.id,
           name: data.fileName,
           status: 'done',

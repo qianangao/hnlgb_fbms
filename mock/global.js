@@ -160,7 +160,7 @@ const uploadFile = (req, res) => {
     code: 0,
     msg: 'success',
     data: {
-      fileUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       id: '呵呵呵呵哒',
       fileName: 'demo图片',
     },

@@ -56,9 +56,9 @@ const SeniorUniversityForm = ({ id, loading, dispatch, form }) => {
         const fields = {
           ...data,
           file: {
-            uid: data.fileId,
+            uid: data.id,
             name: data.fileName,
-            url: data.fileUrl,
+            url: data.url,
             status: 'done',
           },
         };
