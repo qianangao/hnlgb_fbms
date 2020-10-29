@@ -7,7 +7,7 @@ import styles from '../style.less';
 const RetireTotalTwoYears = ({ sheetData, organizationName, sheetLoading, dispatch }) => {
   useEffect(() => {
     dispatch({
-      type: 'retiredCadresAnalysisSheet/getRetireTotalYearsData',
+      type: 'vcAnalysisSheet/getRetireTotalYearsData',
     });
   }, []);
 
@@ -150,8 +150,8 @@ const RetireTotalTwoYears = ({ sheetData, organizationName, sheetLoading, dispat
   );
 };
 
-export default connect(({ user, retiredCadresAnalysisSheet, loading }) => ({
+export default connect(({ user, vcAnalysisSheet, loading }) => ({
   organizationName: user.userInfo.organizationName,
-  sheetData: retiredCadresAnalysisSheet.sheetData,
-  sheetLoading: loading.effects['retiredCadresAnalysisSheet/getRetireTotalYearsData'],
+  sheetData: vcAnalysisSheet.sheetData,
+  sheetLoading: loading.effects['vcAnalysisSheet/getRetireTotalYearsData'],
 }))(RetireTotalTwoYears);
