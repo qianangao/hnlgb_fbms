@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import HealthEducationFrom from './form/HealthEducationForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = HealthEducationFrom.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'healthEducation/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,13 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'healthEducation/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -41,13 +31,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       .validateFields()
       .then(values => {
         values.content = values.context;
-        dispatch({
-          type: `healthEducation/updateHealthEducationInfo`,
-          payload: {
-            ...values,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `healthEducation/updateHealthEducationInfo`,
+            payload: {
+              ...values,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -74,7 +70,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ healthEducation, loading }) => ({
-  modifyModalVisible: healthEducation.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.healthEducation,
 }))(ModifyModal);

@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import WorksCornerForm from './form/WorksCornerForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = WorksCornerForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   const showModal = () => {
-    dispatch({
-      type: 'worksCorner/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'worksCorner/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -40,16 +30,22 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `worksCorner/addWorksCornerInfo`,
-          payload: {
-            headline: values.headline,
-            context: values.context,
-            type: values.type,
-            attachmentId: values.attachmentInfo.uid,
-            status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `worksCorner/addWorksCornerInfo`,
+            payload: {
+              headline: values.headline,
+              context: values.context,
+              type: values.type,
+              attachmentId: values.attachmentInfo.uid,
+              status: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -83,7 +79,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ worksCorner, loading }) => ({
-  addModalVisible: worksCorner.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.worksCorner,
 }))(AddModal);

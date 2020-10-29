@@ -5,13 +5,13 @@ import {
   updateWorksCornerInfo,
   worksCornerInfoList,
   detailWorksCornerInfo,
+  approval,
 } from './service';
 
 const Model = {
   namespace: 'worksCorner',
   state: {
     worksCornerInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailWorksCornerData: {},
@@ -62,17 +62,22 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addWorksCornerInfo({ payload }, { call, put }) {
+
+    *approval({ payload }, { call, put }) {
+      const response = yield call(approval, payload);
+
+      if (!response.error) {
+        message.success('作品审批成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *addWorksCornerInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addWorksCornerInfo, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '作品园地新增成功！' : '作品园地发布成功！');
 
         yield put({
@@ -80,17 +85,11 @@ const Model = {
         });
       }
     },
-    *updateWorksCornerInfo({ payload }, { call, put }) {
+    *updateWorksCornerInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateWorksCornerInfo, payload);
       const publishStatus = payload.status;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '作品园地修改成功！' : '作品园地发布成功！');
 
         yield put({

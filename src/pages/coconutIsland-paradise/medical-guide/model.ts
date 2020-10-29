@@ -11,7 +11,6 @@ const Model = {
   namespace: 'medicalGuide',
   state: {
     medicalGuideInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -61,16 +60,10 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addMedicalGuideInfo({ payload }, { call, put }) {
+    *addMedicalGuideInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addMedicalGuideInfo, payload);
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('新增就医指南成功！');
 
         yield put({
@@ -78,17 +71,11 @@ const Model = {
         });
       }
     },
-    *updateMedicalGuideInfo({ payload }, { call, put }) {
+    *updateMedicalGuideInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateMedicalGuideInfo, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success('修改就医指南成功！');
 
         yield put({

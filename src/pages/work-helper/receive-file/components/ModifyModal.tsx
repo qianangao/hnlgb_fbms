@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ReceiveFileForm from './form/ReceiveFileForm';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = ReceiveFileForm.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -26,12 +22,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
+    setModifyModalVisible(false);
   };
 
   // 获取userList
@@ -65,6 +56,9 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
           type: `receiveFile/updateReceiveFile`,
           payload,
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -107,7 +101,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ receiveFile, loading }) => ({
-  modifyModalVisible: receiveFile.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.receiveFile,
 }))(ModifyModal);

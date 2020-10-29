@@ -6,7 +6,7 @@ import {
 } from './service';
 
 const Model = {
-  namespace: 'retiredCadresAnalysisSheet',
+  namespace: 'vcAnalysisSheet',
   state: {
     sheetData: {
       retireReTotalYearsData: [],

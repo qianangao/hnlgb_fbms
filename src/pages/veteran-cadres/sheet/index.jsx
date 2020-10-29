@@ -14,7 +14,7 @@ const RetireTotalTwoYears = React.lazy(() => import('./components/RetireTotalTwo
 const RetireBase = React.lazy(() => import('./components/RetireBase'));
 
 class AnalysisSheet extends Component {
-  selectIndex = 0;
+  selectKey = 'RetireReTotalTwoYears';
 
   chartList = [
     {
@@ -49,22 +49,26 @@ class AnalysisSheet extends Component {
     printLoading: false,
   };
 
-  tabChangeHandler = index => {
-    this.selectIndex = index;
+  tabChangeHandler = key => {
+    this.selectKey = key;
   };
 
   downLoadHander = () => {
-    const item = this.chartList[this.selectIndex];
-    const table = document.getElementById(item.key).outerHTML;
+    const elem = this.chartList.find(item => {
+      return item.key === this.selectKey;
+    });
+    const table = document.getElementById(elem.key).outerHTML;
     const html = `<html><head><meta charset='utf-8' /></head><body>${table}</body></html>`;
 
-    downloadXlsFile(html, item.label);
+    downloadXlsFile(html, elem.label);
   };
 
   printHander = () => {
-    const item = this.chartList[this.selectIndex];
+    const elem = this.chartList.find(item => {
+      return item.key === this.selectKey;
+    });
     this.setState({ printLoading: true });
-    printElement(document.getElementById(item.key))
+    printElement(document.getElementById(elem.key))
       .then(_ => {
         this.setState({ printLoading: false });
       })
@@ -102,9 +106,6 @@ class AnalysisSheet extends Component {
                   </Button>
                 </>
               }
-              tabBarStyle={{
-                marginBottom: 24,
-              }}
             >
               {this.chartList.map(item => (
                 <Tabs.TabPane tab={item.label} key={item.key}>

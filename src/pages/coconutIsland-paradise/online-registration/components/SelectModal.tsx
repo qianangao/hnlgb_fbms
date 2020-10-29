@@ -3,16 +3,12 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import SelectLgb from './SelectLgb';
 
-const SelectModal = ({ dispatch, selectModalVisible, actionRef }) => {
+const SelectModal = ({ actionRef }) => {
   const [activityId, setActivityId] = useState();
+  const [selectModalVisible, setSelectModalVisible] = useState(false);
   const showModal = item => {
     setActivityId(item.id);
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        selectModalVisible: true,
-      },
-    });
+    setSelectModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,12 +22,7 @@ const SelectModal = ({ dispatch, selectModalVisible, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        selectModalVisible: false,
-      },
-    });
+    setSelectModalVisible(false);
   };
 
   return (
@@ -55,7 +46,6 @@ const SelectModal = ({ dispatch, selectModalVisible, actionRef }) => {
   );
 };
 
-export default connect(({ onlineRegistration, loading }) => ({
-  selectModalVisible: onlineRegistration.selectModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineRegistration,
 }))(SelectModal);

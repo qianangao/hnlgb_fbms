@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import ReceiveFileForm from './form/ReceiveFileForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = ReceiveFileForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
+
   const showModal = () => {
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -66,6 +57,9 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
         });
         form.resetFields();
       })
+      .then(() => {
+        hideModal();
+      })
       .catch(info => {
         console.error('新增错误', info);
       });
@@ -99,7 +93,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ receiveFile, loading }) => ({
-  addModalVisible: receiveFile.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.receiveFile,
 }))(AddModal);

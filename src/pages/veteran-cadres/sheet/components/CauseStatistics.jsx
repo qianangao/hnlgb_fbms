@@ -8,7 +8,7 @@ const CauseStatistics = ({ sheetData, organizationName, sheetLoading, dispatch }
   const SHEET_ID = '8adcf7df6afc354a016afc356c0a';
   useEffect(() => {
     dispatch({
-      type: 'retiredCadresAnalysisSheet/getRetireReBasicsData',
+      type: 'vcAnalysisSheet/getRetireReBasicsData',
       payload: {
         dictUnitNature: SHEET_ID,
       },
@@ -29,8 +29,8 @@ const CauseStatistics = ({ sheetData, organizationName, sheetLoading, dispatch }
   );
 };
 
-export default connect(({ user, retiredCadresAnalysisSheet, loading }) => ({
+export default connect(({ user, vcAnalysisSheet, loading }) => ({
   organizationName: user.userInfo.organizationName,
-  sheetData: retiredCadresAnalysisSheet.sheetData,
-  sheetLoading: loading.effects['retiredCadresAnalysisSheet/getRetireReBasicsData'],
+  sheetData: vcAnalysisSheet.sheetData,
+  sheetLoading: loading.effects['vcAnalysisSheet/getRetireReBasicsData'],
 }))(CauseStatistics);

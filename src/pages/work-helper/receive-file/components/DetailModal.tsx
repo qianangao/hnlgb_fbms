@@ -5,14 +5,10 @@ import DetailForm from './form/DetailForm';
 
 const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, tableRef }) => {
   const [DetailId, setDetailId] = useState('');
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
     setDetailId(item.id);
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
+    setDetailModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -63,8 +59,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, tableRe
   );
 };
 
-export default connect(({ receiveFile, loading }) => ({
-  detailModalVisible: receiveFile.detailModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.receiveFile,
   tableRef: receiveFile.tableRef,
 }))(DetailModal);

@@ -11,7 +11,6 @@ const Model = {
   namespace: 'seniorUniversity',
   state: {
     seniorUniversityInfoListData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailSeniorUniversityData: {},
@@ -62,17 +61,11 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addSeniorUniversityInfo({ payload }, { call, put }) {
+    *addSeniorUniversityInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addSeniorUniversityInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '老年大学新增成功！' : '老年大学发布成功！');
 
         yield put({
@@ -80,17 +73,11 @@ const Model = {
         });
       }
     },
-    *updateSeniorUniversityInfo({ payload }, { call, put }) {
+    *updateSeniorUniversityInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateSeniorUniversityInfo, payload);
       const publishStatus = payload.pushStatus;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '老年大学修改成功！' : '老年大学发布成功！');
         yield put({
           type: 'tableReload',

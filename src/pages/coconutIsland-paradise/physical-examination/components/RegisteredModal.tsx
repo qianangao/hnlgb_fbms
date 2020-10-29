@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableMembers from './TableMembers';
 
-const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
+const RegisteredModal = ({ actionRef }) => {
   const [infoId, setInfoId] = useState('');
+  const [registeredModalVisible, setRegisteredModalVisible] = useState(false);
 
   const showModal = id => {
     setInfoId(id);
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        registeredModalVisible: true,
-      },
-    });
+    setRegisteredModalVisible(true);
   };
 
   useEffect(() => {
@@ -27,12 +23,7 @@ const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'opPhysicalExamination/save',
-      payload: {
-        registeredModalVisible: false,
-      },
-    });
+    setRegisteredModalVisible(false);
   };
 
   return (
@@ -55,6 +46,6 @@ const RegisteredModal = ({ dispatch, registeredModalVisible, actionRef }) => {
   );
 };
 
-export default connect(({ opPhysicalExamination }) => ({
-  registeredModalVisible: opPhysicalExamination.registeredModalVisible,
+export default connect(({ loading }) => ({
+  loading: loading.models.opPhysicalExamination,
 }))(RegisteredModal);

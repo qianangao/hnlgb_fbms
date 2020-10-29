@@ -4,17 +4,14 @@ import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
 
-const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
+
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    dispatch({
-      type: 'differentLivingPlaces/save',
-      payload: {
-        modifyModalVisible: true,
-      },
-    });
+    setModifyModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -27,13 +24,7 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'differentLivingPlaces/save',
-      payload: {
-        modifyModalVisible: false,
-      },
-    });
-
+    setModifyModalVisible(false);
     form.resetFields();
   };
 
@@ -43,13 +34,19 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
       .then(values => {
         values.addressCode = values.address.value;
         values.address = values.address.label;
-        dispatch({
-          type: `differentLivingPlaces/updateDifferentLivingInfo`,
-          payload: {
-            ...values,
-            id: lgbId,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `differentLivingPlaces/updateDifferentLivingInfo`,
+            payload: {
+              ...values,
+              id: lgbId,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('修改错误', info);
@@ -87,7 +84,6 @@ const ModifyModal = ({ dispatch, modifyModalVisible, loading, actionRef }) => {
   );
 };
 
-export default connect(({ differentLivingPlaces, loading }) => ({
-  modifyModalVisible: differentLivingPlaces.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.differentLivingPlaces,
 }))(ModifyModal);

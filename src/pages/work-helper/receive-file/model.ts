@@ -13,7 +13,6 @@ const Model = {
   namespace: 'receiveFile',
   state: {
     receiveFileData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailReceiveFileData: {},
@@ -97,33 +96,22 @@ const Model = {
       });
     },
 
-    *addReceiveFile({ payload }, { call, put }) {
+    *addReceiveFile({ payload, resolve }, { call, put }) {
       const response = yield call(addReceiveFile, payload);
       const publishStatus = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            addModalVisible: false,
-          },
-        });
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '收发文件新增成功！' : '收发文件发布成功！');
         yield put({
           type: 'tableReload',
         });
       }
     },
-    *updateReceiveFile({ payload }, { call, put }) {
+    *updateReceiveFile({ payload, resolve }, { call, put }) {
       const response = yield call(updateReceiveFile, payload);
       const publishStatus = payload.isRelease;
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            modifyModalVisible: false,
-          },
-        });
-
+        resolve && resolve(response);
         message.success(publishStatus === 0 ? '收发文件修改成功！' : '收发文件发布成功！');
 
         yield put({

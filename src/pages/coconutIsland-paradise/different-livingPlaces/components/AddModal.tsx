@@ -1,17 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import DifferentLivingPlacesFrom from './form/DifferentLivingPlacesFrom';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = DifferentLivingPlacesFrom.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
+
   const showModal = () => {
-    dispatch({
-      type: 'differentLivingPlaces/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -25,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'differentLivingPlaces/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -41,12 +32,18 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
       .then(values => {
         values.addressCode = values.address.value;
         values.address = values.address.label;
-        dispatch({
-          type: `differentLivingPlaces/addDifferentLivingInfo`,
-          payload: {
-            ...values,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `differentLivingPlaces/addDifferentLivingInfo`,
+            payload: {
+              ...values,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('新增错误', info);
@@ -74,7 +71,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ differentLivingPlaces, loading }) => ({
-  addModalVisible: differentLivingPlaces.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.differentLivingPlaces,
 }))(AddModal);

@@ -3,8 +3,9 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import HomeDetailForm from './form/HomeDetailForm';
 
-const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) => {
+const HomeDetailModal = ({ loading, actionRef }) => {
   const [detailId, setDetailId] = useState(''); // id
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [blockTypeName, setBlockTypeName] = useState(''); // 区域类型名
   const [blockTypeUrl, setBlockTypeUrl] = useState(''); // 分区域请求详情Url
   const showModal = (item, blockType) => {
@@ -33,12 +34,7 @@ const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) =
       default:
         setBlockTypeUrl('');
     }
-    dispatch({
-      type: 'home/save',
-      payload: {
-        detailModalVisible: true,
-      },
-    });
+    setDetailModalVisible(true);
   };
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
@@ -50,12 +46,7 @@ const HomeDetailModal = ({ dispatch, detailModalVisible, loading, actionRef }) =
     }
   }, []);
   const hideModal = () => {
-    dispatch({
-      type: 'home/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
   };
 
   return (

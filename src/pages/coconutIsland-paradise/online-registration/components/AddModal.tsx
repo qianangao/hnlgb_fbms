@@ -1,18 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
 import OnlineRegistrationForm from './form/OnlineRegistrationForm';
 
-const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = OnlineRegistrationForm.useForm();
+  const [addModalVisible, setAddModalVisible] = useState(false);
 
   const showModal = () => {
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        addModalVisible: true,
-      },
-    });
+    setAddModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,13 +22,7 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'onlineRegistration/save',
-      payload: {
-        addModalVisible: false,
-      },
-    });
-
+    setAddModalVisible(false);
     form.resetFields();
   };
 
@@ -40,17 +30,23 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        dispatch({
-          type: `onlineRegistration/addOnlineRegistrationInfo`,
-          payload: {
-            title: values.title,
-            context: values.context,
-            coreAdd: values.coreAdd,
-            fileId: values.attachmentInfo.uid,
-            urlId: values.attachmentInfo2.uid,
-            pushStatus: 0,
-          },
+        return new Promise(resolve => {
+          dispatch({
+            type: `onlineRegistration/addOnlineRegistrationInfo`,
+            payload: {
+              title: values.title,
+              context: values.context,
+              coreAdd: values.coreAdd,
+              fileId: values.attachmentInfo.uid,
+              urlId: values.attachmentInfo2.uid,
+              pushStatus: 0,
+            },
+            resolve,
+          });
         });
+      })
+      .then(() => {
+        hideModal();
       })
       .catch(info => {
         console.error('Validate Failed:', info);
@@ -78,7 +74,6 @@ const AddModal = ({ dispatch, addModalVisible, actionRef, loading }) => {
   );
 };
 
-export default connect(({ onlineRegistration, loading }) => ({
-  addModalVisible: onlineRegistration.addModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.onlineRegistration,
 }))(AddModal);
