@@ -12,6 +12,17 @@ export async function worksCornerInfoList(params) {
 }
 
 /**
+ * 审核-作品
+ * @param {*} params
+ */
+export async function approval(params) {
+  return request(`/work_corner/audit/${params.id}/${params.status}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+
+/**
  * 删除-作品园地
  * @param {*} params
  */

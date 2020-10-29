@@ -34,10 +34,10 @@ const Table = ({
       valueEnum: enums.dictWorkCornerType,
     },
     {
-      title: publishStatus === 0 ? '保存时间' : '发布时间',
+      title: '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishStatus === 0 ? 'gmtModified' : 'releaseTime',
+      dataIndex: 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -85,12 +85,19 @@ const Table = ({
           </a>
         ),
         <Popconfirm
-          key={`${employeeData.id}del`}
-          title="确认删除该作品园地吗？"
+          key={`${employeeData.id}app`}
+          title="确认审批该作品吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          okText="通过"
+          cancelText="驳回"
+          onConfirm={() => {
+            approval(employeeData.id, 1);
+          }}
+          onCancel={() => {
+            approval(employeeData.id, 2);
+          }}
         >
-          <a>删除</a>
+          <a>审批</a>
         </Popconfirm>,
       ],
     },
@@ -105,6 +112,16 @@ const Table = ({
         resolve,
       });
     });
+
+  const approval = (id, status) => {
+    dispatch({
+      type: 'worksCorner/approval',
+      payload: {
+        id,
+        status,
+      },
+    });
+  };
   const deleteReturnworkPerson = ids => {
     dispatch({
       type: 'worksCorner/deleteWorksCornerInfo',
