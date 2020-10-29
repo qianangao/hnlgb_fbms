@@ -54,7 +54,14 @@ const routes = {
       authority: '01-07',
       remark: '离世管理',
     },
-    // "id": "01-08", 统计分析
+    {
+      path: '/veteran-cadres/analysis',
+      name: 'veteran-cadres-analysis',
+      component: './veteran-cadres/analysis',
+      authority: '01-08',
+      remark: '统计分析',
+    },
+
     // "id": "01-09",年报统计
   ],
 };
