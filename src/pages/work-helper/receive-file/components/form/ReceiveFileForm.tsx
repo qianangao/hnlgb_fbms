@@ -6,7 +6,7 @@ import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
 
 const ReceiveFileForm = ({ form, id, dispatch, loading }) => {
-  const [receiveType, setReceivedType] = useState('false');
+  const [receiveType, setReceivedType] = useState();
 
   // 获取-工作人员列表
   const getWorkLgbs = getMemberParams =>

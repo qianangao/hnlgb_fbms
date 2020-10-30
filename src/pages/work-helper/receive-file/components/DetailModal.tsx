@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
-const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, tableRef }) => {
+const DetailModal = ({ loading, actionRef, tableRef }) => {
   const [DetailId, setDetailId] = useState('');
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
@@ -20,12 +20,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, tableRe
     }
   }, []);
   const hideModal = () => {
-    dispatch({
-      type: 'receiveFile/save',
-      payload: {
-        detailModalVisible: false,
-      },
-    });
+    setDetailModalVisible(false);
     tableRef.current.reload();
   };
 
@@ -59,7 +54,7 @@ const DetailModal = ({ dispatch, detailModalVisible, loading, actionRef, tableRe
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, receiveFile }) => ({
   loading: loading.models.receiveFile,
   tableRef: receiveFile.tableRef,
 }))(DetailModal);

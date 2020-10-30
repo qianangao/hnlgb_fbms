@@ -40,22 +40,24 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        const payload = {
-          ...values,
-          isRelease: publishStatus ? 0 : 1,
-          enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
-        };
-        if (payload.userList) {
-          payload.strList = changeFormat(payload.userList);
-        }
-        if (payload.receiveList) {
-          payload.strList = changeFormat(payload.receiveList);
-        }
-        dispatch({
-          type: `receiveFile/addReceiveFile`,
-          payload,
+        return new Promise(resolve => {
+          const payload = {
+            ...values,
+            isRelease: publishStatus ? 0 : 1,
+            enclosureId: values.attachmentInfo && values.attachmentInfo.uid,
+          };
+          if (payload.userList) {
+            payload.strList = changeFormat(payload.userList);
+          }
+          if (payload.receiveList) {
+            payload.strList = changeFormat(payload.receiveList);
+          }
+          dispatch({
+            type: `receiveFile/addReceiveFile`,
+            payload,
+            resolve,
+          });
         });
-        form.resetFields();
       })
       .then(() => {
         hideModal();
