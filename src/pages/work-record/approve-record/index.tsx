@@ -21,7 +21,7 @@ const Specialty = ({ dispatch }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
-          'recordItems',
+          'dictRecordItems',
         ],
       },
     });

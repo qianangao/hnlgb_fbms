@@ -15,7 +15,7 @@ const ApproveRecordForm = ({ form, id, dispatch, loading }) => {
     {
       label: '备案事项',
       name: 'recordItems',
-      enumsLabel: 'recordItems',
+      enumsLabel: 'dictRecordItems',
       rules: [{ required: true, message: '请选择备案事项!' }],
     },
     {
