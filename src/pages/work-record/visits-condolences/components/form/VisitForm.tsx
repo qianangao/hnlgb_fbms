@@ -124,7 +124,11 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
     // 显示老干部信息-公共组件
     <>
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
-        {tableType === '遗属慰问' ? <LgbSelectInput getLgbs={getMemberList} /> : <LgbSelectInput />}
+        {tableType === '遗属慰问' ? (
+          <LgbSelectInput getLgbs={getMemberList} selectItem />
+        ) : (
+          <LgbSelectInput />
+        )}
       </Form.Item>
       <Descriptions title={`${tableType}详情`} />
     </>
