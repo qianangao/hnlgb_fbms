@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
-const DetailModal = ({ loading, actionRef }) => {
+const DetailModal = ({ loading, actionRef, tableRef }) => {
   const [DetailId, setDetailId] = useState('');
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
@@ -21,6 +21,7 @@ const DetailModal = ({ loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     setDetailModalVisible(false);
+    tableRef.current.reload();
   };
 
   return (
@@ -53,6 +54,7 @@ const DetailModal = ({ loading, actionRef }) => {
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, receiveFile }) => ({
   loading: loading.models.receiveFile,
+  tableRef: receiveFile.tableRef,
 }))(DetailModal);

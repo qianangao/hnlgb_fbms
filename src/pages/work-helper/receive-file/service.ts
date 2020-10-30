@@ -54,3 +54,24 @@ export async function updateReceiveFile(params) {
     data: params,
   });
 }
+/**
+ * 老同志-列表
+ * @param {*} params
+ */
+export async function getWorkLgbs(params) {
+  return request('/user', {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 接收文件-列表
+ * @param {*} params
+ */
+export async function fileLists(params) {
+  return request('/receive_file/receive', {
+    method: 'GET',
+    params,
+  });
+}

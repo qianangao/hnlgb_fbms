@@ -6,7 +6,7 @@ import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
 
 const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
-  const [receivedType, setReceivedType] = useState('false');
+  const [receivedType, setReceivedType] = useState();
   const formItems = [
     {
       label: '通知主题',

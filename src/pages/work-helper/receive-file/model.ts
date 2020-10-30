@@ -5,6 +5,8 @@ import {
   updateReceiveFile,
   receiveFileList,
   detailReceiveFile,
+  getWorkLgbs,
+  fileLists,
 } from './service';
 
 const Model = {
@@ -14,8 +16,10 @@ const Model = {
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailReceiveFileData: {},
+    fileListsData: {},
   },
   effects: {
+    // 发送
     *receiveFileList({ payload, resolve }, { call, put, select }) {
       const orgIdForDataSelect = yield select(state => state.receiveFile.selectedOrgId);
       const params = {
@@ -47,7 +51,38 @@ const Model = {
         });
       }
     },
+    // 接收
+    *fileLists({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.receiveFile.selectedOrgId);
+      const params = {
+        ...payload,
+        orgIdForDataSelect,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+      const response = yield call(fileLists, params);
 
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            fileListsData: result,
+          },
+        });
+      }
+    },
     *selectOrgChange({ payload }, { put }) {
       yield put({
         type: 'save',
@@ -103,6 +138,37 @@ const Model = {
           type: 'save',
           payload: {
             detailReceiveFileData: response,
+          },
+        });
+      }
+    },
+
+    // 工作人员
+    *getWorkLgbs({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+      const response = yield call(getWorkLgbs, params);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            receiveFileData: result,
           },
         });
       }

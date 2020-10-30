@@ -5,6 +5,7 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import AddModal from './components/AddModal';
 import Table from './components/Table';
+import TableReceive from './components/TableReceive';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 
@@ -13,6 +14,7 @@ const ReceiveFile = ({ dispatch, tableRef }) => {
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
+  const [tableType, setTableType] = useState('send');
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -50,16 +52,45 @@ const ReceiveFile = ({ dispatch, tableRef }) => {
     setPublishStatus(changeStatus);
     tableRef.current.reload();
   };
-
+  const onTabChange = id => {
+    setTableType(id);
+    tableRef.current.reload();
+  };
+  const tabs = [
+    {
+      id: 'send',
+      label: '发送文件',
+    },
+    {
+      id: 'receive',
+      label: '接收文件',
+    },
+  ];
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
-        <Table
-          openAddModal={openAddModal}
-          openModifyModal={openModifyModal}
-          opendetailModal={opendetailModal}
-          publishStatus={publishStatus}
-        />
+      <TypeSelectLayout
+        tabs={tabs}
+        onTabChange={onTabChange}
+        onPublishStatusChange={onPublishStatusChange}
+        hidePublish={tableType !== 'send'}
+      >
+        {tableType === 'receive' ? (
+          <TableReceive
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+            opendetailModal={opendetailModal}
+            publishStatus={publishStatus}
+            tableType={tableType === 'send' ? 0 : 1}
+          />
+        ) : (
+          <Table
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+            opendetailModal={opendetailModal}
+            publishStatus={publishStatus}
+            tableType={tableType}
+          />
+        )}
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />

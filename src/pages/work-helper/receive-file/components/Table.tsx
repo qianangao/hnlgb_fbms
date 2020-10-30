@@ -100,7 +100,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="收发文件"
+      headerTitle="发送文件"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
