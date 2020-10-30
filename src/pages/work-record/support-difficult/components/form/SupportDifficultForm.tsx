@@ -22,7 +22,7 @@ const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
     {
       label: '帮扶原因',
       name: 'helpReason',
-      enumsLabel: 'helpReason',
+      enumsLabel: 'dictHelpReason',
       rules: [{ required: true, message: '请选择帮扶原因!' }],
     },
     {

@@ -16,8 +16,8 @@ const AcadvancedDeeds = ({ dispatch }) => {
       type: 'global/getEnums',
       payload: {
         names: [
-          'helpMode', // 帮扶形式
-          'helpReason', // 帮扶原因
+          'dictHelpMode', // 帮扶形式
+          'dictHelpReason', // 帮扶原因
         ],
       },
     });
