@@ -50,6 +50,7 @@ const LgbSingleSelectInput = ({ value, enums, dispatch, getLgbs, actionRef, onCh
       align: 'center',
       dataIndex: 'dictRetirementType',
       valueEnum: enums.dictRetirementType,
+      hideInSearch: true,
     },
     {
       title: '出生日期',
