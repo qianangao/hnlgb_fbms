@@ -22,7 +22,7 @@ const CommunityModifyModal = ({ actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    setMemberModifyModalVisible(true);
+    setMemberModifyModalVisible(false);
   };
 
   return (

@@ -21,7 +21,7 @@ const Home = ({
     // 请求通知公告
     dispatch({
       type: 'home/noticeAnnouncementList',
-      payload: { dictPublishStatus: 1, type: 3, dictNoticeType: '40283f816aba7297016aba8229fe' },
+      payload: { dictPublishStatus: 1, type: 3 },
     });
     // 五老风采
     dispatch({

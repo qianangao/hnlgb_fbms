@@ -7,6 +7,9 @@ import {
   detailBranchActivity,
   branchActivityUser,
   addBranchActivityUser,
+  getCommentList,
+  deleteComment,
+  commentAudit,
 } from './service';
 
 const Model = {
@@ -17,6 +20,7 @@ const Model = {
     selectedOrgId: undefined, // 选择的组织id
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
+    CommentListData: {},
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -136,6 +140,50 @@ const Model = {
       if (!response.error) {
         resolve && resolve(response);
         message.success('新增成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    // 评论-列表
+    *getCommentList({ payload, resolve }, { call, put }) {
+      const response = yield call(getCommentList, payload);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            CommentListData: result,
+          },
+        });
+      }
+    },
+    *deleteComment({ payload }, { call, put }) {
+      const response = yield call(deleteComment, payload);
+
+      if (!response.error) {
+        message.success('删除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+
+    // 审核-评论
+    *commentAudit({ payload }, { call, put }) {
+      const response = yield call(commentAudit, payload);
+
+      if (!response.error) {
+        message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
         yield put({
           type: 'tableReload',
         });

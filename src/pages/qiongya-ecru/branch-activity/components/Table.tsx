@@ -12,6 +12,7 @@ const Table = ({
   publishState,
   tableType,
   openMembersModifyModal,
+  openCommentModal,
 }) => {
   const { tableRef } = branchActivity;
   const columns = [
@@ -67,35 +68,43 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        publishState === 0 ? (
-          [
-            <a
-              key={`${employeeData.id}up`}
-              onClick={() => {
-                openModifyModal(employeeData);
-              }}
-            >
-              编辑活动
-            </a>,
-            <a
-              key={`${employeeData.id}upUsers`}
-              onClick={() => {
-                openMembersModifyModal(employeeData);
-              }}
-            >
-              查看成员
-            </a>,
-          ]
-        ) : (
-          <a
-            key={`${employeeData.id}up`}
-            onClick={() => {
-              opendetailModal(employeeData);
-            }}
-          >
-            查看
-          </a>
-        ),
+        publishState === 0
+          ? [
+              <a
+                key={`${employeeData.id}up`}
+                onClick={() => {
+                  openModifyModal(employeeData);
+                }}
+              >
+                编辑活动
+              </a>,
+              <a
+                key={`${employeeData.id}upUsers`}
+                onClick={() => {
+                  openMembersModifyModal(employeeData);
+                }}
+              >
+                查看成员
+              </a>,
+            ]
+          : [
+              <a
+                key={`${employeeData.id}up`}
+                onClick={() => {
+                  opendetailModal(employeeData);
+                }}
+              >
+                查看活动
+              </a>,
+              <a
+                key={`${employeeData.id}up`}
+                onClick={() => {
+                  openCommentModal(employeeData);
+                }}
+              >
+                查看评论
+              </a>,
+            ],
         <Popconfirm
           key={`${employeeData.id}del`}
           title="确认删除支部活动吗？"
