@@ -60,7 +60,7 @@ export async function updateHospitalRegistrationInfo(params) {
  * @param {*} params
  */
 export async function approvalHospitalRegistrationInfo(params) {
-  return request(`/hospital_register`, {
+  return request(`/hospital_register/audit/${params.id}/${params.status}`, {
     method: 'GET',
     data: params,
   });

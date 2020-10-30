@@ -62,7 +62,6 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >

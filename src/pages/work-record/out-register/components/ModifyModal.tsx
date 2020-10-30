@@ -6,11 +6,13 @@ import OutRegisterForm from './form/OutRegisterForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = OutRegisterForm.useForm();
-  const [lgbId, setLgbId] = useState();
+  const [lgbId, setLgbId] = useState('');
+  const [outRegisterId, setOutRegisterId] = useState('');
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
   const showModal = item => {
-    setLgbId(item.id);
+    setLgbId(item.userId);
+    setOutRegisterId(item.id);
     setModifyModalVisible(true);
   };
   useEffect(() => {
@@ -25,6 +27,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    setOutRegisterId('');
+    setLgbId('');
     form.resetFields();
   };
 
@@ -76,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="外出登记" size="middle" />
-        <OutRegisterForm form={form} id={lgbId} />
+        <OutRegisterForm form={form} id={outRegisterId} />
       </div>
     </Modal>
   );

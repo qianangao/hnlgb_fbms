@@ -43,8 +43,13 @@ const HospitalRegistrationFrom = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请选择住院时间!' }],
     },
     {
-      label: '科室病床',
-      name: 'departmentHospitalBed',
+      label: '科室',
+      name: 'department',
+      rules: [{ required: true, message: '请输入科室病床!' }],
+    },
+    {
+      label: '病床',
+      name: 'hospitalBed',
       rules: [{ required: true, message: '请输入科室病床!' }],
     },
     {
