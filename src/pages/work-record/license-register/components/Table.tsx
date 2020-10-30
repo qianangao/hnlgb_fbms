@@ -15,18 +15,6 @@ const Table = ({ openAddModal, openModifyModal, licenseRegister, enums, dispatch
       width: 64,
     },
     {
-      title: '港澳台通行证照片id',
-      align: 'center',
-      dataIndex: 'passCheckPhotoId',
-      hideInSearch: true,
-    },
-    {
-      title: '护照照片id',
-      align: 'center',
-      dataIndex: 'passportPhotoId',
-      hideInSearch: true,
-    },
-    {
       title: '姓名',
       align: 'center',
       dataIndex: 'realName',
@@ -65,12 +53,6 @@ const Table = ({ openAddModal, openModifyModal, licenseRegister, enums, dispatch
       align: 'center',
       type: 'date',
       dataIndex: 'dateOfBirth',
-      hideInSearch: true,
-    },
-    {
-      title: '单位id',
-      align: 'center',
-      dataIndex: 'organizationId',
       hideInSearch: true,
     },
 

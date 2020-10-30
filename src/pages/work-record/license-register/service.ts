@@ -38,7 +38,7 @@ export async function addLicenseRegisterInfo(params) {
  * @param {*} params
  */
 export async function detailLicenseRegisterInfo(params) {
-  return request(`/outbound_record/${params.id}`, {
+  return request(`/licence_register/${params.id}`, {
     method: 'GET',
     params,
   });

@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dispatch }) => {
+const Table = ({ openModifyModal, hospitalRegistration, enums, dispatch }) => {
   const { tableRef } = hospitalRegistration;
   const columns = [
     {
@@ -17,7 +17,14 @@ const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dis
     {
       title: '姓名',
       align: 'center',
-      dataIndex: 'userName',
+      dataIndex: 'realName',
+    },
+    {
+      title: '性别',
+      align: 'center',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
+      hideInSearch: true,
     },
     {
       title: '年龄',
@@ -29,12 +36,6 @@ const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dis
       title: '出生日期',
       align: 'center',
       dataIndex: 'dateOfBirth',
-      hideInSearch: true,
-    },
-    {
-      title: '原工作单位及职务',
-      align: 'center',
-      dataIndex: 'originalUnitAndPosition',
       hideInSearch: true,
     },
     {
@@ -59,7 +60,7 @@ const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dis
     {
       title: '出院时间',
       align: 'center',
-      type: 'date',
+      valueType: 'date',
       dataIndex: 'dischargeTime',
       hideInSearch: true,
     },
@@ -85,13 +86,6 @@ const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dis
       title: '治疗结果',
       align: 'center',
       dataIndex: 'therapeuticOutcome',
-      hideInSearch: true,
-    },
-    {
-      title: '性别',
-      align: 'center',
-      dataIndex: 'dictSex',
-      valueEnum: enums.dictSex,
       hideInSearch: true,
     },
     {
@@ -229,9 +223,6 @@ const Table = ({ openAddModal, openModifyModal, hospitalRegistration, enums, dis
       scroll={{ x: 'max-content' }}
       request={async params => getHospitalRegistrationList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal()}>
-          新增
-        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {

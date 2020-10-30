@@ -7,9 +7,12 @@ import LicenseRegisterForm from './form/LicenseRegisterForm';
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = LicenseRegisterForm.useForm();
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
-  const [lgbId, setLgbId] = useState();
+
+  const [lgbId, setLgbId] = useState('');
+  const [licenseId, setLicenseId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    setLicenseId(item.id);
+    setLgbId(item.userId);
     setModifyModalVisible(true);
   };
   useEffect(() => {
@@ -24,6 +27,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    setLicenseId('');
+    setLgbId('');
     form.resetFields();
   };
 
@@ -38,7 +43,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
               ...values,
               passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
               passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
-              id: lgbId,
             },
             resolve,
           });
@@ -63,7 +67,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       }}
       visible={modifyModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
@@ -77,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="证照登记" size="middle" />
-        <LicenseRegisterForm form={form} id={lgbId} />
+        <LicenseRegisterForm form={form} id={licenseId} />
       </div>
     </Modal>
   );

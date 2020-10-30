@@ -8,9 +8,11 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = HospitalRegistrationForm.useForm();
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
-  const [lgbId, setLgbId] = useState();
+  const [lgbId, setLgbId] = useState('');
+  const [hospitalRegistrationId, sethospitalRegistrationId] = useState('');
   const showModal = item => {
-    setLgbId(item.id);
+    sethospitalRegistrationId(item.id);
+    setLgbId(item.userId);
     setModifyModalVisible(true);
   };
   useEffect(() => {
@@ -25,6 +27,8 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    sethospitalRegistrationId('');
+    setLgbId('');
     form.resetFields();
   };
 
@@ -76,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
       >
         <LgbBasicInfo userId={lgbId} />
         <Descriptions title="住院登记" size="middle" />
-        <HospitalRegistrationForm form={form} id={lgbId} />
+        <HospitalRegistrationForm form={form} id={hospitalRegistrationId} />
       </div>
     </Modal>
   );
