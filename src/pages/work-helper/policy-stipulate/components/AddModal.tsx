@@ -42,7 +42,6 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
             resolve,
           });
         });
-        form.resetFields();
       })
       .then(() => {
         hideModal();
