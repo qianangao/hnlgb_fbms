@@ -51,7 +51,7 @@ const Table = ({
       title: '帮扶原因',
       align: 'center',
       dataIndex: 'helpReason',
-      valueEnum: enums.helpReason,
+      valueEnum: enums.dictHelpReason,
       hideInTable: true,
     },
     {

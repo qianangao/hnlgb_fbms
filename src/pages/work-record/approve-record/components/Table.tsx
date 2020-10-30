@@ -45,7 +45,7 @@ const Table = ({ openAddModal, openModifyModal, wrApproveRecord, enums, dispatch
       title: '备案事项',
       align: 'center',
       dataIndex: 'recordItems',
-      valueEnum: enums.recordItems,
+      valueEnum: enums.dictRecordItems,
     },
 
     {
