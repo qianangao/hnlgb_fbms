@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Form, Descriptions } from 'antd';
 import LgbSelectInput from '@/components/LgbSelectInput';
 import AdvancedForm from '@/components/AdvancedForm';
 
 const RelocatedForm = ({ form, id, dispatch, loading }) => {
+  const [resettlementUnitVisible, setResettlementUnitVisible] = useState(false);
   const formItems = [
     {
       hidden: true,
       name: 'id',
-    },
-    {
-      label: '安置单位',
-      name: 'resettlementUnit',
     },
     {
       label: '是否选择安置',
@@ -21,7 +18,19 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
       initialValue: 0,
       rules: [{ required: true, message: '请选择是否易地居住!' }],
     },
+
+    {
+      label: '安置单位',
+      visible: resettlementUnitVisible,
+      name: 'resettlementUnit',
+    },
   ];
+
+  const fieldChangeHander = (label, value) => {
+    if (label === 'isRelocation') {
+      setResettlementUnitVisible(!!value);
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -35,6 +44,7 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
         const fields = {
           ...data,
         };
+        setResettlementUnitVisible(!!data.isRelocation);
         form.setFieldsValue(fields);
       });
     }
@@ -50,9 +60,20 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
     </>
   );
   return id ? (
-    <AdvancedForm form={form} fields={formItems} loading={loading} />
+    <AdvancedForm
+      form={form}
+      fields={formItems}
+      loading={loading}
+      fieldChange={fieldChangeHander}
+    />
   ) : (
-    <AdvancedForm form={form} fields={formItems} loading={loading} headerRender={selectLgbInput} />
+    <AdvancedForm
+      form={form}
+      fields={formItems}
+      loading={loading}
+      fieldChange={fieldChangeHander}
+      headerRender={selectLgbInput}
+    />
   );
 };
 
