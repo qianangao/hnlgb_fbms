@@ -14,7 +14,6 @@ const Model = {
         orgIdForDataSelect: payload.orgIdForDataSelect || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
-        allIndex: 'all',
       };
 
       const response = yield call(getLgbList, params);

@@ -18,6 +18,7 @@ const Detail = ({ id, dispatch, detailElegantDemeanorData }) => {
       orgName={detailElegantDemeanorData.organizationName}
       releaseTime={detailElegantDemeanorData.pushTime}
       content={detailElegantDemeanorData.context}
+      extraFile={detailElegantDemeanorData.attachmentInfo}
     />
   );
 };

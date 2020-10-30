@@ -37,6 +37,7 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
 
   const hideModal = () => {
     setCommunityDetailModalVisible(false);
+    setCommunityId('');
   };
 
   return (

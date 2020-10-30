@@ -30,6 +30,7 @@ const CaresDetailModal = ({ dispatch, caresDetailData, actionRef }) => {
 
   const hideModal = () => {
     setCaresDetailModalVisible(false);
+    setCaresId('');
   };
 
   return (

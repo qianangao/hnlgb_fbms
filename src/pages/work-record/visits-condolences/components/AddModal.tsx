@@ -44,13 +44,17 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
       .validateFields()
       .then(values => {
         return new Promise(resolve => {
+          const payload = {
+            ...values,
+            photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
+            type: visitType,
+          };
+          if (tableType === '遗属慰问') {
+            payload.userId = values.userId.userId;
+          }
           dispatch({
             type: `wrVisitsCondolences/addVisit`,
-            payload: {
-              ...values,
-              photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
-              type: visitType,
-            },
+            payload,
             resolve,
           });
         });
