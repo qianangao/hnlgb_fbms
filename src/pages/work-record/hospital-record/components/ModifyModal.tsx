@@ -9,9 +9,9 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
   const [lgbId, setLgbId] = useState('');
-  const [hospitalRegistrationId, sethospitalRegistrationId] = useState('');
+  const [hospitalRegistrationId, setHospitalRegistrationId] = useState('');
   const showModal = item => {
-    sethospitalRegistrationId(item.id);
+    setHospitalRegistrationId(item.id);
     setLgbId(item.userId);
     setModifyModalVisible(true);
   };
@@ -27,7 +27,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
-    sethospitalRegistrationId('');
+    setHospitalRegistrationId('');
     setLgbId('');
     form.resetFields();
   };
