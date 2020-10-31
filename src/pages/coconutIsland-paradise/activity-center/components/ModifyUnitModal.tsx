@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
-import ActivityCenterInfoForm from './form/ActivityCenterInfoForm';
+import { Modal } from 'antd';
+import UnitForm from './form/UnitForm';
 
-const ModifyModal = ({ dispatch, actionRef, loading }) => {
-  const [form] = ActivityCenterInfoForm.useForm();
-  const [modifyModalVisible, setModifyModalVisible] = useState(false);
+const ModifyUnitModal = ({ dispatch, actionRef, loading }) => {
+  const [form] = UnitForm.useForm();
+  const [modifyUnitModalVisible, setModifyUnitModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState();
   const showModal = item => {
     setLgbId(item.id);
-    setModifyModalVisible(true);
+    setModifyUnitModalVisible(true);
   };
 
   useEffect(() => {
@@ -23,25 +23,28 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    setModifyModalVisible(false);
+    setModifyUnitModalVisible(false);
+    setLgbId('');
   };
 
-  const handleOk = publishStatus => {
+  const handleOk = () => {
     form
       .validateFields()
       .then(values => {
+        // 转化单位数据格式
+        const orgArrId = [];
+        values.orgList &&
+          values.orgList.forEach(item => {
+            if (item) {
+              orgArrId.push(item.id);
+            }
+          });
         return new Promise(resolve => {
           dispatch({
-            type: `activityCenter/updateActivityCenterInfo`,
+            type: `activityCenter/updateActivityCenterUnitInfo`,
             payload: {
-              title: values.title,
-              coreAdd: values.coreAdd,
-              context: values.context,
-              phoneNumber: values.phoneNumber,
-              fileId: values.attachmentInfo && values.attachmentInfo.uid,
-              urlId: values.picAttachmentInfo.uid,
               id: lgbId,
-              pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
+              ids: orgArrId,
             },
             resolve,
           });
@@ -57,27 +60,19 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
   return (
     <Modal
-      title="修改活动中心信息"
+      title="编辑活动中心单位信息"
       centered
-      width="95vw"
+      width="600px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
-        height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={modifyModalVisible}
-      forceRender
-      footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
-          保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
-        </Button>,
-      ]}
+      visible={modifyUnitModalVisible}
+      onOk={handleOk}
+      confirmLoading={loading}
+      onCancel={hideModal}
       maskClosable={false}
       destroyOnClose
-      onCancel={hideModal}
     >
       <div
         style={{
@@ -87,7 +82,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
           boxSizing: 'border-box',
         }}
       >
-        <ActivityCenterInfoForm form={form} id={lgbId} />
+        <UnitForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
@@ -95,4 +90,4 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
 export default connect(({ loading }) => ({
   loading: loading.models.activityCenter,
-}))(ModifyModal);
+}))(ModifyUnitModal);

@@ -5,7 +5,7 @@ import { connect } from 'umi';
 import moment from 'moment';
 import LgbSelectInput from '@/components/LgbSelectInput';
 
-const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
+const SupportDifficultForm = ({ form, id, dispatch, tableType, loading }) => {
   const disabledDate = current => {
     return current && current > moment().endOf('day');
   };
@@ -52,6 +52,15 @@ const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
       ],
     },
   ];
+
+  const getMemberList = params =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'wrVisitsCondolences/getDeathMemberList',
+        payload: { ...params },
+        resolve,
+      });
+    });
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -73,7 +82,11 @@ const SupportDifficultForm = ({ form, id, dispatch, loading }) => {
     // 显示老干部信息-公共组件
     <>
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
-        <LgbSelectInput />
+        {tableType === '2' ? (
+          <LgbSelectInput getLgbs={getMemberList} selectItem />
+        ) : (
+          <LgbSelectInput />
+        )}
       </Form.Item>
       <Descriptions title="困难帮扶" />
     </>
