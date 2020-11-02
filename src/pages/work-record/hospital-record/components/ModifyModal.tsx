@@ -41,7 +41,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
             type: `hospitalRegistration/updateHospitalRegistrationInfo`,
             payload: {
               ...values,
-              id: lgbId,
+              id: hospitalRegistrationId,
             },
             resolve,
           });

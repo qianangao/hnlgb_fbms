@@ -43,6 +43,12 @@ const OutRegisterFrom = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请选择出院时间!' }],
     },
     {
+      label: '出国时间',
+      name: 'abroadTime',
+      type: 'date',
+      rules: [{ required: true, message: '请选择出国时间!' }],
+    },
+    {
       label: '返回时间',
       name: 'returnTime',
       type: 'date',

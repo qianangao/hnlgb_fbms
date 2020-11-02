@@ -43,6 +43,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
               ...values,
               passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
               passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
+              id: licenseId,
             },
             resolve,
           });
