@@ -63,7 +63,7 @@ const Model = {
     },
     *addHelpElderlyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(addHelpElderlyInfo, payload);
-      const publishStatus = payload.status;
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         resolve && resolve(response);
         message.success(publishStatus === 0 ? '助老志愿新增成功！' : '助老志愿发布成功！');
@@ -75,7 +75,7 @@ const Model = {
     },
     *updateHelpElderlyInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateHelpElderlyInfo, payload);
-      const publishStatus = payload.status;
+      const publishStatus = payload.pushStatus;
       if (!response.error) {
         resolve && resolve(response);
         message.success(publishStatus === 0 ? '助老志愿修改成功！' : '助老志愿发布成功！');
