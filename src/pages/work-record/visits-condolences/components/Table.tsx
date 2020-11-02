@@ -234,7 +234,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle={`${tableType}信息`}
+      headerTitle={`${tableType}`}
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

@@ -5,9 +5,11 @@ import DetailForm from './form/ActivityCenterDetailForm';
 
 const DetailModal = ({ loading, actionRef }) => {
   const [DetailId, setDetailId] = useState('');
+  const [type, setType] = useState();
   const [detailModalVisible, setDetailModalVisible] = useState(false);
-  const showModal = item => {
-    setDetailId(item.id);
+  const showModal = (id, paramType) => {
+    setDetailId(id);
+    setType(paramType);
     setDetailModalVisible(true);
   };
   useEffect(() => {
@@ -21,11 +23,13 @@ const DetailModal = ({ loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     setDetailModalVisible(false);
+    setDetailId('');
+    setType('');
   };
 
   return (
     <Modal
-      title="活动中心详情"
+      title={type === '1' ? '活动中心详情' : '剪影详情'}
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -35,7 +39,7 @@ const DetailModal = ({ loading, actionRef }) => {
       }}
       visible={detailModalVisible}
       footer={null}
-      forceRender
+      destroyOnClose
       confirmLoading={loading}
       onCancel={hideModal}
     >
@@ -47,7 +51,7 @@ const DetailModal = ({ loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <DetailForm id={DetailId} />
+        <DetailForm id={DetailId} type={type} />
       </div>
     </Modal>
   );

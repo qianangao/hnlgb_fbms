@@ -30,12 +30,17 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
       .validateFields()
       .then(values => {
         return new Promise(resolve => {
+          const payload = {
+            ...values,
+            helpType: tableType,
+          };
+          // 新增遗孀补助申请时，values.userId 携带数据为所选老同志所有数据对象，当新增为特困补助申请时，values.userId为所选老同志的userId
+          if (tableType === '2') {
+            payload.userId = values.userId.userId;
+          }
           dispatch({
             type: `wrSupportDifficult/addSupportDifficult`,
-            payload: {
-              ...values,
-              helpType: tableType,
-            },
+            payload,
             resolve,
           });
         });
@@ -58,7 +63,7 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
       }}
       visible={addModalVisible}
       onOk={handleOk}
-      forceRender
+      destroyOnClose
       confirmLoading={loading}
       onCancel={hideModal}
     >
