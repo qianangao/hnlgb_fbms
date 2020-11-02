@@ -38,8 +38,8 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
               coreAdd: values.coreAdd,
               context: values.context,
               phoneNumber: values.phoneNumber,
-              fileId: values.attachmentInfo.uid,
-              urlId: values.attachmentInfo2.uid,
+              fileId: values.attachmentInfo && values.attachmentInfo.uid,
+              urlId: values.picAttachmentInfo.uid,
               id: lgbId,
               pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             },

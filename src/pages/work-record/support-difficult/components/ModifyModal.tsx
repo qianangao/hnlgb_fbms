@@ -27,6 +27,7 @@ const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
   const hideModal = () => {
     setModifyModalVisible(false);
     form.resetFields();
+    setUserId('');
   };
 
   const handleOk = () => {

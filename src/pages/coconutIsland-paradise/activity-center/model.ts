@@ -5,12 +5,18 @@ import {
   updateActivityCenterInfo,
   activityCenterInfoList,
   detailActivityCenterInfo,
+  detailActivityCenterUnitInfo,
+  updateActivityCenterUnitInfo,
+  addSilhouette,
+  getRegisteredList,
 } from './service';
 
 const Model = {
   namespace: 'activityCenter',
   state: {
     activityCenterInfoListData: {},
+    detailActivityCenterUnitData: [],
+    memberListData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailActivityCenterData: {},
@@ -73,6 +79,28 @@ const Model = {
         });
       }
     },
+    *addSilhouette({ payload, resolve }, { call, put }) {
+      const response = yield call(addSilhouette, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('剪影发布成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *updateActivityCenterUnitInfo({ payload, resolve }, { call, put }) {
+      const response = yield call(updateActivityCenterUnitInfo, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('单位编辑成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
     *updateActivityCenterInfo({ payload, resolve }, { call, put }) {
       const response = yield call(updateActivityCenterInfo, payload);
       const publishStatus = payload.pushStatus;
@@ -104,6 +132,49 @@ const Model = {
           type: 'save',
           payload: {
             detailActivityCenterData: response,
+          },
+        });
+      }
+    },
+
+    *detailActivityCenterUnitInfo({ payload, resolve }, { call, put }) {
+      const response = yield call(detailActivityCenterUnitInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailActivityCenterUnitData: response,
+          },
+        });
+      }
+    },
+    *getRegisteredList({ payload, resolve }, { call, put }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const response = yield call(getRegisteredList, params);
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            memberListData: result,
           },
         });
       }

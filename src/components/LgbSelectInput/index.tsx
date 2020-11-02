@@ -50,6 +50,7 @@ const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange
       align: 'center',
       dataIndex: 'dictRetirementType',
       valueEnum: enums.dictRetirementType,
+      hideInSearch: true,
     },
     {
       title: '出生日期',

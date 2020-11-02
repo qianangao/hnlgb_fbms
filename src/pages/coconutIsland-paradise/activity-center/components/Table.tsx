@@ -7,6 +7,9 @@ const Table = ({
   openAddModal,
   openModifyModal,
   openDetailModal,
+  openModifyUnitModal,
+  openAddSilhouetteModal,
+  openRegisteredModal,
   activityCenter,
   dispatch,
   publishStatus,
@@ -45,31 +48,73 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
-        publishStatus === 0 ? (
+      render: (dom, data) => [
+        publishStatus === 0 && (
           <a
-            key={`${employeeData.id}up`}
+            key={`${data.id}up`}
             onClick={() => {
-              openModifyModal(employeeData);
+              openModifyModal(data);
             }}
           >
-            编辑
+            编辑活动
           </a>
-        ) : (
+        ),
+        publishStatus === 0 && (
           <a
-            key={`${employeeData.id}detail`}
+            key={`${data.id}upUnit`}
             onClick={() => {
-              openDetailModal(employeeData);
+              openModifyUnitModal(data);
+            }}
+          >
+            编辑单位
+          </a>
+        ),
+        publishStatus === 1 && (
+          <a
+            key={`${data.id}detail`}
+            onClick={() => {
+              // 入参1：活动id；入参2：1：代表活动详情，2：代表剪影详情
+              openDetailModal(data.id, '1');
             }}
           >
             详情
           </a>
         ),
+        publishStatus === 1 && (
+          <a
+            key={`${data.id}detail`}
+            onClick={() => {
+              openRegisteredModal(data.id);
+            }}
+          >
+            报名列表
+          </a>
+        ),
+        publishStatus === 1 && data.isSilhouette === 1 && (
+          <a
+            key={`${data.id}detail`}
+            onClick={() => {
+              openDetailModal(data.id, '2');
+            }}
+          >
+            查看剪影
+          </a>
+        ),
+        publishStatus === 1 && data.isSilhouette === 0 && (
+          <a
+            key={`${data.id}detail`}
+            onClick={() => {
+              openAddSilhouetteModal(data.id);
+            }}
+          >
+            发布剪影
+          </a>
+        ),
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${data.id}del`}
           title="确认删除该活动中心吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteReturnworkPerson([data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

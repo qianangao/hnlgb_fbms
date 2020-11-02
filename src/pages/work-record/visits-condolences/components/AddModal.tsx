@@ -49,7 +49,7 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
             photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
             type: visitType,
           };
-          //新增遗属慰问时，values.userId 携带数据为所选老同志所有数据对象，当新增为除遗属慰问的其它类型时，values.userId为所选老同志的userId
+          // 新增遗属慰问时，values.userId 携带数据为所选老同志所有数据对象，当新增为除遗属慰问的其它类型时，values.userId为所选老同志的userId
           if (tableType === '遗属慰问') {
             payload.userId = values.userId.userId;
           }

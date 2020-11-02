@@ -4,7 +4,7 @@ import { Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
 
-const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
+const LicenseRegisterForm = ({ form, id, dispatch, loading }) => {
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -15,6 +15,7 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
         });
       }).then(data => {
         const fields = {
+          id,
           ...data,
         };
 
@@ -62,6 +63,7 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
       type: 'image',
     },
   ];
+
   return id ? (
     <AdvancedForm form={form} fields={formItems} loading={loading} />
   ) : (
@@ -69,8 +71,8 @@ const LicenseRegisterFrom = ({ form, id, dispatch, loading }) => {
   );
 };
 
-LicenseRegisterFrom.useForm = AdvancedForm.useForm;
+LicenseRegisterForm.useForm = AdvancedForm.useForm;
 
 export default connect(({ loading }) => ({
   loading: loading.models.licenseRegister,
-}))(LicenseRegisterFrom);
+}))(LicenseRegisterForm);

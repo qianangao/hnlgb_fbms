@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import LicenseRegisterForm from './form/LicenseRegisterForm';
+import SilhouetteForm from './form/SilhouetteForm';
 
-const AddModal = ({ dispatch, actionRef, loading }) => {
-  const [form] = LicenseRegisterForm.useForm();
-  const [addModalVisible, setAddModalVisible] = useState(false);
+const AddSilhouetteModal = ({ dispatch, actionRef, loading }) => {
+  const [form] = SilhouetteForm.useForm();
+  const [addSilhouetteModalVisible, setAddSilhouetteModalVisible] = useState(false);
+  const [activityId, setActivityId] = useState();
 
-  const showModal = () => {
-    setAddModalVisible(true);
+  const showModal = id => {
+    setActivityId(id);
+    setAddSilhouetteModalVisible(true);
   };
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
   }, []);
 
   const hideModal = () => {
-    setAddModalVisible(false);
+    setAddSilhouetteModalVisible(false);
     form.resetFields();
   };
 
@@ -32,11 +34,10 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       .then(values => {
         return new Promise(resolve => {
           dispatch({
-            type: `licenseRegister/addLicenseRegisterInfo`,
+            type: `activityCenter/addSilhouette`,
             payload: {
               ...values,
-              passCheckPhotoId: values.passCheckPhoto && values.passCheckPhoto.uid,
-              passportPhotoId: values.passportPhoto && values.passportPhoto.uid,
+              id: activityId,
             },
             resolve,
           });
@@ -46,13 +47,13 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
         hideModal();
       })
       .catch(info => {
-        console.error('新增错误', info);
+        console.error('Validate Failed:', info);
       });
   };
 
   return (
     <Modal
-      title="新增证照登记"
+      title="发布剪影"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -60,16 +61,17 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
         height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={addModalVisible}
+      visible={addSilhouetteModalVisible}
       onOk={handleOk}
+      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <LicenseRegisterForm form={form} />
+      <SilhouetteForm form={form} />
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
-  loading: loading.models.licenseRegister,
-}))(AddModal);
+  loading: loading.models.activityCenter,
+}))(AddSilhouetteModal);

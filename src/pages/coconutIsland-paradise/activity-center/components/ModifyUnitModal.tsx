@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Descriptions, Modal } from 'antd';
-import LgbBasicInfo from '@/components/LgbBasicInfo';
-import OutRegisterForm from './form/OutRegisterForm';
+import { Modal } from 'antd';
+import UnitForm from './form/UnitForm';
 
-const ModifyModal = ({ dispatch, loading, actionRef }) => {
-  const [form] = OutRegisterForm.useForm();
-  const [lgbId, setLgbId] = useState('');
-  const [outRegisterId, setOutRegisterId] = useState('');
-  const [modifyModalVisible, setModifyModalVisible] = useState(false);
-
+const ModifyUnitModal = ({ dispatch, actionRef, loading }) => {
+  const [form] = UnitForm.useForm();
+  const [modifyUnitModalVisible, setModifyUnitModalVisible] = useState(false);
+  const [lgbId, setLgbId] = useState();
   const showModal = item => {
-    setLgbId(item.userId);
-    setOutRegisterId(item.id);
-    setModifyModalVisible(true);
+    setLgbId(item.id);
+    setModifyUnitModalVisible(true);
   };
+
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
@@ -26,22 +23,28 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    setModifyModalVisible(false);
-    setOutRegisterId('');
+    setModifyUnitModalVisible(false);
     setLgbId('');
-    form.resetFields();
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
+        // 转化单位数据格式
+        const orgArrId = [];
+        values.orgList &&
+          values.orgList.forEach(item => {
+            if (item) {
+              orgArrId.push(item.id);
+            }
+          });
         return new Promise(resolve => {
           dispatch({
-            type: `outRegister/updateOutRegisterInfo`,
+            type: `activityCenter/updateActivityCenterUnitInfo`,
             payload: {
-              ...values,
               id: lgbId,
+              ids: orgArrId,
             },
             resolve,
           });
@@ -51,41 +54,40 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
         hideModal();
       })
       .catch(info => {
-        console.error('修改错误', info);
+        console.error('Validate Failed:', info);
       });
   };
+
   return (
     <Modal
-      title="修改外出登记"
+      title="编辑活动中心单位信息"
       centered
-      width="95vw"
+      width="600px"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
-        height: 'calc(95vh - 108px)',
         overflow: 'auto',
       }}
-      visible={modifyModalVisible}
+      visible={modifyUnitModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
+      maskClosable={false}
+      destroyOnClose
     >
       <div
         style={{
           height: 'calc(100% - 36px)',
           padding: '20px 0',
-          overflow: 'hidden',
+          overflowX: 'hidden',
           boxSizing: 'border-box',
         }}
       >
-        <LgbBasicInfo userId={lgbId} />
-        <Descriptions title="外出登记" size="middle" />
-        <OutRegisterForm form={form} id={outRegisterId} />
+        <UnitForm form={form} id={lgbId} />
       </div>
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
-  loading: loading.models.outRegister,
-}))(ModifyModal);
+  loading: loading.models.activityCenter,
+}))(ModifyUnitModal);
