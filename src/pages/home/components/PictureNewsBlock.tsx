@@ -25,7 +25,7 @@ const PictureNewsBlock = ({ dispatch, pictureListData, openDetailModal }) => {
               src={item.cephFile && item.cephFile.fileUrl}
               alt={item.cephFile && item.cephFile.fileName}
             />
-            <div className={styles.carouselImgTitle}>{item.cephFile && item.cephFile.fileName}</div>
+            <div className={styles.carouselImgTitle}>{item.headline}</div>
           </div>
         ))}
     </Carousel>

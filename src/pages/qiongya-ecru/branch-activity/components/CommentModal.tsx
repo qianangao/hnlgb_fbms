@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import TableMembersModify from './TableMembersModify';
+import CommentTable from './CommentTable';
 
-const CommunityModifyModal = ({ actionRef }) => {
-  const [studyRecordId, setStudyRecordId] = useState('');
+const CommentModal = ({ actionRef }) => {
+  const [activityId, setActivityId] = useState();
   const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
-  const showModal = id => {
-    setStudyRecordId(id);
+  const showModal = item => {
+    setActivityId(item.id);
     setMemberModifyModalVisible(true);
   };
 
@@ -27,24 +27,24 @@ const CommunityModifyModal = ({ actionRef }) => {
 
   return (
     <Modal
-      title="编辑学习记录成员信息"
+      title="查看活动评论"
       centered
-      width="80vw"
+      width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
-        height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        height: 'calc(95vh - 58px)',
+        overflowX: 'hidden',
       }}
       visible={memberModifyModalVisible}
       destroyOnClose
       onCancel={hideModal}
       footer={[]}
     >
-      <TableMembersModify id={studyRecordId} />
+      <CommentTable activityId={activityId} />
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
   loading: loading.models.studyRecord,
-}))(CommunityModifyModal);
+}))(CommentModal);

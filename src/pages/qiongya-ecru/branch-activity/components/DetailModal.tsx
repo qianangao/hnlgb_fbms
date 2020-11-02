@@ -32,7 +32,7 @@ const DetailModal = ({ loading, actionRef }) => {
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        overflowX: 'hidden',
       }}
       visible={detailModalVisible}
       footer={null}
