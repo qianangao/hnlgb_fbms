@@ -17,24 +17,24 @@ const SeniorUniversityForm = ({ id, loading, dispatch, form }) => {
     {
       label: '大学地址',
       name: 'address',
-      rules: [{ required: true, message: '请填写大学地址!' }],
+      rules: [{ required: true, message: '请输入大学地址!' }],
     },
     {
       label: '联系电话',
       name: 'phone',
-      rules: [{ required: true, message: '请填写联系电话!' }, { validator: checkPhone }],
+      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkPhone }],
     },
     {
       label: '大学网址',
       name: 'url',
-      rules: [{ required: true, message: '请填写大学网址!' }, { validator: checkUrl }],
+      rules: [{ required: true, message: '请输入大学网址!' }, { validator: checkUrl }],
     },
     {
       label: '大学介绍',
       name: 'universitySynopsis',
       type: 'textarea',
       span: 2,
-      rules: [{ required: true, message: '请填写大学介绍!' }],
+      rules: [{ required: true, message: '请输入大学介绍!' }],
     },
     {
       label: '教学活动',
