@@ -108,3 +108,25 @@ export async function commentAudit(params) {
     data: params,
   });
 }
+
+/**
+ * 统计-列表
+ * @param {*} params
+ */
+export async function getStatisticsList(params) {
+  return request(`/getOrgLifeByMonth`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 统计-列表
+ * @param {*} params
+ */
+export async function getOrgLifeStatisticsVo(params) {
+  return request(`/getOrgLifeStatisticsVo`, {
+    method: 'GET',
+    params,
+  });
+}

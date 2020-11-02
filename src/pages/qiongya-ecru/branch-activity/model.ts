@@ -10,6 +10,8 @@ import {
   getCommentList,
   deleteComment,
   commentAudit,
+  getStatisticsList,
+  getOrgLifeStatisticsVo,
 } from './service';
 
 const Model = {
@@ -21,6 +23,8 @@ const Model = {
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
     CommentListData: {},
+    StatisticsData: {},
+    getOrgLifeStatisticsVoData: {},
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -186,6 +190,44 @@ const Model = {
         message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
         yield put({
           type: 'tableReload',
+        });
+      }
+    },
+
+    // 按年统计-列表
+    *getOrgLifeByMonth({ payload, resolve }, { call, put }) {
+      const response = yield call(getStatisticsList, payload);
+
+      const result = {
+        data: response,
+        success: true,
+      };
+      if (!response.error) {
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            StatisticsData: response,
+          },
+        });
+      }
+    },
+
+    // 按类型统计-列表
+    *getOrgLifeStatisticsVo({ payload, resolve }, { call, put }) {
+      const response = yield call(getOrgLifeStatisticsVo, payload);
+
+      const result = {
+        data: response,
+        success: true,
+      };
+      if (!response.error) {
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            getOrgLifeStatisticsVoData: response,
+          },
         });
       }
     },
