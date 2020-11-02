@@ -119,7 +119,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="统计标志">
             {lgbDetailData.statisticSymbol === 1 ? '是' : '否'}
           </Descriptions.Item>
-          <Descriptions.Item label="是否易地居住">
+          <Descriptions.Item label="是否异地居住">
             {lgbDetailData.isDifferentLive === 1 ? '是' : '否'}
           </Descriptions.Item>
           <Descriptions.Item label="待遇批准文号">

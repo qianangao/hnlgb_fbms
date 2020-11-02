@@ -2,7 +2,7 @@ import { Button, Col, Input, Row, Form, message } from 'antd';
 import React, { useState, useCallback, useEffect } from 'react';
 import omit from 'omit.js';
 import { FormItemProps } from 'antd/es/form/FormItem';
-import { getCaptcha } from '@/services/login';
+import { getCaptcha, getVerificationImg } from '@/services/login';
 
 import ItemMap from './map';
 import LoginContext, { LoginContextProps } from './LoginContext';
@@ -15,6 +15,7 @@ export interface LoginItemType {
   Password: React.FC<WrappedLoginItemProps>;
   Mobile: React.FC<WrappedLoginItemProps>;
   Captcha: React.FC<WrappedLoginItemProps>;
+  VerificationCode: React.FC<WrappedLoginItemProps>;
 }
 
 export interface LoginItemProps extends Partial<FormItemProps> {
@@ -60,20 +61,25 @@ const getFormItemOptions = ({
 const LoginItem: React.FC<LoginItemProps> = props => {
   const [count, setCount] = useState<number>(props.countDown || 0);
   const [timing, setTiming] = useState(false);
+  const [verificationImgSrc, setVerificationImgSrc] = useState('');
+
   // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
+
+  /* eslint-disable */
   const {
-    // onChange,
+    onChange,
     customProps,
-    // defaultValue,
-    // rules,
+    defaultValue,
+    rules,
     name,
     // getCaptchaButtonText,
     // getCaptchaSecondText,
-    // updateActive,
+    updateActive,
     type,
-    // tabUtil,
+    tabUtil,
     ...restProps
   } = props;
+  /* eslint-enable */
 
   const onGetCaptcha = useCallback(async (mobile: string) => {
     const result = await getCaptcha(mobile);
@@ -82,6 +88,19 @@ const LoginItem: React.FC<LoginItemProps> = props => {
     }
     message.success('获取验证码成功！');
     setTiming(true);
+  }, []);
+
+  const refreshVerificationImg = useCallback(async () => {
+    const result = await getVerificationImg();
+
+    if (!result.error) {
+      setVerificationImgSrc(window.URL.createObjectURL(result));
+    }
+  }, []);
+  useEffect(() => {
+    if (type === 'VerificationCode') {
+      refreshVerificationImg();
+    }
   }, []);
 
   useEffect(() => {
@@ -136,6 +155,31 @@ const LoginItem: React.FC<LoginItemProps> = props => {
             </Col>
           </Row>
         )}
+      </FormItem>
+    );
+  }
+
+  if (type === 'VerificationCode') {
+    const inputProps = omit(otherProps, ['onGetCaptcha', 'countDown']);
+
+    return (
+      <FormItem noStyle>
+        <Row gutter={8}>
+          <Col span={16}>
+            <FormItem name={name} {...options}>
+              <Input {...customProps} {...inputProps} />
+            </FormItem>
+          </Col>
+          <Col span={8}>
+            <img
+              alt=""
+              src={verificationImgSrc}
+              onClick={() => {
+                refreshVerificationImg();
+              }}
+            />
+          </Col>
+        </Row>
       </FormItem>
     );
   }

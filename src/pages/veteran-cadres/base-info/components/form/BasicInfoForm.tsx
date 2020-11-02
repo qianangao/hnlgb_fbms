@@ -195,11 +195,11 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     },
 
     {
-      label: '是否易地居住',
+      label: '是否异地居住',
       name: 'isDifferentLive',
       type: 'switch',
       initialValue: 0,
-      rules: [{ required: true, message: '请选择是否易地居住!' }],
+      rules: [{ required: true, message: '请选择是否异地居住!' }],
     },
     {
       label: '待遇批准文号',
