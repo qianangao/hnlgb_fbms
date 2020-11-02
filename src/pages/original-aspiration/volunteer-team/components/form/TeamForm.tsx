@@ -14,7 +14,7 @@ const TeamForm = ({ form, id, dispatch, loading }) => {
       name: 'teamName',
       span: 2,
       rules: [
-        { required: true, message: '请输入标题!', whitespace: true },
+        { required: true, message: '请输入团队名称!', whitespace: true },
         { max: 64, message: '团队名称不超过64个字!' },
       ],
     },

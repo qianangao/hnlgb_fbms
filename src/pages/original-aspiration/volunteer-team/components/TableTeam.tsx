@@ -33,7 +33,7 @@ const Table = ({
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 200,
+      width: 240,
       fixed: 'right',
       render: (dom, Data) => [
         <a key={`${Data.id}up`} onClick={() => openModifyModal(Data)}>

@@ -62,10 +62,10 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
-        <Button loading={loading} onClick={() => handleOk(true)}>
+        <Button key="save" loading={loading} onClick={() => handleOk(true)}>
           保存
         </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
+        <Button key="release" loading={loading} onClick={() => handleOk(false)}>
           发布
         </Button>,
       ]}

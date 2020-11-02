@@ -4,7 +4,7 @@ import { Modal } from 'antd';
 import DetailForm from './form/OnlineRegistrationDetailForm';
 import TableRegistered from './TableRegistered';
 
-const DetailModal = ({ dispatch, loading, actionRef, detailOnlineRegistrationData }) => {
+const DetailModal = ({ loading, actionRef }) => {
   const [DetailId, setDetailId] = useState('');
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
@@ -20,16 +20,10 @@ const DetailModal = ({ dispatch, loading, actionRef, detailOnlineRegistrationDat
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (DetailId) {
-      dispatch({
-        type: 'onlineRegistration/detailOnlineRegistrationInfo',
-        payload: { id: DetailId },
-      });
-    }
-  }, [DetailId]);
+
   const hideModal = () => {
     setDetailModalVisible(false);
+    setDetailId('');
   };
 
   return (
@@ -48,7 +42,7 @@ const DetailModal = ({ dispatch, loading, actionRef, detailOnlineRegistrationDat
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DetailForm id={DetailId} detailOnlineRegistrationData={detailOnlineRegistrationData} />
+      <DetailForm id={DetailId} />
       <TableRegistered id={DetailId} />
     </Modal>
   );

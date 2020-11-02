@@ -41,7 +41,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
             type: `outRegister/updateOutRegisterInfo`,
             payload: {
               ...values,
-              id: lgbId,
+              id: outRegisterId,
             },
             resolve,
           });
