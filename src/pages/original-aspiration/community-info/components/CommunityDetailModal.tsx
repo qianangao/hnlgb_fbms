@@ -65,7 +65,7 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
           {enums.dictClubType && enums.dictClubType[communityDetailData.dictClubType]}
         </Descriptions.Item>
         <Descriptions.Item label="社团简介">
-          {communityDetailData.clubIntroduction}
+          <pre> {communityDetailData.clubIntroduction}</pre>
         </Descriptions.Item>
         <Descriptions.Item label="社团成员">{communityMembers}</Descriptions.Item>
       </Descriptions>

@@ -38,8 +38,8 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
               coreAdd: values.coreAdd,
               context: values.context,
               phoneNumber: values.phoneNumber,
-              fileId: values.attachmentInfo.uid,
-              urlId: values.attachmentInfo2.uid,
+              fileId: values.attachmentInfo && values.attachmentInfo.uid,
+              urlId: values.picAttachmentInfo.uid,
               pushStatus: publishStatus ? 0 : 1, // 状态 0：保存 1：发布
             },
             resolve,
@@ -66,11 +66,9 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       }}
       visible={addModalVisible}
       footer={[
+        <Button onClick={hideModal}>取消</Button>,
         <Button loading={loading} onClick={() => handleOk(true)}>
           保存
-        </Button>,
-        <Button loading={loading} onClick={() => handleOk(false)}>
-          发布
         </Button>,
       ]}
       forceRender

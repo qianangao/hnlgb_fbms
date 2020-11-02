@@ -47,12 +47,6 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        const payload = {
-          ...values,
-          userList: userIds, // 人员列表
-          receivedType,
-        };
-
         // 转化单位数据格式
         const orgArrId = [];
         values.orgList &&
@@ -61,7 +55,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
               orgArrId.push(item.id);
             }
           });
-        payload.orgList = orgArrId;
+        // payload.orgList = orgArrId;
         if (orgArrId.length === 0 && userIds.length === 0) {
           message.error('请传入接收单位或接收个人');
           throw new Error('请传入接收单位或接收个人');
@@ -73,6 +67,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
               ...values,
               userList: userIds, // 人员列表
               receivedType,
+              orgList: orgArrId || undefined,
             },
             resolve,
           });

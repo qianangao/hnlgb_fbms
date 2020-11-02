@@ -56,7 +56,9 @@ const CaresDetailModal = ({ dispatch, caresDetailData, actionRef }) => {
         <Descriptions.Item label="组织名称">{caresDetailData.mechanismName}</Descriptions.Item>
         <Descriptions.Item label="联系人">{caresDetailData.contactPerson}</Descriptions.Item>
         <Descriptions.Item label="联系方式">{caresDetailData.contactInformation}</Descriptions.Item>
-        <Descriptions.Item label="简介">{caresDetailData.introduction}</Descriptions.Item>
+        <Descriptions.Item label="简介">
+          <pre>{caresDetailData.introduction}</pre>
+        </Descriptions.Item>
       </Descriptions>
       <TableCaresMember id={caresId} />
     </Modal>

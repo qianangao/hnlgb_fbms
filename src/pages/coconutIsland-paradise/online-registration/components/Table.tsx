@@ -47,27 +47,27 @@ const Table = ({
       width: 300,
       fixed: 'right',
       render: (dom, employeeData) => [
-        publishStatus === 0 ? (
-          <>
-            <a
-              key={`${employeeData.id}up`}
-              onClick={() => {
-                openModifyModal(employeeData);
-              }}
-            >
-              编辑
-            </a>
-
-            <a
-              key={`${employeeData.id}select`}
-              onClick={() => {
-                openSelectModal(employeeData);
-              }}
-            >
-              选择人员/单位
-            </a>
-          </>
-        ) : (
+        publishStatus === 0 && (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              openModifyModal(employeeData);
+            }}
+          >
+            编辑
+          </a>
+        ),
+        publishStatus === 0 && (
+          <a
+            key={`${employeeData.id}select`}
+            onClick={() => {
+              openSelectModal(employeeData);
+            }}
+          >
+            选择人员
+          </a>
+        ),
+        publishStatus === 1 && (
           <a
             key={`${employeeData.id}detail`}
             onClick={() => {

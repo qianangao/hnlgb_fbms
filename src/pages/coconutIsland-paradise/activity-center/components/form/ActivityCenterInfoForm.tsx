@@ -26,11 +26,10 @@ const ActivityCenterInfoForm = ({ form, id, dispatch, loading }) => {
       label: '附件',
       name: 'attachmentInfo',
       type: 'upload',
-      rules: [{ required: true, message: '请上传附件!' }],
     },
     {
       label: '缩略图',
-      name: 'attachmentInfo2',
+      name: 'picAttachmentInfo',
       type: 'image',
       rules: [{ required: true, message: '请上传缩略图!' }],
     },
@@ -53,16 +52,18 @@ const ActivityCenterInfoForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          attachmentInfo: {
-            uid: data.attachmentInfo && data.attachmentInfo.id,
-            name: data.attachmentInfo && data.attachmentInfo.fileName,
-            url: data.attachmentInfo && data.attachmentInfo.url,
-            status: 'done',
-          },
-          attachmentInfo2: {
-            uid: data.attachmentInfo2 && data.attachmentInfo2.id,
-            name: data.attachmentInfo2 && data.attachmentInfo2.fileName,
-            url: data.attachmentInfo2 && data.attachmentInfo2.url,
+          attachmentInfo: data.attachmentInfo
+            ? {
+                uid: data.attachmentInfo && data.attachmentInfo.id,
+                name: data.attachmentInfo && data.attachmentInfo.fileName,
+                url: data.attachmentInfo && data.attachmentInfo.url,
+                status: 'done',
+              }
+            : null,
+          picAttachmentInfo: {
+            uid: data.picAttachmentInfo && data.picAttachmentInfo.id,
+            name: data.picAttachmentInfo && data.picAttachmentInfo.fileName,
+            url: data.picAttachmentInfo && data.picAttachmentInfo.url,
             status: 'done',
           },
         };
