@@ -31,14 +31,14 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         <Descriptions.Item label="支部名称">{detailBranchActivityData.partyName}</Descriptions.Item>
         <Descriptions.Item label="缩略图">
           {detailBranchActivityData && detailBranchActivityData.attachmentInfo && (
-            <a href={detailBranchActivityData.attachmentInfo.fileUrl}>
+            <a href={detailBranchActivityData.attachmentInfo.url}>
               {detailBranchActivityData.attachmentInfo.fileName}
             </a>
           )}
         </Descriptions.Item>
         <Descriptions.Item label="附件" span={22}>
           {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (
-            <a href={detailBranchActivityData.picAttachmentInfo.fileUrl}>
+            <a href={detailBranchActivityData.picAttachmentInfo.url}>
               {detailBranchActivityData.picAttachmentInfo.fileName}
             </a>
           )}

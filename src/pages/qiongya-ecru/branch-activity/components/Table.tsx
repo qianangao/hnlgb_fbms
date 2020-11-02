@@ -97,7 +97,7 @@ const Table = ({
                 查看活动
               </a>,
               <a
-                key={`${employeeData.id}up`}
+                key={`${employeeData.id}check`}
                 onClick={() => {
                   openCommentModal(employeeData);
                 }}

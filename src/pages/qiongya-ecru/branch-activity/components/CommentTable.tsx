@@ -129,8 +129,8 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
     });
   };
   // 审核
-  const commentAudit = (ids, commentStatus) => {
-    const auditId = [ids];
+  const commentAudit = (id, commentStatus) => {
+    const auditId = [id];
     dispatch({
       type: 'branchActivity/commentAudit',
       payload: {
