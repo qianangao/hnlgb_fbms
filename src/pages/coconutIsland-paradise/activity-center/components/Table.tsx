@@ -56,7 +56,7 @@ const Table = ({
               openModifyModal(data);
             }}
           >
-            编辑活动
+            编辑
           </a>
         ),
         publishStatus === 0 && (
