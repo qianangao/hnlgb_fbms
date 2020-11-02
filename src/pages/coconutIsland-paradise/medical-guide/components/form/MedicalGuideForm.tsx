@@ -12,8 +12,8 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
       label: '医院名称',
       name: 'name',
       rules: [
-        { required: true, message: '请输入就医指南名称!', whitespace: true },
-        { max: 32, message: '就医指南名称请小于32位!', whitespace: true },
+        { required: true, message: '请输入医院名称!', whitespace: true },
+        { max: 32, message: '医院名称不超过32个字!', whitespace: true },
       ],
     },
     {
@@ -21,7 +21,7 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
       name: 'addressData',
       render: <AddressInput />,
 
-      rules: [{ required: true, message: '请填写医院地址!' }],
+      rules: [{ required: true, message: '请输入医院地址!' }],
     },
     {
       key: 'firstLine',
@@ -31,12 +31,12 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
       label: '联系电话',
       name: 'phone',
       type: 'input',
-      rules: [{ required: true, message: '请填写联系电话!' }, { validator: checkPhone }],
+      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkPhone }],
     },
     {
       label: '医院网址',
       name: 'url',
-      rules: [{ required: true, message: '请填写医院网址!' }, { validator: checkUrl }],
+      rules: [{ required: true, message: '请输入医院网址!' }, { validator: checkUrl }],
     },
     {
       label: '简介',
