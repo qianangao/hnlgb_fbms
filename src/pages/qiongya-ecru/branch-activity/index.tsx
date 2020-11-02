@@ -8,14 +8,17 @@ import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 import MembersModifyModal from './components/MembersModifyModal';
+import CommentModal from './components/CommentModal';
 
 const BranchActivity = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   const membersModifyModelRef = useRef({});
+  const commentModalRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
   const [tableType, setTableType] = useState('8adcf7f96b54cab9016b54ceb77c');
+
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -69,9 +72,9 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       label: '其他',
     },
   ];
+
   const onTabChange = id => {
     setTableType(id);
-    tableRef.current.reload();
   };
   const openAddModal = item => {
     addModelRef.current.showModal(item);
@@ -91,6 +94,9 @@ const BranchActivity = ({ dispatch, tableRef }) => {
   const openMembersModifyModal = item => {
     membersModifyModelRef.current.showModal(item);
   };
+  const openCommentModal = ids => {
+    commentModalRef.current.showModal(ids);
+  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
@@ -104,6 +110,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
           openMembersModifyModal={openMembersModifyModal}
+          openCommentModal={openCommentModal}
           publishState={publishStatus}
           tableType={tableType}
         />
@@ -111,6 +118,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
+      <CommentModal actionRef={commentModalRef} />
       <MembersModifyModal actionRef={membersModifyModelRef} />
     </OrgTreeLayout>
   );

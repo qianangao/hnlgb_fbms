@@ -13,7 +13,7 @@ const StudyRecordForm = ({ form, id, dispatch, loading }) => {
       label: '学习时间',
       name: 'time',
       type: 'date',
-      rules: [{ required: true, message: '请输入学习时间!', whitespace: true }],
+      rules: [{ required: true, message: '请选择学习时间!', whitespace: true }],
     },
     {
       label: '主持人',
@@ -24,7 +24,7 @@ const StudyRecordForm = ({ form, id, dispatch, loading }) => {
       label: '学习形式',
       name: 'dictForm',
       enumsLabel: 'dictPartyType',
-      rules: [{ required: true, message: '请输入学习形式!', whitespace: true }],
+      rules: [{ required: true, message: '请选择学习形式!', whitespace: true }],
     },
     {
       key: 'firstLine',

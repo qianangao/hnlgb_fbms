@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import { Descriptions } from 'antd';
+import moment from 'moment';
 
 const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
   const { context } = detailBranchActivityData;
@@ -21,23 +22,24 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         </Descriptions.Item>
         <Descriptions.Item label="支持人">{detailBranchActivityData.host}</Descriptions.Item>
         <Descriptions.Item label="活动日期">
-          {detailBranchActivityData.activityDate}
+          {detailBranchActivityData.activityDate &&
+            moment(detailBranchActivityData.activityDate).format('YYYY-MM-DD')}
         </Descriptions.Item>
         <Descriptions.Item label="活动地点">
           {detailBranchActivityData.activityAdd}
         </Descriptions.Item>
         <Descriptions.Item label="支部名称">{detailBranchActivityData.partyName}</Descriptions.Item>
         <Descriptions.Item label="缩略图">
-          {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (
-            <a href={detailBranchActivityData.picAttachmentInfo.url}>
-              {detailBranchActivityData.picAttachmentInfo.name}
+          {detailBranchActivityData && detailBranchActivityData.attachmentInfo && (
+            <a href={detailBranchActivityData.attachmentInfo.url}>
+              {detailBranchActivityData.attachmentInfo.fileName}
             </a>
           )}
         </Descriptions.Item>
         <Descriptions.Item label="附件" span={22}>
-          {detailBranchActivityData && detailBranchActivityData.attachmentInfo && (
-            <a href={detailBranchActivityData.attachmentInfo.url}>
-              {detailBranchActivityData.attachmentInfo.name}
+          {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (
+            <a href={detailBranchActivityData.picAttachmentInfo.url}>
+              {detailBranchActivityData.picAttachmentInfo.fileName}
             </a>
           )}
         </Descriptions.Item>

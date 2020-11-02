@@ -135,7 +135,7 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '慰问时间',
+      title: tableType === '日常走访' ? '走访时间' : '慰问时间',
       valueType: 'dateRange',
       align: 'center',
       dataIndex: 'searchTime',

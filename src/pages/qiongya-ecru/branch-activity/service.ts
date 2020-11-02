@@ -75,3 +75,36 @@ export async function addBranchActivityUser(params) {
     data: params,
   });
 }
+
+/**
+ * 评论-列表
+ * @param {*} params
+ */
+export async function getCommentList(params) {
+  return request(`/orglife_comment`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 删除-评论
+ * @param {*} params
+ */
+export async function deleteComment(params) {
+  return request(`/orglife_comment`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
+ * 审核-评论
+ * @param {*} params
+ */
+export async function commentAudit(params) {
+  return request(`/orglife_comment/examine`, {
+    method: 'POST',
+    data: params,
+  });
+}
