@@ -61,7 +61,7 @@ export async function updateHospitalRegistrationInfo(params) {
  */
 export async function approvalHospitalRegistrationInfo(params) {
   return request(`/hospital_register/audit/${params.id}/${params.status}`, {
-    method: 'GET',
+    method: 'PUT',
     data: params,
   });
 }

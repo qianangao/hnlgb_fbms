@@ -103,12 +103,6 @@ const Table = ({ openAddModal, openModifyModal, outRegister, enums, dispatch }) 
       hideInSearch: true,
     },
     {
-      title: '单位id',
-      align: 'center',
-      dataIndex: 'organizationId',
-      hideInSearch: true,
-    },
-    {
       title: '操作',
       valueType: 'option',
       align: 'center',
