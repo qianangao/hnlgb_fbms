@@ -23,7 +23,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
-    form.resetFields();
   };
 
   const handleOk = () => {

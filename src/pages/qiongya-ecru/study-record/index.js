@@ -23,6 +23,7 @@ const StudyRecord = ({ dispatch }) => {
           'dictTreatmentNow',
           'dictPartyType',
           'dictPartyCategory',
+          'dictForm',
         ],
       },
     });

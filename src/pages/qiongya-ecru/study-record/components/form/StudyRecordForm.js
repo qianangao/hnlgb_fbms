@@ -23,7 +23,7 @@ const StudyRecordForm = ({ form, id, dispatch, loading }) => {
     {
       label: '学习形式',
       name: 'dictForm',
-      enumsLabel: 'dictPartyType',
+      enumsLabel: 'dictForm',
       rules: [{ required: true, message: '请选择学习形式!', whitespace: true }],
     },
     {
