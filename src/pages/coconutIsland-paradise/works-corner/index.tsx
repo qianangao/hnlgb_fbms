@@ -14,7 +14,7 @@ const WorksCornerInfo = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: ['dictWorkCornerType'],
+        names: ['dictWorkCornerType', 'dictSex'],
       },
     });
   }, []);

@@ -5,12 +5,16 @@ import {
   updateLifeServiceInfo,
   lifeServiceInfoList,
   detailLifeServiceInfo,
+  getCommentList,
+  commentAudit,
+  deleteComment,
 } from './service';
 
 const Model = {
   namespace: 'lifeService',
   state: {
     lifeServiceInfoListData: {},
+    CommentListData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailLifeServiceData: {},
@@ -45,6 +49,48 @@ const Model = {
           payload: {
             lifeServiceInfoListData: result,
           },
+        });
+      }
+    },
+    // 评论-列表
+    *getCommentList({ payload, resolve }, { call, put }) {
+      const response = yield call(getCommentList, payload);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            CommentListData: result,
+          },
+        });
+      }
+    },
+    *commentAudit({ payload }, { call, put }) {
+      const response = yield call(commentAudit, payload);
+
+      if (!response.error) {
+        message.success('评论审核成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *deleteComment({ payload }, { call, put }) {
+      const response = yield call(deleteComment, payload);
+
+      if (!response.error) {
+        message.success('评论删除成功！');
+        yield put({
+          type: 'tableReload',
         });
       }
     },

@@ -58,6 +58,17 @@ const Table = ({
       hideInSearch: true,
     },
     {
+      title: '审核状态',
+      align: 'center',
+      dataIndex: 'approveStatus',
+      valueEnum: {
+        0: { text: '待审核' },
+        1: { text: '审核通过' },
+        2: { text: '审核不通过' },
+      },
+      hideInTable: true,
+    },
+    {
       title: '操作',
       valueType: 'option',
       align: 'center',
@@ -65,25 +76,15 @@ const Table = ({
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        publishStatus === 0 ? (
-          <a
-            key={`${employeeData.id}up`}
-            onClick={() => {
-              openModifyModal(employeeData);
-            }}
-          >
-            编辑
-          </a>
-        ) : (
-          <a
-            key={`${employeeData.id}up`}
-            onClick={() => {
-              openDetailModal(employeeData);
-            }}
-          >
-            详情
-          </a>
-        ),
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openDetailModal(employeeData);
+          }}
+        >
+          详情
+        </a>,
+
         <Popconfirm
           key={`${employeeData.id}app`}
           title="确认审批该作品吗？"
@@ -97,8 +98,17 @@ const Table = ({
             approval(employeeData.id, 2);
           }}
         >
-          <a>审批</a>
+          <a>审批作品</a>
         </Popconfirm>,
+
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openModifyModal(employeeData);
+          }}
+        >
+          审核评论
+        </a>,
       ],
     },
   ];
