@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
-import DetailFormPage from '@/components/DetailFormPage';
+import DetailCornerForm from '@/components/DetailCornerForm';
 
 const DetailForm = ({ id, dispatch, detailWorksCornerData }) => {
   useEffect(() => {
@@ -13,10 +13,10 @@ const DetailForm = ({ id, dispatch, detailWorksCornerData }) => {
   }, [id]);
 
   return (
-    <DetailFormPage
+    <DetailCornerForm
       title={detailWorksCornerData.headline}
       releaseTime={detailWorksCornerData.releaseTime}
-      orgName={detailWorksCornerData.createOrgName}
+      userName={detailWorksCornerData.createUserName}
       content={detailWorksCornerData.context}
       extraFile={detailWorksCornerData.attachmentInfo}
     />

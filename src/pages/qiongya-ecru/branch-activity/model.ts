@@ -10,6 +10,8 @@ import {
   getCommentList,
   deleteComment,
   commentAudit,
+  getStatisticsList,
+  getOrgLifeStatisticsVo,
 } from './service';
 
 const Model = {
@@ -21,6 +23,10 @@ const Model = {
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
     CommentListData: {},
+    statisticsData: {},
+    getOrgLifeStatisticsVoData: {},
+    totalNumber: '',
+    totalNum: '',
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -186,6 +192,48 @@ const Model = {
         message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
         yield put({
           type: 'tableReload',
+        });
+      }
+    },
+
+    // 按年统计-列表
+    *getOrgLifeByMonth({ payload, resolve }, { call, put }) {
+      const response = yield call(getStatisticsList, payload);
+      if (!response.error) {
+        const { orgLifeMonthList, totalNumber } = response;
+        const result = {
+          data: orgLifeMonthList,
+          success: true,
+        };
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            statisticsData: result,
+            totalNumber,
+          },
+        });
+      }
+    },
+
+    // 按类型统计-列表
+    *getOrgLifeStatisticsVo({ payload, resolve }, { call, put }) {
+      const response = yield call(getOrgLifeStatisticsVo, payload);
+      if (!response.error) {
+        const { orgLifeStatisticsVoList, totalNumber } = response;
+        const result = {
+          data: orgLifeStatisticsVoList,
+          success: true,
+        };
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            getOrgLifeStatisticsVoData: result,
+            totalNum: totalNumber,
+          },
         });
       }
     },
