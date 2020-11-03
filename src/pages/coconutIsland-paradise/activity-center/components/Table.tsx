@@ -46,7 +46,7 @@ const Table = ({
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 180,
+      width: 240,
       fixed: 'right',
       render: (dom, data) => [
         publishStatus === 0 && (
