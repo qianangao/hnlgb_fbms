@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 import { Progress } from 'antd';
 
-const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
-  const { tableRef } = wrVisitsCondolences;
+const StatisticsTable = ({ branchActivity, enums, dispatch, totalNumber, totalNum }) => {
+  const { tableRef } = branchActivity;
   const [orgLife, setOrgLife] = useState(false);
   const columnsMonth = [
     {
@@ -39,6 +39,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
       dataIndex: 'year',
       hideInSearch: true,
       width: 100,
+      render: text => <span>{`${text}年`}</span>,
     },
     {
       title: '月份',
@@ -46,6 +47,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
       dataIndex: 'month',
       hideInSearch: true,
       width: 100,
+      render: text => <span>{`${text}月`}</span>,
     },
     {
       title: `活动次数`,
@@ -61,7 +63,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
       hideInSearch: true,
       width: 200,
       render: (text, record) => {
-        let remark = (record.num / record.totalNum) * 100;
+        let remark = (record.num / totalNumber) * 100;
         remark = Math.round(remark * 100) / 100;
         return <Progress percent={remark} status="active" />;
       },
@@ -72,7 +74,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
       title: '序号',
       dataIndex: 'index',
       valueType: 'index',
-      align: 'right',
+      align: 'center',
       fixed: 'left',
       width: 64,
     },
@@ -115,15 +117,12 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
       hideInSearch: true,
       width: 300,
       render: (text, record) => {
-        let remark = (record.total / record.totalNum) * 100;
+        let remark = (record.total / totalNum) * 100;
         remark = Math.round(remark * 100) / 100;
         return <Progress percent={remark} status="active" />;
       },
     },
   ];
-  useEffect(() => {
-    tableRef.current && tableRef.current.reloadAndRest();
-  }, [tableType]);
 
   // 列表
   const getVisitList = params => {
@@ -143,6 +142,7 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
   return (
     <ProTable
       rowKey="id"
+      headerTitle={`活动总数:${orgLife ? totalNum : totalNumber}`}
       actionRef={tableRef}
       scroll={{ x: 'max-content' }}
       pagination={false}
@@ -152,8 +152,9 @@ const Table = ({ wrVisitsCondolences, enums, dispatch, tableType }) => {
   );
 };
 
-export default connect(({ wrVisitsCondolences, global }) => ({
-  wrVisitsCondolences,
-  totalNumber: wrVisitsCondolences.totalNumber,
+export default connect(({ branchActivity, global }) => ({
+  branchActivity,
+  totalNumber: branchActivity.totalNumber,
+  totalNum: branchActivity.totalNum,
   enums: global.enums,
-}))(Table);
+}))(StatisticsTable);

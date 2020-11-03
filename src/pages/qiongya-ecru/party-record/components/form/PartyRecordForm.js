@@ -3,7 +3,7 @@ import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
-import { Select, InputNumber, Option } from 'antd';
+import { Select } from 'antd';
 
 const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
   const [partyId, setPartyId] = useState('');
@@ -38,8 +38,8 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       rules: [{ required: true, message: '请选择缴纳状态!' }],
       render: (
         <Select>
-          <Option value={0}>未缴纳</Option>
-          <Option value={1}>已缴纳</Option>
+          <Select.Option value={0}>未缴纳</Select.Option>
+          <Select.Option value={1}>已缴纳</Select.Option>
         </Select>
       ),
     },
@@ -47,7 +47,11 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       label: '缴费金额',
       name: 'paymentAmount',
       rules: [{ required: true, message: '请输入缴费金额!' }],
-      render: <InputNumber min={0} />,
+      type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000000000,
+      },
     },
     {
       key: 'firstLine',

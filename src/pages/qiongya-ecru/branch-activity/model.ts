@@ -23,8 +23,10 @@ const Model = {
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
     CommentListData: {},
-    StatisticsData: {},
+    statisticsData: {},
     getOrgLifeStatisticsVoData: {},
+    totalNumber: '',
+    totalNum: '',
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -197,17 +199,19 @@ const Model = {
     // 按年统计-列表
     *getOrgLifeByMonth({ payload, resolve }, { call, put }) {
       const response = yield call(getStatisticsList, payload);
-
-      const result = {
-        data: response,
-        success: true,
-      };
       if (!response.error) {
+        const { orgLifeMonthList, totalNumber } = response;
+        const result = {
+          data: orgLifeMonthList,
+          success: true,
+        };
         resolve && resolve(result);
+
         yield put({
           type: 'save',
           payload: {
-            StatisticsData: response,
+            statisticsData: result,
+            totalNumber,
           },
         });
       }
@@ -216,17 +220,19 @@ const Model = {
     // 按类型统计-列表
     *getOrgLifeStatisticsVo({ payload, resolve }, { call, put }) {
       const response = yield call(getOrgLifeStatisticsVo, payload);
-
-      const result = {
-        data: response,
-        success: true,
-      };
       if (!response.error) {
+        const { orgLifeStatisticsVoList, totalNumber } = response;
+        const result = {
+          data: orgLifeStatisticsVoList,
+          success: true,
+        };
         resolve && resolve(result);
+
         yield put({
           type: 'save',
           payload: {
-            getOrgLifeStatisticsVoData: response,
+            getOrgLifeStatisticsVoData: result,
+            totalNum: totalNumber,
           },
         });
       }
