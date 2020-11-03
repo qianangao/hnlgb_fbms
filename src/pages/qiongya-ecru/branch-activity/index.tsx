@@ -9,6 +9,7 @@ import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
 import MembersModifyModal from './components/MembersModifyModal';
 import CommentModal from './components/CommentModal';
+import StatisticsTable from './components/StatisticsTable';
 
 const BranchActivity = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
@@ -71,6 +72,10 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       id: '8adcf7f96b54cab9016b54cfe195',
       label: '其他',
     },
+    {
+      id: '1',
+      label: '统计查询',
+    },
   ];
 
   const onTabChange = id => {
@@ -97,23 +102,31 @@ const BranchActivity = ({ dispatch, tableRef }) => {
   const openCommentModal = ids => {
     commentModalRef.current.showModal(ids);
   };
-
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout
         tabs={tabs}
         onTabChange={onTabChange}
         onPublishStatusChange={onPublishStatusChange}
+        hidePublish={tableType === '1'}
       >
-        <Table
-          openAddModal={openAddModal}
-          openModifyModal={openModifyModal}
-          opendetailModal={opendetailModal}
-          openMembersModifyModal={openMembersModifyModal}
-          openCommentModal={openCommentModal}
-          publishState={publishStatus}
-          tableType={tableType}
-        />
+        {tableType === '1' ? (
+          <StatisticsTable
+            tableType={tableType}
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+          />
+        ) : (
+          <Table
+            openAddModal={openAddModal}
+            openModifyModal={openModifyModal}
+            opendetailModal={opendetailModal}
+            openMembersModifyModal={openMembersModifyModal}
+            openCommentModal={openCommentModal}
+            publishState={publishStatus}
+            tableType={tableType}
+          />
+        )}
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />

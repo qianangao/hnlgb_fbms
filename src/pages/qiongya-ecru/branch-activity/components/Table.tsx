@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
@@ -116,6 +116,10 @@ const Table = ({
       ],
     },
   ];
+
+  useEffect(() => {
+    tableRef.current && tableRef.current.reloadAndRest();
+  }, [tableType]);
 
   // 列表
   const branchActivityList = params =>

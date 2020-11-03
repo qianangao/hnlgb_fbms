@@ -3,11 +3,11 @@ import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
+import { Select } from 'antd';
 
 const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
   const [partyId, setPartyId] = useState('');
   const [detailPartyRecordData, setDetailPartyRecordData] = useState('');
-  const paymentStateData = { 0: '未缴纳', 1: '已缴纳' };
   // 获取-当前支部人员列表
   const getPoliticalStatusLgbs = getMemberParams =>
     new Promise(resolve => {
@@ -27,22 +27,31 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       disabled: !!id,
     },
     {
-      label: '缴纳年月',
+      label: '缴纳日期',
       name: 'paymentTime',
       type: 'date',
-      rules: [{ required: true, message: '请输入学习时间!', whitespace: true }],
+      rules: [{ required: true, message: '请选择缴纳时间!', whitespace: true }],
     },
     {
       label: '缴纳状态',
       name: 'paymentState',
       rules: [{ required: true, message: '请选择缴纳状态!' }],
-      enumsItems: paymentStateData,
+      render: (
+        <Select>
+          <Select.Option value={0}>未缴纳</Select.Option>
+          <Select.Option value={1}>已缴纳</Select.Option>
+        </Select>
+      ),
     },
     {
       label: '缴费金额',
       name: 'paymentAmount',
-      type: 'number',
       rules: [{ required: true, message: '请输入缴费金额!' }],
+      type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000000000,
+      },
     },
     {
       key: 'firstLine',
