@@ -69,4 +69,17 @@ export default {
       },
     ],
   },
+  VerificationCode: {
+    props: {
+      size: 'large',
+      prefix: <MailTwoTone className={styles.prefixIcon} />,
+      placeholder: 'verificationCode',
+    },
+    rules: [
+      {
+        required: true,
+        message: 'Please enter VerificationCode!',
+      },
+    ],
+  },
 };

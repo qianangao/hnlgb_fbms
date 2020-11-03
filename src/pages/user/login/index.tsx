@@ -7,7 +7,7 @@ import LoginForm from './components/Login';
 
 import styles from './style.less';
 
-const { Tab, UserName, Password, Submit } = LoginForm;
+const { Tab, UserName, Password, VerificationCode, Submit } = LoginForm;
 
 const LoginMessage = ({ content }) => (
   <Alert
@@ -45,6 +45,7 @@ const Login = props => {
       payload: {
         username: values.username ? encrypt(values.username) : '',
         password: values.password ? md.md5(values.password) : '',
+        verifyCode: values.verifyCode,
       },
     });
   };
@@ -73,6 +74,16 @@ const Login = props => {
               {
                 required: true,
                 message: '请输入密码！',
+              },
+            ]}
+          />
+          <VerificationCode
+            name="verifyCode"
+            placeholder="请输入验证码"
+            rules={[
+              {
+                required: true,
+                message: '请输入验证码！',
               },
             ]}
           />
