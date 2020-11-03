@@ -12,6 +12,37 @@ export async function worksCornerInfoList(params) {
 }
 
 /**
+ * 评论-列表
+ * @param {*} params
+ */
+export async function getCommentList(params) {
+  return request(`/work_corner_comment`, {
+    method: 'GET',
+    params,
+  });
+}
+/**
+ * 审核-评论
+ * @param {*} params
+ */
+export async function commentAudit(params) {
+  return request(`/work_corner_comment/examine`, {
+    method: 'POST',
+    data: params,
+  });
+}
+/**
+ * 删除-评论
+ * @param {*} params
+ */
+export async function deleteComment(params) {
+  return request(`/work_corner_comment`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+
+/**
  * 审核-作品
  * @param {*} params
  */

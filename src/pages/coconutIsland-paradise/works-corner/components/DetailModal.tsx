@@ -34,8 +34,8 @@ const DetailModal = ({ loading, actionRef }) => {
         overflow: 'auto',
       }}
       visible={detailModalVisible}
+      destroyOnClose
       footer={null}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >

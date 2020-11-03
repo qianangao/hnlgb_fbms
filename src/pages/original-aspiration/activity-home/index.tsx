@@ -4,6 +4,7 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import AddModal from './components/AddModal';
+import CommentModal from './components/CommentModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
@@ -11,13 +12,14 @@ import DetailModal from './components/DetailModal';
 const ActivityHome = ({ dispatch }) => {
   const [publishStatus, setPublishStatus] = useState(1);
   const addModelRef = useRef({});
+  const commentModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: ['dictActivityClassification'],
+        names: ['dictActivityClassification', 'dictSex'],
       },
     });
   }, []);
@@ -30,6 +32,9 @@ const ActivityHome = ({ dispatch }) => {
   };
   const openAddModal = item => {
     addModelRef.current.showModal(item);
+  };
+  const openCommentModal = item => {
+    commentModelRef.current.showModal(item);
   };
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
@@ -47,6 +52,7 @@ const ActivityHome = ({ dispatch }) => {
       <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
         <Table
           publishStatus={publishStatus}
+          openCommentModal={openCommentModal}
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
           opendetailModal={opendetailModal}
@@ -55,6 +61,7 @@ const ActivityHome = ({ dispatch }) => {
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
+      <CommentModal actionRef={commentModelRef} />
     </OrgTreeLayout>
   );
 };
