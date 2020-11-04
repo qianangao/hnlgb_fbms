@@ -1,6 +1,6 @@
+import { Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
 import CommentTable from './CommentTable';
 
 const CommentModal = ({ actionRef }) => {

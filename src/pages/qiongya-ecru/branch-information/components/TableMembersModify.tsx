@@ -1,7 +1,7 @@
+import { message } from 'antd';
 import React from 'react';
 import { connect } from 'umi';
 import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
-import { message } from 'antd';
 
 const TableCommunityMember = ({ dispatch, id }) => {
   // 获取支部成员

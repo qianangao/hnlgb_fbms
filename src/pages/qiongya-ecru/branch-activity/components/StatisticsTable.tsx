@@ -1,7 +1,7 @@
+import { Progress } from 'antd';
 import React, { useState } from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
-import { Progress } from 'antd';
 
 const StatisticsTable = ({ branchActivity, enums, dispatch, totalNumber, totalNum }) => {
   const { tableRef } = branchActivity;
