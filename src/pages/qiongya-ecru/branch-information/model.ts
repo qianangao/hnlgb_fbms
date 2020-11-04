@@ -142,6 +142,7 @@ const Model = {
         message.success('支部成员新增成功！');
       }
     },
+
     *deletePartyUser({ payload, resolve }, { call }) {
       const response = yield call(deletePartyUser, payload);
       if (!response.error) {

@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import ActivityUserTable from './ActivityUserTable';
 
-const CommunityModifyModal = ({ actionRef }) => {
+const MembersModifyModal = ({ actionRef }) => {
   const [partyId, setPartyId] = useState('');
   const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
@@ -22,6 +22,7 @@ const CommunityModifyModal = ({ actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setPartyId('');
     setMemberModifyModalVisible(false);
   };
 
@@ -47,4 +48,4 @@ const CommunityModifyModal = ({ actionRef }) => {
 
 export default connect(({ loading }) => ({
   loading: loading.models.studyRecord,
-}))(CommunityModifyModal);
+}))(MembersModifyModal);

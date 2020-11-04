@@ -22,6 +22,7 @@ const CommentModal = ({ actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setActivityId('');
     setMemberModifyModalVisible(false);
   };
 
