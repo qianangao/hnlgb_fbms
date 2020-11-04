@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
-import { Form, Descriptions } from 'antd';
+import { Radio, Form, Descriptions } from 'antd';
 import { connect } from 'umi';
 import LgbSelectInput from '@/components/LgbSelectInput';
-import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 
 const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
   useEffect(() => {
@@ -39,10 +38,15 @@ const DifferentLivingPlacesFrom = ({ form, id, dispatch, loading }) => {
   );
   const formItems = [
     {
-      label: '异地居住地址',
-      name: 'address',
-      rules: [{ required: true, message: '请选择异地居住地址!' }],
-      render: <ProvinceCascaderInput />,
+      label: '省内/省外居住',
+      name: 'isProvince',
+      rules: [{ required: true, message: '请选择省内/省外居住!' }],
+      render: (
+        <Radio.Group>
+          <Radio.Button value={0}>省内</Radio.Button>
+          <Radio.Button value={1}>省外</Radio.Button>
+        </Radio.Group>
+      ),
     },
     {
       label: '异地居住详细地址',
