@@ -30,8 +30,6 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
-        values.addressCode = values.address.value;
-        values.address = values.address.label;
         return new Promise(resolve => {
           dispatch({
             type: `differentLivingPlaces/addDifferentLivingInfo`,

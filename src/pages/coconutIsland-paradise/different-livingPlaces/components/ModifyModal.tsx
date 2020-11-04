@@ -32,8 +32,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
-        values.addressCode = values.address.value;
-        values.address = values.address.label;
         return new Promise(resolve => {
           dispatch({
             type: `differentLivingPlaces/updateDifferentLivingInfo`,
