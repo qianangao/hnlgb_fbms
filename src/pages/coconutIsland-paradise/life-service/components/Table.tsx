@@ -9,6 +9,7 @@ const Table = ({
   lifeService,
   dispatch,
   openDetailModal,
+  openCommentModal,
   enums,
   publishStatus,
 }) => {
@@ -48,31 +49,41 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, data) => [
         publishStatus === 0 ? (
           <a
-            key={`${employeeData.id}up`}
+            key={`${data.id}up`}
             onClick={() => {
-              openModifyModal(employeeData);
+              openModifyModal(data);
             }}
           >
             编辑
           </a>
         ) : (
           <a
-            key={`${employeeData.id}up`}
+            key={`${data.id}up`}
             onClick={() => {
-              openDetailModal(employeeData);
+              openDetailModal(data);
             }}
           >
             详情
           </a>
         ),
+        publishStatus === 1 && (
+          <a
+            key={`${data.id}up`}
+            onClick={() => {
+              openCommentModal(data.id);
+            }}
+          >
+            审核评论
+          </a>
+        ),
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${data.id}del`}
           title="确认删除该生活服务吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={() => deleteReturnworkPerson([data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

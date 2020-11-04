@@ -34,6 +34,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    setLgbId('');
     changeCurrent(0);
   };
   const steps = [

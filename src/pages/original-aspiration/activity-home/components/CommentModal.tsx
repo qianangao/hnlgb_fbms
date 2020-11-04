@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import WorksCornerForm from './form/WorksCornerForm';
 import CommentTable from './CommentTable';
 
-const ModifyModal = ({ actionRef }) => {
-  const [form] = WorksCornerForm.useForm();
-  const [modifyModalVisible, setModifyModalVisible] = useState(false);
-  const [infoId, setInfoId] = useState();
+const CommentModal = ({ actionRef }) => {
+  const [activityId, setActivityId] = useState();
+  const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
-  const showModal = item => {
-    setInfoId(item.id);
-    setModifyModalVisible(true);
+  const showModal = id => {
+    setActivityId(id);
+    setMemberModifyModalVisible(true);
   };
 
   useEffect(() => {
     if (actionRef && typeof actionRef === 'function') {
       actionRef({ showModal });
     }
-
     if (actionRef && typeof actionRef !== 'function') {
       actionRef.current = { showModal };
     }
   }, []);
 
   const hideModal = () => {
-    setModifyModalVisible(false);
+    setMemberModifyModalVisible(false);
   };
 
   return (
@@ -35,20 +32,19 @@ const ModifyModal = ({ actionRef }) => {
       width="95vw"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
-        height: 'calc(95vh - 108px)',
-        overflow: 'auto',
+        height: 'calc(95vh - 58px)',
+        overflowX: 'hidden',
       }}
-      visible={modifyModalVisible}
-      footer={[]}
-      maskClosable={false}
+      visible={memberModifyModalVisible}
       destroyOnClose
       onCancel={hideModal}
+      footer={[]}
     >
-      <CommentTable form={form} id={infoId} />
+      <CommentTable id={activityId} />
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
-  loading: loading.models.worksCorner,
-}))(ModifyModal);
+  loading: loading.models.studyRecord,
+}))(CommentModal);

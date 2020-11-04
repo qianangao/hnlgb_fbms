@@ -10,6 +10,7 @@ const Table = ({
   enums,
   dispatch,
   opendetailModal,
+  openCommentModal,
   publishStatus,
 }) => {
   const { tableRef } = oaActivityHome;
@@ -56,31 +57,41 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, Data) => [
+      render: (dom, data) => [
         publishStatus === 0 ? (
           <a
-            key={`${Data.id}up`}
+            key={`${data.id}up`}
             onClick={() => {
-              openModifyModal(Data);
+              openModifyModal(data);
             }}
           >
             编辑
           </a>
         ) : (
           <a
-            key={`${Data.id}detail`}
+            key={`${data.id}detail`}
             onClick={() => {
-              opendetailModal(Data);
+              opendetailModal(data);
             }}
           >
             详情
           </a>
         ),
+        publishStatus === 1 && (
+          <a
+            key={`${data.id}up`}
+            onClick={() => {
+              openCommentModal(data.id);
+            }}
+          >
+            审核评论
+          </a>
+        ),
         <Popconfirm
-          key={`${Data.id}del`}
+          key={`${data.id}del`}
           title="确认删除该活动信息？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([Data.id])}
+          onConfirm={() => deleteReturnworkPerson([data.id])}
         >
           <a>删除</a>
         </Popconfirm>,

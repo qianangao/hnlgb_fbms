@@ -4,11 +4,13 @@ import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import TypeSelectLayout from '@/layouts/TypeSelectLayout';
 import ModifyModal from './components/ModifyModal';
 import AddModal from './components/AddModal';
+import CommentModal from './components/CommentModal';
 import Table from './components/Table';
 import DetailModal from './components/DetailModal';
 
 const LifeServiceInfo = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
+  const addCommentModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
@@ -30,6 +32,9 @@ const LifeServiceInfo = ({ dispatch, tableRef }) => {
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
+  const openCommentModal = item => {
+    addCommentModelRef.current.showModal(item);
+  };
   const openModifyModal = item => {
     modifyModelRef.current.showModal(item);
   };
@@ -47,6 +52,7 @@ const LifeServiceInfo = ({ dispatch, tableRef }) => {
       <TypeSelectLayout onPublishStatusChange={onPublishStatusChange}>
         <Table
           openAddModal={openAddModal}
+          openCommentModal={openCommentModal}
           openModifyModal={openModifyModal}
           openDetailModal={openDetailModal}
           publishStatus={publishStatus}
@@ -55,6 +61,7 @@ const LifeServiceInfo = ({ dispatch, tableRef }) => {
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
+      <CommentModal actionRef={addCommentModelRef} />
     </OrgTreeLayout>
   );
 };
