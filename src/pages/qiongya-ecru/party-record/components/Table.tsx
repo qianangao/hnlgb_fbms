@@ -98,6 +98,7 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
       type: 'partyRecord/exportPartyRecord',
       payload: {
         ids,
+        excelName: '支部活动信息表.xls',
       },
     });
   };

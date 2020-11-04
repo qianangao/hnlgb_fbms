@@ -36,14 +36,18 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
             </a>
           )}
         </Descriptions.Item>
-        <Descriptions.Item label="附件" span={22}>
+      </Descriptions>
+      <Descriptions size="middle">
+        <Descriptions.Item label="附件">
           {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (
             <a href={detailBranchActivityData.picAttachmentInfo.url}>
               {detailBranchActivityData.picAttachmentInfo.fileName}
             </a>
           )}
         </Descriptions.Item>
-        <Descriptions.Item label="活动简介" span={22}>
+      </Descriptions>
+      <Descriptions size="middle">
+        <Descriptions.Item label="活动简介">
           <div
             dangerouslySetInnerHTML={{
               __html: context,

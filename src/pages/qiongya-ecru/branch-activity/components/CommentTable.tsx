@@ -56,10 +56,10 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
       title: '审核状态',
       align: 'center',
       dataIndex: 'commentStatus',
-      initialValue: 'all',
+      width: 100,
       filters: true,
+      fixed: 'right',
       valueEnum: {
-        all: { text: '全部', status: 'Default' },
         2: {
           text: '审核不通过',
           status: 'Error',
@@ -73,7 +73,6 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
           status: 'Processing',
         },
       },
-      hideInSearch: true,
     },
     {
       title: '操作',
@@ -85,7 +84,7 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
       render: (dom, employeeData) => [
         <Popconfirm
           key={`${employeeData.id}app`}
-          title="确认审批该评论信息吗？"
+          title="确认审该评论信息吗？"
           placement="topRight"
           okText="通过"
           cancelText="不通过"
@@ -96,7 +95,7 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
             commentAudit(employeeData.id, 2);
           }}
         >
-          <a>审批</a>
+          <a>审核</a>
         </Popconfirm>,
         <Popconfirm
           key={`${employeeData.id}del`}

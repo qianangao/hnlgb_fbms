@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'umi';
 import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
+import { message } from 'antd';
 
 const TableCommunityMember = ({ dispatch, id }) => {
   // 获取支部成员
@@ -12,13 +13,17 @@ const TableCommunityMember = ({ dispatch, id }) => {
         resolve,
       });
     });
-  const addMemberLgb = parme =>
+  const addMemberLgb = params =>
     new Promise(resolve => {
-      dispatch({
-        type: 'branchInformation/addPartyUser',
-        payload: { ...parme, partyId: id },
-        resolve,
-      });
+      if (params.userIds.length === 0) {
+        message.error('请选择人员');
+      } else {
+        dispatch({
+          type: 'branchInformation/addPartyUser',
+          payload: { ...params, partyId: id },
+          resolve,
+        });
+      }
     });
   const deleteMemberLgb = deleteMemberParam =>
     new Promise(resolve => {

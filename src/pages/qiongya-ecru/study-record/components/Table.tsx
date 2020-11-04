@@ -42,6 +42,7 @@ const Table = ({
       title: '学习人数',
       align: 'center',
       dataIndex: 'number',
+      hideInSearch: true,
     },
     {
       title: '学习形式',
