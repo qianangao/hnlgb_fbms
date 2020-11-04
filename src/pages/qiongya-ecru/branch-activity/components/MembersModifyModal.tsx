@@ -22,6 +22,7 @@ const CommunityModifyModal = ({ actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setPartyId('');
     setMemberModifyModalVisible(false);
   };
 

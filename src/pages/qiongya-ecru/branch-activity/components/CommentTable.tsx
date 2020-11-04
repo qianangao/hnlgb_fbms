@@ -56,10 +56,10 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
       title: '审核状态',
       align: 'center',
       dataIndex: 'commentStatus',
-      initialValue: 'all',
+      width: 100,
       filters: true,
+      fixed: 'right',
       valueEnum: {
-        all: { text: '全部', status: 'Default' },
         2: {
           text: '审核不通过',
           status: 'Error',
@@ -73,7 +73,6 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
           status: 'Processing',
         },
       },
-      hideInSearch: true,
     },
     {
       title: '操作',
