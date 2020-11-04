@@ -79,7 +79,7 @@ const Table = ({
         ),
         publishStatus === 1 && (
           <a
-            key={`${data.id}up`}
+            key={`${data.id}audit`}
             onClick={() => {
               openCommentModal(data.id);
             }}

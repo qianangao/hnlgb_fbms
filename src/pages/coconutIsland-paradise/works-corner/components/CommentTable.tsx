@@ -57,6 +57,7 @@ const CommentTable = ({ worksCorner, dispatch, id, enums }) => {
       align: 'center',
       dataIndex: 'commentStatus',
       filters: true,
+      fixed: 'right',
       valueEnum: {
         2: {
           text: '审核不通过',

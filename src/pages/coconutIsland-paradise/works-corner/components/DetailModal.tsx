@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DetailForm from './form/WorksCornerDetailForm';
 
-const DetailModal = ({ loading, actionRef }) => {
+const DetailModal = ({ loading, actionRef, dispatch }) => {
   const [DetailId, setDetailId] = useState('');
   const [detailModalVisible, setDetailModalVisible] = useState(false);
   const showModal = item => {
@@ -21,6 +21,12 @@ const DetailModal = ({ loading, actionRef }) => {
   }, []);
   const hideModal = () => {
     setDetailModalVisible(false);
+    dispatch({
+      type: 'worksCorner/save',
+      payload: {
+        detailWorksCornerData: {},
+      },
+    });
   };
 
   return (
