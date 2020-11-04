@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Popconfirm, Modal } from 'antd';
+import { Button, Popconfirm, Modal, Badge } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
@@ -74,41 +74,44 @@ const Table = ({
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 180,
+      width: 220,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, data) => [
         <a
-          key={`${employeeData.id}up`}
+          key={`${data.id}up`}
           onClick={() => {
-            openDetailModal(employeeData);
+            openDetailModal(data);
           }}
         >
           详情
         </a>,
 
         <Popconfirm
-          key={`${employeeData.id}app`}
+          key={`${data.id}app`}
           title="确认审批该作品吗？"
           placement="topRight"
           okText="通过"
           cancelText="驳回"
           onConfirm={() => {
-            approval(employeeData.id, 1);
+            approval(data.id, 1);
           }}
           onCancel={() => {
-            approval(employeeData.id, 2);
+            approval(data.id, 2);
           }}
         >
           <a>审批作品</a>
         </Popconfirm>,
 
         <a
-          key={`${employeeData.id}audit`}
+          key={`${data.id}audit`}
+          style={{ marginRight: 10 }}
           onClick={() => {
-            openModifyModal(employeeData);
+            openModifyModal(data);
           }}
         >
-          审核评论
+          <Badge count={data.commentNum} offset={[10, 0]}>
+            审核评论
+          </Badge>
         </a>,
       ],
     },

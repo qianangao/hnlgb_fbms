@@ -40,6 +40,20 @@ const Table = ({ openAddModal, openModifyModal, differentLivingPlaces, enums, di
       hideInSearch: true,
     },
     {
+      title: '省内/省外居住',
+      align: 'center',
+      dataIndex: 'isProvince',
+      hideInSearch: true,
+      valueEnum: {
+        0: {
+          text: '省内',
+        },
+        1: {
+          text: '省外',
+        },
+      },
+    },
+    {
       title: '详细地址',
       align: 'center',
       dataIndex: 'addressDiy',

@@ -56,7 +56,6 @@ const CommentTable = ({ oaActivityHome, dispatch, id, enums }) => {
       title: '审核状态',
       align: 'center',
       dataIndex: 'commentStatus',
-      filters: true,
       fixed: 'right',
       valueEnum: {
         2: {
