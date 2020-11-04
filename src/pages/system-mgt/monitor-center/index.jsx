@@ -6,13 +6,13 @@ import FontIcon from '@/components/FontIcon';
 import MonitorDetail from './components/MonitorDetail';
 
 const content = [
-  { title: '目前老同志总数', field: 'cadreTotalNum', icon: 'users' },
+  { title: '目前老干部总数', field: 'cadreTotalNum', icon: 'users' },
   { title: '目前录入单位总数', field: 'orgTotalNum', icon: 'company' },
   { title: '目前工作人员总数', field: 'staffTotalNum', icon: 'gonguzorenyuan' },
-  { title: '本月新增老同志数', field: 'addNum', icon: 'userup' },
-  { title: '老同志月活跃数', field: 'cadreActiveNum', icon: 'userup', hasList: true },
+  { title: '本月新增老干部数', field: 'addNum', icon: 'userup' },
+  { title: '老干部月活跃数', field: 'cadreActiveNum', icon: 'userup', hasList: true },
   { title: '工作人员月活跃数', field: 'staffActiveNum', icon: 'gonguzorenyuan', hasList: true },
-  { title: '老同志累计登录数', field: 'lgbLoginNum', icon: 'userup', hasList: true },
+  { title: '老干部累计登录数', field: 'lgbLoginNum', icon: 'userup', hasList: true },
   { title: '工作人员累计登录数', field: 'workLoginNum', icon: 'gonguzorenyuan', hasList: true },
 ];
 const MonitorCenter = ({ loading, sumData, dispatch }) => {

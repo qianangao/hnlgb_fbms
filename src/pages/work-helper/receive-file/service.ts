@@ -55,7 +55,7 @@ export async function updateReceiveFile(params) {
   });
 }
 /**
- * 老同志-列表
+ * 老干部-列表
  * @param {*} params
  */
 export async function getWorkLgbs(params) {

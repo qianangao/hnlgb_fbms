@@ -19,7 +19,7 @@ for (let i = 0; i < 8; i++) {
     fileName: 'fileName', //附件名称
     fileUrl: 'fileUrl', //附件地址
     createUserId: 'createUserId', //创建人员id
-    realName: '请勿删除', //老同志名称
+    realName: '请勿删除', //老干部名称
     organizationName: '海南省委老干部局', //发布单位
     createTime: '2020-09-21', //创建时间
     pushTime: '2020-09-21', //发布时间
@@ -56,7 +56,7 @@ const getDemeanorDetail = (req, res) => {
       fileName: 'fileName', //附件名称
       fileUrl: 'fileUrl', //附件地址
       createUserId: 'createUserId', //创建人员id
-      realName: '请勿删除', //老同志名称
+      realName: '请勿删除', //老干部名称
       organizationName: '海南省委老干部局', //发布单位
       createTime: '2020-09-21', //创建时间
       pushTime: '2020-09-21', //发布时间

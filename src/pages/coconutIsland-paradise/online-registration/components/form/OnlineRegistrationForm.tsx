@@ -36,7 +36,7 @@ const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请上传缩略图!' }],
     },
     // {
-    //   label: '选择老同志',
+    //   label: '选择老干部',
     //   name: 'memberItems',
     //   span: 4,
     //   render: <OrgMultiSelectInput />,

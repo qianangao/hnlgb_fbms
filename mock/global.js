@@ -219,7 +219,7 @@ const getExportFiles = (req, res) => {
           fileName: '全部信息20200622101957.xls', //文件名
           fileUrl: 'http://10.92.120.138:9091/attachment/91/d3/40dee3268a3f69246377636cce.xls', //文件地址
           status: 1, //状态 0-导出中，1-可下载，2-导出失败
-          userType: 1, //0-老同志，1-工作人员
+          userType: 1, //0-老干部，1-工作人员
         },
       ],
     },
