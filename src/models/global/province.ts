@@ -41,7 +41,7 @@ const Model = {
         selectData.children = yield response.map(item => ({
           label: item.organizationName,
           value: item.id,
-          isLeaf: idArr.length === 4,
+          isLeaf: !item.isSubunit,
         }));
 
         if (!selectData.value) {
