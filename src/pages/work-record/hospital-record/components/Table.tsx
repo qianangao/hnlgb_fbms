@@ -121,6 +121,7 @@ const Table = ({ openModifyModal, hospitalRegistration, enums, dispatch }) => {
     {
       title: '审核状态',
       align: 'center',
+      fixed: 'right',
       dataIndex: 'dictApproveStatus',
       initialValue: 'all',
       filters: true,
