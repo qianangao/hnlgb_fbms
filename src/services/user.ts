@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function resetPassword(params) {
-  return request(`/user/checkoutPassword/${params.id}`, {
+  return request(`/user/change_password`, {
     method: 'PUT',
     data: params,
   });
