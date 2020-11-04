@@ -147,7 +147,13 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="身份性质">
             {enums.dictIdentity && enums.dictIdentity[lgbDetailData.dictIdentity]}
           </Descriptions.Item>
+          <Descriptions.Item label="组织区域">
+            {enums.dictOrganizationArea &&
+              enums.dictOrganizationArea[lgbDetailData.dictOrganizationArea]}
+          </Descriptions.Item>
+          <Descriptions.Item label="职称">{lgbDetailData.academicTitles}</Descriptions.Item>
         </Descriptions>
+
         <Descriptions title="家庭信息" column={{ xxl: 4, xl: 3, lg: 2 }}>
           <Descriptions.Item label="常住地址" span={{ xxl: 4, xl: 3, lg: 2 }}>
             {`${lgbFamilyData.residentAddressList || ''} ${lgbFamilyData.residentAddressDiy || ''}`}

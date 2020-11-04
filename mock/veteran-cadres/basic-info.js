@@ -110,6 +110,8 @@ const getUserInfo = (req, res) => {
       dictIdentity: '身份性质', //身份性质
       awardSituation: '奖罚情况', //奖罚情况
       specialContribution: '特殊贡献', //特殊贡献
+      dictOrganizationArea: '28257c9df1b911ea9cdd6c4b90894a7d', //组织区域
+      academicTitles: '高级', //职称
     },
   });
 };

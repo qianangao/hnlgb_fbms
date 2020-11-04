@@ -97,7 +97,7 @@ const Model = {
       }
     },
     *exportList({ payload }, { call, put, select }) {
-      const MAX_EXPORT_VALUE = 50; // 同步导出数据的最大条数
+      const MAX_EXPORT_VALUE = 5; // 同步导出数据的最大条数
       const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
       const { total } = yield select(state => state.vcBasicInfo.lgbListData);
       const { organizationId } = yield select(state => state.user.userInfo);
@@ -105,8 +105,6 @@ const Model = {
       const params = {
         ...payload,
         orgIdForDataSelect: selectedOrgId || organizationId,
-        currentPage: payload.current,
-        pageSize: payload.pageSize,
       };
 
       const { dateOfBirth } = params;
