@@ -50,10 +50,11 @@ const Table = ({
       title: '审核状态',
       align: 'center',
       dataIndex: 'dictApproveStatus',
+      fixed: 'right',
       valueEnum: {
-        0: { text: '待审核' },
-        1: { text: '审核通过' },
-        2: { text: '审核不通过' },
+        0: { text: '待审核', status: 'Processing' },
+        1: { text: '审核通过', status: 'Success' },
+        2: { text: '审核不通过', status: 'Error' },
       },
       hideInSearch: true,
     },
@@ -102,7 +103,7 @@ const Table = ({
         </Popconfirm>,
 
         <a
-          key={`${employeeData.id}up`}
+          key={`${employeeData.id}audit`}
           onClick={() => {
             openModifyModal(employeeData);
           }}
