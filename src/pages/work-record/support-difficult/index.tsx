@@ -18,6 +18,8 @@ const AcadvancedDeeds = ({ dispatch }) => {
         names: [
           'dictHelpMode', // 帮扶形式
           'dictHelpReason', // 帮扶原因
+          'dictSex',
+          'dictRetirementType',
         ],
       },
     });

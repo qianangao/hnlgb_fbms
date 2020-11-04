@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Popconfirm, Modal } from 'antd';
+import { Button, Popconfirm, Modal, Badge } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
@@ -47,7 +47,7 @@ const Table = ({
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 180,
+      width: 200,
       fixed: 'right',
       render: (dom, data) => [
         publishStatus === 0 ? (
@@ -72,11 +72,14 @@ const Table = ({
         publishStatus === 1 && (
           <a
             key={`${data.id}audit`}
+            style={{ marginRight: 25 }}
             onClick={() => {
               openCommentModal(data.id);
             }}
           >
-            审核评论
+            <Badge count={data.commentNum} offset={[10, 0]}>
+              审核评论
+            </Badge>
           </a>
         ),
         <Popconfirm
