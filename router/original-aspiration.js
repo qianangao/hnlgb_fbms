@@ -61,6 +61,11 @@ const routes = {
       authority: '03-08',
       remark: '志愿团队',
     },
+    {
+      path: '/original-aspiration',
+      redirect: '/original-aspiration/cares-next',
+      hideInMenu: true,
+    },
   ],
 };
 

@@ -1,4 +1,10 @@
-import { LockTwoTone, MailTwoTone, MobileTwoTone, UserOutlined } from '@ant-design/icons';
+import {
+  LockTwoTone,
+  MailTwoTone,
+  MobileTwoTone,
+  SafetyCertificateTwoTone,
+  UserOutlined,
+} from '@ant-design/icons';
 import React from 'react';
 import styles from './index.less';
 
@@ -10,7 +16,7 @@ export default {
       prefix: (
         <UserOutlined
           style={{
-            color: '#1890ff',
+            color: '#EA4814',
           }}
           className={styles.prefixIcon}
         />
@@ -27,7 +33,7 @@ export default {
   Password: {
     props: {
       size: 'large',
-      prefix: <LockTwoTone className={styles.prefixIcon} />,
+      prefix: <LockTwoTone twoToneColor="#EA4814" className={styles.prefixIcon} />,
       type: 'password',
       id: 'password',
       placeholder: '888888',
@@ -42,7 +48,7 @@ export default {
   Mobile: {
     props: {
       size: 'large',
-      prefix: <MobileTwoTone className={styles.prefixIcon} />,
+      prefix: <MobileTwoTone twoToneColor="#EA4814" className={styles.prefixIcon} />,
       placeholder: 'mobile number',
     },
     rules: [
@@ -72,7 +78,7 @@ export default {
   VerificationCode: {
     props: {
       size: 'large',
-      prefix: <MailTwoTone className={styles.prefixIcon} />,
+      prefix: <SafetyCertificateTwoTone twoToneColor="#EA4814" className={styles.prefixIcon} />,
       placeholder: 'verificationCode',
     },
     rules: [

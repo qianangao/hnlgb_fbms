@@ -68,8 +68,11 @@ const routes = {
       authority: '01-09',
       remark: '年报统计',
     },
-
-    // "id": "01-09",年报统计
+    {
+      path: '/veteran-cadres',
+      redirect: '/veteran-cadres/base-info',
+      hideInMenu: true,
+    },
   ],
 };
 
