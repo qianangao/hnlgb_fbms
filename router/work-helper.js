@@ -26,6 +26,11 @@ const routes = {
       authority: '06-03',
       remark: '收发文件',
     },
+    {
+      path: '/work-helper',
+      redirect: '/work-helper/staff-directory',
+      hideInMenu: true,
+    },
   ],
 };
 

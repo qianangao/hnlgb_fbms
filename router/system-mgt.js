@@ -40,6 +40,11 @@ const routes = {
       authority: '08-05',
       remark: '监测中心',
     },
+    {
+      path: '/system-mgt',
+      redirect: '/system-mgt/organization-mgt',
+      hideInMenu: true,
+    },
   ],
 };
 

@@ -47,6 +47,11 @@ const routes = {
       authority: '02-06',
       remark: '流动党员登记',
     },
+    {
+      path: '/qiongya-ecru',
+      redirect: '/qiongya-ecru/branch-information',
+      hideInMenu: true,
+    },
   ],
 };
 
