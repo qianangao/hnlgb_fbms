@@ -5,6 +5,7 @@ import {
   updateStaff,
   deleteStaffs,
   getStaffList,
+  getStaffInfo,
   resetStaffPwd,
 } from './service';
 
@@ -14,6 +15,7 @@ const Model = {
     roleData: {},
     searchRoleData: {},
     staffListData: {},
+    staffInfo: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -87,6 +89,19 @@ const Model = {
           type: 'save',
           payload: {
             staffListData: result,
+          },
+        });
+      }
+    },
+    *getStaffInfo({ payload, resolve }, { call, put }) {
+      const response = yield call(getStaffInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            staffInfo: response,
           },
         });
       }

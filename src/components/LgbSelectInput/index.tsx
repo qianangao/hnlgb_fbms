@@ -106,7 +106,7 @@ const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange
       tempdata = {};
       setVisible(false);
     } else {
-      message.warning('请选择老同志！');
+      message.warning('请选择老干部！');
     }
   };
 
@@ -121,7 +121,7 @@ const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange
               setVisible(true);
             }}
           >
-            选择老同志
+            选择老干部
           </Button>
         }
       >

@@ -89,12 +89,66 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
       rules: [{ required: true, message: '请选择出生日期!' }],
       type: 'date',
     },
+    {
+      label: '办公电话',
+      name: 'officePhone',
+    },
+
+    {
+      label: '人员类别',
+      name: 'dictIdentity',
+      enumsLabel: 'dictIdentity',
+    },
+
+    {
+      label: '职务',
+      name: 'dictRetirementLevel',
+      enumsLabel: 'dictRetirementLevel',
+    },
+    {
+      label: '民族',
+      name: 'dictNation',
+      enumsLabel: 'dictNation',
+    },
+    {
+      label: '籍贯',
+      name: 'nativePlace',
+    },
+    {
+      label: '政治面貌',
+      name: 'dictPoliticalStatus',
+      enumsLabel: 'dictPoliticalStatus',
+    },
+    {
+      label: '入党时间',
+      name: 'partyTime',
+      type: 'date',
+    },
+    {
+      label: '文化程度',
+      name: 'dictDegree',
+      enumsLabel: 'dictDegree',
+    },
+    {
+      label: '职称',
+      name: 'academicTitles',
+    },
   ];
 
   useEffect(() => {
     if (staffInfoData) {
-      orgSelect.current.setLabel(staffInfoData.organizationName || '');
-      form.setFieldsValue({ ...staffInfoData });
+      new Promise(resolve => {
+        dispatch({
+          type: 'smStaffMgt/getStaffInfo',
+          payload: {
+            id: staffInfoData.id,
+          },
+          resolve,
+        });
+      }).then(data => {
+        form.setFieldsValue({ ...data });
+        orgSelect.current.setLabel(data.organizationName || '');
+      });
 
       setRoleVisible(!!staffInfoData.organizationId);
 

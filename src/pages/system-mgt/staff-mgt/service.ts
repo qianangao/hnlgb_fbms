@@ -55,6 +55,17 @@ export async function getStaffList(params) {
 }
 
 /**
+ * 获取工作人员信息
+ * @param {*} params
+ */
+export async function getStaffInfo(params) {
+  return request(`/user/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
  * 工作人员重置密码
  * @param {*} params
  */

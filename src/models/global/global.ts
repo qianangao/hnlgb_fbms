@@ -7,14 +7,19 @@ import {
   deleteDownloadFiles,
 } from '@/services/global';
 
+import { LocalCache } from '@/utils/storage';
+
+const ENUMS_CACHE_KEY = 'enums_cache_key';
+const ENUMS_CACHE_TAMP_KEY = 'enums_cache_tamp_key';
+
 const GlobalModel = {
   namespace: 'global',
   state: {
     collapsed: false,
     filesStatus: 1, // 导出中：0， 导出完成： 1
     downloadFiles: [],
-    enums: {},
-    enumsTimestamp: {},
+    enums: LocalCache.get(ENUMS_CACHE_KEY) || {},
+    enumsTimestamp: LocalCache.get(ENUMS_CACHE_TAMP_KEY) || {},
   },
   effects: {
     *getEnums({ payload }, { put }) {
@@ -120,6 +125,12 @@ const GlobalModel = {
     saveEnum(state, { payload }) {
       const enums = { ...state.enums, [payload.key]: payload.items };
       const enumsTimestamp = { ...state.enumsTimestamp, [payload.key]: payload.timestamp };
+
+      LocalCache.get(ENUMS_CACHE_KEY) || LocalCache.set(ENUMS_CACHE_KEY, {});
+      LocalCache.apply(ENUMS_CACHE_KEY, payload.key, payload.items);
+
+      LocalCache.get(ENUMS_CACHE_TAMP_KEY) || LocalCache.set(ENUMS_CACHE_TAMP_KEY, {});
+      LocalCache.apply(ENUMS_CACHE_TAMP_KEY, payload.key, payload.timestamp);
 
       return { ...state, enums, enumsTimestamp };
     },

@@ -39,6 +39,7 @@ const BaseInfo = ({ dispatch }) => {
           'dictSpouseHealth',
           'dictHierarchy',
           'dictIdentity',
+          'dictOrganizationArea',
         ],
       },
     });

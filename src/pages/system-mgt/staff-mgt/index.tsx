@@ -12,7 +12,14 @@ const StaffMgt = ({ dispatch }) => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: ['dictSex'],
+        names: [
+          'dictSex',
+          'dictIdentity',
+          'dictRetirementLevel',
+          'dictNation',
+          'dictPoliticalStatus',
+          'dictDegree',
+        ],
       },
     });
     dispatch({

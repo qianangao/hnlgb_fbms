@@ -49,7 +49,7 @@ const getActivityDetail = (req, res) => {
       createTime: '2020-08-20', //创建时间
       updateTime: '2020-08-20', //最近一次修改时间
       pushTime: '2020-08-20', //发布时间
-      realName: '请勿删除', //老同志名称
+      realName: '请勿删除', //老干部名称
       organizationName: '省委老干部局', //发布单位
     },
   });

@@ -121,7 +121,7 @@ const Table = ({
     dispatch({
       type: 'vcBasicInfo/exportList',
       payload: {
-        formData: formRef.current.getFieldsValue(),
+        ...formRef.current.getFieldsValue(),
       },
     });
   };

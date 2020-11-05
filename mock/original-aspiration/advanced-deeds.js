@@ -13,7 +13,7 @@ for (let i = 0; i < 10; i++) {
     id: '402883e973e5c2ce0173e5c2ce9' + i, //id
     title: '个人先进事迹', //标题
     updateTime: '2020-09-23', //保存时间
-    realName: '请勿删除', //老同志
+    realName: '请勿删除', //老干部
     pushTime: '2020-09-23', //发布时间
     organizationName: '海南省委老干部局', //发布单位
   });
@@ -42,7 +42,7 @@ for (let i = 0; i < 10; i++) {
     id: '402883e973e5c2ce0173e5c2ce9' + i, //id
     title: '集体先进事迹', //标题
     updateTime: '2020-09-23', //保存时间
-    realName: '请勿删除', //老同志
+    realName: '请勿删除', //老干部
     pushTime: '2020-09-23', //发布时间
     organizationName: '海南省委老干部局', //发布单位
   });
@@ -77,7 +77,7 @@ const getUnitDetail = (req, res) => {
       updateTime: '2020-08-25', //更新时间
       isPublished: 1, //已发布
       pushTime: '2020-08-25', //发布时间
-      realName: '请勿删除', //老同志
+      realName: '请勿删除', //老干部
       organizationName: '省委老干部局', //发布单位
       teamType: ['1-1', '2-1-2'],
     },
@@ -96,7 +96,7 @@ const getPersonalDetail = (req, res) => {
       updateTime: '2020-08-25', //更新时间
       isPublished: 1, //已发布
       pushTime: '2020-08-25', //发布时间
-      realName: '请勿删除', //老同志
+      realName: '请勿删除', //老干部
       organizationName: '省委老干部局', //发布单位
     },
   });

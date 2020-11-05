@@ -259,6 +259,15 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       enumsLabel: 'dictIdentity',
       rules: [{ required: true, message: '请选择身份性质!' }],
     },
+    {
+      label: '组织区域',
+      name: 'dictOrganizationArea',
+      enumsLabel: 'dictOrganizationArea',
+    },
+    {
+      label: '职称',
+      name: 'academicTitles',
+    },
   ];
 
   useEffect(() => {

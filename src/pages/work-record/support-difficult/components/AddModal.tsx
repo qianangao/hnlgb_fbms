@@ -34,7 +34,7 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
             ...values,
             helpType: tableType,
           };
-          // 新增遗孀补助申请时，values.userId 携带数据为所选老同志所有数据对象，当新增为特困补助申请时，values.userId为所选老同志的userId
+          // 新增遗孀补助申请时，values.userId 携带数据为所选老干部所有数据对象，当新增为特困补助申请时，values.userId为所选老干部的userId
           if (tableType === '2') {
             payload.userId = values.userId.userId;
           }
