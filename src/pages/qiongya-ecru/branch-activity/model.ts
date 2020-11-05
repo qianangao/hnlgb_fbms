@@ -19,6 +19,8 @@ const Model = {
   state: {
     branchActivityData: {},
     tableRef: {},
+    tableCommentRef: {},
+    tableUserRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
@@ -244,8 +246,12 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
+      const tableCommentRef = state.tableCommentRef || {};
+      const tableUserRef = state.tableUserRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
+        tableCommentRef.current && tableCommentRef.current.reloadAndRest();
+        tableUserRef.current && tableUserRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },

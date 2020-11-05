@@ -80,6 +80,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
 
   const onTabChange = id => {
     setTableType(id);
+    tableRef.current.reload();
   };
   const openAddModal = item => {
     addModelRef.current.showModal(item);

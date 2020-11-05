@@ -57,7 +57,7 @@ const Table = ({
       title: publishState === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishState === 0 ? 'createTime' : 'releaseTime',
+      dataIndex: publishState === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
     },
     {
