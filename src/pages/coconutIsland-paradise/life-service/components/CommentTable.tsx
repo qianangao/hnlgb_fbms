@@ -40,6 +40,19 @@ const CommentTable = ({ lifeService, dispatch, id, enums }) => {
       hideInSearch: true,
     },
     {
+      title: '角色',
+      align: 'center',
+      dataIndex: 'userType',
+      valueEnum: {
+        1: {
+          text: '老同志',
+        },
+        0: {
+          text: '工作人员',
+        },
+      },
+    },
+    {
       title: '评论时间',
       align: 'center',
       valueType: 'date',
