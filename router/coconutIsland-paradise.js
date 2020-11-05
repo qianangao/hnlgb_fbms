@@ -76,13 +76,13 @@ const routes = {
       remark: '网络报名',
     },
     {
-      path: 'https://www.hao123.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       authority: '04-11',
       remark: '社保查询',
     },
     {
-      path: 'https://www.huaban.com',
+      path: 'http://ggfw.hainan.gov.cn/ecdomain/framework/hnwbdt/index.jsp',
       target: '_blank',
       authority: '04-12',
       remark: '医保查询',

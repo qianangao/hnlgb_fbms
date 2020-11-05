@@ -25,7 +25,11 @@ const Table = ({ openAddModal, openModifyModal, seniorUniversity, dispatch }) =>
       dataIndex: 'url',
       width: 200,
       hideInSearch: true,
-      render: _ => <a href={_}>{_}</a>,
+      render: text => (
+        <a rel="noopener noreferrer" target="_blank" href={text}>
+          {text}
+        </a>
+      ),
     },
     {
       title: '大学地址',
