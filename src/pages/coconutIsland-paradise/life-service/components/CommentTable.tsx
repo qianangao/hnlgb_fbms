@@ -43,6 +43,7 @@ const CommentTable = ({ lifeService, dispatch, id, enums }) => {
       title: '角色',
       align: 'center',
       dataIndex: 'userType',
+      hideInSearch: true,
       valueEnum: {
         1: {
           text: '老同志',
