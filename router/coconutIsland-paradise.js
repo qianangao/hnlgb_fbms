@@ -115,6 +115,11 @@ const routes = {
       authority: '04-16',
       remark: '体检管理',
     },
+    {
+      path: '/coconutIsland-paradise',
+      redirect: '/coconutIsland-paradise/senior-university',
+      hideInMenu: true,
+    },
   ],
 };
 export default routes;

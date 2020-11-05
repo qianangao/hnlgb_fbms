@@ -33,6 +33,11 @@ const routes = {
       authority: '07-04',
       remark: '每日播报',
     },
+    {
+      path: '/information-release',
+      redirect: '/information-release/notice-announcement',
+      hideInMenu: true,
+    },
   ],
 };
 

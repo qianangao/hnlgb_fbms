@@ -47,6 +47,11 @@ const routes = {
       authority: '05-06',
       remark: '证照登记',
     },
+    {
+      path: '/work-record',
+      redirect: '/work-record/hospital-record',
+      hideInMenu: true,
+    },
   ],
 };
 
