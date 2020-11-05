@@ -1,6 +1,6 @@
+import { Modal } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
 import DetailForm from './form/DetailForm';
 
 const DetailModal = ({ loading, actionRef }) => {

@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openAddModal, openModifyModal, relocated, dispatch }) => {
+const Table = ({ openAddModal, openModifyModal, relocated, dispatch, enums }) => {
   const { tableRef } = relocated;
   const columns = [
     {
@@ -20,16 +20,24 @@ const Table = ({ openAddModal, openModifyModal, relocated, dispatch }) => {
       dataIndex: 'realName',
     },
     {
-      title: '单位',
+      title: '性别',
       align: 'center',
-      dataIndex: 'organizationName',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
       hideInSearch: true,
     },
     {
-      title: '创建时间',
+      title: '民族',
+      align: 'center',
+      dataIndex: 'dictNation',
+      valueEnum: enums.dictNation,
+      hideInSearch: true,
+    },
+    {
+      title: '出生日期',
       valueType: 'date',
       align: 'center',
-      dataIndex: 'createTime',
+      dataIndex: 'dateOfBirth',
       hideInSearch: true,
     },
     {

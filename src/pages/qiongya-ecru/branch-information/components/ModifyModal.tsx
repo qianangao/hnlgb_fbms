@@ -1,6 +1,6 @@
+import { Modal, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
 import BranchInformationForm from './form/BranchInformationForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
