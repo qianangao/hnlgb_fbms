@@ -14,6 +14,13 @@ export default {
         '^/hnlgb-server': '',
       },
     },
+    '/files_server': {
+      target: 'http://192.168.23.41:18944/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/files_server': '',
+      },
+    },
   },
   test: {
     '/hnlgb-server': {
