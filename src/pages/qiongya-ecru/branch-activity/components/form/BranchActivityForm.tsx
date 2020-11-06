@@ -15,6 +15,15 @@ const BranchActivityForm = ({
   branchLoading,
 }) => {
   const [isUser, setIsUser] = useState();
+  // 获取本单位人员
+  const getLgbsList = params =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'globalLgb/getLgbList',
+        payload: { ...params, allIndex: 'ONLY' },
+        resolve,
+      });
+    });
   const formItems = [
     {
       label: '活动名称',
@@ -97,7 +106,7 @@ const BranchActivityForm = ({
       label: '接收人员',
       name: 'userIds',
       rules: [{ required: true, message: '请选择接收人员!' }],
-      render: <LgbMultiSelectInput />,
+      render: <LgbMultiSelectInput getLgbs={getLgbsList} />,
       visible: isUser === 1,
     },
     {
@@ -122,6 +131,7 @@ const BranchActivityForm = ({
       span: 2,
     },
   ];
+
   useEffect(() => {
     if (id) {
       dispatch({
