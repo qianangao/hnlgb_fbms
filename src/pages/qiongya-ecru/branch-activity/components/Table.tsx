@@ -11,7 +11,6 @@ const Table = ({
   opendetailModal,
   publishState,
   tableType,
-  openMembersModifyModal,
   openCommentModal,
 }) => {
   const { tableRef } = branchActivity;
@@ -57,7 +56,7 @@ const Table = ({
       title: publishState === 0 ? '保存时间' : '发布时间',
       valueType: 'date',
       align: 'center',
-      dataIndex: publishState === 0 ? 'createTime' : 'releaseTime',
+      dataIndex: publishState === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -77,14 +76,6 @@ const Table = ({
                 }}
               >
                 编辑活动
-              </a>,
-              <a
-                key={`${employeeData.id}upUsers`}
-                onClick={() => {
-                  openMembersModifyModal(employeeData);
-                }}
-              >
-                查看成员
               </a>,
             ]
           : [

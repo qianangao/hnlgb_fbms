@@ -28,7 +28,6 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         <Descriptions.Item label="活动地点">
           {detailBranchActivityData.activityAdd}
         </Descriptions.Item>
-        <Descriptions.Item label="支部名称">{detailBranchActivityData.partyName}</Descriptions.Item>
         <Descriptions.Item label="缩略图">
           {detailBranchActivityData && detailBranchActivityData.attachmentInfo && (
             <a href={detailBranchActivityData.attachmentInfo.url}>

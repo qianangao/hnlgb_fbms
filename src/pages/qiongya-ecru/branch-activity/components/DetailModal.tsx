@@ -21,6 +21,7 @@ const DetailModal = ({ loading, actionRef }) => {
     }
   }, []);
   const hideModal = () => {
+    setDetailId('');
     setDetailModalVisible(false);
   };
 

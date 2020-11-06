@@ -3,7 +3,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const ActivityUserTable = ({ partyId, branchActivity, dispatch, enums }) => {
-  const { tableRef } = branchActivity;
+  const { tableUserRef } = branchActivity;
   const columns = [
     {
       title: '序号',
@@ -49,7 +49,7 @@ const ActivityUserTable = ({ partyId, branchActivity, dispatch, enums }) => {
     <ProTable
       rowKey="id"
       headerTitle="支部活动"
-      actionRef={tableRef}
+      actionRef={tableUserRef}
       scroll={{ x: 'max-content' }}
       request={async params => branchActivityList(params)}
       columns={columns}
