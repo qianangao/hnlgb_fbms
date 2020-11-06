@@ -3,22 +3,19 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableMembersModify from './TableMembersModify';
 
-const CommunityModifyModal = ({
-  dispatch,
-  memberModifyModalVisible,
-  communityDetailData,
-  actionRef,
-}) => {
+const CommunityModifyModal = ({ dispatch, actionRef }) => {
   const [communityId, setCommunityId] = useState('');
+  const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
   const showModal = id => {
+    if (id) {
+      dispatch({
+        type: 'oaCommunity/getCommunityDetail',
+        payload: { id },
+      });
+    }
     setCommunityId(id);
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        memberModifyModalVisible: true,
-      },
-    });
+    setMemberModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -29,22 +26,9 @@ const CommunityModifyModal = ({
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (communityId) {
-      dispatch({
-        type: 'oaCommunity/getCommunityDetail',
-        payload: { id: communityId },
-      });
-    }
-  }, [communityId]);
-
   const hideModal = () => {
-    dispatch({
-      type: 'oaCommunity/save',
-      payload: {
-        memberModifyModalVisible: false,
-      },
-    });
+    setMemberModifyModalVisible(false);
+    setCommunityId('');
   };
 
   return (
@@ -62,13 +46,11 @@ const CommunityModifyModal = ({
       onCancel={hideModal}
       footer={[]}
     >
-      <TableMembersModify id={communityDetailData.id} />
+      <TableMembersModify id={communityId} />
     </Modal>
   );
 };
 
-export default connect(({ oaCommunity, loading }) => ({
-  memberModifyModalVisible: oaCommunity.memberModifyModalVisible,
-  communityDetailData: oaCommunity.communityDetailData,
+export default connect(({ loading }) => ({
   loading: loading.models.oaCommunity,
 }))(CommunityModifyModal);

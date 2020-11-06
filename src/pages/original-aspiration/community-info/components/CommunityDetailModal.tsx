@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button, Descriptions } from 'antd';
+import TableMembers from './TableMembers';
 
 const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) => {
   const [communityId, setCommunityId] = useState('');
-  const [communityMembers, setCommunityMembers] = useState('');
   const [communityDetailModalVisible, setCommunityDetailModalVisible] = useState(false);
   const showModal = id => {
+    if (id) {
+      dispatch({
+        type: 'oaCommunity/getCommunityDetail',
+        payload: { id },
+      });
+    }
     setCommunityId(id);
     setCommunityDetailModalVisible(true);
   };
@@ -19,21 +25,6 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (communityId) {
-      dispatch({
-        type: 'oaCommunity/getCommunityDetail',
-        payload: { id: communityId },
-      });
-      const membersArray =
-        communityDetailData.memberItems &&
-        communityDetailData.memberItems.map((Item, index) => {
-          return ` ${index + 1}、${Item.realName}`;
-        });
-      const members = membersArray && membersArray.join();
-      setCommunityMembers(members);
-    }
-  }, [communityId]);
 
   const hideModal = () => {
     setCommunityDetailModalVisible(false);
@@ -67,8 +58,8 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
         <Descriptions.Item label="社团简介">
           <pre> {communityDetailData.clubIntroduction}</pre>
         </Descriptions.Item>
-        <Descriptions.Item label="社团成员">{communityMembers}</Descriptions.Item>
       </Descriptions>
+      <TableMembers id={communityId} />
     </Modal>
   );
 };
