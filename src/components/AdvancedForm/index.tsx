@@ -75,7 +75,7 @@ const AdvancedFormItem = ({
   } else if (type === 'date') {
     resField.valuePropName = 'value';
     resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD') : '');
-    resField.getValueProps = str => ({ value: formatDate(str) });
+    resField.getValueProps = str => ({ value: formatDate(str, 'YYYY-MM-DD') });
 
     fieldInput = (
       <DatePicker
@@ -85,10 +85,24 @@ const AdvancedFormItem = ({
         {...extraProps}
       />
     );
+  } else if (type === 'dateTime') {
+    resField.valuePropName = 'value';
+    resField.getValueFromEvent = value => (value ? value.format('YYYY-MM-DD HH:mm:ss') : '');
+    resField.getValueProps = str => ({ value: formatDate(str, 'YYYY-MM-DD HH:mm:ss') });
+
+    fieldInput = (
+      <DatePicker
+        disabled={disabled}
+        showTime
+        style={{ width: '100%' }}
+        format="YYYY-MM-DD HH:mm:ss"
+        {...extraProps}
+      />
+    );
   } else if (type === 'time') {
     resField.valuePropName = 'value';
     resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');
-    resField.getValueProps = str => ({ value: formatDate(str) });
+    resField.getValueProps = str => ({ value: formatDate(str, 'HH:mm:ss') });
 
     fieldInput = <TimePicker disabled={disabled} style={{ width: '100%' }} format="HH:mm:ss" />;
   } else if (type === 'switch') {
