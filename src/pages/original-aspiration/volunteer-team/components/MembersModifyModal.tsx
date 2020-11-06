@@ -3,17 +3,13 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableMembers from './TableMembers';
 
-const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
+const TeamModifyModal = ({ actionRef }) => {
   const [infoId, setInfoId] = useState('');
+  const [memberModifyModalVisible, setMemberModifyModalVisible] = useState(false);
 
   const showModal = id => {
     setInfoId(id);
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        memberModifyModalVisible: true,
-      },
-    });
+    setMemberModifyModalVisible(true);
   };
 
   useEffect(() => {
@@ -26,12 +22,8 @@ const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
   }, []);
 
   const hideModal = () => {
-    dispatch({
-      type: 'oaVolunteerTeam/save',
-      payload: {
-        memberModifyModalVisible: false,
-      },
-    });
+    setMemberModifyModalVisible(false);
+    setInfoId('');
   };
 
   return (
@@ -54,7 +46,6 @@ const TeamModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
   );
 };
 
-export default connect(({ oaVolunteerTeam, loading }) => ({
-  memberModifyModalVisible: oaVolunteerTeam.memberModifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.oaVolunteerTeam,
 }))(TeamModifyModal);
