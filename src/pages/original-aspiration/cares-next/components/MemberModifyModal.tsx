@@ -69,7 +69,6 @@ const MemberModifyModal = ({ dispatch, actionRef, loading, mechanismId }) => {
   );
 };
 
-export default connect(({ oaCaresNext, loading }) => ({
-  memberModifyModalVisible: oaCaresNext.memberModifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['oaCaresNext/addCares'],
 }))(MemberModifyModal);

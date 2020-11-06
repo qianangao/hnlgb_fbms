@@ -74,7 +74,6 @@ const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
   );
 };
 
-export default connect(({ wrSupportDifficult, loading }) => ({
-  modifyModalVisible: wrSupportDifficult.modifyModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.effects['wrSupportDifficult/updateSupportDifficult'],
 }))(ModifyModal);

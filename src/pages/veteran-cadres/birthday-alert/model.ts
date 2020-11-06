@@ -73,13 +73,6 @@ const Model = {
       const response = yield call(isReminder, payload);
 
       if (!response.error) {
-        yield put({
-          type: 'save',
-          payload: {
-            // modifyModalVisible: false,
-          },
-        });
-
         message.success('修改成功！');
 
         yield put({

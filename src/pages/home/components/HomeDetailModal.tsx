@@ -79,7 +79,6 @@ const HomeDetailModal = ({ loading, actionRef }) => {
   );
 };
 
-export default connect(({ home, loading }) => ({
-  detailModalVisible: home.detailModalVisible,
+export default connect(({ loading }) => ({
   loading: loading.models.home,
 }))(HomeDetailModal);

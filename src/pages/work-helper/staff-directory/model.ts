@@ -4,7 +4,6 @@ const Model = {
   namespace: 'staffDirectory',
   state: {
     staffDirectoryData: {},
-    addModalVisible: false, // 新增modal visible
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailStaffDirectoryData: {},
