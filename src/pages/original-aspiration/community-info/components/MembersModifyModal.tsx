@@ -3,12 +3,7 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import TableMembersModify from './TableMembersModify';
 
-const CommunityModifyModal = ({
-  dispatch,
-  memberModifyModalVisible,
-  communityDetailData,
-  actionRef,
-}) => {
+const CommunityModifyModal = ({ dispatch, memberModifyModalVisible, actionRef }) => {
   const [communityId, setCommunityId] = useState('');
 
   const showModal = id => {
@@ -43,6 +38,7 @@ const CommunityModifyModal = ({
       type: 'oaCommunity/save',
       payload: {
         memberModifyModalVisible: false,
+        setCommunityId: '',
       },
     });
   };
@@ -62,13 +58,12 @@ const CommunityModifyModal = ({
       onCancel={hideModal}
       footer={[]}
     >
-      <TableMembersModify id={communityDetailData.id} />
+      <TableMembersModify id={communityId} />
     </Modal>
   );
 };
 
 export default connect(({ oaCommunity, loading }) => ({
   memberModifyModalVisible: oaCommunity.memberModifyModalVisible,
-  communityDetailData: oaCommunity.communityDetailData,
   loading: loading.models.oaCommunity,
 }))(CommunityModifyModal);

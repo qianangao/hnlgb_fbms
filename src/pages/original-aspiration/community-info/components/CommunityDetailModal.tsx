@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Button, Descriptions } from 'antd';
+import TableMembers from './TableMembers';
 
 const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) => {
   const [communityId, setCommunityId] = useState('');
-  const [communityMembers, setCommunityMembers] = useState('');
   const [communityDetailModalVisible, setCommunityDetailModalVisible] = useState(false);
   const showModal = id => {
     setCommunityId(id);
@@ -25,13 +25,6 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
         type: 'oaCommunity/getCommunityDetail',
         payload: { id: communityId },
       });
-      const membersArray =
-        communityDetailData.memberItems &&
-        communityDetailData.memberItems.map((Item, index) => {
-          return ` ${index + 1}、${Item.realName}`;
-        });
-      const members = membersArray && membersArray.join();
-      setCommunityMembers(members);
     }
   }, [communityId]);
 
@@ -67,14 +60,15 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
         <Descriptions.Item label="社团简介">
           <pre> {communityDetailData.clubIntroduction}</pre>
         </Descriptions.Item>
-        <Descriptions.Item label="社团成员">{communityMembers}</Descriptions.Item>
       </Descriptions>
+      <TableMembers id={communityId} />
     </Modal>
   );
 };
 
 export default connect(({ oaCommunity, loading, global }) => ({
   communityDetailData: oaCommunity.communityDetailData,
+  memberListData: oaCommunity.memberListData,
   loading: loading.models.oaCommunity,
   enums: global.enums,
 }))(CommunityDetail);
