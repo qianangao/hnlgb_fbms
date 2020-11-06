@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import PhysicalExaminationForm from './form/PhysicalExaminationForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {

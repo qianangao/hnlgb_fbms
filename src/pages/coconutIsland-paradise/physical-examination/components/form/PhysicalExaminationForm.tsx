@@ -26,7 +26,7 @@ const PhysicalExaminationForm = ({
     {
       label: '体检时间',
       name: 'activityDate',
-      type: 'date',
+      type: 'dateTime',
       rules: [{ required: true, message: '请选择体检时间!' }],
     },
     {

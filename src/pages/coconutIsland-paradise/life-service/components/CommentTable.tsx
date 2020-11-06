@@ -4,7 +4,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const CommentTable = ({ lifeService, dispatch, id, enums }) => {
-  const { tableRef } = lifeService;
+  const { commentTableRef } = lifeService;
   const columns = [
     {
       title: '序号',
@@ -152,7 +152,7 @@ const CommentTable = ({ lifeService, dispatch, id, enums }) => {
   return (
     <ProTable
       rowKey="id"
-      actionRef={tableRef}
+      actionRef={commentTableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
       request={async params => getCommentList(params)}

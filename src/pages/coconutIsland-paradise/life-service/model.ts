@@ -16,6 +16,7 @@ const Model = {
     lifeServiceInfoListData: {},
     CommentListData: {},
     tableRef: {},
+    commentTableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailLifeServiceData: {},
   },
@@ -161,8 +162,10 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
+      const commentTableRef = state.commentTableRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
+        commentTableRef.current && commentTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
