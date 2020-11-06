@@ -4,7 +4,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
-  const { tableCommentRef } = branchActivity;
+  const { commentTableRef } = branchActivity;
   const columns = [
     {
       title: '序号',
@@ -57,6 +57,7 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
       align: 'center',
       dataIndex: 'commentStatus',
       width: 100,
+      filters: true,
       fixed: 'right',
       valueEnum: {
         2: {
@@ -140,7 +141,7 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
   return (
     <ProTable
       rowKey="id"
-      actionRef={tableCommentRef}
+      actionRef={commentTableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
       request={async params => branchActivityList(params)}

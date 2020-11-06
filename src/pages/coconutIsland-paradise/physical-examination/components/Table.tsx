@@ -34,7 +34,6 @@ const Table = ({
     },
     {
       title: '体检时间',
-      valueType: 'date',
       align: 'center',
       dataIndex: 'activityDate',
       hideInSearch: true,
