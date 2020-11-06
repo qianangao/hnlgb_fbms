@@ -7,6 +7,12 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
   const [communityId, setCommunityId] = useState('');
   const [communityDetailModalVisible, setCommunityDetailModalVisible] = useState(false);
   const showModal = id => {
+    if (id) {
+      dispatch({
+        type: 'oaCommunity/getCommunityDetail',
+        payload: { id },
+      });
+    }
     setCommunityId(id);
     setCommunityDetailModalVisible(true);
   };
@@ -19,14 +25,6 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
       actionRef.current = { showModal };
     }
   }, []);
-  useEffect(() => {
-    if (communityId) {
-      dispatch({
-        type: 'oaCommunity/getCommunityDetail',
-        payload: { id: communityId },
-      });
-    }
-  }, [communityId]);
 
   const hideModal = () => {
     setCommunityDetailModalVisible(false);
@@ -68,7 +66,6 @@ const CommunityDetail = ({ dispatch, communityDetailData, actionRef, enums }) =>
 
 export default connect(({ oaCommunity, loading, global }) => ({
   communityDetailData: oaCommunity.communityDetailData,
-  memberListData: oaCommunity.memberListData,
   loading: loading.models.oaCommunity,
   enums: global.enums,
 }))(CommunityDetail);
