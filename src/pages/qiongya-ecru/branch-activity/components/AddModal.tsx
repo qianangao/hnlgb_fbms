@@ -25,19 +25,34 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     form.resetFields();
   };
 
+  // 获取userIds
+  const changeFormat = params => {
+    const userArr = [];
+    params.forEach(item => {
+      if (item) {
+        userArr.push(item.id);
+      }
+    });
+    return userArr;
+  };
+
   const handleOk = publishState => {
     form
       .validateFields()
       .then(values => {
+        const payload = {
+          ...values,
+          publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
+          photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
+          fileId: values.attachmentInfo && values.attachmentInfo.uid,
+        };
+        if (values.isUser === 1) {
+          payload.userIds = changeFormat(values.userIds);
+        }
         return new Promise(resolve => {
           dispatch({
             type: `branchActivity/addBranchActivity`,
-            payload: {
-              ...values,
-              publishState: publishState ? 0 : 1, // 状态 0：保存 1：发布
-              photoAttachmentId: values.picAttachmentInfo && values.picAttachmentInfo.uid,
-              fileId: values.attachmentInfo && values.attachmentInfo.uid,
-            },
+            payload,
             resolve,
           });
         });

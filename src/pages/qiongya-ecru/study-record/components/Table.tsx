@@ -48,7 +48,7 @@ const Table = ({
       title: '学习形式',
       align: 'center',
       dataIndex: 'dictForm',
-      valueEnum: enums.dictPartyType,
+      valueEnum: enums.dictForm,
     },
     {
       title: '操作',
