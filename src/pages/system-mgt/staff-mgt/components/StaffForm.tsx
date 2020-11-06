@@ -25,12 +25,13 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
     {
       label: '性别',
       name: 'dictSex',
+      rules: [{ required: true, message: '请选择性别!' }],
       enumsLabel: 'dictSex',
     },
     {
       label: '手机号码（同用户名）',
+      rules: [{ required: true, message: '请输入手机号码!' }, { validator: checkPhone }],
       name: 'phonenumber',
-      rules: [{ validator: checkPhone }],
     },
     {
       label: '工作单位',
