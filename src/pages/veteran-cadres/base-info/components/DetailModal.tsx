@@ -85,9 +85,10 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
             {enums.dictPoliticalStatus &&
               enums.dictPoliticalStatus[lgbDetailData.dictPoliticalStatus]}
           </Descriptions.Item>
-          <Descriptions.Item label="生日">
+          {/* TODO 阴历日期计算生日提醒暂未实现，后续观察是否保留 */}
+          {/* <Descriptions.Item label="生日">
             {lgbDetailData.birthday + (lgbDetailData.solarOrLunar === 1 ? '阴历' : '阳历')}
-          </Descriptions.Item>
+          </Descriptions.Item> */}
           <Descriptions.Item label="离退休类型">
             {enums.dictRetirementType && enums.dictRetirementType[lgbDetailData.dictRetirementType]}
           </Descriptions.Item>

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Form, DatePicker, Radio } from 'antd';
 import { connect } from 'umi';
 import moment from 'moment';
 
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
-import { formatDate } from '@/utils/format';
 import { checkIdCard, checkPhone } from '@/utils/validators';
 
 const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
@@ -104,31 +102,35 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       enumsLabel: 'dictPoliticalStatus',
       rules: [{ required: true, message: '请选择政治面貌!' }],
     },
-    {
-      label: '生日',
-      key: 'birthdayout',
-      span: 2,
-      render: (
-        <span style={{ display: 'inline-flex', width: '100%' }}>
-          <Form.Item
-            name="birthday"
-            style={{ flexGrow: 1 }}
-            valuePropName="value"
-            getValueFromEvent={value => (value ? value.format('YYYY-MM-DD') : '')}
-            getValueProps={str => ({ value: formatDate(str) })}
-          >
-            <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
-          </Form.Item>
+    // TODO 阴历日期计算生日提醒暂未实现，后续观察是否保留
+    // 相关依赖
+    // import { formatDate } from '@/utils/format';
+    // import { Form, DatePicker, Radio } from 'antd';
+    // {
+    //   label: '生日',
+    //   key: 'birthdayout',
+    //   span: 2,
+    //   render: (
+    //     <span style={{ display: 'inline-flex', width: '100%' }}>
+    //       <Form.Item
+    //         name="birthday"
+    //         style={{ flexGrow: 1 }}
+    //         valuePropName="value"
+    //         getValueFromEvent={value => (value ? value.format('YYYY-MM-DD') : '')}
+    //         getValueProps={str => ({ value: formatDate(str) })}
+    //       >
+    //         <DatePicker style={{ width: '100%' }} format="YYYY-MM-DD" />
+    //       </Form.Item>
 
-          <Form.Item name="solarOrLunar" initialValue={0} style={{ flexGrow: 1, marginLeft: 20 }}>
-            <Radio.Group>
-              <Radio.Button value={0}>阳历</Radio.Button>
-              <Radio.Button value={1}>阴历</Radio.Button>
-            </Radio.Group>
-          </Form.Item>
-        </span>
-      ),
-    },
+    //       <Form.Item name="solarOrLunar" initialValue={0} style={{ flexGrow: 1, marginLeft: 20 }}>
+    //         <Radio.Group>
+    //           <Radio.Button value={0}>阳历</Radio.Button>
+    //           <Radio.Button value={1}>阴历</Radio.Button>
+    //         </Radio.Group>
+    //       </Form.Item>
+    //     </span>
+    //   ),
+    // },
     {
       label: '离退休类型',
       name: 'dictRetirementType',
