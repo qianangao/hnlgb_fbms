@@ -19,6 +19,7 @@ const Model = {
   state: {
     branchActivityData: {},
     tableRef: {},
+    commentTableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailBranchActivityData: {},
     branchPartyUserList: {}, // 支部成员列表
@@ -179,7 +180,7 @@ const Model = {
       if (!response.error) {
         message.success('删除成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -191,7 +192,7 @@ const Model = {
       if (!response.error) {
         message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -245,7 +246,14 @@ const Model = {
     tableReload(state) {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    commentTableReload(state) {
+      const commentTableRef = state.commentTableRef || {};
+      setTimeout(() => {
+        commentTableRef.current && commentTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
