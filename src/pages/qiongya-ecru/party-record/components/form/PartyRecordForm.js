@@ -30,7 +30,7 @@ const PartyRecordForm = ({ form, id, dispatch, loading, partyData }) => {
       label: '缴纳日期',
       name: 'paymentTime',
       type: 'date',
-      rules: [{ required: true, message: '请选择缴纳时间!', whitespace: true }],
+      rules: [{ required: true, message: '请选择缴纳日期!', whitespace: true }],
     },
     {
       label: '缴纳状态',

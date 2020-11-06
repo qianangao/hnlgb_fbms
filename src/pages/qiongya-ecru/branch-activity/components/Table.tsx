@@ -11,7 +11,6 @@ const Table = ({
   opendetailModal,
   publishState,
   tableType,
-  openMembersModifyModal,
   openCommentModal,
 }) => {
   const { tableRef } = branchActivity;
@@ -77,14 +76,6 @@ const Table = ({
                 }}
               >
                 编辑活动
-              </a>,
-              <a
-                key={`${employeeData.id}upUsers`}
-                onClick={() => {
-                  openMembersModifyModal(employeeData);
-                }}
-              >
-                查看成员
               </a>,
             ]
           : [

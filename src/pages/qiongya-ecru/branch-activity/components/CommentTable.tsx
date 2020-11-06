@@ -57,7 +57,6 @@ const CommentTable = ({ branchActivity, dispatch, activityId, enums }) => {
       align: 'center',
       dataIndex: 'commentStatus',
       width: 100,
-      filters: false,
       fixed: 'right',
       valueEnum: {
         2: {

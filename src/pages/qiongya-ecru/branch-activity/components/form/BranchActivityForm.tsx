@@ -1,11 +1,19 @@
-import { Radio, TreeSelect } from 'antd';
+import { Radio, Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 
-const { TreeNode } = TreeSelect;
-const BranchActivityForm = ({ form, id, dispatch, loading, branchInformationData, partyData }) => {
+const { Option } = Select;
+const BranchActivityForm = ({
+  form,
+  id,
+  dispatch,
+  loading,
+  branchInformationData,
+  partyData,
+  branchLoading,
+}) => {
   const [isUser, setIsUser] = useState();
   const formItems = [
     {
@@ -75,13 +83,13 @@ const BranchActivityForm = ({ form, id, dispatch, loading, branchInformationData
       name: 'partyIds',
       rules: [{ required: true, message: '请选择接收支部!' }],
       render: (
-        <TreeSelect style={{ width: '100%' }} allowClear multiple treeDefaultExpandAll>
+        <Select style={{ width: '100%' }} mode="tags" loading={branchLoading}>
           {branchInformationData &&
             branchInformationData.data &&
             branchInformationData.data.map(item => {
-              return <TreeNode value={item.id} title={item.partyName} />;
+              return <Option key={item.id}>{item.partyName}</Option>;
             })}
-        </TreeSelect>
+        </Select>
       ),
       visible: isUser === 0,
     },
@@ -116,45 +124,42 @@ const BranchActivityForm = ({ form, id, dispatch, loading, branchInformationData
   ];
   useEffect(() => {
     if (id) {
+      dispatch({
+        type: 'branchInformation/branchInformationList',
+        payload: {},
+      });
+
       new Promise(resolve => {
         dispatch({
-          type: 'branchInformation/branchInformationList',
-          payload: { current: 1, pageSize: 10000 },
+          type: 'branchActivity/detailBranchActivity',
+          payload: { id },
           resolve,
         });
-      }).then(() => {
-        new Promise(resolve => {
-          dispatch({
-            type: 'branchActivity/detailBranchActivity',
-            payload: { id },
-            resolve,
-          });
-        }).then(data => {
-          const fields = {
-            ...data,
-            picAttachmentInfo:
-              data.picAttachmentInfo && data.picAttachmentInfo.id && data.picAttachmentInfo.url
-                ? {
-                    uid: data.picAttachmentInfo.id,
-                    name: data.picAttachmentInfo.fileName,
-                    url: data.picAttachmentInfo.url,
-                    status: 'done',
-                  }
-                : null,
-            attachmentInfo:
-              data.attachmentInfo && data.attachmentInfo.id && data.attachmentInfo.url
-                ? {
-                    uid: data.attachmentInfo.id,
-                    name: data.attachmentInfo.fileName,
-                    url: data.attachmentInfo.url,
-                    status: 'done',
-                  }
-                : null,
-          };
-          fields.userIds = fields.userInfos;
-          setIsUser(fields.isUser);
-          form.setFieldsValue(fields);
-        });
+      }).then(data => {
+        const fields = {
+          ...data,
+          picAttachmentInfo:
+            data.picAttachmentInfo && data.picAttachmentInfo.id && data.picAttachmentInfo.url
+              ? {
+                  uid: data.picAttachmentInfo.id,
+                  name: data.picAttachmentInfo.fileName,
+                  url: data.picAttachmentInfo.url,
+                  status: 'done',
+                }
+              : null,
+          attachmentInfo:
+            data.attachmentInfo && data.attachmentInfo.id && data.attachmentInfo.url
+              ? {
+                  uid: data.attachmentInfo.id,
+                  name: data.attachmentInfo.fileName,
+                  url: data.attachmentInfo.url,
+                  status: 'done',
+                }
+              : null,
+        };
+        fields.userIds = fields.userInfos;
+        setIsUser(fields.isUser);
+        form.setFieldsValue(fields);
       });
     }
   }, [id]);
@@ -163,7 +168,7 @@ const BranchActivityForm = ({ form, id, dispatch, loading, branchInformationData
     // 支部-列表
     dispatch({
       type: 'branchInformation/branchInformationList',
-      payload: { current: 1, pageSize: 10000 },
+      payload: {},
     });
   }, []);
 
@@ -193,4 +198,5 @@ export default connect(({ loading, global, branchInformation }) => ({
   enums: global.enums,
   branchInformationData: branchInformation.branchInformationData,
   partyData: branchInformation.partyData,
+  branchLoading: loading.models.branchInformation,
 }))(BranchActivityForm);
