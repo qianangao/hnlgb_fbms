@@ -180,7 +180,7 @@ const Model = {
       if (!response.error) {
         message.success('删除成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -192,7 +192,7 @@ const Model = {
       if (!response.error) {
         message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -245,9 +245,14 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
-      const commentTableRef = state.commentTableRef || {};
       setTimeout(() => {
         tableRef.current && tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    commentTableReload(state) {
+      const commentTableRef = state.commentTableRef || {};
+      setTimeout(() => {
         commentTableRef.current && commentTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };

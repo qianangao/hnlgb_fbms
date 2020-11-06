@@ -79,7 +79,7 @@ const Model = {
       if (!response.error) {
         message.success('评论审核成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -89,7 +89,7 @@ const Model = {
       if (!response.error) {
         message.success('评论删除成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -161,9 +161,14 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
-      const commentTableRef = state.commentTableRef || {};
       setTimeout(() => {
         tableRef.current && tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    commentTableReload(state) {
+      const commentTableRef = state.commentTableRef || {};
+      setTimeout(() => {
         commentTableRef.current && commentTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
