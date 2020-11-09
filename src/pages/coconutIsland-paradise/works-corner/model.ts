@@ -17,6 +17,7 @@ const Model = {
     worksCornerInfoListData: {},
     CommentListData: {},
     tableRef: {},
+    commentTableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailWorksCornerData: {},
   },
@@ -82,7 +83,7 @@ const Model = {
       if (!response.error) {
         message.success('评论审核成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -92,7 +93,7 @@ const Model = {
       if (!response.error) {
         message.success('评论删除成功！');
         yield put({
-          type: 'tableReload',
+          type: 'commentTableReload',
         });
       }
     },
@@ -176,6 +177,13 @@ const Model = {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
         tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    commentTableReload(state) {
+      const commentTableRef = state.commentTableRef || {};
+      setTimeout(() => {
+        commentTableRef.current && commentTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
