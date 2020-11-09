@@ -4,7 +4,8 @@ import request, { noErrorRequest, BASE_URL } from '@/utils/request';
  * @param {*} params 登陆信息
  */
 export async function accountLogin(params) {
-  return request('/login', {
+  // TODO 更新登录类型字段
+  return request('/login?appMark=PC', {
     method: 'POST',
     prefix: BASE_URL,
     data: params,

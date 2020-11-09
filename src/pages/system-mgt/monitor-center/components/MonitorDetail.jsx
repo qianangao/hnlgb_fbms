@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { connect } from 'umi';
 import { Button, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
-import styles from '../style.less';
 
-const MonitorDetail = ({ getRef, getDetailData }) => {
+const MonitorDetail = ({ getRef, enums, getDetailData }) => {
   const personListColumns = [
     {
       title: '序号',
@@ -12,18 +12,37 @@ const MonitorDetail = ({ getRef, getDetailData }) => {
       fixed: 'left',
       width: 64,
     },
-    { title: '姓名', dataIndex: 'realName' },
-    { title: '性别', dataIndex: 'dictSexRemarks', hideInSearch: true },
-    { title: '出生日期', dataIndex: 'dateOfBirth', hideInSearch: true },
-    { title: '民族', dataIndex: 'dictNationRemarks', hideInSearch: true },
-    { title: '政治面貌', dataIndex: 'dictPoliticalStatusRemarks', hideInSearch: true },
+    { title: '姓名', align: 'center', dataIndex: 'realName' },
+    {
+      title: '性别',
+      align: 'center',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
+      hideInSearch: true,
+    },
+    { title: '出生日期', align: 'center', dataIndex: 'dateOfBirth', hideInSearch: true },
+    {
+      title: '民族',
+      align: 'center',
+      dataIndex: 'dictNation',
+      valueEnum: enums.dictNation,
+      hideInSearch: true,
+    },
+    {
+      title: '政治面貌',
+      align: 'center',
+      dataIndex: 'dictPoliticalStatus',
+      valueEnum: enums.dictPoliticalStatus,
+      hideInSearch: true,
+    },
     {
       title: '原工作单位及职务',
+      align: 'center',
       dataIndex: 'originalUnitAndPosition',
       width: 255,
       hideInSearch: true,
     },
-    { title: '联系电话', dataIndex: 'phonenumber', hideInSearch: true },
+    { title: '联系电话', align: 'center', dataIndex: 'phonenumber', hideInSearch: true },
   ];
 
   const actionRef = useRef();
@@ -68,7 +87,6 @@ const MonitorDetail = ({ getRef, getDetailData }) => {
       ]}
     >
       <ProTable
-        className={styles.countDetail}
         actionRef={actionRef}
         formRef={formRef}
         rowKey="id"
@@ -82,4 +100,6 @@ const MonitorDetail = ({ getRef, getDetailData }) => {
   );
 };
 
-export default MonitorDetail;
+export default connect(({ global }) => ({
+  enums: global.enums,
+}))(MonitorDetail);
