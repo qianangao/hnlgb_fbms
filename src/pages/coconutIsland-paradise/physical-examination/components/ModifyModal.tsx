@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
-import { Modal, message } from 'antd';
+import { Modal } from 'antd';
 import PhysicalExaminationForm from './form/PhysicalExaminationForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const [form] = PhysicalExaminationForm.useForm();
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [lgbId, setLgbId] = useState('');
-  const [userIds, setUserIds] = useState([]);
   const showModal = item => {
     setLgbId(item.id);
     setModifyModalVisible(true);
@@ -26,44 +25,38 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
     setModifyModalVisible(false);
     form.resetFields();
   };
-  // 获取-选择的成员id
-  const getUserId = keys => {
-    const getUserIds = [];
-    keys.forEach(item => {
-      if (item) {
-        getUserIds.push(item.id);
-      }
-    });
-    setUserIds(getUserIds);
-  };
   // 获取-接收类型
   const receivedTypeFn = value => {
     setReceivedType(value);
+  };
+
+  // 获取userList
+  const changeFormat = parms => {
+    const userArr = [];
+    parms.forEach(item => {
+      if (item) {
+        userArr.push(item.id);
+      }
+    });
+    return userArr;
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        const payload = {
-          ...values,
-          id: lgbId,
-          userList: userIds, // 人员列表
-        };
-        // 转化单位数据格式
-        const orgArrId = [];
-        values.orgList &&
-          values.orgList.forEach(item => {
-            if (item) {
-              orgArrId.push(item.id);
-            }
-          });
-        payload.orgList = orgArrId;
-        if (orgArrId.length === 0 && userIds.length === 0) {
-          message.error('请传入接收单位或接收个人');
-          throw new Error('请传入接收单位或接收个人');
-        }
         return new Promise(resolve => {
+          const payload = {
+            ...values,
+            id: lgbId,
+          };
+          if (values.receivedType === 1) {
+            payload.userList = changeFormat(values.userList);
+            payload.orgList = [];
+          }
+          if (values.receivedType === 0) {
+            payload.orgList = changeFormat(values.orgList);
+          }
           dispatch({
             type: `opPhysicalExamination/updatePhysicalExamination`,
             payload,
@@ -105,7 +98,6 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
         <PhysicalExaminationForm
           form={form}
           id={lgbId}
-          getUserId={getUserId}
           receivedTypeFn={receivedTypeFn}
           openStatus="modify"
         />

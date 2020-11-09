@@ -5,7 +5,7 @@ import { Modal } from 'antd';
 import AdvancedForm from '@/components/AdvancedForm';
 
 const TableMembers = ({ opPhysicalExamination, enums, loading, dispatch, id }) => {
-  const { tableRef } = opPhysicalExamination;
+  const { membersTableRef } = opPhysicalExamination;
   const [form] = AdvancedForm.useForm();
   const [physicalModalVisible, setPhysicalModalVisible] = useState(false);
   const [userId, setUserId] = useState();
@@ -101,7 +101,7 @@ const TableMembers = ({ opPhysicalExamination, enums, loading, dispatch, id }) =
     <>
       <ProTable
         headerTitle="报名列表"
-        actionRef={tableRef}
+        actionRef={membersTableRef}
         options={false}
         search={false}
         scroll={{ x: 'max-content' }}

@@ -6,9 +6,6 @@ import PhysicalExaminationForm from './form/PhysicalExaminationForm';
 const AddModal = ({ dispatch, actionRef, loading }) => {
   const [form] = PhysicalExaminationForm.useForm();
   const [addModalVisible, setAddModalVisible] = useState(false);
-  const [userIds, setUserIds] = useState([]);
-  const [receivedType, setReceivedType] = useState(null);
-
   const showModal = () => {
     setAddModalVisible(true);
   };
@@ -27,48 +24,35 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     setAddModalVisible(false);
     form.resetFields();
   };
-
-  // 获取-选择的成员id
-  const getUserId = keys => {
-    const getUserIds = [];
-    keys.forEach(item => {
+  // 获取userList
+  const changeFormat = params => {
+    const userArr = [];
+    params.forEach(item => {
       if (item) {
-        getUserIds.push(item.id);
+        userArr.push(item.id);
       }
     });
-    setUserIds(getUserIds);
-  };
-  // 获取-接收类型
-  const receivedTypeFn = value => {
-    setReceivedType(value);
+    return userArr;
   };
 
   const handleOk = () => {
     form
       .validateFields()
       .then(values => {
-        // 转化单位数据格式
-        const orgArrId = [];
-        values.orgList &&
-          values.orgList.forEach(item => {
-            if (item) {
-              orgArrId.push(item.id);
-            }
-          });
-        // payload.orgList = orgArrId;
-        if (orgArrId.length === 0 && userIds.length === 0) {
-          message.error('请传入接收单位或接收个人');
-          throw new Error('请传入接收单位或接收个人');
-        }
         return new Promise(resolve => {
+          const payload = {
+            ...values,
+          };
+          if (values.receivedType === 1) {
+            payload.userList = changeFormat(values.userList);
+            payload.orgList = [];
+          }
+          if (values.receivedType === 0) {
+            payload.orgList = changeFormat(values.orgList);
+          }
           dispatch({
             type: `opPhysicalExamination/addPhysicalExamination`,
-            payload: {
-              ...values,
-              userList: userIds, // 人员列表
-              receivedType,
-              orgList: orgArrId || undefined,
-            },
+            payload,
             resolve,
           });
         });
@@ -97,7 +81,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <PhysicalExaminationForm form={form} getUserId={getUserId} receivedTypeFn={receivedTypeFn} />
+      <PhysicalExaminationForm form={form} />
     </Modal>
   );
 };
