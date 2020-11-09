@@ -15,6 +15,7 @@ const Model = {
   state: {
     physicalExaminationListData: {},
     tableRef: {},
+    membersTableRef: {},
     memberListData: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -122,7 +123,7 @@ const Model = {
         resolve && resolve(response);
 
         yield put({
-          type: 'tableReload',
+          type: 'membersTableReload',
         });
       }
     },
@@ -164,6 +165,13 @@ const Model = {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
         tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    membersTableReload(state) {
+      const membersTableRef = state.membersTableRef || {};
+      setTimeout(() => {
+        membersTableRef.current && membersTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },

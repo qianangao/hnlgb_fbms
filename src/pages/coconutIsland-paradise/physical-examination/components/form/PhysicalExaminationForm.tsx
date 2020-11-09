@@ -5,17 +5,8 @@ import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
 import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
 import { Radio } from 'antd';
 
-const PhysicalExaminationForm = ({
-  form,
-  id,
-  dispatch,
-  loading,
-  getUserId,
-  receivedTypeFn,
-  openStatus,
-}) => {
-  const [receivedType, setReceivedType] = useState('false');
-  const [userObj, setUserObj] = useState([]);
+const PhysicalExaminationForm = ({ form, id, dispatch, loading, openStatus }) => {
+  const [receivedType, setReceivedType] = useState();
   const formItems = [
     {
       label: '标题',
@@ -45,7 +36,6 @@ const PhysicalExaminationForm = ({
       label: '接收方式',
       name: 'receivedType',
       rules: [{ required: true, message: '请选择接收方式!' }],
-
       render: (
         <Radio.Group disabled={openStatus === 'modify'}>
           <Radio value={0}>单位</Radio>
@@ -54,17 +44,24 @@ const PhysicalExaminationForm = ({
       ),
     },
     {
-      key: 'threeLine',
+      key: 'firstLine',
       type: 'segmentation',
     },
     {
-      label: receivedType === 0 ? '接收单位' : null,
+      label: '接收单位',
       name: 'orgList',
-      rules: [{ required: receivedType === 0, message: '请选择接收单位!' }],
-      render: receivedType === 0 ? <OrgMultiSelectInput /> : <span style={{ display: 'none' }} />,
+      rules: [{ required: true, message: '请选择接收单位!' }],
+      render: <OrgMultiSelectInput />,
+      visible: receivedType === 0,
+    },
+    {
+      label: '接收人员',
+      name: 'userList',
+      rules: [{ required: true, message: '请选择接收人员!' }],
+      render: <LgbMultiSelectInput />,
+      visible: receivedType === 1,
     },
   ];
-
   useEffect(() => {
     if (id) {
       new Promise(resolve => {
@@ -77,8 +74,8 @@ const PhysicalExaminationForm = ({
         const fields = {
           ...data,
         };
-        form.setFieldsValue(fields);
-        setReceivedType(fields.receivedType); // 接收类型
+        setReceivedType(fields.receivedType); // 接收类型初始化
+
         // 接收单位-数据转化
         if (fields.getOrgInformation) {
           const orgObj = JSON.parse(
@@ -100,7 +97,7 @@ const PhysicalExaminationForm = ({
             ).replace(/getUserName/g, 'realName'),
           );
           form.setFieldsValue(fields);
-          setUserObj(userObjs);
+          form.setFieldsValue({ userList: userObjs });
         } else {
           form.setFieldsValue(fields);
         }
@@ -112,18 +109,10 @@ const PhysicalExaminationForm = ({
   const fieldChangeHander = (label, value) => {
     if (label === 'receivedType') {
       setReceivedType(value);
-      form.setFieldsValue({ orgList: [] }); // 切换类型清空
-      setUserObj([]);
-      receivedTypeFn(value); // 接收类型
+      form.setFieldsValue({ orgList: [] }); // 切换类型清空单位
+      form.setFieldsValue({ userList: [] }); // 切换类型清空人员
     }
   };
-
-  // 拿到-选择人员id
-  const onChange = keys => {
-    getUserId(keys);
-    setUserObj(keys);
-  };
-
   return (
     <>
       <AdvancedForm
@@ -132,7 +121,6 @@ const PhysicalExaminationForm = ({
         fields={formItems}
         fieldChange={fieldChangeHander}
       />
-      {receivedType === 1 ? <LgbMultiSelectInput onChange={onChange} value={userObj} /> : null}
     </>
   );
 };
