@@ -75,7 +75,7 @@ const Model = {
         });
       }
     },
-    *importLgbs({ payload }, { call, put }) {
+    *importLgbs({ payload, resolve }, { call, put }) {
       if (!payload) {
         return;
       }
@@ -84,12 +84,11 @@ const Model = {
         url: payload.url,
       });
 
-      if (!response.error) {
-        if (response && response.length > 0) {
-          message.warning('导入数据格式有误，请确认并更正数据后重新导入！');
-        } else {
-          message.success('复工员工信息批量导入成功！');
+      resolve && resolve(response);
 
+      if (!response.error) {
+        if (response || response.length === 0) {
+          message.success('老干部信息批量导入成功！');
           yield put({
             type: 'tableReload',
           });

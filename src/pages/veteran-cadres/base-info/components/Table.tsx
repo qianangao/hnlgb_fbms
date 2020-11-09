@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Popconfirm, Modal } from 'antd';
+import { Button, Popconfirm, Modal, message } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
@@ -138,6 +138,8 @@ const Table = ({
   const importLgbs = e => {
     const file = e.target.files[0];
 
+    message.loading({ content: '文件上传中，请稍后……', key: 'importsLgbKey', duration: 0 });
+
     new Promise(resolve => {
       dispatch({
         type: 'global/uploadFile',
@@ -148,12 +150,39 @@ const Table = ({
         },
         resolve,
       });
-    }).then(data => {
-      dispatch({
-        type: 'vcBasicInfo/importLgbs',
-        payload: data,
+    })
+      .then(data => {
+        return new Promise(resolve => {
+          dispatch({
+            type: 'vcBasicInfo/importLgbs',
+            payload: data,
+            resolve,
+          });
+        });
+      })
+      .then(res => {
+        if (res && res.length > 0) {
+          Modal.warning({
+            title: '导入数据格式有误，请确认并更正数据后重新导入！',
+            width: 640,
+            content: (
+              <div
+                style={{
+                  height: 540,
+                  overflow: 'auto',
+                }}
+              >
+                {res.map(item => (
+                  <div key={item.reason}>{item.reason}</div>
+                ))}
+              </div>
+            ),
+          });
+        }
+      })
+      .finally(() => {
+        message.destroy('importsLgbKey');
       });
-    });
 
     e.target.value = '';
   };
