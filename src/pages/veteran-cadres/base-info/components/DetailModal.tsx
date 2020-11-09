@@ -80,7 +80,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
             {enums.dictNation && enums.dictNation[lgbDetailData.dictNation]}
           </Descriptions.Item>
           <Descriptions.Item label="出生日期">{lgbDetailData.dateOfBirth}</Descriptions.Item>
-          <Descriptions.Item label="入党时间">{lgbDetailData.partyName}</Descriptions.Item>
+          <Descriptions.Item label="入党时间">{lgbDetailData.partyTime}</Descriptions.Item>
           <Descriptions.Item label="政治面貌">
             {enums.dictPoliticalStatus &&
               enums.dictPoliticalStatus[lgbDetailData.dictPoliticalStatus]}
@@ -115,7 +115,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
               enums.dictAllergenUnitNaturel[lgbDetailData.dictAllergenUnitNaturel]}
           </Descriptions.Item>
           <Descriptions.Item label="层级">
-            {enums.dictHierarchy && enums.dictHierarchy[lgbDetailData.dictHierarchy]}
+            {enums.hierarchy && enums.hierarchy[lgbDetailData.hierarchy]}
           </Descriptions.Item>
           <Descriptions.Item label="统计标志">
             {lgbDetailData.statisticSymbol === 1 ? '是' : '否'}
@@ -201,7 +201,9 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item>
           <Descriptions.Item label="评残情况">{lgbHealthyData.disability}</Descriptions.Item>
           <Descriptions.Item label="就近医院">{lgbHealthyData.nearHospital}</Descriptions.Item>
-          <Descriptions.Item label="医疗照顾">{lgbHealthyData.caregivers}</Descriptions.Item>
+          <Descriptions.Item label="医疗照顾">
+            {lgbHealthyData.caregivers === 1 ? '是' : '否'}
+          </Descriptions.Item>
         </Descriptions>
       </Spin>
     </Modal>
