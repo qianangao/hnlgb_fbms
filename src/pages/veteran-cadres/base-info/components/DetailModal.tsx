@@ -115,7 +115,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
               enums.dictAllergenUnitNaturel[lgbDetailData.dictAllergenUnitNaturel]}
           </Descriptions.Item>
           <Descriptions.Item label="层级">
-            {enums.hierarchy && enums.hierarchy[lgbDetailData.hierarchy]}
+            {enums.dictHierarchy && enums.dictHierarchy[lgbDetailData.hierarchy]}
           </Descriptions.Item>
           <Descriptions.Item label="统计标志">
             {lgbDetailData.statisticSymbol === 1 ? '是' : '否'}
