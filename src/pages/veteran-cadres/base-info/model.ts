@@ -123,7 +123,7 @@ const Model = {
           yield downloadXlsFile(response, '条件查询人员列表');
         }
       } else {
-        const fileName = `人员列表${moment().format('MM-DD HH:mm:ss')}.xlsx`;
+        const fileName = `人员列表${moment().format('MM-DD HH:mm:ss')}.xls`;
         params.name = fileName;
         const response = yield call(exportLgbsAsync, params);
 

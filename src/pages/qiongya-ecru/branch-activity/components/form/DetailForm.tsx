@@ -28,7 +28,7 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         <Descriptions.Item label="活动地点">
           {detailBranchActivityData.activityAdd}
         </Descriptions.Item>
-        <Descriptions.Item label="缩略图">
+        <Descriptions.Item label="附件">
           {detailBranchActivityData && detailBranchActivityData.attachmentInfo && (
             <a href={detailBranchActivityData.attachmentInfo.url}>
               {detailBranchActivityData.attachmentInfo.fileName}
@@ -37,7 +37,7 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         </Descriptions.Item>
       </Descriptions>
       <Descriptions size="middle">
-        <Descriptions.Item label="附件">
+        <Descriptions.Item label="缩略图">
           {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (
             <a href={detailBranchActivityData.picAttachmentInfo.url}>
               {detailBranchActivityData.picAttachmentInfo.fileName}
