@@ -87,7 +87,7 @@ const Model = {
       resolve && resolve(response);
 
       if (!response.error) {
-        if (response || response.length === 0) {
+        if (!response || response.length === 0) {
           message.success('老干部信息批量导入成功！');
           yield put({
             type: 'tableReload',

@@ -32,6 +32,11 @@ const Table = ({
       align: 'center',
       dataIndex: 'coreAdd',
       hideInSearch: true,
+      render: text => (
+        <a rel="noopener noreferrer" target="_blank" href={text}>
+          {text}
+        </a>
+      ),
     },
     {
       title: '所属单位',

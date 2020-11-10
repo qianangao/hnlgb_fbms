@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
-// import LgbMultiSelectInput from '@/components/LgbMultiSelectInput';
-// import OrgMultiSelectInput from '@/components/OrgMultiSelectInput';
+import { checkUrl } from '@/utils/validators';
+
 const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     // 名称是否为选择
@@ -18,6 +18,7 @@ const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
       label: '网络报名地址',
       name: 'coreAdd',
       type: 'input',
+      rules: [{ validator: checkUrl }],
     },
     {
       key: 'firstLine',
@@ -35,12 +36,6 @@ const OnlineRegistrationForm = ({ form, id, dispatch, loading }) => {
       type: 'image',
       rules: [{ required: true, message: '请上传缩略图!' }],
     },
-    // {
-    //   label: '选择老干部',
-    //   name: 'memberItems',
-    //   span: 4,
-    //   render: <OrgMultiSelectInput />,
-    // },
     {
       label: '内容',
       name: 'context',

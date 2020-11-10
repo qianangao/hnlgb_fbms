@@ -168,7 +168,7 @@ const Table = ({
             content: (
               <div
                 style={{
-                  height: 540,
+                  maxHeight: 400,
                   overflow: 'auto',
                 }}
               >
@@ -231,12 +231,7 @@ const Table = ({
         >
           模版下载
         </Button>,
-        <Button
-          type="primary"
-          onClick={() => {
-            uploadLgbListRef.current.click();
-          }}
-        >
+        <>
           <input
             type="file"
             name="file"
@@ -244,8 +239,15 @@ const Table = ({
             style={{ display: 'none' }}
             ref={uploadLgbListRef}
           />
-          导入
-        </Button>,
+          <Button
+            type="primary"
+            onClick={() => {
+              uploadLgbListRef.current.click();
+            }}
+          >
+            导入
+          </Button>
+        </>,
         <Button
           type="primary"
           onClick={() => {
