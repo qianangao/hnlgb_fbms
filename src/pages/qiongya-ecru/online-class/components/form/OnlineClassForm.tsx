@@ -35,7 +35,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '缩略图',
-      name: 'picAttachmentInfo',
+      name: 'cephFileInfo',
       type: 'image',
       rules: [{ required: false, message: '请上传图片!' }],
     },
@@ -52,12 +52,12 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          picAttachmentInfo:
-            data.picAttachmentInfo && data.picAttachmentInfo.id && data.picAttachmentInfo.url
+          cephFileInfo:
+            data.cephFile && data.cephFile.id && data.cephFile.url
               ? {
-                  uid: data.picAttachmentInfo.id,
-                  name: data.picAttachmentInfo.fileName,
-                  url: data.picAttachmentInfo.url,
+                  uid: data.cephFile.id,
+                  name: data.cephFile.fileName,
+                  url: data.cephFile.url,
                   status: 'done',
                 }
               : null,

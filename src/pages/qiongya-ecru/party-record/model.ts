@@ -110,7 +110,7 @@ const Model = {
         resolve && resolve(response);
         message.success('党费记录导出成功！');
         yield put({
-          type: 'save',
+          type: 'global/refreshDownloadFiles',
         });
       }
     },
