@@ -159,7 +159,7 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '配偶离世时间',
-      name: 'deadTime',
+      name: 'spouseDieDate',
       visible: spouseDeadTimeVisible,
       type: 'date',
     },
