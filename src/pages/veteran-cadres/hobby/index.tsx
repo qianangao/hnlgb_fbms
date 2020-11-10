@@ -16,7 +16,8 @@ const HobbyInfo = ({ dispatch }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
-          'hobby',
+          'dictHobby',
+          'dictHobbyLevel',
         ],
       },
     });

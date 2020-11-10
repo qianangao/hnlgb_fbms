@@ -1,6 +1,7 @@
 import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
+import { Tag } from 'antd';
 
 const Table = ({ vcHobbyInfo, enums, dispatch }) => {
   const { tableRef } = vcHobbyInfo;
@@ -60,15 +61,22 @@ const Table = ({ vcHobbyInfo, enums, dispatch }) => {
       title: '兴趣爱好',
       align: 'center',
       dataIndex: 'hobby',
-      hideInSearch: true,
-      fixed: 'right',
+      valueEnum: enums.dictHobby,
+      hideInTable: true,
     },
     {
       title: '兴趣爱好',
       align: 'center',
-      dataIndex: 'hobby',
-      valueEnum: enums.hobby,
-      hideInTable: true,
+      width: 200,
+      render: data => (
+        <span>
+          {data.list.map(item => (
+            <Tag color="orange">{`${enums.dictHobby[item.hobby]}|${
+              enums.dictHobbyLevel[item.level]
+            }`}</Tag>
+          ))}
+        </span>
+      ),
     },
   ];
 
