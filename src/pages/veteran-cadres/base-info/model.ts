@@ -254,7 +254,7 @@ const Model = {
       const response = yield call(updatePartTimeLgb, payload);
 
       if (!response.error) {
-        message.success('修改老干社会兼职信息成功！');
+        message.success('修改老干部社会兼职信息成功！');
         yield resolve && resolve();
       }
     },
@@ -275,7 +275,7 @@ const Model = {
       const response = yield call(updateHealthyLgb, payload);
 
       if (!response.error) {
-        message.success('修改老干健康档案信息成功！');
+        message.success('修改老干部健康档案信息成功！');
         yield resolve && resolve();
       }
     },
