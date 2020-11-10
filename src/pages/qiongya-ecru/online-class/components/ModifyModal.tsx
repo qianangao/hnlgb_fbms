@@ -24,6 +24,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   const hideModal = () => {
     setModifyModalVisible(false);
     setOnlineClassId('');
+    form.resetFields();
   };
 
   const handleOk = () => {
