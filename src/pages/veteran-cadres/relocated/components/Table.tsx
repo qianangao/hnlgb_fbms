@@ -72,7 +72,7 @@ const Table = ({ openAddModal, openModifyModal, relocated, dispatch, enums }) =>
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除易地安置吗？"
+          title="确定删除该项吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
