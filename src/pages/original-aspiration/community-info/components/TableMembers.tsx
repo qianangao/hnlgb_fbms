@@ -3,7 +3,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const TableMembers = ({ oaCommunity, enums, dispatch, id }) => {
-  const { tableRef } = oaCommunity;
+  const { membersTableRef } = oaCommunity;
 
   const columns = [
     {
@@ -43,7 +43,7 @@ const TableMembers = ({ oaCommunity, enums, dispatch, id }) => {
   return (
     <ProTable
       headerTitle="成员"
-      actionRef={tableRef}
+      actionRef={membersTableRef}
       options={false}
       search={false}
       scroll={{ x: 'max-content' }}

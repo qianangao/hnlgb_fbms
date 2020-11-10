@@ -18,6 +18,7 @@ const Model = {
     detailActivityCenterUnitData: [],
     memberListData: {},
     tableRef: {},
+    registeredTableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailActivityCenterData: {},
   },
@@ -188,6 +189,13 @@ const Model = {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
         tableRef.current.reloadAndRest();
+      }, 0);
+      return { ...state };
+    },
+    registeredTableReload(state) {
+      const registeredTableRef = state.registeredTableRef || {};
+      setTimeout(() => {
+        registeredTableRef.current && registeredTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
