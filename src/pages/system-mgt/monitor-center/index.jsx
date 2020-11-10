@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
+import moment from 'moment';
+import { Alert, Statistic, Card, Row, Col, Spin } from 'antd';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
-import { Statistic, Card, Row, Col, Spin } from 'antd';
 import FontIcon from '@/components/FontIcon';
 import MonitorDetail from './components/MonitorDetail';
 
@@ -70,6 +71,13 @@ const MonitorCenter = ({ loading, sumData, dispatch }) => {
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <Spin spinning={loading}>
         <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Alert
+              message={`统计截止日期：${moment().startOf('day').format('YYYY-MM-DD HH:mm:ss')}`}
+              type="info"
+              showIcon
+            />
+          </Col>
           {content.map(item => (
             <Col key={item.field} xs={24} sm={12} md={8} lg={8} xl={8} xxl={6}>
               <Card
