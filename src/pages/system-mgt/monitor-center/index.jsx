@@ -20,6 +20,13 @@ const MonitorCenter = ({ loading, sumData, dispatch }) => {
   const [orgId, setOrgId] = useState('');
   useEffect(() => {
     dispatch({
+      type: 'global/getEnums',
+      payload: {
+        names: ['dictSex', 'dictNation', 'dictPoliticalStatus'],
+      },
+    });
+
+    dispatch({
       type: 'smMonitorCenter/getSummaryData',
       payload: {},
     });
