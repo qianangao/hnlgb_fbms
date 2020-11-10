@@ -201,7 +201,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item>
           <Descriptions.Item label="评残情况">{lgbHealthyData.disability}</Descriptions.Item>
           <Descriptions.Item label="就近医院">{lgbHealthyData.nearHospital}</Descriptions.Item>
-          <Descriptions.Item label="医疗照顾">
+          <Descriptions.Item label="是否有医疗照顾">
             {lgbHealthyData.caregivers === 1 ? '是' : '否'}
           </Descriptions.Item>
         </Descriptions>

@@ -3,7 +3,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
 const TableRegistered = ({ oaVolunteerTeam, enums, dispatch, id }) => {
-  const { tableRef } = oaVolunteerTeam;
+  const { registeredTableRef } = oaVolunteerTeam;
 
   const columns = [
     {
@@ -84,7 +84,7 @@ const TableRegistered = ({ oaVolunteerTeam, enums, dispatch, id }) => {
   return (
     <ProTable
       headerTitle="人员信息"
-      actionRef={tableRef}
+      actionRef={registeredTableRef}
       options={false}
       search={false}
       scroll={{ x: 'max-content' }}
