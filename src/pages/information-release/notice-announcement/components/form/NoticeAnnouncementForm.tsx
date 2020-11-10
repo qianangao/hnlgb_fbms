@@ -17,7 +17,7 @@ const NoticeAnnouncementForm = ({ form, id, dispatch, loading }) => {
       label: '通知类型',
       name: 'dictNoticeType',
       enumsLabel: 'dictNoticeType',
-      rules: [{ required: true, message: '请输入通知类型!', whitespace: true }],
+      rules: [{ required: true, message: '请选择通知类型!', whitespace: true }],
     },
     {
       key: 'firstLine',

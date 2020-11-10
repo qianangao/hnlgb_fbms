@@ -23,6 +23,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    setOnlineClassId('');
   };
 
   const handleOk = () => {
@@ -37,9 +38,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
               name: values.name,
               type: values.type,
               url: values.url,
-              photoAttachmentId: values.picAttachmentInfo
-                ? values.picAttachmentInfo.uid
-                : undefined,
+              photoAttachmentId: values.cephFileInfo ? values.cephFileInfo.uid : undefined,
             },
             resolve,
           });

@@ -20,21 +20,6 @@ const Table = ({ openAddModal, openModifyModal, onlineClass, dispatch, tableType
       dataIndex: 'name',
     },
     {
-      title: '缩略图url地址',
-      align: 'center',
-      dataIndex: 'cephFile',
-      hideInSearch: true,
-      render: text => {
-        return (
-          text && (
-            <a title={text.fileUrl} href={text} target="_blank" rel="noopener noreferrer">
-              {text.fileUrl}
-            </a>
-          )
-        );
-      },
-    },
-    {
       title: '网络链接地址',
       align: 'center',
       dataIndex: 'url',
