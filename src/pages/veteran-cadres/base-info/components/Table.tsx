@@ -225,7 +225,7 @@ const Table = ({
         </Button>,
         <Button
           onClick={() => {
-            const url = '/离退休干部职工信息收集模版.xlsx';
+            const url = '/海南老干部管理系统人员信息导入模板.xlsx';
             window.open(url);
           }}
         >

@@ -35,13 +35,6 @@ const MonitorDetail = ({ getRef, enums, getDetailData }) => {
       valueEnum: enums.dictPoliticalStatus,
       hideInSearch: true,
     },
-    {
-      title: '原工作单位及职务',
-      align: 'center',
-      dataIndex: 'originalUnitAndPosition',
-      width: 255,
-      hideInSearch: true,
-    },
     { title: '联系电话', align: 'center', dataIndex: 'phonenumber', hideInSearch: true },
   ];
 
