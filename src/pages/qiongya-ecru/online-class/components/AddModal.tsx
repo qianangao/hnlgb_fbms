@@ -36,7 +36,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
               name: values.name,
               type: values.type,
               url: values.url,
-              photoAttachmentId: values.cephFileInfo ? values.cephFileInfo.uid : undefined,
+              photoAttachmentId: values.cephFileInfo && values.cephFileInfo.uid,
             },
             resolve,
           });
