@@ -35,9 +35,9 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
             type: `medicalGuide/addMedicalGuideInfo`,
             payload: {
               ...values,
-              address: values.addressData.address,
-              longitude: values.addressData.longitude,
-              latitude: values.addressData.latitude,
+              // TODO 政务无外网权限，暂时屏蔽baidu地图api参数
+              longitude: 0,
+              latitude: 0,
             },
             resolve,
           });

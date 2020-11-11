@@ -3,7 +3,6 @@ import { connect } from 'umi';
 
 import AdvancedForm from '@/components/AdvancedForm';
 import { checkUrl, checkPhone } from '@/utils/validators';
-import AddressInput from '@/components/AddressInput';
 
 const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
@@ -18,10 +17,7 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '医院地址',
-      name: 'addressData',
-      render: <AddressInput />,
-
-      rules: [{ required: true, message: '请输入医院地址!' }],
+      name: 'address',
     },
     {
       key: 'firstLine',
@@ -57,14 +53,6 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
-          addressData:
-            data.address && data.latitude
-              ? {
-                  address: data.address,
-                  latitude: data.latitude,
-                  longitude: data.longitude,
-                }
-              : null,
         };
         form.setFieldsValue(fields);
       });
