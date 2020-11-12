@@ -10,15 +10,8 @@
     />
     <title>海南老干部管理系统</title>
     <link rel="icon" href="<%= context.config.publicPath +'favicon.png'%>" type="image/x-icon" />
-    <script
-      type="text/javascript"
-      src="https://api.map.baidu.com/api?v=2.0&ak=wucQxGzxpIRv8tdbr38MnYsm9linHRG6"
-    ></script>
-    <script>
-      window.BMap = BMap;
-    </script>
-  </head>
 
+  </head>
   <body>
     <noscript>Out-of-the-box mid-stage front/design solution!</noscript>
     <div id="root">
@@ -189,4 +182,12 @@
       </div>
     </div>
   </body>
+  <!-- TODO 无外网环境，暂时不适用baidu地图组件 -->
+  <!-- <script
+    type="text/javascript"
+    src="https://api.map.baidu.com/api?v=2.0&ak=wucQxGzxpIRv8tdbr38MnYsm9linHRG6"
+  ></script>
+  <script>
+    window.BMap = BMap;
+  </script> -->
 </html>
