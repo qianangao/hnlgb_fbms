@@ -34,6 +34,13 @@ const routes = {
       remark: '角色授权',
     },
     {
+      path: '/system-mgt/download-mgt',
+      name: 'system-mgt-download-mgt',
+      component: './system-mgt/download-mgt',
+      // authority: '08-06',
+      remark: '下载管理',
+    },
+    {
       path: '/system-mgt/monitor-center',
       name: 'system-mgt-monitor-center',
       component: './system-mgt/monitor-center',
