@@ -4,13 +4,21 @@ import { Descriptions, Modal } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
 import DeathInfoForm from './DeathInfoForm';
 
-const ModifyModal = ({ dispatch, actionRef, loading }) => {
+const ModifyModal = ({ enums, surviviorValues, dispatch, actionRef, loading }) => {
   const [form] = DeathInfoForm.useForm();
   const [deathValues, setDeathValues] = useState();
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
 
   const showModal = deathFormValues => {
     setDeathValues(deathFormValues);
+
+    dispatch({
+      type: 'vcDeathInfo/getSpouseInfo',
+      payload: {
+        id: deathFormValues.id,
+      },
+    });
+
     setModifyModalVisible(true);
   };
 
@@ -26,6 +34,13 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
 
   const hideModal = () => {
     setModifyModalVisible(false);
+    dispatch({
+      type: 'vcDeathInfo/save',
+      payload: {
+        surviviorValues: {},
+      },
+    });
+
     setDeathValues(undefined);
     form.resetFields();
   };
@@ -70,12 +85,31 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       onCancel={hideModal}
     >
       <LgbBasicInfo userId={deathValues && deathValues.userId} />
+
+      <Descriptions title="遗属信息" size="middle">
+        <Descriptions.Item label="遗属姓名">{surviviorValues.spouseName}</Descriptions.Item>
+        <Descriptions.Item label="遗属性别">
+          {enums.dictSpouseSex && enums.dictSpouseSex[surviviorValues.dictSpouseSex]}
+        </Descriptions.Item>
+        <Descriptions.Item label="遗属出生日期">
+          {surviviorValues.spouseBirthOfDate}
+        </Descriptions.Item>
+        <Descriptions.Item label="遗属工作单位及职务">
+          {surviviorValues.spouseUnit}
+        </Descriptions.Item>
+        <Descriptions.Item label="遗属手机号码">{surviviorValues.spousePhone}</Descriptions.Item>
+        <Descriptions.Item label="遗属健康状态">
+          {enums.dictSpouseHealth && enums.dictSpouseHealth[surviviorValues.dictSpouseHealth]}
+        </Descriptions.Item>
+      </Descriptions>
       <Descriptions title="离世信息" size="middle" />
       <DeathInfoForm form={form} deathValues={deathValues} />
     </Modal>
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ global, vcDeathInfo, loading }) => ({
+  enums: global.enums,
+  surviviorValues: vcDeathInfo.surviviorValues,
   loading: loading.models.vcDeathInfo,
 }))(ModifyModal);

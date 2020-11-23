@@ -96,7 +96,7 @@ const Model = {
       }
     },
     *exportList({ payload }, { call, put, select }) {
-      const MAX_EXPORT_VALUE = 5; // 同步导出数据的最大条数
+      const MAX_EXPORT_VALUE = 3000; // 同步导出数据的最大条数
       const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
       const { total } = yield select(state => state.vcBasicInfo.lgbListData);
       const { organizationId } = yield select(state => state.user.userInfo);
@@ -119,7 +119,7 @@ const Model = {
         const response = yield call(exportLgbs, params);
 
         if (!response.error) {
-          yield downloadXlsFile(response, '条件查询人员列表');
+          yield downloadXlsFile(response, `人员列表${moment().format('MM-DD HH:mm:ss')}.xls`);
         }
       } else {
         const fileName = `人员列表${moment().format('MM-DD HH:mm:ss')}.xls`;

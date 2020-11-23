@@ -84,7 +84,7 @@ const BranchActivityForm = ({
       ),
     },
     {
-      key: 'thirdlyLine',
+      key: 'firstLine',
       type: 'segmentation',
     },
     {

@@ -10,6 +10,7 @@ const Table = ({
   enums,
   dispatch,
   opendetailModal,
+  openSubscribeModal,
   openCommentModal,
   publishStatus,
 }) => {
@@ -86,8 +87,27 @@ const Table = ({
             }}
           >
             <Badge count={data.commentNum} offset={[10, 0]}>
-              审核评论
+              <a>审核评论</a>
             </Badge>
+          </a>
+        ),
+        data.resultFieldMangeVo ? (
+          <Popconfirm
+            key={`${data.id}clear`}
+            title="确认取消已预约的场地吗？"
+            placement="topRight"
+            onConfirm={() => clearSite(data.resultFieldMangeVo.timeId)}
+          >
+            <a>取消预约</a>
+          </Popconfirm>
+        ) : (
+          <a
+            key={`${data.id}sub`}
+            onClick={() => {
+              openSubscribeModal(data.id);
+            }}
+          >
+            场地预约
           </a>
         ),
         <Popconfirm
@@ -115,6 +135,14 @@ const Table = ({
         resolve,
       });
     });
+  const clearSite = id => {
+    dispatch({
+      type: 'branchActivity/clearSite',
+      payload: {
+        id,
+      },
+    });
+  };
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({

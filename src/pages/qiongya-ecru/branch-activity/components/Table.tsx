@@ -9,6 +9,7 @@ const Table = ({
   branchActivity,
   dispatch,
   opendetailModal,
+  openSubscribeModal,
   publishState,
   tableType,
   openCommentModal,
@@ -66,13 +67,13 @@ const Table = ({
       dataIndex: 'id',
       width: 180,
       fixed: 'right',
-      render: (dom, employeeData) => [
+      render: (dom, activityData) => [
         publishState === 0
           ? [
               <a
-                key={`${employeeData.id}up`}
+                key={`${activityData.id}up`}
                 onClick={() => {
-                  openModifyModal(employeeData);
+                  openModifyModal(activityData);
                 }}
               >
                 编辑活动
@@ -80,27 +81,46 @@ const Table = ({
             ]
           : [
               <a
-                key={`${employeeData.id}up`}
+                key={`${activityData.id}up`}
                 onClick={() => {
-                  opendetailModal(employeeData);
+                  opendetailModal(activityData);
                 }}
               >
                 查看活动
               </a>,
               <a
-                key={`${employeeData.id}check`}
+                key={`${activityData.id}check`}
                 onClick={() => {
-                  openCommentModal(employeeData);
+                  openCommentModal(activityData);
                 }}
               >
                 查看评论
               </a>,
+              activityData.resultFieldMangeVo ? (
+                <Popconfirm
+                  key={`${activityData.id}clear`}
+                  title="确认取消已预约的场地吗？"
+                  placement="topRight"
+                  onConfirm={() => clearSite(activityData.resultFieldMangeVo.timeId)}
+                >
+                  <a>取消预约</a>
+                </Popconfirm>
+              ) : (
+                <a
+                  key={`${activityData.id}sub`}
+                  onClick={() => {
+                    openSubscribeModal(activityData.id);
+                  }}
+                >
+                  场地预约
+                </a>
+              ),
             ],
         <Popconfirm
-          key={`${employeeData.id}del`}
+          key={`${activityData.id}del`}
           title="确认删除支部活动吗？"
           placement="topRight"
-          onConfirm={() => deleteBranchActivity([employeeData.id])}
+          onConfirm={() => deleteBranchActivity([activityData.id])}
         >
           <a>删除</a>
         </Popconfirm>,
@@ -127,6 +147,15 @@ const Table = ({
       type: 'branchActivity/deleteBranchActivity',
       payload: {
         ids,
+      },
+    });
+  };
+
+  const clearSite = id => {
+    dispatch({
+      type: 'branchActivity/clearSite',
+      payload: {
+        id,
       },
     });
   };

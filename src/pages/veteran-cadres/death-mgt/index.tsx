@@ -4,9 +4,11 @@ import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import ModifyModal from './components/ModifyModal';
 import Table from './components/Table';
+import ReminiscenceModal from './components/ReminiscenceModal';
 
 const DeathInfo = ({ dispatch }) => {
   const modifyRef = useRef({});
+  const reminiscenceRef = useRef({});
 
   useEffect(() => {
     dispatch({
@@ -19,6 +21,9 @@ const DeathInfo = ({ dispatch }) => {
           'dictRetirementLevel',
           'dictRetirementType',
           'dictTreatmentNow',
+          'dictReminiscenceType',
+          'dictSpouseSex',
+          'dictSpouseHealth',
         ],
       },
     });
@@ -34,11 +39,15 @@ const DeathInfo = ({ dispatch }) => {
   const openModifyModal = item => {
     modifyRef.current.showModal(item);
   };
+  const openReminiscenceModal = id => {
+    reminiscenceRef.current.showModal(id);
+  };
 
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openModifyModal={openModifyModal} />
+      <Table openModifyModal={openModifyModal} openReminiscenceModal={openReminiscenceModal} />
       <ModifyModal actionRef={modifyRef} />
+      <ReminiscenceModal actionRef={reminiscenceRef} />
     </OrgTreeLayout>
   );
 };

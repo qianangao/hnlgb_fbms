@@ -10,12 +10,14 @@ import DetailModal from './components/DetailModal';
 import MembersModifyModal from './components/MembersModifyModal';
 import CommentModal from './components/CommentModal';
 import StatisticsTable from './components/StatisticsTable';
+import SubscribeModal from './components/SubscribeModal';
 
 const BranchActivity = ({ dispatch, tableRef }) => {
   const addModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
   const membersModifyModelRef = useRef({});
+  const subscribeModalRef = useRef({});
   const commentModalRef = useRef({});
   const [publishStatus, setPublishStatus] = useState(1);
   const [tableType, setTableType] = useState('8adcf7f96b54cab9016b54ceb77c');
@@ -88,6 +90,9 @@ const BranchActivity = ({ dispatch, tableRef }) => {
   const openModifyModal = ids => {
     modifyModelRef.current.showModal(ids);
   };
+  const openSubscribeModal = id => {
+    subscribeModalRef.current.showModal(id);
+  };
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
@@ -122,6 +127,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
             openAddModal={openAddModal}
             openModifyModal={openModifyModal}
             opendetailModal={opendetailModal}
+            openSubscribeModal={openSubscribeModal}
             openMembersModifyModal={openMembersModifyModal}
             openCommentModal={openCommentModal}
             publishState={publishStatus}
@@ -133,6 +139,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
       <CommentModal actionRef={commentModalRef} />
+      <SubscribeModal actionRef={subscribeModalRef} />
       <MembersModifyModal actionRef={membersModifyModelRef} />
     </OrgTreeLayout>
   );

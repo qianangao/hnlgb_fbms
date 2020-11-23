@@ -8,6 +8,10 @@ import {
   getCommentList,
   commentAudit,
   deleteComment,
+  getSiteData,
+  getSiteTimeData,
+  setSite,
+  clearSite,
 } from './service';
 
 const Model = {
@@ -16,6 +20,7 @@ const Model = {
     ActivityListData: {},
     tableRef: {},
     commentTableRef: {},
+    siteData: {},
     selectedOrgId: undefined, // 选择的组织id
     detailActivityData: {},
   },
@@ -151,6 +156,48 @@ const Model = {
           payload: {
             detailActivityData: response,
           },
+        });
+      }
+    },
+    *getSiteData({ payload, resolve }, { call, put }) {
+      const response = yield call(getSiteData, payload);
+      if (!response.error) {
+        const items = {};
+        response.length > 0 &&
+          response.forEach(item => {
+            items[item.id] = item.name;
+          });
+
+        resolve && resolve(items);
+
+        yield put({
+          type: 'save',
+          payload: {
+            siteData: items,
+          },
+        });
+      }
+    },
+    *getSiteTimeData({ payload, resolve }, { call }) {
+      const response = yield call(getSiteTimeData, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *setSite({ payload, resolve }, { call }) {
+      const response = yield call(setSite, payload);
+      if (!response.error) {
+        message.success('活动场地预约成功！');
+        resolve && resolve(response);
+      }
+    },
+    *clearSite({ payload, resolve }, { call, put }) {
+      const response = yield call(clearSite, payload);
+      if (!response.error) {
+        message.success('活动场地预约成功取消！');
+        resolve && resolve(response);
+        yield put({
+          type: 'tableReload',
         });
       }
     },

@@ -12,6 +12,7 @@ for (let i = 0; i < 20; i++) {
   staffInfo.push({
     id: '402883e973e5c2ce0173e5c2ce9' + i, //id
     userId: '123456' + i,
+    reminiscence: i % 2,
     dictSex: '8adcf7c96a48fae4016a4925e34b', //标题
     originalUnitAndPosition: '海口市林业局副局长' + i,
     realName: 'death' + i,
@@ -50,8 +51,26 @@ const list = (req, res) => {
   });
 };
 
+const survivior = (req, res) => {
+  res.send({
+    code: 0,
+    msg: 'success',
+    data: {
+      spouseBirthOfDate: '2020-08-19T09:24:30.717Z',
+      spouseDieDate: '2020-08-19T09:24:30.717Z',
+      spouseIsDead: 'string',
+      spouseName: 'string',
+      spouseOther: 'string',
+      spousePhone: 'string',
+      spouseUnit: 'string',
+    },
+  });
+};
+
 export default {
-  'GET /user/death': list,
-  'DELETE /user/death': noResponse,
-  'PUT /user/death/:id': noResponse,
+  'GET /users/death': list,
+  'DELETE /users/death': noResponse,
+  'PUT /users/death/:id': noResponse,
+  'POST /reminiscence': noResponse,
+  'GET /users/survivior/:id': survivior,
 };
