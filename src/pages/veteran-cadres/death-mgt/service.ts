@@ -5,7 +5,7 @@ import request from '@/utils/request';
  * @param {*} params
  */
 export async function updateLgb(params) {
-  return request(`/user/death/${params.id}`, {
+  return request(`/users/death/${params.id}`, {
     method: 'PUT',
     data: params,
   });
@@ -16,8 +16,29 @@ export async function updateLgb(params) {
  * @param {*} params
  */
 export async function deleteLgb(params) {
-  return request(`/user/death`, {
+  return request(`/users/death`, {
     method: 'DELETE',
+    data: params,
+  });
+}
+/**
+ * 获取老干部遗属信息
+ * @param {*} params
+ */
+export async function getSpouseInfo(params) {
+  return request(`/users/survivior/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 发起追思缅怀活动
+ * @param {*} params
+ */
+export async function initReminiscence(params) {
+  return request(`/reminiscence`, {
+    method: 'POST',
     data: params,
   });
 }
@@ -27,7 +48,7 @@ export async function deleteLgb(params) {
  * @param {*} params
  */
 export async function getLgbList(params) {
-  return request('/user/death', {
+  return request('/users/death', {
     method: 'GET',
     params,
   });

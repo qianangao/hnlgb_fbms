@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ vcDeathInfo, openModifyModal, enums, dispatch }) => {
+const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dispatch }) => {
   const { tableRef } = vcDeathInfo;
 
   const columns = [
@@ -68,11 +68,26 @@ const Table = ({ vcDeathInfo, openModifyModal, enums, dispatch }) => {
       valueEnum: enums.dictTreatmentNow,
     },
     {
+      title: '追思缅怀',
+      align: 'center',
+      dataIndex: 'reminiscence',
+      valueEnum: {
+        0: { text: '未缅怀', status: 'Processing' },
+        1: { text: '已缅怀', status: 'Success' },
+      },
+    },
+    {
+      title: '缅怀类型',
+      align: 'center',
+      dataIndex: 'reminiscenceType',
+      valueEnum: enums.dictReminiscenceType,
+    },
+    {
       title: '操作',
       valueType: 'option',
       align: 'center',
       dataIndex: 'id',
-      width: 180,
+      width: 200,
       fixed: 'right',
       render: (dom, employeeData) => [
         <a key={`${employeeData.id}up`} onClick={() => openModifyModal(employeeData)}>
@@ -86,6 +101,11 @@ const Table = ({ vcDeathInfo, openModifyModal, enums, dispatch }) => {
         >
           <a>恢复在世</a>
         </Popconfirm>,
+        employeeData.reminiscence === 0 && (
+          <a key={`${employeeData.id}up`} onClick={() => openReminiscenceModal(employeeData.id)}>
+            追思缅怀
+          </a>
+        ),
       ],
     },
   ];

@@ -1,11 +1,12 @@
 import { message } from 'antd';
 import moment from 'moment';
-import { deleteLgb, updateLgb, getLgbList } from './service';
+import { deleteLgb, updateLgb, getLgbList, initReminiscence, getSpouseInfo } from './service';
 
 const Model = {
   namespace: 'vcDeathInfo',
   state: {
     lgbListData: {},
+    surviviorValues: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -60,6 +61,21 @@ const Model = {
         });
       }
     },
+
+    *getSpouseInfo({ payload, resolve }, { put, call }) {
+      const response = yield call(getSpouseInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            surviviorValues: response,
+          },
+        });
+      }
+    },
+
     *selectOrgChange({ payload }, { put }) {
       yield put({
         type: 'save',
@@ -90,6 +106,17 @@ const Model = {
 
       if (!response.error) {
         message.success('老干部恢复在世成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *initReminiscence({ payload, resolve }, { call, put }) {
+      const response = yield call(initReminiscence, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('追思缅怀活动发起成功！');
         yield put({
           type: 'tableReload',
         });
