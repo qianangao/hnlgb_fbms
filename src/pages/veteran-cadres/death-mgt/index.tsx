@@ -39,8 +39,8 @@ const DeathInfo = ({ dispatch }) => {
   const openModifyModal = item => {
     modifyRef.current.showModal(item);
   };
-  const openReminiscenceModal = item => {
-    reminiscenceRef.current.showModal(item);
+  const openReminiscenceModal = id => {
+    reminiscenceRef.current.showModal(id);
   };
 
   return (

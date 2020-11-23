@@ -250,10 +250,10 @@ const partyUserList = (req, res) => {
 };
 
 export default {
-  'GET /lgbsmp/api/orgLife': list,
-  'POST /lgbsmp/api/orgLife': noResponse,
-  'DELETE /lgbsmp/api/orgLife': noResponse,
-  'PUT /lgbsmp/api/orgLife/:id': noResponse,
-  'GET /lgbsmp/api/orgLife/:id': detailOrgLife,
+  'GET /orgLife': list,
+  'POST /orgLife': noResponse,
+  'DELETE /orgLife': noResponse,
+  'PUT /orgLife/:id': noResponse,
+  'GET /orgLife/:id': detailOrgLife,
   'GET /branchPartyUser/:id': partyUserList,
 };

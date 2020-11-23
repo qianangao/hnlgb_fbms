@@ -13,6 +13,13 @@ const routes = {
       remark: '支部信息',
     },
     {
+      path: '/qiongya-ecru/activity-site',
+      name: 'qiongya-ecru-activity-site',
+      component: './qiongya-ecru/activity-site',
+      // authority: '02-01',
+      remark: '活动地点管理',
+    },
+    {
       path: '/qiongya-ecru/branch-activity',
       name: 'qiongya-ecru-branch-activity',
       component: './qiongya-ecru/branch-activity',

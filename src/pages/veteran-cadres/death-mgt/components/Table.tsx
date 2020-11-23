@@ -70,18 +70,19 @@ const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dis
     {
       title: '追思缅怀',
       align: 'center',
-      dataIndex: 'reminiscence',
+      dataIndex: 'isReminiscence',
       valueEnum: {
         0: { text: '未缅怀', status: 'Processing' },
         1: { text: '已缅怀', status: 'Success' },
       },
     },
-    {
-      title: '缅怀类型',
-      align: 'center',
-      dataIndex: 'reminiscenceType',
-      valueEnum: enums.dictReminiscenceType,
-    },
+    // TODO 接口暂时未加
+    // {
+    //   title: '缅怀类型',
+    //   align: 'center',
+    //   dataIndex: 'reminiscenceType',
+    //   valueEnum: enums.dictReminiscenceType,
+    // },
     {
       title: '操作',
       valueType: 'option',
@@ -101,8 +102,11 @@ const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dis
         >
           <a>恢复在世</a>
         </Popconfirm>,
-        employeeData.reminiscence === 0 && (
-          <a key={`${employeeData.id}up`} onClick={() => openReminiscenceModal(employeeData.id)}>
+        employeeData.isReminiscence === 0 && (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => openReminiscenceModal(employeeData.userId)}
+          >
             追思缅怀
           </a>
         ),
