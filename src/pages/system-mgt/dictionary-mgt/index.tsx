@@ -1,55 +1,38 @@
 import React, { useEffect, useRef } from 'react';
 import { connect } from 'umi';
-import OrgTreeLayout from '@/layouts/OrgTreeLayout';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import Table from './components/Table';
-
-import ModifyModal from './components/ModifyModal';
-import MaintainModal from './components/MaintainModal';
+import ModifyDictModal from './components/ModifyDictModal';
+import FieldModal from './components/fields/FieldModal';
 
 const DictionaryMgt = ({ dispatch }) => {
-  const modifyRef = useRef({});
-  const maintainRef = useRef({});
+  const modifyDictRef = useRef({});
+
+  const fieldRef = useRef({});
 
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
       payload: {
-        names: [
-          'dictSex',
-          'dictIdentity',
-          'dictRetirementLevel',
-          'dictNation',
-          'dictPoliticalStatus',
-          'dictDegree',
-        ],
+        names: [],
       },
-    });
-    dispatch({
-      type: 'smDictionaryMgt/getSearchRoles',
     });
   }, []);
 
-  const orgChangeHander = orgId => {
-    dispatch({
-      type: 'smDictionaryMgt/selectOrgChange',
-      payload: orgId,
-    });
-  };
-
-  const openModifyModal = item => {
-    modifyRef.current.showModal(item);
+  const openAddDictModal = () => {
+    modifyDictRef.current.showModal();
   };
 
   const openMaintainModal = item => {
-    maintainRef.current.showModal(item);
+    fieldRef.current.showModal(item);
   };
 
   return (
-    <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table openModifyModal={openModifyModal} openMaintainModal={openMaintainModal} />
-      <ModifyModal actionRef={modifyRef} />
-      <MaintainModal actionRef={maintainRef} />
-    </OrgTreeLayout>
+    <PageHeaderWrapper>
+      <Table openAddDictModal={openAddDictModal} openMaintainModal={openMaintainModal} />
+      <ModifyDictModal actionRef={modifyDictRef} />
+      <FieldModal actionRef={fieldRef} />
+    </PageHeaderWrapper>
   );
 };
 

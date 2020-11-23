@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
-import DictionaryForm from './DictionaryForm';
+import FieldForm from './FieldForm';
 
-const DictionaryAddModal = ({ dispatch, actionRef, loading }) => {
-  const [form] = DictionaryForm.useForm();
+const DictionaryModifyModal = ({ dispatch, actionRef, loading }) => {
+  const [form] = FieldForm.useForm();
   const [modifyModalVisible, setModalVisible] = useState(false);
-  const [data, setData] = useState({});
+  const [fieldData, setFieldData] = useState({});
+  const [type, setType] = useState('add');
 
   const showModal = items => {
     setModalVisible(true);
-    setData(items);
+    setFieldData(items);
+    setType(items.remarks ? 'update' : 'add');
   };
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const DictionaryAddModal = ({ dispatch, actionRef, loading }) => {
 
   const hideModal = () => {
     setModalVisible(false);
+    setFieldData({});
     form.resetFields();
   };
 
@@ -34,10 +37,9 @@ const DictionaryAddModal = ({ dispatch, actionRef, loading }) => {
       .then(values => {
         return new Promise(resolve => {
           dispatch({
-            type: `smDictionaryMgt/updateRemarks`,
+            type: `smDictionaryMgt/${type}Field`,
             payload: {
-              code: data.code,
-              remarks: values.remarks,
+              ...values,
             },
             resolve,
           });
@@ -53,7 +55,7 @@ const DictionaryAddModal = ({ dispatch, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增字段"
+      title={type === 'add' ? '新增字段' : '编辑字段信息'}
       centered
       style={{ paddingBottom: 0 }}
       bodyStyle={{
@@ -65,11 +67,11 @@ const DictionaryAddModal = ({ dispatch, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DictionaryForm form={form} data={data} />
+      <FieldForm form={form} data={fieldData} />
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
   loading: loading.models.smDictionaryMgt,
-}))(DictionaryAddModal);
+}))(DictionaryModifyModal);

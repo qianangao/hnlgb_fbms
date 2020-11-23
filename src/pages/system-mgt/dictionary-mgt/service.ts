@@ -1,91 +1,55 @@
 import request from '@/utils/request';
-
-/**
- * 获取角色数据
- * @param {*} params
- */
-export async function getRoles(params) {
-  return request('/role/nopage', {
+// 查询字典信息  queryType: dict
+export async function getDictList(params) {
+  return request(`/dictionary/relation`, {
     method: 'GET',
     params,
   });
 }
-
-/**
- * 新增工作人员
- * @param {*} params
- */
-export async function addStaff(params) {
-  return request('/user', {
+// 新增字典信息     params：chineseName、name
+export async function addDict(params) {
+  return request(`/dictionary/relation`, {
     method: 'POST',
     data: params,
   });
 }
-
-/**
- * 修改工作人员信息
- * @param {*} params
- */
-export async function updateStaff(params) {
-  return request(`/user/${params.id}`, {
-    method: 'PUT',
-    data: params,
-  });
-}
-/**
- * 删除工作人员
- * @param {*} params
- */
-export async function deleteStaffs(params) {
-  return request(`/user`, {
+// 删除字典信息  params：ids
+export async function deleteDicts(params) {
+  return request(`/dictionary/relation`, {
     method: 'DELETE',
     data: params,
   });
 }
 
-/**
- * 获取工作人员列表
- * @param {*} params
- */
-export async function getStaffList(params) {
-  return request('/dictionary/relation', {
-    method: 'GET',
-    params,
-  });
-}
-
-export async function getStaffList1(params) {
+// 根据chineseName查询字段信息  params：chineseName、queryType
+export async function getFieldList(params) {
   return request(`/dictionary`, {
     method: 'GET',
     params,
   });
 }
 
-/**
- * 获取工作人员信息
- * @param {*} params
- */
-export async function getStaffInfo(params) {
-  return request(`/user/${params.id}`, {
-    method: 'GET',
-    params,
+// 新增字段信息 params：remarks、code、chineseName
+export async function addField(params) {
+  return request('/dictionary', {
+    method: 'POST',
+    data: params,
   });
 }
 
-/**
- * 工作人员重置密码
- * @param {*} params
- */
-export async function resetStaffPwd(params) {
-  return request(`/user/reset_password/${params.id}`, {
+//
+// 编辑字段信息 params：remarks、code
+export async function updateField(params) {
+  return request('/dictionary', {
     method: 'PUT',
     data: params,
   });
 }
 
-export async function updateRemarks(params) {
+// 删除字段信息 params：idsDictionary
+export async function deleteFields(params) {
   return request(`/dictionary`, {
-    method: 'PUT',
+    method: 'DELETE',
     data: params,
   });
 }

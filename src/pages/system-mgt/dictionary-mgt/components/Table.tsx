@@ -3,7 +3,7 @@ import { Button, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ smDictionaryMgt, openMaintainModal, openModifyModal, dispatch }) => {
+const Table = ({ smDictionaryMgt, openMaintainModal, openAddDictModal, dispatch }) => {
   const { tableRef } = smDictionaryMgt;
 
   const columns = [
@@ -32,14 +32,21 @@ const Table = ({ smDictionaryMgt, openMaintainModal, openModifyModal, dispatch }
     },
   ];
 
-  const getStaffList = params =>
+  const getDictList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'smDictionaryMgt/getStaffList',
+        type: 'smDictionaryMgt/getDictList',
         payload: { ...params },
         resolve,
       });
     });
+
+  const deleteDicts = ids => {
+    dispatch({
+      type: 'smDictionaryMgt/deleteDicts',
+      payload: { ids },
+    });
+  };
 
   return (
     <ProTable
@@ -48,18 +55,18 @@ const Table = ({ smDictionaryMgt, openMaintainModal, openModifyModal, dispatch }
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getStaffList(params)}
+      request={async params => getDictList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openModifyModal()}>
+        <Button type="primary" onClick={() => openAddDictModal()}>
           新增
         </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除所选择单位？该操作不可恢复',
+                title: '确认删除所选择字典信息？该操作不可恢复',
                 onOk: () => {
-                  deleteStaffs(selectedRowKeys);
+                  deleteDicts(selectedRowKeys);
                 },
               });
             }}

@@ -40,17 +40,18 @@ const routes = {
       remark: '下载管理',
     },
     {
+      path: '/system-mgt/dictionary-mgt',
+      name: 'system-mgt-dictionary-mgt',
+      component: './system-mgt/dictionary-mgt',
+      authority: '08-06',
+      remark: '字典管理',
+    },
+    {
       path: '/system-mgt/monitor-center',
       name: 'system-mgt-monitor-center',
       component: './system-mgt/monitor-center',
       authority: '08-05',
       remark: '监测中心',
-    },
-    {
-      path: '/system-mgt/dictionary-mgt',
-      name: 'system-mgt-dictionary-mgt',
-      component: './system-mgt/dictionary-mgt',
-      remark: '字典管理',
     },
     {
       path: '/system-mgt',

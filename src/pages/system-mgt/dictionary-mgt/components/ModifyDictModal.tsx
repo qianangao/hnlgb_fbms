@@ -3,16 +3,12 @@ import { connect } from 'umi';
 import { Modal } from 'antd';
 import DictionaryForm from './DictionaryForm';
 
-const DictionaryModifyModal = ({ dispatch, actionRef, loading }) => {
+const ModifyDictModal = ({ dispatch, actionRef, loading }) => {
   const [form] = DictionaryForm.useForm();
   const [modifyModalVisible, setModalVisible] = useState(false);
-  const [type, setType] = useState('');
-  const [data, setData] = useState({});
 
-  const showModal = (items, status) => {
-    setType(status);
+  const showModal = () => {
     setModalVisible(true);
-    setData(items);
   };
 
   useEffect(() => {
@@ -36,10 +32,9 @@ const DictionaryModifyModal = ({ dispatch, actionRef, loading }) => {
       .then(values => {
         return new Promise(resolve => {
           dispatch({
-            type: `smDictionaryMgt/updateRemarks`,
+            type: `smDictionaryMgt/addDict`,
             payload: {
-              code: data.code,
-              remarks: values.remarks,
+              ...values,
             },
             resolve,
           });
@@ -55,7 +50,7 @@ const DictionaryModifyModal = ({ dispatch, actionRef, loading }) => {
 
   return (
     <Modal
-      title="编辑字段"
+      title="新增字典"
       centered
       style={{ paddingBottom: 0 }}
       bodyStyle={{
@@ -63,15 +58,14 @@ const DictionaryModifyModal = ({ dispatch, actionRef, loading }) => {
       }}
       visible={modifyModalVisible}
       onOk={handleOk}
-      forceRender
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <DictionaryForm form={form} type={type} data={data} />
+      <DictionaryForm form={form} />
     </Modal>
   );
 };
 
 export default connect(({ loading }) => ({
   loading: loading.models.smDictionaryMgt,
-}))(DictionaryModifyModal);
+}))(ModifyDictModal);

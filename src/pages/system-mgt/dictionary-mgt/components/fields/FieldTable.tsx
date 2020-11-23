@@ -3,14 +3,8 @@ import { Button, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const DictionaryTable = ({
-  smDictionaryMgt,
-  openModifyModal,
-  openAddModal,
-  dispatch,
-  chineseName,
-}) => {
-  const { tableRef, staffListData1 } = smDictionaryMgt;
+const FieldTable = ({ smDictionaryMgt, dictData, openFieldModal, dispatch }) => {
+  const { fieldTableRef } = smDictionaryMgt;
 
   const columns = [
     {
@@ -32,43 +26,50 @@ const DictionaryTable = ({
       width: 180,
       fixed: 'right',
       render: (dom, orgData) => [
-        <a key={`${orgData.id}up`} onClick={() => openModifyModal(orgData, 'edit')}>
+        <a key={`${orgData.id}up`} onClick={() => openFieldModal(orgData)}>
           编辑
         </a>,
       ],
     },
   ];
 
-  const getStaffList = () =>
+  const getFieldList = () =>
     new Promise(resolve => {
       dispatch({
-        type: 'smDictionaryMgt/getStaffList1',
-        payload: { chineseName },
+        type: 'smDictionaryMgt/getFieldList',
+        payload: { chineseName: dictData.chineseName },
         resolve,
       });
     });
 
+  const deleteFields = ids => {
+    dispatch({
+      type: 'smDictionaryMgt/deleteFields',
+      payload: { idsDictionary: ids },
+    });
+  };
+
   return (
     <ProTable
-      rowKey="id"
-      headerTitle="字典信息"
-      actionRef={tableRef}
+      rowKey="code"
+      headerTitle="字段信息"
+      actionRef={fieldTableRef}
       search={false}
       destroyOnClose
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
-      request={async params => getStaffList(params)}
+      request={async params => getFieldList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal(staffListData1[0])}>
+        <Button type="primary" onClick={() => openFieldModal(dictData)}>
           新增
         </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除所选择单位？该操作不可恢复',
+                title: '确认删除所选择字段？该操作不可恢复',
                 onOk: () => {
-                  deleteStaffs(selectedRowKeys);
+                  deleteFields(selectedRowKeys);
                 },
               });
             }}
@@ -82,8 +83,6 @@ const DictionaryTable = ({
   );
 };
 
-export default connect(({ smDictionaryMgt, global }) => ({
+export default connect(({ smDictionaryMgt }) => ({
   smDictionaryMgt,
-  staffListData1: smDictionaryMgt.staffListData1,
-  enums: global.enums,
-}))(DictionaryTable);
+}))(FieldTable);
