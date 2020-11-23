@@ -36,6 +36,19 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
           )}
         </Descriptions.Item>
       </Descriptions>
+
+      {detailBranchActivityData.resultFieldMangeVo && (
+        <Descriptions size="middle">
+          <Descriptions.Item label="预约场地">
+            {detailBranchActivityData.resultFieldMangeVo.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="预约时间">
+            {detailBranchActivityData.resultFieldMangeVo.time +
+              (detailBranchActivityData.resultFieldMangeVo.amOrPm === 1 ? '上午' : '下午')}
+          </Descriptions.Item>
+        </Descriptions>
+      )}
+
       <Descriptions size="middle">
         <Descriptions.Item label="缩略图">
           {detailBranchActivityData && detailBranchActivityData.picAttachmentInfo && (

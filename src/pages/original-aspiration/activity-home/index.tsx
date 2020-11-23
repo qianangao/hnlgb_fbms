@@ -8,6 +8,7 @@ import CommentModal from './components/CommentModal';
 import Table from './components/Table';
 import ModifyModal from './components/ModifyModal';
 import DetailModal from './components/DetailModal';
+import SubscribeModal from './components/SubscribeModal';
 
 const ActivityHome = ({ dispatch }) => {
   const [publishStatus, setPublishStatus] = useState(1);
@@ -15,6 +16,7 @@ const ActivityHome = ({ dispatch }) => {
   const commentModelRef = useRef({});
   const modifyModelRef = useRef({});
   const detailModalRef = useRef({});
+  const subscribeModalRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -42,6 +44,9 @@ const ActivityHome = ({ dispatch }) => {
   const opendetailModal = ids => {
     detailModalRef.current.showModal(ids);
   };
+  const openSubscribeModal = id => {
+    subscribeModalRef.current.showModal(id);
+  };
   const onPublishStatusChange = value => {
     // publishStatus 0 草稿箱 ， 1 已发布
     setPublishStatus(value);
@@ -55,12 +60,14 @@ const ActivityHome = ({ dispatch }) => {
           openCommentModal={openCommentModal}
           openAddModal={openAddModal}
           openModifyModal={openModifyModal}
+          openSubscribeModal={openSubscribeModal}
           opendetailModal={opendetailModal}
         />
       </TypeSelectLayout>
       <AddModal actionRef={addModelRef} />
       <ModifyModal actionRef={modifyModelRef} />
       <DetailModal actionRef={detailModalRef} />
+      <SubscribeModal actionRef={subscribeModalRef} />
       <CommentModal actionRef={commentModelRef} />
     </OrgTreeLayout>
   );

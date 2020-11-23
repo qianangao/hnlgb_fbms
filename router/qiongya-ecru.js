@@ -16,7 +16,7 @@ const routes = {
       path: '/qiongya-ecru/activity-site',
       name: 'qiongya-ecru-activity-site',
       component: './qiongya-ecru/activity-site',
-      // authority: '02-01',
+      authority: '02-07',
       remark: '活动地点管理',
     },
     {

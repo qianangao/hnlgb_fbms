@@ -84,3 +84,47 @@ export async function deleteComment(params) {
     data: params,
   });
 }
+
+/**
+ * 活动地点查询（无分页）
+ * @param {*} params
+ */
+export async function getSiteData(params) {
+  return request(`/field_manage/nopage`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 预约活动时段查询
+ * @param {*} params
+ */
+export async function getSiteTimeData(params) {
+  return request(`/field_order/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 设置预约活动地点
+ * @param {*} params
+ */
+export async function setSite(params) {
+  return request(`/field_order`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
+ * 取消预约活动
+ * @param {*} params
+ */
+export async function clearSite(params) {
+  return request(`/field_order/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}

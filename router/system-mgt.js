@@ -37,7 +37,7 @@ const routes = {
       path: '/system-mgt/download-mgt',
       name: 'system-mgt-download-mgt',
       component: './system-mgt/download-mgt',
-      // authority: '08-06',
+      authority: '08-07',
       remark: '下载管理',
     },
     {

@@ -12,6 +12,10 @@ import {
   commentAudit,
   getStatisticsList,
   getOrgLifeStatisticsVo,
+  getSiteData,
+  getSiteTimeData,
+  setSite,
+  clearSite,
 } from './service';
 
 const Model = {
@@ -26,6 +30,7 @@ const Model = {
     CommentListData: {},
     statisticsData: {},
     getOrgLifeStatisticsVoData: {},
+    siteData: {},
     totalNumber: '',
     totalNum: '',
   },
@@ -235,6 +240,48 @@ const Model = {
             getOrgLifeStatisticsVoData: result,
             totalNum: totalNumber,
           },
+        });
+      }
+    },
+    *getSiteData({ payload, resolve }, { call, put }) {
+      const response = yield call(getSiteData, payload);
+      if (!response.error) {
+        const items = {};
+        response.length > 0 &&
+          response.forEach(item => {
+            items[item.id] = item.name;
+          });
+
+        resolve && resolve(items);
+
+        yield put({
+          type: 'save',
+          payload: {
+            siteData: items,
+          },
+        });
+      }
+    },
+    *getSiteTimeData({ payload, resolve }, { call }) {
+      const response = yield call(getSiteTimeData, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *setSite({ payload, resolve }, { call }) {
+      const response = yield call(setSite, payload);
+      if (!response.error) {
+        message.success('活动场地预约成功！');
+        resolve && resolve(response);
+      }
+    },
+    *clearSite({ payload, resolve }, { call, put }) {
+      const response = yield call(clearSite, payload);
+      if (!response.error) {
+        message.success('活动场地预约成功取消！');
+        resolve && resolve(response);
+        yield put({
+          type: 'tableReload',
         });
       }
     },
