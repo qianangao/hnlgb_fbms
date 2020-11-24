@@ -15,7 +15,7 @@ const ModifyModal = ({ enums, surviviorValues, dispatch, actionRef, loading }) =
     dispatch({
       type: 'vcDeathInfo/getSpouseInfo',
       payload: {
-        id: deathFormValues.id,
+        userId: deathFormValues.userId,
       },
     });
 
