@@ -2,7 +2,6 @@ const routes = {
   path: '/system-mgt',
   name: 'system-mgt',
   icon: 'setting',
-  authority: '08',
   remark: '系统管理',
   routes: [
     {
@@ -39,6 +38,13 @@ const routes = {
       component: './system-mgt/download-mgt',
       authority: '08-07',
       remark: '下载管理',
+    },
+    {
+      path: '/system-mgt/dictionary-mgt',
+      name: 'system-mgt-dictionary-mgt',
+      component: './system-mgt/dictionary-mgt',
+      authority: '08-06',
+      remark: '字典管理',
     },
     {
       path: '/system-mgt/monitor-center',

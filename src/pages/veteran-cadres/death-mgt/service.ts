@@ -26,7 +26,7 @@ export async function deleteLgb(params) {
  * @param {*} params
  */
 export async function getSpouseInfo(params) {
-  return request(`/users/survivior/${params.id}`, {
+  return request(`/users/survivior/${params.userId}`, {
     method: 'GET',
     params,
   });
