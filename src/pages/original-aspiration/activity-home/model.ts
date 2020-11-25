@@ -184,11 +184,14 @@ const Model = {
         resolve && resolve(response);
       }
     },
-    *setSite({ payload, resolve }, { call }) {
+    *setSite({ payload, resolve }, { call, put }) {
       const response = yield call(setSite, payload);
       if (!response.error) {
         message.success('活动场地预约成功！');
         resolve && resolve(response);
+        yield put({
+          type: 'tableReload',
+        });
       }
     },
     *clearSite({ payload, resolve }, { call, put }) {
