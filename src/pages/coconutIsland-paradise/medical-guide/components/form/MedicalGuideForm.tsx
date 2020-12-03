@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'umi';
 
 import AdvancedForm from '@/components/AdvancedForm';
-import { checkUrl, checkPhone } from '@/utils/validators';
+import { checkUrl, checkAllTel } from '@/utils/validators';
 
 const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
@@ -27,7 +27,7 @@ const MedicalGuideForm = ({ form, id, dispatch, loading }) => {
       label: '联系电话',
       name: 'phone',
       type: 'input',
-      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkPhone }],
+      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkAllTel }],
     },
     {
       label: '医院网址',
