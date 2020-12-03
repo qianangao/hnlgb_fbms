@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
-import { checkTel } from '@/utils/validators';
+import { checkAllTel } from '@/utils/validators';
 
 const CaresForm = ({ form, dispatch, id }) => {
   const formItems = [
@@ -21,7 +21,7 @@ const CaresForm = ({ form, dispatch, id }) => {
     {
       label: '联系方式',
       name: 'contactInformation',
-      rules: [{ validator: checkTel }],
+      rules: [{ validator: checkAllTel }],
     },
     {
       label: '简介',
