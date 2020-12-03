@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
-import { checkUrl, checkPhone } from '@/utils/validators';
+import { checkUrl, checkTel } from '@/utils/validators';
 
 const SeniorUniversityForm = ({ id, loading, dispatch, form }) => {
   const formItems = [
@@ -22,7 +22,7 @@ const SeniorUniversityForm = ({ id, loading, dispatch, form }) => {
     {
       label: '联系电话',
       name: 'phone',
-      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkPhone }],
+      rules: [{ required: true, message: '请输入联系电话!' }, { validator: checkTel }],
     },
     {
       label: '大学网址',

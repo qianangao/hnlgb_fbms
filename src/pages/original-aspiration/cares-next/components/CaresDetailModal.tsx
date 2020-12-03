@@ -57,7 +57,9 @@ const CaresDetailModal = ({ dispatch, caresDetailData, actionRef }) => {
         <Descriptions.Item label="联系人">{caresDetailData.contactPerson}</Descriptions.Item>
         <Descriptions.Item label="联系方式">{caresDetailData.contactInformation}</Descriptions.Item>
         <Descriptions.Item label="简介">
-          <pre>{caresDetailData.introduction}</pre>
+          <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+            {caresDetailData.introduction}
+          </pre>
         </Descriptions.Item>
       </Descriptions>
       <TableCaresMember id={caresId} />
