@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
+import moment from 'moment';
 
 const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) => {
   const { tableRef } = partyRecord;
@@ -98,7 +99,7 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
       type: 'partyRecord/exportPartyRecord',
       payload: {
         ids,
-        excelName: '支部活动信息表.xls',
+        excelName: `党费记录信息表${moment().format('MM-DD HH:mm:ss')}.xls`,
       },
     });
   };
