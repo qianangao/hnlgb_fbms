@@ -2,10 +2,16 @@ import React from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
-import moment from 'moment';
 
-const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) => {
-  const { tableRef } = partyRecord;
+const Table = ({
+  openAddModal,
+  openModifyModal,
+  politicsNews,
+  dispatch,
+  opendetailModal,
+  publishStatus,
+}) => {
+  const { tableRef } = politicsNews;
   const columns = [
     {
       title: '序号',
@@ -16,35 +22,21 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
       width: 64,
     },
     {
-      title: `姓名`,
+      title: `标题`,
       align: 'center',
-      dataIndex: 'userName',
+      dataIndex: 'headline',
     },
     {
-      title: '性别',
+      title: '创建单位',
       align: 'center',
-      dataIndex: 'dictSex',
-      valueEnum: enums.dictSex,
+      dataIndex: 'createOrgName',
       hideInSearch: true,
     },
     {
-      title: '缴纳年月',
+      title: publishStatus === 0 ? '保存时间' : '发布时间',
+      valueType: 'date',
       align: 'center',
-      valueType: 'data',
-      dataIndex: 'paymentTime',
-      hideInSearch: true,
-    },
-    {
-      title: '支部名称',
-      align: 'center',
-      dataIndex: 'partyName',
-    },
-    {
-      title: '缴纳状态',
-      align: 'center',
-      dataIndex: 'dictPaymentState',
-      valueEnum: enums.dictNation,
-      render: (_, record) => <span>{record.paymentState === 1 ? '已缴纳' : '未缴纳'}</span>,
+      dataIndex: publishStatus === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
     },
     {
@@ -55,17 +47,28 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
       width: 180,
       fixed: 'right',
       render: (dom, employeeData) => [
-        <a
-          key={`${employeeData.id}up`}
-          onClick={() => {
-            openModifyModal(employeeData);
-          }}
-        >
-          编辑党费
-        </a>,
+        publishStatus === 0 ? (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              openModifyModal(employeeData);
+            }}
+          >
+            编辑
+          </a>
+        ) : (
+          <a
+            key={`${employeeData.id}up`}
+            onClick={() => {
+              opendetailModal(employeeData);
+            }}
+          >
+            详情
+          </a>
+        ),
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除党费记录吗？"
+          title="确认删除时政要闻吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -79,50 +82,40 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
   const getEmployeeList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'partyRecord/partyRecordList',
-        payload: { ...params },
+        type: 'politicsNews/politicsNewsList',
+        payload: { ...params, status: publishStatus, type: 3 },
         resolve,
       });
     });
   // 删除
   const deleteReturnworkPerson = ids => {
     dispatch({
-      type: 'partyRecord/deletePartyRecord',
+      type: 'politicsNews/deletePoliticsNews',
       payload: {
         ids,
       },
     });
   };
-  // 导出
-  const exportPartyRecord = ids => {
-    dispatch({
-      type: 'partyRecord/exportPartyRecord',
-      payload: {
-        ids,
-        excelName: `党费记录信息表${moment().format('MM-DD HH:mm:ss')}.xls`,
-      },
-    });
-  };
+
   return (
     <ProTable
       rowKey="id"
-      headerTitle="党费记录"
+      headerTitle="时政要闻"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
-        <Button type="primary" onClick={() => openAddModal()}>
-          新增
-        </Button>,
-        <Button type="primary" onClick={() => exportPartyRecord(selectedRowKeys)}>
-          导出
-        </Button>,
+        publishStatus === 0 ? (
+          <Button type="primary" onClick={() => openAddModal()}>
+            新增
+          </Button>
+        ) : null,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除党费记录？',
+                title: '确认删除时政要闻？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);
@@ -139,7 +132,7 @@ const Table = ({ openAddModal, openModifyModal, partyRecord, dispatch, enums }) 
   );
 };
 
-export default connect(({ partyRecord, global }) => ({
-  partyRecord,
+export default connect(({ politicsNews, global }) => ({
+  politicsNews,
   enums: global.enums,
 }))(Table);

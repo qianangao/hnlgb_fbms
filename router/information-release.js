@@ -27,6 +27,20 @@ const routes = {
       remark: '新闻动态',
     },
     {
+      path: '/information-release/politics-news',
+      name: 'information-release-politics-news',
+      component: './information-release/politics-news',
+      authority: '07-05',
+      remark: '时政要闻',
+    },
+    {
+      path: '/information-release/work-dynamic',
+      name: 'information-release-work-dynamic',
+      component: './information-release/work-dynamic',
+      authority: '07-06',
+      remark: '工作动态',
+    },
+    {
       path: '/information-release/daily-broadcast',
       name: 'information-release-daily-broadcast',
       component: './information-release/daily-broadcast',
