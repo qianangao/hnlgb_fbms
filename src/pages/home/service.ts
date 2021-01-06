@@ -20,23 +20,22 @@ export async function detailNoticeAnnouncement(params) {
     params,
   });
 }
-
 /**
- * 风采列表
+ * 支部活动
  * @param {*} params
  */
-export async function elegantDemeanorList(params) {
-  return request('/style_five_old', {
+export async function branchActivityList(params) {
+  return request('/orgLife', {
     method: 'GET',
     params,
   });
 }
 /**
- * 风采列表-详情
+ * 支部活动-详情
  * @param {*} params
  */
-export async function detailElegantDemeanor(params) {
-  return request(`/style_five_old/${params.id}`, {
+export async function detailBranchActivity(params) {
+  return request(`/orgLife/${params.id}`, {
     method: 'GET',
     params,
   });

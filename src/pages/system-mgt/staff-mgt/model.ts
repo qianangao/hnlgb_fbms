@@ -7,6 +7,7 @@ import {
   getStaffList,
   getStaffInfo,
   resetStaffPwd,
+  importJobs,
 } from './service';
 
 const Model = {
@@ -153,9 +154,30 @@ const Model = {
     },
     *resetStaffPwd({ payload }, { call }) {
       const response = yield call(resetStaffPwd, payload);
-
       if (!response.error) {
         yield message.success('工作人员密码重置成功！');
+      }
+    },
+    *importJobs({ payload, resolve }, { call, put }) {
+      const orgId = yield select(state => state.smStaffMgt.selectedOrgId);
+      if (!payload) {
+        return;
+      }
+
+      const response = yield call(importJobs, {
+        url: payload.url,
+        orgId,
+      });
+
+      resolve && resolve(response);
+
+      if (!response.error) {
+        if (!response || response.length === 0) {
+          message.success('工作人员信息批量导入成功！');
+          yield put({
+            type: 'tableReload',
+          });
+        }
       }
     },
   },

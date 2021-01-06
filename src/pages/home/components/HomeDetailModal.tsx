@@ -22,8 +22,8 @@ const HomeDetailModal = ({ loading, actionRef }) => {
       case '通知公告':
         setBlockTypeUrl('detailNoticeAnnouncement');
         break;
-      case '五老风采':
-        setBlockTypeUrl('detailElegantDemeanor');
+      case '支部活动':
+        setBlockTypeUrl('detailBranchActivity');
         break;
       case '成果展台':
         setBlockTypeUrl('detailAchievement');
