@@ -33,13 +33,13 @@ const routes = {
       authority: '02-03',
       remark: '学习记录',
     },
-    {
-      path: '/qiongya-ecru/party-record',
-      name: 'qiongya-ecru-party-record',
-      component: './qiongya-ecru/party-record',
-      authority: '02-04',
-      remark: '党费记录',
-    },
+    // {
+    //   path: '/qiongya-ecru/party-record',
+    //   name: 'qiongya-ecru-party-record',
+    //   component: './qiongya-ecru/party-record',
+    //   authority: '02-04',
+    //   remark: '党费记录',
+    // },
     {
       path: '/qiongya-ecru/online-class',
       name: 'qiongya-ecru-online-class',

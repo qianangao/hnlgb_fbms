@@ -8,7 +8,7 @@ const TableMembers = ({ opPhysicalExamination, enums, loading, dispatch, id }) =
   const { membersTableRef } = opPhysicalExamination;
   const [form] = AdvancedForm.useForm();
   const [physicalModalVisible, setPhysicalModalVisible] = useState(false);
-  const [userId, setUserId] = useState();
+  // const [userId, setUserId] = useState();
 
   const columns = [
     {
@@ -28,31 +28,31 @@ const TableMembers = ({ opPhysicalExamination, enums, loading, dispatch, id }) =
       hideInSearch: true,
     },
     { title: '联系电话', align: 'center', dataIndex: 'phonenumber', hideInSearch: true },
-    {
-      title: '体检报告',
-      valueType: 'option',
-      align: 'center',
-      dataIndex: 'id',
-      width: 200,
-      fixed: 'right',
-      render: (dom, Data) => [
-        Data.isReport === 1 ? (
-          <a key={`${Data.id}up`} onClick={() => window.open(Data.attachmentInfo.url)}>
-            已上传 | 查看
-          </a>
-        ) : (
-          <a
-            key={`${Data.id}up`}
-            onClick={() => {
-              setPhysicalModalVisible(true);
-              setUserId(Data.id);
-            }}
-          >
-            未上传 | 点击上传
-          </a>
-        ),
-      ],
-    },
+    // {
+    //   title: '体检报告',
+    //   valueType: 'option',
+    //   align: 'center',
+    //   dataIndex: 'id',
+    //   width: 200,
+    //   fixed: 'right',
+    //   render: (dom, Data) => [
+    //     Data.isReport === 1 ? (
+    //       <a key={`${Data.id}up`} onClick={() => window.open(Data.attachmentInfo.url)}>
+    //         已上传 | 查看
+    //       </a>
+    //     ) : (
+    //       <a
+    //         key={`${Data.id}up`}
+    //         onClick={() => {
+    //           setPhysicalModalVisible(true);
+    //           setUserId(Data.id);
+    //         }}
+    //       >
+    //         未上传 | 点击上传
+    //       </a>
+    //     ),
+    //   ],
+    // },
   ];
   const formItems = [
     {

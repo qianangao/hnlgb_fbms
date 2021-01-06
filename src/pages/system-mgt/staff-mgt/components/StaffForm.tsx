@@ -42,6 +42,7 @@ const StaffForm = ({ dispatch, form, staffInfoData, roleData }) => {
     {
       label: '角色',
       name: 'roleId',
+      rules: [{ required: true, message: '请选择角色!' }],
       visible: roleVisible,
       enumsItems: roleData,
     },

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
+import { Radio } from 'antd';
 import moment from 'moment';
 
 import AdvancedForm from '@/components/AdvancedForm';
@@ -10,6 +11,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const orgSelect = useRef({});
   const nowThePipeOrgSelect = useRef({});
   const [deadTimeVisible, setDeadTimeVisible] = useState(false);
+  const [provincialCadresVisible, setProvincialCadresVisible] = useState(false);
 
   const disabledDate = current => {
     return current && current > moment().endOf('day');
@@ -172,6 +174,17 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       rules: [{ required: true, message: '请选择职级!' }],
     },
     {
+      label: '是否省属干部',
+      name: 'isProvincialCadres',
+      visible: provincialCadresVisible,
+      render: (
+        <Radio.Group>
+          <Radio.Button value={1}>是</Radio.Button>
+          <Radio.Button value={0}>否</Radio.Button>
+        </Radio.Group>
+      ),
+    },
+    {
       label: '原工作单位及职务',
       name: 'originalUnitAndPosition',
       rules: [{ required: true, message: '请输入原工作单位及职务!' }],
@@ -288,6 +301,18 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
         orgSelect.current.setLabel(data.organizationName || '');
         nowThePipeOrgSelect.current.setLabel(data.nowThePipeUnits || '');
         setDeadTimeVisible(!!data.isDead);
+        if (
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925f9a3' ||
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925f71e' ||
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925f750' ||
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925f973' ||
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925fa8a' ||
+          data.dictRetirementLevel === '8adcf7c96a48fae4016a4925fabf'
+        ) {
+          setProvincialCadresVisible(true);
+        } else {
+          setProvincialCadresVisible(false);
+        }
 
         form.setFieldsValue(fields);
       });
@@ -297,6 +322,19 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const fieldChangeHander = (label, value) => {
     if (label === 'isDead') {
       setDeadTimeVisible(!!value);
+    } else if (label === 'dictRetirementLevel') {
+      if (
+        value === '8adcf7c96a48fae4016a4925f9a3' ||
+        value === '8adcf7c96a48fae4016a4925f71e' ||
+        value === '8adcf7c96a48fae4016a4925f750' ||
+        value === '8adcf7c96a48fae4016a4925f973' ||
+        value === '8adcf7c96a48fae4016a4925fa8a' ||
+        value === '8adcf7c96a48fae4016a4925fabf'
+      ) {
+        setProvincialCadresVisible(true);
+      } else {
+        setProvincialCadresVisible(false);
+      }
     }
   };
 
