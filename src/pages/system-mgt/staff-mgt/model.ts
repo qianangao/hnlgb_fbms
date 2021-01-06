@@ -158,7 +158,7 @@ const Model = {
         yield message.success('工作人员密码重置成功！');
       }
     },
-    *importJobs({ payload, resolve }, { call, put }) {
+    *importJobs({ payload, resolve }, { call, put, select }) {
       const orgId = yield select(state => state.smStaffMgt.selectedOrgId);
       if (!payload) {
         return;
