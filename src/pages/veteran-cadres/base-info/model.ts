@@ -75,7 +75,7 @@ const Model = {
         });
       }
     },
-    *importLgbs({ payload, resolve }, { call, put }) {
+    *importLgbs({ payload, resolve }, { call, put, select }) {
       const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
       if (!payload) {
