@@ -76,12 +76,15 @@ const Model = {
       }
     },
     *importLgbs({ payload, resolve }, { call, put }) {
+      const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
+      const { organizationId } = yield select(state => state.user.userInfo);
       if (!payload) {
         return;
       }
 
       const response = yield call(importLgbs, {
         url: payload.url,
+        orgId: selectedOrgId || organizationId,
       });
 
       resolve && resolve(response);

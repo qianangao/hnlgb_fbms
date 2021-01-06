@@ -1,11 +1,11 @@
 import {
   noticeAnnouncementList,
-  elegantDemeanorList,
+  branchActivityList,
   pictureList,
   achievementList,
   elderlyPolicyList,
   detailNoticeAnnouncement,
-  detailElegantDemeanor,
+  detailBranchActivity,
   detailPicture,
   detailAchievement,
   detailElderlyPolicy,
@@ -15,12 +15,12 @@ const Model = {
   namespace: 'home',
   state: {
     noticeAnnouncementData: {},
-    elegantDemeanorData: {},
+    branchActivityData: {},
     pictureListData: {},
     achievementListData: {},
     elderlyPolicyListData: {},
     detailNoticeAnnouncementData: {},
-    detailElegantDemeanorData: {},
+    detailBranchActivityrData: {},
     detailPictureData: {},
     detailAchievementData: {},
     detailElderlyPolicyData: {},
@@ -53,28 +53,30 @@ const Model = {
         });
       }
     },
-    *elegantDemeanorList({ payload, resolve }, { call, put }) {
-      const response = yield call(elegantDemeanorList, payload);
+    // 支部活動
+    *branchActivityList({ payload, resolve }, { call, put }) {
+      const response = yield call(branchActivityList, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            elegantDemeanorData: response,
+            branchActivityData: response,
           },
         });
       }
     },
-    *detailElegantDemeanor({ payload, resolve }, { call, put }) {
-      const response = yield call(detailElegantDemeanor, payload);
+    // 支部详情
+    *detailBranchActivity({ payload, resolve }, { call, put }) {
+      const response = yield call(detailBranchActivity, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         yield put({
           type: 'save',
           payload: {
-            detailElegantDemeanorData: response,
+            detailBranchActivityrData: response,
           },
         });
       }

@@ -12,7 +12,7 @@ import CardBlock from './components/CardBlock';
 const Home = ({
   dispatch,
   noticeAnnouncementData,
-  elegantDemeanorData,
+  branchActivityData,
   achievementListData,
   elderlyPolicyListData,
 }) => {
@@ -23,10 +23,10 @@ const Home = ({
       type: 'home/noticeAnnouncementList',
       payload: { dictPublishStatus: 1, type: 3 },
     });
-    // 五老风采
+    // 支部活动
     dispatch({
-      type: 'home/elegantDemeanorList',
-      payload: { isPublished: 1 },
+      type: 'home/branchActivityList',
+      payload: { publishState: 1 },
     });
     // 成果展台
     dispatch({
@@ -60,9 +60,9 @@ const Home = ({
       <Row gutter={[16, 16]}>
         <Col span={8}>
           <CardBlock
-            title="五老风采"
+            title="支部活动"
             icon={oldStyle}
-            data={elegantDemeanorData.items}
+            data={branchActivityData.items}
             openDetailModal={openDetailModal}
           />
         </Col>
@@ -90,7 +90,7 @@ const Home = ({
 
 export default connect(({ home }) => ({
   noticeAnnouncementData: home.noticeAnnouncementData,
-  elegantDemeanorData: home.elegantDemeanorData,
+  branchActivityData: home.branchActivityData,
   achievementListData: home.achievementListData,
   elderlyPolicyListData: home.elderlyPolicyListData,
 }))(Home);

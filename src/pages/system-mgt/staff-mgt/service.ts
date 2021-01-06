@@ -75,3 +75,14 @@ export async function resetStaffPwd(params) {
     data: params,
   });
 }
+
+/**
+ * 工作人员导入
+ * @param {*} params
+ */
+export async function importJobs(params) {
+  return request('/user/excel/worker', {
+    method: 'GET',
+    params,
+  });
+}
