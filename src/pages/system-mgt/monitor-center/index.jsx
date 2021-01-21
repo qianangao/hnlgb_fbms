@@ -9,7 +9,7 @@ import MonitorDetail from './components/MonitorDetail';
 const content = [
   { title: '目前老干部总数', field: 'cadreTotalNum', icon: 'users' },
   { title: '目前录入单位总数', field: 'orgTotalNum', icon: 'company' },
-  { title: '目前工作人员总数', field: 'staffTotalNum', icon: 'gonguzorenyuan' },
+  { title: '目前在职工作人员总数', field: 'staffTotalNum', icon: 'gonguzorenyuan' },
   { title: '本月新增老干部数', field: 'addNum', icon: 'userup' },
   { title: '老干部月活跃数', field: 'cadreActiveNum', icon: 'userup', hasList: true },
   { title: '工作人员月活跃数', field: 'staffActiveNum', icon: 'gonguzorenyuan', hasList: true },

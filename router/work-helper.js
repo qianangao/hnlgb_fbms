@@ -6,6 +6,12 @@ const routes = {
   remark: '工作助手',
   routes: [
     {
+      path: '/work-helper/toDo-list',
+      name: 'work-helper-toDo-list',
+      component: './work-helper/toDo-list',
+      remark: '待办事项',
+    },
+    {
       path: '/work-helper/staff-directory',
       name: 'work-helper-staff-directory',
       component: './work-helper/staff-directory',
@@ -28,7 +34,7 @@ const routes = {
     },
     {
       path: '/work-helper',
-      redirect: '/work-helper/staff-directory',
+      redirect: '/work-helper/toDo-list',
       hideInMenu: true,
     },
   ],

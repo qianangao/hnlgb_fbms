@@ -55,7 +55,7 @@ const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
       title={`编辑${tableType}`}
       centered
       destroyOnClose
-      width="900px"
+      width="90%"
       style={{ paddingBottom: 0 }}
       bodyStyle={{
         height: 'calc(95vh - 108px)',
