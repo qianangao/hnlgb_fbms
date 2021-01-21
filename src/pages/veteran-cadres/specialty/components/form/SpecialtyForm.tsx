@@ -28,6 +28,10 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
       enumsLabel: 'dictTitleGrade',
       rules: [{ required: true, message: '请选择技术等级!', whitespace: true }],
     },
+    {
+      label: '返聘岗位',
+      name: 'reemploymentPost',
+    },
   ];
 
   useEffect(() => {

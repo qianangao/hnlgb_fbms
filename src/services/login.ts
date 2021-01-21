@@ -23,6 +23,16 @@ export async function accountLogout(params) {
     data: params,
   });
 }
+/**
+ * 获取待办数
+ * @param {*} params
+ */
+export async function getCount(params) {
+  return request('/worker_pend_events/count', {
+    method: 'GET',
+    params,
+  });
+}
 
 /**
  * 获取手机验证码

@@ -1,6 +1,6 @@
 import { history } from 'umi';
 import { stringify } from 'querystring';
-import { accountLogin, getCaptcha, accountLogout } from '@/services/login';
+import { accountLogin, getCaptcha, accountLogout, getCount } from '@/services/login';
 import { requestConfig } from '@/utils/request';
 import { getPageQuery } from '@/utils/utils';
 import { setAuthority } from '@/utils/authority';
@@ -13,9 +13,11 @@ const Model = {
     token: getCookie(TOKEN_KEY) || '',
   },
   effects: {
-    *login({ payload }, { call, put }) {
+    *login({ payload, resolve }, { call, put }) {
       const response = yield call(accountLogin, payload);
-
+      if (!response.error) {
+        resolve && resolve(response);
+      }
       if (response.error) {
         yield put({
           type: 'save',
@@ -80,6 +82,14 @@ const Model = {
         }
 
         yield history.replace(/* redirect || */ '/');
+      }
+    },
+
+    *getCount({ payload, resolve }, { call }) {
+      const response = yield call(getCount, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
       }
     },
     *getCaptcha({ payload }, { call }) {

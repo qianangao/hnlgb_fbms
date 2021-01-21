@@ -1,10 +1,10 @@
-import { Alert, Checkbox } from 'antd';
+import { Alert, Checkbox, notification } from 'antd';
 import React, { useState } from 'react';
 import { connect } from 'umi';
 import md from 'utility';
 import CryptoJS from 'crypto-js';
+import { useHistory } from 'react-router-dom';
 import LoginForm from './components/Login';
-
 import styles from './style.less';
 
 const { Tab, UserName, Password, VerificationCode, Submit } = LoginForm;
@@ -25,6 +25,10 @@ const Login = props => {
   const { status, type: loginType } = userLogin;
   const [autoLogin, setAutoLogin] = useState(true);
   const [type, setType] = useState('account');
+  const history = useHistory();
+  const linkToWork = () => {
+    history.push('/work-helper/toDo-list');
+  };
 
   const handleSubmit = values => {
     const { dispatch } = props;
@@ -40,13 +44,43 @@ const Login = props => {
       return encrypted.toString();
     };
 
-    dispatch({
-      type: 'login/login',
-      payload: {
-        username: values.username ? encrypt(values.username) : '',
-        password: values.password ? md.md5(values.password) : '',
-        verifyCode: values.verifyCode,
-      },
+    new Promise(resolve => {
+      dispatch({
+        type: 'login/login',
+        payload: {
+          username: values.username ? encrypt(values.username) : '',
+          password: values.password ? md.md5(values.password) : '',
+          verifyCode: values.verifyCode,
+        },
+        resolve,
+      });
+    }).then(_ => {
+      new Promise(resolve => {
+        dispatch({
+          type: 'login/getCount',
+          payload: {},
+          resolve,
+        });
+      }).then(data => {
+        notification.open({
+          message: '待办事项',
+          description: (
+            <div style={{ cursor: 'pointer', fontSize: '16px' }} onClick={linkToWork}>
+              {' '}
+              您有{' '}
+              <span style={{ color: 'red', fontSize: '14px', fontWeight: 'bold' }}>
+                {' '}
+                {JSON.stringify(data) !== '{}' ? data : '0'}{' '}
+              </span>{' '}
+              条待办未处理！{' '}
+            </div>
+          ),
+          placement: 'bottom',
+          style: {
+            width: 280,
+          },
+        });
+      });
     });
   };
   return (

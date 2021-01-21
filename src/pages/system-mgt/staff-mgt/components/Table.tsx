@@ -49,7 +49,7 @@ const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
         2: { text: '离职' },
         3: { text: '退休' },
       },
-      hideInSearch: true,
+      // hideInSearch: true,
     },
     {
       title: '操作',
@@ -76,7 +76,7 @@ const Table = ({ smStaffMgt, openModifyModal, enums, dispatch }) => {
           placement="topRight"
           onConfirm={() => resetStaffPwd(orgData.id)}
         >
-          <a>重置密码</a>
+          <a> {orgData.state === 1 ? '重置密码' : ''}</a>
         </Popconfirm>,
       ],
     },
