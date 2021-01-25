@@ -31,29 +31,19 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
       label: '就近医院',
       name: 'nearHospital',
     },
-    {
-      label: '是否有医疗照顾',
-      name: 'caregivers',
-      type: 'switch',
-      initialValue: 0,
-    },
+
     {
       label: '享受医疗待遇情况',
       name: 'dictMedicalTreatment',
       enumsLabel: 'dictMedicalTreatment',
     },
-    {
-      label: '是否有医保',
-      name: 'hasMedical',
-      type: 'switch',
-      initialValue: 1,
-    },
-    {
-      label: '是否为军休干部',
-      name: 'retiredCadres',
-      type: 'switch',
-      initialValue: 0,
-    },
+    // {
+    //   label: '是否有医保',
+    //   name: 'hasMedical',
+    //   type: 'switch',
+    //   initialValue: 1,
+    // },
+
     {
       label: '病史',
       name: 'medical',
@@ -63,11 +53,23 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
       name: 'action',
     },
     {
-      label: '是否长期住院',
-      name: 'longInHospital',
+      label: '是否有医疗照顾',
+      name: 'caregivers',
       type: 'switch',
       initialValue: 0,
     },
+    {
+      label: '是否为军休干部',
+      name: 'retiredCadres',
+      type: 'switch',
+      initialValue: 0,
+    },
+    // {
+    //   label: '是否长期住院',
+    //   name: 'longInHospital',
+    //   type: 'switch',
+    //   initialValue: 0,
+    // },
   ];
 
   useEffect(() => {

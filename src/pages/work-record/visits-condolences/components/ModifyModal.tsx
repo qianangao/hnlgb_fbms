@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Descriptions } from 'antd';
 import LgbBasicInfo from '@/components/LgbBasicInfo';
+import DeadLgbBasicInfo from '@/components/DeadLgbBasicInfo';
 import VisitForm from './form/VisitForm';
 
 const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
@@ -66,7 +67,12 @@ const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <LgbBasicInfo userId={userId} />
+      {tableType === '遗属慰问' ? (
+        <DeadLgbBasicInfo userId={userId} />
+      ) : (
+        <LgbBasicInfo userId={userId} />
+      )}
+
       <Descriptions title="慰问详情" size="middle" />
       <VisitForm form={form} id={visitId} tableType={tableType} />
     </Modal>

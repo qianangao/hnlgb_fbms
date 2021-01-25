@@ -32,6 +32,16 @@ export async function addHospitalRegistrationInfo(params) {
     data: params,
   });
 }
+/**
+ * 新增-走访慰问
+ * @param {*} params
+ */
+export async function addVisit(params) {
+  return request(`/visit`, {
+    method: 'POST',
+    data: params,
+  });
+}
 
 /**
  * 住院登记-详情

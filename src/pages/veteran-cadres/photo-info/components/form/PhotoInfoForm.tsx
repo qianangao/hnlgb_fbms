@@ -24,7 +24,7 @@ const PhotoInfoForm = ({ form, id, dispatch, loading }) => {
       label: '描述',
       name: 'remark',
       type: 'editor',
-      rules: [{ required: true, message: '请输入描述!', whitespace: true }],
+      // rules: [{ required: true, message: '请输入描述!', whitespace: true }],
       span: 2,
     },
   ];

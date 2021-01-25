@@ -17,10 +17,16 @@ interface LgbDataType {
 
 let tempdata: LgbDataType;
 
-const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange }) => {
+const LgbSelectInput = ({
+  enums,
+  dispatch,
+  getLgbs,
+  selectItem = false,
+  onChange,
+  surviviorInfo,
+}) => {
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [lgbData, setLgbData] = useState<LgbDataType>({});
-
   const columns = [
     {
       title: '序号',
@@ -146,6 +152,20 @@ const LgbSelectInput = ({ enums, dispatch, getLgbs, selectItem = false, onChange
           {enums.dictTreatmentNow && enums.dictTreatmentNow[lgbData.dictTreatmentNow]}
         </Descriptions.Item>
       </Descriptions>
+      {surviviorInfo && (
+        <Descriptions title="遗属信息" size="middle">
+          <Descriptions.Item label="遗属姓名">{lgbData.spouseName}</Descriptions.Item>
+          <Descriptions.Item label="遗属性别">
+            {enums.dictSpouseSex && enums.dictSpouseSex[lgbData.dictSpouseSex]}
+          </Descriptions.Item>
+          <Descriptions.Item label="遗属出生日期">{lgbData.spouseBirthOfDate}</Descriptions.Item>
+          <Descriptions.Item label="遗属工作单位及职务">{lgbData.spouseUnit}</Descriptions.Item>
+          <Descriptions.Item label="遗属手机号码">{lgbData.spousePhone}</Descriptions.Item>
+          <Descriptions.Item label="遗属健康状态">
+            {enums.dictSpouseHealth && enums.dictSpouseHealth[lgbData.dictSpouseHealth]}
+          </Descriptions.Item>
+        </Descriptions>
+      )}
       <Modal
         title="选择老干部"
         centered

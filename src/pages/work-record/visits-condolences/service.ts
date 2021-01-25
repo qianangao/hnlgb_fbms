@@ -15,7 +15,7 @@ export async function getVisitList(params) {
  * @param {*} params
  */
 export async function getDeathMemberList(params) {
-  return request(`/user/death`, {
+  return request(`/users/death`, {
     method: 'GET',
     params,
   });

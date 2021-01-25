@@ -3,7 +3,7 @@ import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
-const Table = ({ openModifyModal, hospitalRegistration, enums, dispatch }) => {
+const Table = ({ openModifyModal, hospitalRegistration, openAddVisitModal, enums, dispatch }) => {
   const { tableRef } = hospitalRegistration;
   const columns = [
     {
@@ -103,7 +103,6 @@ const Table = ({ openModifyModal, hospitalRegistration, enums, dispatch }) => {
         0: '否',
         1: '是',
       },
-      hideInSearch: true,
     },
     {
       title: '审核人',
@@ -153,12 +152,20 @@ const Table = ({ openModifyModal, hospitalRegistration, enums, dispatch }) => {
         <a
           key={`${employeeData.id}up`}
           onClick={() => {
-            if (employeeData.dictApproveStatus === 0 || employeeData.dictApproveStatus === 2) {
-              openModifyModal(employeeData);
-            }
+            openAddVisitModal(employeeData);
           }}
         >
-          编辑
+          {employeeData.isVisit === 0 ? '看望' : ''}
+        </a>,
+        <a
+          key={`${employeeData.id}up`}
+          onClick={() => {
+            openModifyModal(employeeData);
+          }}
+        >
+          {employeeData.dictApproveStatus === 0 || employeeData.dictApproveStatus === 2
+            ? '编辑'
+            : ''}
         </a>,
         <Popconfirm
           key={`${employeeData.id}del`}
