@@ -130,9 +130,9 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
     <>
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         {tableType === '遗属慰问' ? (
-          <LgbSelectInput getLgbs={getMemberList} selectItem />
+          <LgbSelectInput getLgbs={getMemberList} selectItem surviviorInfo />
         ) : (
-          <LgbSelectInput />
+          <LgbSelectInput surviviorInfo={false} />
         )}
       </Form.Item>
       <Descriptions title={`${tableType}详情`} />

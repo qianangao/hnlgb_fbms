@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import {
   addHospitalRegistrationInfo,
+  addVisit,
   deleteHospitalRegistrationInfo,
   updateHospitalRegistrationInfo,
   hospitalRegistrationInfoList,
@@ -67,6 +68,18 @@ const Model = {
       if (!response.error) {
         resolve && resolve(response);
         message.success('新增住院登记成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *addVisit({ payload, resolve }, { call, put }) {
+      const response = yield call(addVisit, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+
+        message.success('看望记录已添加！');
 
         yield put({
           type: 'tableReload',
