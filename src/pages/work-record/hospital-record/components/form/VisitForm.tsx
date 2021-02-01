@@ -40,7 +40,7 @@ const VisitForm = ({ form, loading, realName }) => {
       rules: [{ max: 64, message: `慰问品不超过64个字` }],
     },
     {
-      label: '老同志反馈信息',
+      label: '反馈信息',
       name: 'feedback',
       type: 'textarea',
     },

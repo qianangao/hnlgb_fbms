@@ -114,7 +114,7 @@ const Table = ({ openAddModal, openModifyModal, specialty, enums, dispatch }) =>
   return (
     <ProTable
       rowKey="id"
-      headerTitle="银色人才信息"
+      headerTitle="银发人才信息"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}

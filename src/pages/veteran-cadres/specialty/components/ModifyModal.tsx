@@ -57,7 +57,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   };
   return (
     <Modal
-      title="修改银色人才"
+      title="修改银发人才"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}
@@ -80,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
         }}
       >
         <LgbBasicInfo userId={lgbId} />
-        <Descriptions title="银色人才" size="middle" />
+        <Descriptions title="银发人才" size="middle" />
         <SpecialtyForm form={form} id={infoId} />
       </div>
     </Modal>

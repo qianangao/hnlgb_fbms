@@ -68,7 +68,7 @@ const Table = ({
       dataIndex: 'dictTreatmentNow',
       valueEnum: enums.dictTreatmentNow,
     },
-    { title: '身份证号', align: 'center', dataIndex: 'idCard' },
+    { title: '身份证号', align: 'center', dataIndex: 'idCard', hideInTable: true },
     { title: '现管单位', align: 'center', dataIndex: 'nowThePipeUnits' },
     { title: '支部名称', align: 'center', dataIndex: 'partyName' },
     {

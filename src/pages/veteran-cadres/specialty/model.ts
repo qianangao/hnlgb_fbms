@@ -74,7 +74,7 @@ const Model = {
 
       if (!response.error) {
         resolve && resolve(response);
-        message.success('新增银色人才成功！');
+        message.success('新增银发人才成功！');
 
         yield put({
           type: 'tableReload',
@@ -86,7 +86,7 @@ const Model = {
 
       if (!response.error) {
         resolve && resolve(response);
-        message.success('银色人才修改成功！');
+        message.success('银发人才修改成功！');
 
         yield put({
           type: 'tableReload',
@@ -97,7 +97,7 @@ const Model = {
       const response = yield call(deleteSpecialty, payload);
 
       if (!response.error) {
-        message.success('银色人才删除成功！');
+        message.success('银发人才删除成功！');
         yield put({
           type: 'tableReload',
         });

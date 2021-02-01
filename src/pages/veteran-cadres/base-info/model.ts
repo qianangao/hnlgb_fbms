@@ -1,6 +1,7 @@
 import { message } from 'antd';
 import moment from 'moment';
 import { downloadXlsFile } from '@/utils';
+import { encrypt } from '@/utils/format';
 import {
   addLgb,
   deleteLgb,
@@ -35,13 +36,17 @@ const Model = {
     *getList({ payload, resolve }, { call, put, select }) {
       const selectedOrgId = yield select(state => state.vcBasicInfo.selectedOrgId);
       const { organizationId } = yield select(state => state.user.userInfo);
-
       const params = {
         ...payload,
         orgIdForDataSelect: selectedOrgId || organizationId,
         currentPage: payload.current,
         pageSize: payload.pageSize,
       };
+      if (payload.idCard) {
+        params.idCard = encrypt(payload.idCard);
+      } else {
+        delete params.idCard;
+      }
 
       const { dateOfBirth } = params;
 

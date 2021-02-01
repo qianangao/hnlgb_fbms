@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 /**
- * 银色人才-列表
+ * 银发人才-列表
  * @param {*} params
  */
 export async function specialtyList(params) {
@@ -12,7 +12,7 @@ export async function specialtyList(params) {
 }
 
 /**
- * 新增-银色人才
+ * 新增-银发人才
  * @param {*} params
  */
 export async function addSpecialty(params) {
@@ -23,7 +23,7 @@ export async function addSpecialty(params) {
 }
 
 /**
- * 删除-银色人才
+ * 删除-银发人才
  * @param {*} params
  */
 export async function deleteSpecialty(params) {
@@ -34,7 +34,7 @@ export async function deleteSpecialty(params) {
 }
 
 /**
- * 银色人才-详情
+ * 银发人才-详情
  * @param {*} params
  */
 export async function detailSpecialty(params) {
@@ -45,7 +45,7 @@ export async function detailSpecialty(params) {
 }
 
 /**
- * 编辑-银色人才
+ * 编辑-银发人才
  * @param {*} params
  */
 export async function updateSpecialty(params) {

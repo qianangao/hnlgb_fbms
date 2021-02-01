@@ -18,15 +18,15 @@ const ResetPasswordModel = ({ dispatch, userInfo, resetResault, submitLoading, g
   }, []);
 
   const passwordValidator = (rule, value) => {
-    const passwordPattern = new RegExp(
-      '(?=^.{8,20}$)(?=.*\\d)(?![.\n])(?=.*\\W+)(?=.*[a-zA-Z]).*$',
-    );
+    // const passwordPattern = new RegExp(
+    //   '(?=^.{8,20}$)(?=.*\\d)(?![.\n])(?=.*\\W+)(?=.*[a-zA-Z]).*$',
+    // );
 
-    if (passwordPattern.test(value)) {
+    if (value.length > 5 && value.length < 13) {
       return Promise.resolve();
     }
 
-    return Promise.reject(new Error('密码应为8-20位，且必须包含数字、字母和特殊符号!'));
+    return Promise.reject(new Error('密码应为6-12位!'));
   };
 
   const onResetPasswordConmit = value => {

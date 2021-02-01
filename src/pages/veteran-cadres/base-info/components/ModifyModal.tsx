@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import { Modal, Steps, Button } from 'antd';
+import { encrypt } from '@/utils/format';
 import BasicInfoForm from './form/BasicInfoForm';
 import FamilyForm from './form/FamilyForm';
 import PartTimeForm from './form/PartTimeForm';
@@ -51,10 +52,10 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       dataFormat: values => ({
         ...values,
         id: lgbId,
-        residentAddressVillage: values.residentAddress.value,
-        residentAddressList: values.residentAddress.label,
-        homeAddressVillage: values.homeAddress.value,
-        homeNameList: values.homeAddress.label,
+        residentAddressVillage: values.residentAddress && values.residentAddress.value,
+        residentAddressList: values.residentAddress && values.residentAddress.label,
+        homeAddressVillage: values.homeAddress && values.homeAddress.value,
+        homeNameList: values.homeAddress && values.homeAddress.label,
       }),
     },
     {
@@ -86,9 +87,19 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       .validateFields()
       .then(values => {
         return new Promise(resolve => {
+          const param = steps[stepCurrent].dataFormat(values);
+          if (values.idCard) {
+            param.idCard = encrypt(values.idCard);
+          }
+          if (values.residentAddressDiy) {
+            param.residentAddressDiy = encrypt(values.residentAddressDiy);
+          }
+          if (values.homeAddressDiy) {
+            param.homeAddressDiy = encrypt(values.homeAddressDiy);
+          }
           dispatch({
             type: `vcBasicInfo/${steps[stepCurrent].effect}`,
-            payload: steps[stepCurrent].dataFormat(values),
+            payload: param,
             resolve,
           });
         });

@@ -31,7 +31,7 @@ const routes = {
       name: 'veteran-cadres-specialty',
       component: './veteran-cadres/specialty',
       authority: '01-04',
-      remark: '银色人才',
+      remark: '银发人才',
     },
     {
       path: '/veteran-cadres/hobby',

@@ -49,7 +49,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增银色人才"
+      title="新增银发人才"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

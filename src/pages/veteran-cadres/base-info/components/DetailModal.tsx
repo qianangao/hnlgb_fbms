@@ -70,7 +70,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           </Descriptions.Item>
           <Descriptions.Item label="工作单位">{lgbDetailData.organizationName}</Descriptions.Item>
           <Descriptions.Item label="籍贯">{lgbDetailData.nativePlace}</Descriptions.Item>
-          <Descriptions.Item label="身份证号">{lgbDetailData.idCard}</Descriptions.Item>
+          {/* <Descriptions.Item label="身份证号">{lgbDetailData.idCard}</Descriptions.Item> */}
           <Descriptions.Item label="手机号码">{lgbDetailData.phonenumber}</Descriptions.Item>
           <Descriptions.Item label="现管单位">{lgbDetailData.nowThePipeUnits}</Descriptions.Item>
           <Descriptions.Item label="单位性质">
@@ -155,12 +155,12 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="职称">{lgbDetailData.academicTitles}</Descriptions.Item>
         </Descriptions>
 
-        <Descriptions title="家庭信息" column={{ xxl: 4, xl: 3, lg: 2 }}>
-          <Descriptions.Item label="常住地址" span={{ xxl: 4, xl: 3, lg: 2 }}>
-            {`${lgbFamilyData.residentAddressList || ''} ${lgbFamilyData.residentAddressDiy || ''}`}
+        <Descriptions title="家庭信息">
+          <Descriptions.Item label="常住地址">
+            {`${lgbFamilyData.residentAddressList || ''}`}
           </Descriptions.Item>
-          <Descriptions.Item label="家庭住址" span={{ xxl: 4, xl: 3, lg: 2 }}>
-            {`${lgbFamilyData.homeNameList || ''} ${lgbFamilyData.homeAddressDiy || ''}`}
+          <Descriptions.Item label="家庭住址">
+            {`${lgbFamilyData.homeNameList || ''}`}
           </Descriptions.Item>
 
           <Descriptions.Item label="婚姻状况">
