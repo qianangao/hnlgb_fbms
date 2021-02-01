@@ -11,7 +11,7 @@ const staffInfo = [];
 for (let i = 0; i < 20; i++) {
   staffInfo.push({
     id: '4028b23f73eae1b30173eae1b37b', //id
-    realName: '银色人才' + i, //姓名
+    realName: '银发人才' + i, //姓名
     dictSex: '8adcf7c96a48fae4016a4925e34b', //性别
     dateOfBirth: '2020-08-12', //出生日期
     dictRetirementType: '8adcf7c96a48fae4016a4925f601', //离退休类型

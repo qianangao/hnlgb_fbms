@@ -43,7 +43,7 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
       rules: [{ max: 64, message: `慰问品不超过64个字` }],
     },
     {
-      label: '老同志反馈信息',
+      label: '反馈信息',
       name: 'feedback',
       type: 'textarea',
     },
@@ -84,6 +84,11 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
       label: '慰问品',
       name: 'consolationGoods',
       rules: [{ max: 64, message: `慰问品不超过64个字` }],
+    },
+    {
+      label: '反馈信息',
+      name: 'feedback',
+      type: 'textarea',
     },
     {
       label: '照片信息',

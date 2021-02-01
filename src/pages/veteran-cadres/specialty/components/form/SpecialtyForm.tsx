@@ -57,7 +57,7 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="银色人才" />
+      <Descriptions title="银发人才" />
     </>
   );
   return id ? (

@@ -5,9 +5,12 @@ import AdvancedForm from '@/components/AdvancedForm';
 import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 import { Descriptions } from 'antd';
 import { checkPost, checkPhone, checkTelephone } from '@/utils/validators';
+import { USER_INFO, getCookie } from '@/utils/cookie';
+import { decrypt } from '@/utils/format';
 
 const FamilyForm = ({ form, id, dispatch, loading }) => {
   const [spouseDeadTimeVisible, setSpouseDeadTimeVisible] = useState(false);
+  const [adminVisible, setAdminVisible] = useState(false);
   const formItems = [
     {
       name: 'id',
@@ -21,30 +24,32 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
     {
       label: '常住地址',
       name: 'residentAddress',
-      rules: [{ required: true, message: '请选择常住地址!' }],
+      // rules: [{ required: true, message: '请选择常住地址!' }],
       render: <ProvinceCascaderInput />,
     },
     {
       label: '常住详细地址',
       name: 'residentAddressDiy',
       span: 2,
+      visible: adminVisible || !id,
       rules: [
-        { required: true, message: '请输入常住详细地址!', whitespace: true },
+        // { required: true, message: '请输入常住详细地址!', whitespace: true },
         { max: 120, message: '常住详细地址请小于120位!', whitespace: true },
       ],
     },
     {
       label: '家庭地址',
       name: 'homeAddress',
-      rules: [{ required: true, message: '请选择家庭地址!' }],
+      // rules: [{ required: true, message: '请选择家庭地址!' }],
       render: <ProvinceCascaderInput />,
     },
     {
       label: '家庭详细地址',
       name: 'homeAddressDiy',
       span: 2,
+      visible: adminVisible || !id,
       rules: [
-        { required: true, message: '请输入家庭详细地址!', whitespace: true },
+        // { required: true, message: '请输入家庭详细地址!', whitespace: true },
         { max: 120, message: '家庭详细地址请小于120位!', whitespace: true },
       ],
     },
@@ -180,6 +185,13 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
   ];
 
   useEffect(() => {
+    const {account} = JSON.parse(getCookie(USER_INFO));
+    const userId = JSON.parse(getCookie(USER_INFO)).id;
+    if (account === 'admin' && userId === '1') {
+      setAdminVisible(true);
+    } else {
+      setAdminVisible(false);
+    }
     if (id) {
       new Promise(resolve => {
         dispatch({
@@ -190,6 +202,8 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          residentAddressDiy: data.residentAddressDiy && decrypt(data.residentAddressDiy),
+          homeAddressDiy: data.homeAddressDiy && decrypt(data.homeAddressDiy),
         };
 
         fields.residentAddress = data.residentAddressVillage

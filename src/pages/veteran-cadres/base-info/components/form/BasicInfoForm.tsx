@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
 import { Radio } from 'antd';
 import moment from 'moment';
-
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
-import { checkIdCard, checkPhone } from '@/utils/validators';
+import { USER_INFO, getCookie } from '@/utils/cookie';
+import { checkPhone } from '@/utils/validators';
+import { decrypt } from '@/utils/format';
 
 const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   const orgSelect = useRef({});
   const nowThePipeOrgSelect = useRef({});
   const [deadTimeVisible, setDeadTimeVisible] = useState(false);
+  const [adminVisible, setAdminVisible] = useState(false);
   const [provincialCadresVisible, setProvincialCadresVisible] = useState(false);
 
   const disabledDate = current => {
@@ -28,7 +30,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '姓名',
       name: 'realName',
-      disabled: !!id,
+      disabled: adminVisible === true ? false : !!id,
       rules: [
         { required: true, message: '请输入姓名!', whitespace: true },
         { max: 30, message: '姓名长度请小于30位!', whitespace: true },
@@ -59,11 +61,12 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '身份证号',
       name: 'idCard',
-      disabled: !!id,
-      rules: [
-        { required: true, message: '请输入身份证号!', whitespace: true },
-        { validator: checkIdCard },
-      ],
+      visible: adminVisible || !id,
+      // disabled: !!id,
+      // rules: [
+      //   { required: true, message: '请输入身份证号!', whitespace: true },
+      //   { validator: checkIdCard },
+      // ],
     },
     {
       label: '手机号码',
@@ -286,6 +289,13 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
   ];
 
   useEffect(() => {
+    const { account } = JSON.parse(getCookie(USER_INFO));
+    const userId = JSON.parse(getCookie(USER_INFO)).id;
+    if (account === 'admin' && userId === '1') {
+      setAdminVisible(true);
+    } else {
+      setAdminVisible(false);
+    }
     if (id) {
       new Promise(resolve => {
         dispatch({
@@ -296,6 +306,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       }).then(data => {
         const fields = {
           ...data,
+          idCard: data.idCard && decrypt(data.idCard),
         };
 
         orgSelect.current.setLabel(data.organizationName || '');

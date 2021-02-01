@@ -65,7 +65,7 @@ const Table = ({
       hideInSearch: true,
     },
     {
-      title: '党员数量',
+      title: '成员数量',
       align: 'center',
       dataIndex: 'partyMemberNum',
       hideInSearch: true,
