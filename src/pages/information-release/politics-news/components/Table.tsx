@@ -68,7 +68,7 @@ const Table = ({
         ),
         <Popconfirm
           key={`${employeeData.id}del`}
-          title="确认删除时政要闻吗？"
+          title="确认删除要闻速览吗？"
           placement="topRight"
           onConfirm={() => deleteReturnworkPerson([employeeData.id])}
         >
@@ -100,7 +100,7 @@ const Table = ({
   return (
     <ProTable
       rowKey="id"
-      headerTitle="时政要闻"
+      headerTitle="要闻速览"
       actionRef={tableRef}
       rowSelection={[]}
       scroll={{ x: 'max-content' }}
@@ -115,7 +115,7 @@ const Table = ({
           <Button
             onClick={() => {
               Modal.confirm({
-                title: '确认删除时政要闻？',
+                title: '确认删除要闻速览？',
                 content: '一旦确定将无法恢复',
                 onOk: () => {
                   deleteReturnworkPerson(selectedRowKeys);

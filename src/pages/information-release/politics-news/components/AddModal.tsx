@@ -51,7 +51,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
 
   return (
     <Modal
-      title="新增时政要闻"
+      title="新增要闻速览"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

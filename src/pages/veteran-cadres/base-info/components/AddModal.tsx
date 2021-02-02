@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import { Modal } from 'antd';
+import { encrypt } from '@/utils/format';
 import BasicInfoForm from './form/BasicInfoForm';
 
 const AddModal = ({ dispatch, actionRef, loading }) => {
@@ -30,12 +31,14 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
     form
       .validateFields()
       .then(values => {
+        const params = values;
+        if (values.idCard) {
+          params.idCard = encrypt(values.idCard);
+        }
         return new Promise(resolve => {
           dispatch({
             type: `vcBasicInfo/addLgb`,
-            payload: {
-              ...values,
-            },
+            payload: params,
             resolve,
           });
         });

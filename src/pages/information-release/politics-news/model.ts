@@ -66,7 +66,7 @@ const Model = {
       const publishStatus = payload.status;
       if (!response.error) {
         resolve && resolve(response);
-        message.success(publishStatus === 0 ? '时政要闻新增成功！' : '时政要闻发布成功！');
+        message.success(publishStatus === 0 ? '要闻速览新增成功！' : '要闻速览发布成功！');
         yield put({
           type: 'tableReload',
         });
@@ -78,7 +78,7 @@ const Model = {
       if (!response.error) {
         resolve && resolve(response);
 
-        message.success(publishStatus === 0 ? '时政要闻修改成功！' : '时政要闻发布成功！');
+        message.success(publishStatus === 0 ? '要闻速览修改成功！' : '要闻速览发布成功！');
 
         yield put({
           type: 'tableReload',
@@ -89,7 +89,7 @@ const Model = {
       const response = yield call(deletePoliticsNews, payload);
 
       if (!response.error) {
-        message.success('时政要闻删除成功！');
+        message.success('要闻速览删除成功！');
         yield put({
           type: 'tableReload',
         });
