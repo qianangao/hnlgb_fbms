@@ -25,7 +25,7 @@ const DetailModal = ({ loading, actionRef }) => {
 
   return (
     <Modal
-      title="时政要闻详情"
+      title="要闻速览详情"
       centered
       width="95vw"
       style={{ paddingBottom: 0 }}

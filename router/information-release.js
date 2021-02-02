@@ -31,7 +31,7 @@ const routes = {
       name: 'information-release-politics-news',
       component: './information-release/politics-news',
       authority: '07-05',
-      remark: '时政要闻',
+      remark: '要闻速览',
     },
     {
       path: '/information-release/work-dynamic',
