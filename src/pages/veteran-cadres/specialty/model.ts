@@ -6,6 +6,11 @@ import {
   updateSpecialty,
   specialtyList,
   detailSpecialty,
+  specialtyFlowList,
+  addSpecialtyFlow,
+  updateSpecialtyFlow,
+  deleteSpecialtyFlow,
+  detailSpecialtyFlow,
 } from './service';
 
 const Model = {
@@ -56,6 +61,47 @@ const Model = {
         });
       }
     },
+    // 查询候鸟型银色人才
+    *specialtyFlowList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.specialty.selectedOrgId);
+      const params = {
+        ...payload,
+        orgIdForDataSelect,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const { dateOfBirth } = params;
+
+      if (dateOfBirth && dateOfBirth.length === 2) {
+        params.dateOfBirthStart = moment(dateOfBirth[0]).format('YYYY-MM-DD');
+        params.dateOfBirthEnd = moment(dateOfBirth[1]).format('YYYY-MM-DD');
+      }
+
+      delete params.dateOfBirth;
+      const response = yield call(specialtyFlowList, params);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+
+        yield put({
+          type: 'save',
+          payload: {
+            specialtyFlowListData: result,
+          },
+        });
+      }
+    },
 
     *selectOrgChange({ payload }, { put }) {
       yield put({
@@ -81,12 +127,36 @@ const Model = {
         });
       }
     },
+    *addSpecialtyFlow({ payload, resolve }, { call, put }) {
+      const response = yield call(addSpecialtyFlow, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('新增候鸟型银发人才成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
     *updateSpecialty({ payload, resolve }, { call, put }) {
       const response = yield call(updateSpecialty, payload);
 
       if (!response.error) {
         resolve && resolve(response);
         message.success('银发人才修改成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *updateSpecialtyFlow({ payload, resolve }, { call, put }) {
+      const response = yield call(updateSpecialtyFlow, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('候鸟型银发人才修改成功！');
 
         yield put({
           type: 'tableReload',
@@ -103,8 +173,25 @@ const Model = {
         });
       }
     },
+    *deleteSpecialtyFlow({ payload }, { call, put }) {
+      const response = yield call(deleteSpecialtyFlow, payload);
+
+      if (!response.error) {
+        message.success('候鸟型银发人才删除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
     *detailSpecialty({ payload, resolve }, { call }) {
       const response = yield call(detailSpecialty, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *detailSpecialtyFlow({ payload, resolve }, { call }) {
+      const response = yield call(detailSpecialtyFlow, payload);
 
       if (!response.error) {
         resolve && resolve(response);
