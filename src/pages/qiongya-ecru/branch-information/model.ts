@@ -9,6 +9,11 @@ import {
   addPartyUser,
   deletePartyUser,
   getUsersNoParty,
+  updateBranchMembers,
+  getLgbOuterList,
+  addLgbOuter,
+  updateLgbOuter,
+  deleteLgbOuter,
 } from './service';
 
 const Model = {
@@ -16,11 +21,13 @@ const Model = {
   state: {
     branchInformationData: {},
     tableRef: {},
+    detailTableRef: {},
     selectedOrgId: undefined, // 选择的组织id
     detailbranchInformationData: {},
     partyUserListData: {},
     politicalStatusLgbsData: {},
     partyData: {},
+    lgbOuterListData: {},
   },
   effects: {
     *branchInformationList({ payload, resolve }, { call, put, select }) {
@@ -170,6 +177,64 @@ const Model = {
         });
       }
     },
+
+    *updateBranchMembers({ payload, resolve }, { call, put }) {
+      const response = yield call(updateBranchMembers, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('修改成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *getLgbOuterList({ payload, resolve }, { call, put }) {
+      const response = yield call(getLgbOuterList, payload);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+        resolve && resolve(result);
+        yield put({
+          type: 'save',
+          payload: {
+            lgbOuterListData: result,
+          },
+        });
+      }
+    },
+    *addLgbOuter({ payload, resolve }, { call }) {
+      const response = yield call(addLgbOuter, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('新增成功！');
+      }
+    },
+    *updateLgbOuter({ payload, resolve }, { call, put }) {
+      const response = yield call(updateLgbOuter, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('修改成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *deleteLgbOuter({ payload }, { call, put }) {
+      const response = yield call(deleteLgbOuter, payload);
+      if (!response.error) {
+        message.success('删除成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
   },
   reducers: {
     save(state, { payload }) {
@@ -177,8 +242,10 @@ const Model = {
     },
     tableReload(state) {
       const tableRef = state.tableRef || {};
+      const detailTableRef = state.detailTableRef || {};
       setTimeout(() => {
         tableRef.current.reloadAndRest();
+        detailTableRef.current && detailTableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },

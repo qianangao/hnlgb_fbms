@@ -98,3 +98,53 @@ export async function getUsersNoParty(params) {
     params,
   });
 }
+/**
+ * 编辑-支部成员角色
+ * @param {*} params
+ */
+export async function updateBranchMembers(params) {
+  return request(`/updatePartyUserRole`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+/**
+ * 支部成员(系统外)列表
+ * @param {*} params
+ */
+export async function getLgbOuterList(params) {
+  return request(`/mobileParty`, {
+    method: 'GET',
+    params,
+  });
+}
+/**
+ * 支部-新增成員(系统外)
+ * @param {*} params
+ */
+export async function addLgbOuter(params) {
+  return request(`/mobileParty`, {
+    method: 'POST',
+    data: params,
+  });
+}
+/**
+ * 编辑-支部成员(系统外)
+ * @param {*} params
+ */
+export async function updateLgbOuter(params) {
+  return request(`/mobileParty/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+/**
+ * 删除-支部成员(外部)
+ * @param {*} params
+ */
+export async function deleteLgbOuter(params) {
+  return request(`/mobileParty`, {
+    method: 'DELETE',
+    data: params,
+  });
+}

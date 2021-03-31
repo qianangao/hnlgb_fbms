@@ -27,17 +27,17 @@ const Table = ({
       dataIndex: 'partyName',
     },
     {
-      title: '支部类型',
+      title: '支部性质',
       align: 'center',
-      dataIndex: 'dictPartyType',
-      valueEnum: enums.dictPartyType,
+      dataIndex: 'dictPartyNature',
+      valueEnum: enums.dictPartyNature,
       hideInSearch: true,
     },
     {
-      title: '支部类别',
+      title: '支部来源',
       align: 'center',
-      dataIndex: 'dictPartyCategory',
-      valueEnum: enums.dictPartyCategory,
+      dataIndex: 'dictPartySource',
+      valueEnum: enums.dictPartySource,
     },
     {
       title: '书记',
@@ -58,12 +58,12 @@ const Table = ({
       dataIndex: 'dateForChangingLeaders',
       hideInSearch: true,
     },
-    {
-      title: '换届地点',
-      align: 'center',
-      dataIndex: 'venues',
-      hideInSearch: true,
-    },
+    // {
+    //   title: '换届地点',
+    //   align: 'center',
+    //   dataIndex: 'venues',
+    //   hideInSearch: true,
+    // },
     {
       title: '成员数量',
       align: 'center',

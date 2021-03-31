@@ -26,21 +26,21 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
         { max: 64, message: `${tableType === '生日看望' ? '看望地点' : '看望医院'}不超过64个字` },
       ],
     },
+    // {
+    //   label: '看望领导',
+    //   name: 'leader',
+    //   rules: [{ max: 64, message: `看望领导不超过64个字` }],
+    // },
     {
-      label: '看望领导',
-      name: 'leader',
-      rules: [{ max: 64, message: `看望领导不超过64个字` }],
-    },
-    {
-      label: '陪同人员',
+      label: '工作人员',
       name: 'entourage',
-      rules: [{ max: 64, message: `陪同人员不超过64个字` }],
+      rules: [{ max: 64, message: `工作人员不超过64个字` }],
     },
 
     {
-      label: '慰问品',
+      label: '慰问清单',
       name: 'consolationGoods',
-      rules: [{ max: 64, message: `慰问品不超过64个字` }],
+      rules: [{ max: 64, message: `慰问清单不超过64个字` }],
     },
     {
       label: '反馈信息',
@@ -67,23 +67,23 @@ const VisitForm = ({ form, id, dispatch, loading, tableType }) => {
         { max: 64, message: `${tableType === '日常走访' ? '走访地点' : '慰问地点'}不超过64个字` },
       ],
     },
+    // {
+    //   label: tableType === '日常走访' ? '走访领导' : '慰问领导',
+    //   name: 'leader',
+    //   rules: [
+    //     { max: 64, message: `${tableType === '日常走访' ? '走访领导' : '慰问领导'}不超过64个字` },
+    //   ],
+    // },
     {
-      label: tableType === '日常走访' ? '走访领导' : '慰问领导',
-      name: 'leader',
-      rules: [
-        { max: 64, message: `${tableType === '日常走访' ? '走访领导' : '慰问领导'}不超过64个字` },
-      ],
-    },
-    {
-      label: '陪同人员',
+      label: '工作人员',
       name: 'entourage',
-      rules: [{ max: 64, message: `陪同人员不超过64个字` }],
+      rules: [{ max: 64, message: `工作人员不超过64个字` }],
     },
 
     {
-      label: '慰问品',
+      label: '慰问清单',
       name: 'consolationGoods',
-      rules: [{ max: 64, message: `慰问品不超过64个字` }],
+      rules: [{ max: 64, message: `慰问清单不超过64个字` }],
     },
     {
       label: '反馈信息',

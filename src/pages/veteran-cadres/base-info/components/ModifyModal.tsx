@@ -150,7 +150,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
       destroyOnClose
       onCancel={hideModal}
     >
-      <Steps current={stepCurrent}>
+      <Steps current={stepCurrent} onChange={changeCurrent}>
         {steps.map(item => (
           <Steps.Step key={item.title} title={item.title} />
         ))}

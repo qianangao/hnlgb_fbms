@@ -205,7 +205,7 @@ const Model = {
     tableReload(state) {
       const tableRef = state.tableRef || {};
       setTimeout(() => {
-        tableRef.current.reloadAndRest();
+        tableRef.current && tableRef.current.reloadAndRest();
       }, 0);
       return { ...state };
     },
