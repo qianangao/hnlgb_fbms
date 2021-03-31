@@ -41,7 +41,7 @@ const Table = ({ openAddModal, openModifyModal, relocated, dispatch, enums }) =>
       hideInSearch: true,
     },
     {
-      title: '安置单位',
+      title: '安置居住地',
       align: 'center',
       dataIndex: 'resettlementUnit',
     },

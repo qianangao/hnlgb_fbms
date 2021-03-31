@@ -45,14 +45,14 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '性别',
       name: 'dictSex',
       enumsLabel: 'dictSex',
-      rules: [{ required: true, message: '请选择性别!' }],
+      rules: [{message: '请选择性别!' }],
     },
-    {
-      label: '工作单位',
-      name: 'organizationId',
-      rules: [{ required: true, message: '请选择工作单位!' }],
-      render: <OrgSelectInput actionRef={orgSelect} />,
-    },
+    // {
+    //   label: '工作单位',
+    //   name: 'organizationId',
+    //   rules: [{ required: true, message: '请选择工作单位!' }],
+    //   render: <OrgSelectInput actionRef={orgSelect} />,
+    // },
     {
       label: '籍贯',
       name: 'nativePlace',
@@ -83,7 +83,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '单位性质',
       name: 'dictUnitNature',
       enumsLabel: 'dictUnitNature',
-      rules: [{ required: true, message: '请选择单位性质!' }],
+      rules: [{ message: '请选择单位性质!' }],
     },
     {
       label: '民族',
@@ -94,7 +94,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '出生日期',
       name: 'dateOfBirth',
       type: 'date',
-      rules: [{ required: true, message: '请选择出生日期!' }],
+      rules: [{ message: '请选择出生日期!' }],
     },
     {
       label: '入党时间',
@@ -105,7 +105,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '政治面貌',
       name: 'dictPoliticalStatus',
       enumsLabel: 'dictPoliticalStatus',
-      rules: [{ required: true, message: '请选择政治面貌!' }],
+      rules: [{ message: '请选择政治面貌!' }],
     },
     // TODO 阴历日期计算生日提醒暂未实现，后续观察是否保留
     // 相关依赖
@@ -140,7 +140,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '离退休类型',
       name: 'dictRetirementType',
       enumsLabel: 'dictRetirementType',
-      rules: [{ required: true, message: '请选择离退休类型!' }],
+      rules: [{ message: '请选择离退休类型!' }],
     },
     {
       label: '文化程度',
@@ -151,13 +151,13 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '参加工作时间',
       name: 'startWorkTime',
       type: 'date',
-      rules: [{ required: true, message: '请选择参加工作时间!' }],
+      rules: [{ message: '请选择参加工作时间!' }],
     },
     {
       label: '离退休时间',
       name: 'retirementDate',
       type: 'date',
-      rules: [{ required: true, message: '请选择离退休时间!' }],
+      rules: [{ message: '请选择离退休时间!' }],
     },
     {
       label: '现享受待遇批准时间',
@@ -168,13 +168,13 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '现享受待遇',
       name: 'dictTreatmentNow',
       enumsLabel: 'dictTreatmentNow',
-      rules: [{ required: true, message: '请选择现享受待遇!' }],
+      rules: [{  message: '请选择现享受待遇!' }],
     },
     {
       label: '职级',
       name: 'dictRetirementLevel',
       enumsLabel: 'dictRetirementLevel',
-      rules: [{ required: true, message: '请选择职级!' }],
+      rules: [{ message: '请选择职级!' }],
     },
     {
       label: '是否省属干部',
@@ -190,26 +190,26 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '原工作单位及职务',
       name: 'originalUnitAndPosition',
-      rules: [{ required: true, message: '请输入原工作单位及职务!' }],
+      rules: [{ message: '请输入原工作单位及职务!' }],
     },
     {
       label: '原工作单位性质',
       name: 'dictAllergenUnitNaturel',
       enumsLabel: 'dictAllergenUnitNaturel',
     },
-    {
-      label: '层级',
-      name: 'hierarchy',
-      enumsLabel: 'dictHierarchy',
-      rules: [{ required: true, message: '请选择层级!' }],
-    },
+    // {
+    //   label: '层级',
+    //   name: 'hierarchy',
+    //   enumsLabel: 'dictHierarchy',
+    //   rules: [{ message: '请选择层级!' }],
+    // },
     {
       label: '统计标志',
       name: 'statisticSymbol',
       type: 'switch',
       switchEnums: [2, 1],
       initialValue: 1,
-      rules: [{ required: true, message: '请选择统计标志!' }],
+      rules: [{ required: false, message: '请选择统计标志!' }],
     },
 
     {
@@ -217,7 +217,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       name: 'isDifferentLive',
       type: 'switch',
       initialValue: 0,
-      rules: [{ required: true, message: '请选择是否异地居住!' }],
+      rules: [{ required: false, message: '请选择是否异地居住!' }],
     },
     {
       label: '待遇批准文号',
@@ -238,7 +238,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '健康状态',
       name: 'dictHealth',
       enumsLabel: 'dictHealthStatus',
-      rules: [{ required: true, message: '请选择健康状态!' }],
+      rules: [{ message: '请选择健康状态!' }],
     },
     {
       label: '享受医疗待遇情况',
@@ -259,7 +259,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       type: 'switch',
       switchEnums: [1, 0],
       initialValue: 0,
-      rules: [{ required: true, message: '请选择是否在世!' }],
+      rules: [{ required: false, message: '请选择是否在世!' }],
     },
     {
       label: '离世时间',
@@ -269,19 +269,19 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       extraProps: {
         disabledDate,
       },
-      rules: [{ required: true, message: '请选择离世时间!' }],
+      rules: [{ message: '请选择离世时间!' }],
     },
     {
       label: '身份性质',
       name: 'dictIdentity',
       enumsLabel: 'dictIdentity',
-      rules: [{ required: true, message: '请选择身份性质!' }],
+      rules: [{ message: '请选择身份性质!' }],
     },
-    {
-      label: '组织区域',
-      name: 'dictOrganizationArea',
-      enumsLabel: 'dictOrganizationArea',
-    },
+    // {
+    //   label: '组织区域',
+    //   name: 'dictOrganizationArea',
+    //   enumsLabel: 'dictOrganizationArea',
+    // },
     {
       label: '职称',
       name: 'academicTitles',
@@ -309,7 +309,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
           idCard: data.idCard && decrypt(data.idCard),
         };
 
-        orgSelect.current.setLabel(data.organizationName || '');
+        // orgSelect.current.setLabel(data.organizationName || '');
         nowThePipeOrgSelect.current.setLabel(data.nowThePipeUnits || '');
         setDeadTimeVisible(!!data.isDead);
         if (
