@@ -1,23 +1,17 @@
 import { message } from 'antd';
 import moment from 'moment';
-import {
-  addSpecialty,
-  deleteSpecialty,
-  updateSpecialty,
-  specialtyList,
-  detailSpecialty,
-} from './service';
+import { addPoints, pointsRecords, pointsList } from './service';
 
 const Model = {
-  namespace: 'specialty',
+  namespace: 'vcPointsMgt',
   state: {
-    specialtyListData: {},
+    pointsListData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
   effects: {
-    *specialtyList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.specialty.selectedOrgId);
+    *pointsList({ payload, resolve }, { call, put, select }) {
+      const orgIdForDataSelect = yield select(state => state.vcPointsMgt.selectedOrgId);
       const params = {
         ...payload,
         orgIdForDataSelect,
@@ -33,7 +27,7 @@ const Model = {
       }
 
       delete params.dateOfBirth;
-      const response = yield call(specialtyList, params);
+      const response = yield call(pointsList, params);
 
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
@@ -51,7 +45,7 @@ const Model = {
         yield put({
           type: 'save',
           payload: {
-            specialtyListData: result,
+            pointsListData: result,
           },
         });
       }
@@ -69,45 +63,48 @@ const Model = {
         type: 'tableReload',
       });
     },
-    *addSpecialty({ payload, resolve }, { call, put }) {
-      const response = yield call(addSpecialty, payload);
+
+    *pointsRecords({ payload, resolve }, { call }) {
+      const params = {
+        ...payload,
+        currentPage: payload.current,
+        pageSize: payload.pageSize,
+      };
+
+      const { dateOfBirth } = params;
+
+      if (dateOfBirth && dateOfBirth.length === 2) {
+        params.dateOfBirthStart = moment(dateOfBirth[0]).format('YYYY-MM-DD');
+        params.dateOfBirthEnd = moment(dateOfBirth[1]).format('YYYY-MM-DD');
+      }
+
+      delete params.dateOfBirth;
+      const response = yield call(pointsRecords, params);
+
+      if (!response.error) {
+        const { items, currentPage, totalNum } = response;
+
+        const result = {
+          data: items,
+          page: currentPage,
+          pageSize: payload.pageSize,
+          success: true,
+          total: totalNum,
+        };
+
+        resolve && resolve(result);
+      }
+    },
+    *addPoints({ payload, resolve }, { call, put }) {
+      const response = yield call(addPoints, payload);
 
       if (!response.error) {
         resolve && resolve(response);
-        message.success('新增银发人才成功！');
+        message.success('添加成功！');
 
         yield put({
           type: 'tableReload',
         });
-      }
-    },
-    *updateSpecialty({ payload, resolve }, { call, put }) {
-      const response = yield call(updateSpecialty, payload);
-
-      if (!response.error) {
-        resolve && resolve(response);
-        message.success('银发人才修改成功！');
-
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *deleteSpecialty({ payload }, { call, put }) {
-      const response = yield call(deleteSpecialty, payload);
-
-      if (!response.error) {
-        message.success('银发人才删除成功！');
-        yield put({
-          type: 'tableReload',
-        });
-      }
-    },
-    *detailSpecialty({ payload, resolve }, { call }) {
-      const response = yield call(detailSpecialty, payload);
-
-      if (!response.error) {
-        resolve && resolve(response);
       }
     },
   },

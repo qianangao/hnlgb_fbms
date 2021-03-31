@@ -19,10 +19,10 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
       label: '疾病情况',
       name: 'disease',
     },
-    {
-      label: '合同医院',
-      name: 'assignedHospital',
-    },
+    // {
+    //   label: '合同医院',
+    //   name: 'assignedHospital',
+    // },
     {
       label: '评残情况',
       name: 'disability',
@@ -52,18 +52,18 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
       label: '活动能力',
       name: 'action',
     },
-    {
-      label: '是否有医疗照顾',
-      name: 'caregivers',
-      type: 'switch',
-      initialValue: 0,
-    },
-    {
-      label: '是否为军休干部',
-      name: 'retiredCadres',
-      type: 'switch',
-      initialValue: 0,
-    },
+    // {
+    //   label: '是否有医疗照顾',
+    //   name: 'caregivers',
+    //   type: 'switch',
+    //   initialValue: 0,
+    // },
+    // {
+    //   label: '是否为军休干部',
+    //   name: 'retiredCadres',
+    //   type: 'switch',
+    //   initialValue: 0,
+    // },
     // {
     //   label: '是否长期住院',
     //   name: 'longInHospital',

@@ -198,12 +198,12 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
             {enums.dictHealthStatus && enums.dictHealthStatus[lgbDetailData.dictHealth]}
           </Descriptions.Item>
           <Descriptions.Item label="疾病情况">{lgbHealthyData.disease}</Descriptions.Item>
-          <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item>
+          {/* <Descriptions.Item label="合同医院">{lgbHealthyData.assignedHospital}</Descriptions.Item> */}
           <Descriptions.Item label="评残情况">{lgbHealthyData.disability}</Descriptions.Item>
           <Descriptions.Item label="就近医院">{lgbHealthyData.nearHospital}</Descriptions.Item>
-          <Descriptions.Item label="是否有医疗照顾">
+          {/* <Descriptions.Item label="是否有医疗照顾">
             {lgbHealthyData.caregivers === 1 ? '是' : '否'}
-          </Descriptions.Item>
+          </Descriptions.Item> */}
         </Descriptions>
       </Spin>
     </Modal>

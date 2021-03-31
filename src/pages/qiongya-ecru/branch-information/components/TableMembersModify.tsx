@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import React from 'react';
 import { connect } from 'umi';
-import LgbSyncMultiSelect from '@/components/LgbSyncMultiSelect';
+import PartyLgbSyncMultiSelect from '@/components/PartyLgbSyncMultiSelect';
 
 const TableCommunityMember = ({ dispatch, id }) => {
   // 获取支部成员
@@ -20,7 +20,7 @@ const TableCommunityMember = ({ dispatch, id }) => {
       } else {
         dispatch({
           type: 'branchInformation/addPartyUser',
-          payload: { ...params, partyId: id },
+          payload: { ...params, partyId: id, dictPartyUserRole: '8adcf7cc77faf37a0177faf530ca' },
           resolve,
         });
       }
@@ -34,27 +34,64 @@ const TableCommunityMember = ({ dispatch, id }) => {
       });
     });
   // 获取所以党员
-  const getUsersNoParty = politicalStatusParam =>
+  // const getUsersNoParty = politicalStatusParam =>
+  //   new Promise(resolve => {
+  //     dispatch({
+  //       type: 'branchInformation/getUsersNoParty',
+  //       payload: {
+  //         ...politicalStatusParam,
+  //       },
+  //       resolve,
+  //     });
+  //   });
+  const getLgbOuterList = params =>
     new Promise(resolve => {
       dispatch({
-        type: 'branchInformation/getUsersNoParty',
-        payload: {
-          ...politicalStatusParam,
-        },
+        type: 'branchInformation/getLgbOuterList',
+        payload: { ...params, partyId: id },
+        resolve,
+      });
+    });
+  const addLgbOuter = params =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/addLgbOuter',
+        payload: { ...params, partyId: id },
+        resolve,
+      });
+    });
+  const updateLgbOuter = params =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/updateLgbOuter',
+        payload: { ...params },
+        resolve,
+      });
+    });
+  const deleteLgbOuter = deleteMemberParam =>
+    new Promise(resolve => {
+      dispatch({
+        type: 'branchInformation/deleteLgbOuter',
+        payload: { ...deleteMemberParam },
         resolve,
       });
     });
 
   return (
-    <LgbSyncMultiSelect
+    <PartyLgbSyncMultiSelect
       getLgbs={getMemberList}
+      getLgbsOuter={getLgbOuterList}
       addLgb={addMemberLgb}
+      addLgbOuter={addLgbOuter}
       deleteLgb={deleteMemberLgb}
-      getSelectLgbs={getUsersNoParty}
+      updateLgbOuter={updateLgbOuter}
+      deleteLgbOuter={deleteLgbOuter}
+      // getSelectLgbs={getUsersNoParty}
     />
   );
 };
 
-export default connect(({ branchInformation }) => ({
+export default connect(({ branchInformation, global }) => ({
   branchInformation,
+  enums: global.enums,
 }))(TableCommunityMember);

@@ -55,6 +55,13 @@ const routes = {
       remark: '离世管理',
     },
     {
+      path: '/veteran-cadres/points-mgt',
+      name: 'veteran-cadres-points-mgt',
+      component: './veteran-cadres/points-mgt',
+      authority: '01-07',
+      remark: '积分管理',
+    },
+    {
       path: '/veteran-cadres/analysis',
       name: 'veteran-cadres-analysis',
       component: './veteran-cadres/analysis',
