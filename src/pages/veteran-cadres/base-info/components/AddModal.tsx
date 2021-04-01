@@ -35,6 +35,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
         if (values.idCard) {
           params.idCard = encrypt(values.idCard);
         }
+        params.organizationId = values.nowThePipeUnitsId;
         return new Promise(resolve => {
           dispatch({
             type: `vcBasicInfo/addLgb`,

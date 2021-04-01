@@ -46,13 +46,18 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       label: '支部类型',
       name: 'dictPartyNature',
       enumsLabel: 'dictPartyNature',
-      rules: [{ required: false, message: '请选择支部类型!', whitespace: true }],
+      rules: [{ message: '请选择支部性质!', whitespace: true }],
     },
     {
       label: '组建类型',
       name: 'dictPartySource',
       enumsLabel: 'dictPartySource',
-      rules: [{ required: false, message: '请选择组建类型!', whitespace: true }],
+      rules: [{ message: '请选择支部来源!', whitespace: true }],
+    },
+    {
+      label: '支部活动地点',
+      name: 'venues',
+      // rules: [{ required: true, message: '请输入支部活动地点!', whitespace: true }],
     },
     // {
     //   label: '支部活动地点',

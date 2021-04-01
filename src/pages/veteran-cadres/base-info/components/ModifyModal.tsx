@@ -91,6 +91,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
           if (values.idCard) {
             param.idCard = encrypt(values.idCard);
           }
+          param.organizationId = values.nowThePipeUnitsId;
           if (values.residentAddressDiy) {
             param.residentAddressDiy = encrypt(values.residentAddressDiy);
           }
