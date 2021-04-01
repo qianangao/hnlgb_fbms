@@ -39,6 +39,7 @@ const SelectTable = ({
       width: 64,
     },
     { title: '姓名', align: 'center', dataIndex: 'realName' },
+    { title: '身份证号', align: 'center', dataIndex: 'idCard', hideInTable: true },
     {
       title: '性别',
       align: 'center',
@@ -123,13 +124,13 @@ const SelectTable = ({
       onOk={handleOk}
       footer={[
         <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf37ad0')}>
-          添加原单位党员
+          添加一般党员
         </Button>,
         <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3ad11')}>
-          添加接转党员
+          添加迁入党员
         </Button>,
         <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3d33d')}>
-          添加流动党员
+          添加迁出党员
         </Button>,
         <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3ff32')}>
           添加非党员
