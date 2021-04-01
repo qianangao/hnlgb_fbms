@@ -99,6 +99,21 @@ const AdvancedFormItem = ({
         {...extraProps}
       />
     );
+  } else if (type === 'dateMonth') {
+    resField.valuePropName = 'value';
+    resField.getValueFromEvent = value => (value ? value.format('YYYY-MM') : '');
+    resField.getValueProps = str => ({ value: formatDate(str, 'YYYY-MM') });
+
+    fieldInput = (
+      <DatePicker
+        picker="month"
+        disabled={disabled}
+        showTime
+        style={{ width: '100%' }}
+        format="YYYY-MM"
+        {...extraProps}
+      />
+    );
   } else if (type === 'time') {
     resField.valuePropName = 'value';
     resField.getValueFromEvent = value => (value ? value.format('HH:mm:ss') : '');

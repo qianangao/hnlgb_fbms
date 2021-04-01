@@ -99,7 +99,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '入党时间',
       name: 'partyTime',
-      type: 'date',
+      type: 'dateMonth',
     },
     {
       label: '政治面貌',
@@ -150,19 +150,19 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     {
       label: '参加工作时间',
       name: 'startWorkTime',
-      type: 'date',
+      type: 'dateMonth',
       rules: [{ message: '请选择参加工作时间!' }],
     },
     {
       label: '离退休时间',
       name: 'retirementDate',
-      type: 'date',
+      type: 'dateMonth',
       rules: [{ message: '请选择离退休时间!' }],
     },
     {
       label: '现享受待遇批准时间',
       name: 'treatmentApproveTime',
-      type: 'date',
+      type: 'dateMonth',
     },
     {
       label: '现享受待遇',

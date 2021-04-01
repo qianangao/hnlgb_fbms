@@ -68,7 +68,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="性别">
             {enums.dictSex && enums.dictSex[lgbDetailData.dictSex]}
           </Descriptions.Item>
-          <Descriptions.Item label="工作单位">{lgbDetailData.organizationName}</Descriptions.Item>
+          {/* <Descriptions.Item label="工作单位">{lgbDetailData.organizationName}</Descriptions.Item> */}
           <Descriptions.Item label="籍贯">{lgbDetailData.nativePlace}</Descriptions.Item>
           {/* <Descriptions.Item label="身份证号">{lgbDetailData.idCard}</Descriptions.Item> */}
           <Descriptions.Item label="手机号码">{lgbDetailData.phonenumber}</Descriptions.Item>
@@ -114,9 +114,9 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
             {enums.dictAllergenUnitNaturel &&
               enums.dictAllergenUnitNaturel[lgbDetailData.dictAllergenUnitNaturel]}
           </Descriptions.Item>
-          <Descriptions.Item label="层级">
+          {/* <Descriptions.Item label="层级">
             {enums.dictHierarchy && enums.dictHierarchy[lgbDetailData.hierarchy]}
-          </Descriptions.Item>
+          </Descriptions.Item> */}
           <Descriptions.Item label="统计标志">
             {lgbDetailData.statisticSymbol === 1 ? '是' : '否'}
           </Descriptions.Item>
@@ -148,10 +148,10 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
           <Descriptions.Item label="身份性质">
             {enums.dictIdentity && enums.dictIdentity[lgbDetailData.dictIdentity]}
           </Descriptions.Item>
-          <Descriptions.Item label="组织区域">
+          {/* <Descriptions.Item label="组织区域">
             {enums.dictOrganizationArea &&
               enums.dictOrganizationArea[lgbDetailData.dictOrganizationArea]}
-          </Descriptions.Item>
+          </Descriptions.Item> */}
           <Descriptions.Item label="职称">{lgbDetailData.academicTitles}</Descriptions.Item>
         </Descriptions>
 
@@ -185,7 +185,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, actionRef, enums, loading }) => {
         </Descriptions>
 
         <Descriptions title="兼职信息" column={{ xxl: 4, xl: 3, lg: 2 }}>
-          <Descriptions.Item label="社会团体">{lgbPartTimeData.socialGroups}</Descriptions.Item>
+          <Descriptions.Item label="单位名称">{lgbPartTimeData.socialGroups}</Descriptions.Item>
           <Descriptions.Item label="职务">{lgbPartTimeData.post}</Descriptions.Item>
           <Descriptions.Item label="兼职常驻地">
             {lgbPartTimeData.placeOfResidenceName}
