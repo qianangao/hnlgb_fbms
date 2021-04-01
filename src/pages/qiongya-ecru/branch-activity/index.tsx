@@ -45,45 +45,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
       payload: orgId,
     });
   };
-  const tabs = [
-    {
-      id: '8adcf7f96b54cab9016b54ceb77c',
-      label: '党员大会',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54ced4fd',
-      label: '支委会',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54cf07bf',
-      label: '党小组会',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54cf27af',
-      label: '党课',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54cf6498',
-      label: '主题党日活动',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54cfb348',
-      label: '民主评议党员',
-    },
-    {
-      id: '8adcf7f96b54cab9016b54cfe195',
-      label: '其他',
-    },
-    {
-      id: '1',
-      label: '统计查询',
-    },
-  ];
 
-  const onTabChange = id => {
-    setTableType(id);
-    tableRef.current.reload();
-  };
   const openAddModal = item => {
     addModelRef.current.showModal(item);
   };
@@ -107,6 +69,20 @@ const BranchActivity = ({ dispatch, tableRef }) => {
   };
   const openCommentModal = ids => {
     commentModalRef.current.showModal(ids);
+  };
+  const tabs = [
+    {
+      id: '0',
+      label: '支部活动',
+    },
+    {
+      id: '1',
+      label: '统计查询',
+    },
+  ];
+  const onTabChange = id => {
+    setTableType(id);
+    tableRef.current.reload();
   };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>

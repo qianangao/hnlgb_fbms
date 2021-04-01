@@ -1,5 +1,5 @@
 import { Button, Popconfirm, Modal } from 'antd';
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 
@@ -11,8 +11,8 @@ const Table = ({
   opendetailModal,
   openSubscribeModal,
   publishState,
-  tableType,
   openCommentModal,
+  enums,
 }) => {
   const { tableRef } = branchActivity;
   const columns = [
@@ -59,6 +59,20 @@ const Table = ({
       align: 'center',
       dataIndex: publishState === 0 ? 'gmtCreate' : 'releaseTime',
       hideInSearch: true,
+    },
+    {
+      title: '活动类型',
+      align: 'center',
+      valueEnum: enums.dictOrgLife,
+      dataIndex: 'dictActivityChildType',
+      hideInSearch: true,
+    },
+    {
+      title: '活动类型',
+      align: 'center',
+      valueEnum: enums.dictOrgLife,
+      dataIndex: 'dictOrgLife',
+      hideInTable: true,
     },
     {
       title: '操作',
@@ -128,16 +142,12 @@ const Table = ({
     },
   ];
 
-  useEffect(() => {
-    tableRef.current && tableRef.current.reloadAndRest();
-  }, [tableType]);
-
   // 列表
   const branchActivityList = params =>
     new Promise(resolve => {
       dispatch({
         type: 'branchActivity/branchActivityList',
-        payload: { ...params, publishState, dictOrgLife: tableType },
+        payload: { ...params, publishState },
         resolve,
       });
     });

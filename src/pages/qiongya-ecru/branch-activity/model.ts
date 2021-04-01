@@ -193,9 +193,8 @@ const Model = {
     // 审核-评论
     *commentAudit({ payload }, { call, put }) {
       const response = yield call(commentAudit, payload);
-
       if (!response.error) {
-        message.success(payload.commentStatus === 0 ? '审核未通过成功！' : '审核未通过成功！');
+        message.success(payload.commentStatus === 2 ? '审核未通过！' : '审核通过成功！');
         yield put({
           type: 'commentTableReload',
         });

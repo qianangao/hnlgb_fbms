@@ -27,14 +27,14 @@ const Table = ({
       dataIndex: 'partyName',
     },
     {
-      title: '支部性质',
+      title: '支部类型',
       align: 'center',
       dataIndex: 'dictPartyNature',
       valueEnum: enums.dictPartyNature,
       hideInSearch: true,
     },
     {
-      title: '支部来源',
+      title: '组建类型',
       align: 'center',
       dataIndex: 'dictPartySource',
       valueEnum: enums.dictPartySource,

@@ -2,10 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbSingleSelectInput from '@/components/LgbSingleSelectInput';
+// import { Radio } from 'antd';
 
 const BranchInformationForm = ({ form, id, dispatch, loading }) => {
   const secretaryRef = useRef({});
   const deputyRef = useRef({});
+  // const [venuesVisible, setVenuesVisible] = useState(false);
+
   // const commissaryRef = useRef({});
   // const organRef = useRef({});
   // const publicityRef = useRef({});
@@ -40,22 +43,32 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       rules: [{ required: true, message: '请输入支部名称!', whitespace: true }],
     },
     {
-      label: '支部性质',
+      label: '支部类型',
       name: 'dictPartyNature',
       enumsLabel: 'dictPartyNature',
-      rules: [{ required: true, message: '请选择支部性质!', whitespace: true }],
+      rules: [{ required: false, message: '请选择支部类型!', whitespace: true }],
     },
     {
-      label: '支部来源',
+      label: '组建类型',
       name: 'dictPartySource',
       enumsLabel: 'dictPartySource',
-      rules: [{ required: true, message: '请选择支部来源!', whitespace: true }],
+      rules: [{ required: false, message: '请选择组建类型!', whitespace: true }],
     },
-    {
-      label: '支部活动地点',
-      name: 'venues',
-      // rules: [{ required: true, message: '请输入支部活动地点!', whitespace: true }],
-    },
+    // {
+    //   label: '支部活动地点',
+    //   name: 'venues',
+    //   render: (
+    //     <Radio.Group>
+    //       <Radio value={0}>固定</Radio>
+    //       <Radio value={1}>临时</Radio>
+    //     </Radio.Group>
+    //   ),
+    // },
+    // {
+    //   label: '固定地址',
+    //   name: 'guding',
+    //   visible: venuesVisible,
+    // },
     {
       label: '换届时间',
       name: 'dateForChangingLeaders',
@@ -75,19 +88,26 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     // {
     //   label: '纪检委员',
     //   name: 'disciplineCommissaryId',
-    //   render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={commissaryRef} />,
     // },
     // {
     //   label: '组织委员',
     //   name: 'organCommissaryId',
-    //   render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={organRef} />,
     // },
     // {
     //   label: '宣传委员',
     //   name: 'publicityCommissaryId',
-    //   render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={publicityRef} />,
     // },
+    {
+      label: '备注',
+      name: 'remarks',
+    },
   ];
+
+  // const fieldChangeHander = (label, value) => {
+  //   if (label === 'venues') {
+  //     setVenuesVisible(!value);
+  //   }
+  // };
 
   useEffect(() => {
     if (id) {
@@ -111,7 +131,14 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     }
   }, [id]);
 
-  return <AdvancedForm form={form} loading={loading} fields={formItems} />;
+  return (
+    <AdvancedForm
+      form={form}
+      loading={loading}
+      fields={formItems}
+      // fieldChange={fieldChangeHander}
+    />
+  );
 };
 
 BranchInformationForm.useForm = AdvancedForm.useForm;
