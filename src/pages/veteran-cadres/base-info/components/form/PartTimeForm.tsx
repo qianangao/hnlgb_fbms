@@ -11,10 +11,10 @@ const PartTimeForm = ({ form, id, dispatch, loading }) => {
       hidden: true,
     },
     {
-      label: '社会团体',
+      label: '单位名称',
       name: 'socialGroups',
       rules: [
-        { required: true, message: '请输入社会团体名称!', whitespace: true },
+        { message: '请输入社会团体名称!', whitespace: true },
         { max: 120, message: '社会团体名称请小于120位!', whitespace: true },
       ],
     },
@@ -22,7 +22,7 @@ const PartTimeForm = ({ form, id, dispatch, loading }) => {
       label: '职务',
       name: 'post',
       rules: [
-        { required: true, message: '请输入职务名称!', whitespace: true },
+        { message: '请输入职务名称!', whitespace: true },
         { max: 120, message: '职务名称请小于120位!', whitespace: true },
       ],
     },
