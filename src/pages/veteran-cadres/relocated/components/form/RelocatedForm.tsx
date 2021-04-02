@@ -20,7 +20,7 @@ const RelocatedForm = ({ form, id, dispatch, loading }) => {
     },
 
     {
-      label: '安置单位',
+      label: '安置居住地',
       visible: resettlementUnitVisible,
       name: 'resettlementUnit',
     },

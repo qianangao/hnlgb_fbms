@@ -132,7 +132,7 @@ const SelectTable = ({
         <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3d33d')}>
           添加迁出党员
         </Button>,
-        <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3ff32')}>
+        <Button type="primary" onClick={() => handleOk('ff808081788cb15c01788cc447ff')}>
           添加非党员
         </Button>,
       ]}
