@@ -80,7 +80,7 @@ const DetailTable = ({
           key={`${Data.id}del`}
           title="确认删除该组织吗？"
           placement="topRight"
-          onConfirm={() => deleteItems([Data.id])}
+          onConfirm={() => deleteItems([Data.userId])}
         >
           <a>删除</a>
         </Popconfirm>,

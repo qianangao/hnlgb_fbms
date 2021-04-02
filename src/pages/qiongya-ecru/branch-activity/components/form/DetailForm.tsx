@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Descriptions } from 'antd';
 import moment from 'moment';
 
-const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
+const DetailForm = ({ dispatch, id, detailBranchActivityData, enums }) => {
   const { context } = detailBranchActivityData;
   useEffect(() => {
     if (id) {
@@ -20,7 +20,16 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
         <Descriptions.Item label="活动名称">
           {detailBranchActivityData.activityName}
         </Descriptions.Item>
-        <Descriptions.Item label="支持人">{detailBranchActivityData.host}</Descriptions.Item>
+
+        <Descriptions.Item label="活动类型">
+          {enums &&
+            enums.dictOrgLife &&
+            enums.dictOrgLife[detailBranchActivityData.dictActivityChildType]}
+        </Descriptions.Item>
+        <Descriptions.Item label="主持活动支部">
+          {detailBranchActivityData.partyName}
+        </Descriptions.Item>
+        <Descriptions.Item label="主持人">{detailBranchActivityData.host}</Descriptions.Item>
         <Descriptions.Item label="活动日期">
           {detailBranchActivityData.activityDate &&
             moment(detailBranchActivityData.activityDate).format('YYYY-MM-DD')}
@@ -71,7 +80,8 @@ const DetailForm = ({ dispatch, id, detailBranchActivityData }) => {
   );
 };
 
-export default connect(({ branchActivity, loading }) => ({
+export default connect(({ branchActivity, loading, global }) => ({
   detailBranchActivityData: branchActivity.detailBranchActivityData,
   loading: loading.models.branchActivity,
+  enums: global.enums,
 }))(DetailForm);

@@ -20,7 +20,7 @@ const TableCommunityMember = ({ dispatch, id }) => {
       } else {
         dispatch({
           type: 'branchInformation/addPartyUser',
-          payload: { ...params, partyId: id, dictPartyUserRole: '8adcf7cc77faf37a0177faf530ca' },
+          payload: { ...params, partyId: id, dictPartyUserRole: 'ff808081788cb15c01788cc5e764' },
           resolve,
         });
       }

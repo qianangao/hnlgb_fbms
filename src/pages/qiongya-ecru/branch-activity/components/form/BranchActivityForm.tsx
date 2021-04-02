@@ -47,16 +47,16 @@ const BranchActivityForm = ({ form, id, dispatch, loading, partyData }) => {
       name: 'activityAdd',
       rules: [{ required: false, message: '请输入活动地点!', whitespace: true }],
     },
-    // {
-    //   key: 'firstLine',
-    //   type: 'segmentation',
-    // },
-    // {
-    //   label: '缩略图',
-    //   name: 'picAttachmentInfo',
-    //   type: 'image',
-    //   rules: [{ required: false, message: '请上传图片!' }],
-    // },
+    {
+      key: 'firstLine',
+      type: 'segmentation',
+    },
+    {
+      label: '缩略图',
+      name: 'picAttachmentInfo',
+      type: 'image',
+      rules: [{ required: false, message: '请上传图片!' }],
+    },
     // {
     //   key: 'firstLine',
     //   type: 'segmentation',
