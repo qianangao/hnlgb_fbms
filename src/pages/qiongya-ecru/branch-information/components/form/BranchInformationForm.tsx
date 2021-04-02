@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 import LgbSingleSelectInput from '@/components/LgbSingleSelectInput';
-// import { Radio } from 'antd';
+import { Radio } from 'antd';
 
 const BranchInformationForm = ({ form, id, dispatch, loading }) => {
   const secretaryRef = useRef({});
   const deputyRef = useRef({});
-  // const [venuesVisible, setVenuesVisible] = useState(false);
+  const [venuesVisible, setVenuesVisible] = useState(false);
 
   // const commissaryRef = useRef({});
   // const organRef = useRef({});
@@ -59,21 +59,21 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       name: 'venues',
       // rules: [{ required: true, message: '请输入支部活动地点!', whitespace: true }],
     },
-    // {
-    //   label: '支部活动地点',
-    //   name: 'venues',
-    //   render: (
-    //     <Radio.Group>
-    //       <Radio value={0}>固定</Radio>
-    //       <Radio value={1}>临时</Radio>
-    //     </Radio.Group>
-    //   ),
-    // },
-    // {
-    //   label: '固定地址',
-    //   name: 'guding',
-    //   visible: venuesVisible,
-    // },
+    {
+      label: '支部活动地点',
+      name: 'venues',
+      render: (
+        <Radio.Group>
+          <Radio value={0}>固定</Radio>
+          <Radio value={1}>临时</Radio>
+        </Radio.Group>
+      ),
+    },
+    {
+      label: '固定地址',
+      name: 'guding',
+      visible: venuesVisible,
+    },
     {
       label: '换届时间',
       name: 'dateForChangingLeaders',
@@ -90,29 +90,29 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       name: 'branchDeputySecretaryOneId',
       render: <LgbSingleSelectInput getLgbs={getLgbs} actionRef={deputyRef} />,
     },
-    // {
-    //   label: '纪检委员',
-    //   name: 'disciplineCommissaryId',
-    // },
-    // {
-    //   label: '组织委员',
-    //   name: 'organCommissaryId',
-    // },
-    // {
-    //   label: '宣传委员',
-    //   name: 'publicityCommissaryId',
-    // },
+    {
+      label: '纪检委员',
+      name: 'disciplineCommissaryId',
+    },
+    {
+      label: '组织委员',
+      name: 'organCommissaryId',
+    },
+    {
+      label: '宣传委员',
+      name: 'publicityCommissaryId',
+    },
     {
       label: '备注',
       name: 'remarks',
     },
   ];
 
-  // const fieldChangeHander = (label, value) => {
-  //   if (label === 'venues') {
-  //     setVenuesVisible(!value);
-  //   }
-  // };
+  const fieldChangeHander = (label, value) => {
+    if (label === 'venues') {
+      setVenuesVisible(!value);
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -141,7 +141,7 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       form={form}
       loading={loading}
       fields={formItems}
-      // fieldChange={fieldChangeHander}
+      fieldChange={fieldChangeHander}
     />
   );
 };

@@ -39,6 +39,7 @@ const SelectTable = ({
       width: 64,
     },
     { title: '姓名', align: 'center', dataIndex: 'realName' },
+    { title: '身份证号', align: 'center', dataIndex: 'idCard', hideInTable: true },
     {
       title: '性别',
       align: 'center',
@@ -122,14 +123,14 @@ const SelectTable = ({
       visible={lgbSelectModalVisible}
       onOk={handleOk}
       footer={[
-        <Button type="primary" onClick={() => handleOk('ff808081788cb15c01788cc3b6c0')}>
-          添加原单位党员
+        <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf37ad0')}>
+          添加一般党员
         </Button>,
-        <Button type="primary" onClick={() => handleOk('ff808081788cb15c01788cc3ed31')}>
-          添加接转党员
+        <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3ad11')}>
+          添加迁入党员
         </Button>,
-        <Button type="primary" onClick={() => handleOk('ff808081788cb15c01788cc425d5')}>
-          添加流动党员
+        <Button type="primary" onClick={() => handleOk('8adcf7cc77faf37a0177faf3d33d')}>
+          添加迁出党员
         </Button>,
         <Button type="primary" onClick={() => handleOk('ff808081788cb15c01788cc447ff')}>
           添加非党员
