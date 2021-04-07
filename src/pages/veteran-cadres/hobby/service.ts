@@ -10,3 +10,24 @@ export async function getHobbyList(params) {
     params,
   });
 }
+/**
+ * 兴趣爱好-详情
+ * @param {*} params
+ */
+export async function detailHobby(params) {
+  return request(`/hobby/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+
+/**
+ * 编辑-兴趣爱好
+ * @param {*} params
+ */
+export async function updateHobby(params) {
+  return request(`/hobby/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}

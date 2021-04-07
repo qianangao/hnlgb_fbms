@@ -98,6 +98,7 @@ const ModifyModal = ({ dispatch, actionRef, loading }) => {
           if (values.homeAddressDiy) {
             param.homeAddressDiy = encrypt(values.homeAddressDiy);
           }
+          delete param.idCardMd;
           dispatch({
             type: `vcBasicInfo/${steps[stepCurrent].effect}`,
             payload: param,

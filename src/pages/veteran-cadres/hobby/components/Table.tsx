@@ -3,7 +3,7 @@ import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
 import { Tag } from 'antd';
 
-const Table = ({ vcHobbyInfo, enums, dispatch }) => {
+const Table = ({ vcHobbyInfo, enums, dispatch, openModifyModal }) => {
   const { tableRef } = vcHobbyInfo;
 
   const columns = [
@@ -15,7 +15,12 @@ const Table = ({ vcHobbyInfo, enums, dispatch }) => {
       fixed: 'left',
       width: 64,
     },
-    { title: '姓名', align: 'center', dataIndex: 'realName' },
+    {
+      title: '姓名',
+      align: 'center',
+      dataIndex: 'realName',
+      render: (dom, employeeData) => <a onClick={() => openModifyModal(employeeData)}>{dom}</a>,
+    },
     { title: '性别', align: 'center', dataIndex: 'dictSex', valueEnum: enums.dictSex },
     { title: '民族', align: 'center', dataIndex: 'dictNation', valueEnum: enums.dictNation },
     {

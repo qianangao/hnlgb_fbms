@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'umi';
-import { Radio } from 'antd';
+import { Radio, Input } from 'antd';
 import moment from 'moment';
 import AdvancedForm from '@/components/AdvancedForm';
 import OrgSelectInput from '@/components/OrgSelectInput';
@@ -9,7 +9,6 @@ import { checkPhone } from '@/utils/validators';
 import { decrypt } from '@/utils/format';
 
 const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
-  const orgSelect = useRef({});
   const nowThePipeOrgSelect = useRef({});
   const [deadTimeVisible, setDeadTimeVisible] = useState(false);
   const [adminVisible, setAdminVisible] = useState(false);
@@ -17,6 +16,20 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
 
   const disabledDate = current => {
     return current && current > moment().endOf('day');
+  };
+
+  // 失焦-给样式idCardMd加密,并给idCard赋值
+  const onBlur = () => {
+    if (form.getFieldValue('idCardMd')) {
+      const idCardMdNew = form.getFieldValue('idCardMd');
+
+      if (idCardMdNew.indexOf('*') === -1) {
+        form.setFieldsValue({
+          idCardMd: idCardMdNew.replace(/^(.{5})(?:\w+)(.{4})$/, '$1********$2'),
+        });
+        form.setFieldsValue({ idCard: idCardMdNew });
+      }
+    }
   };
   const formItems = [
     {
@@ -45,7 +58,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '性别',
       name: 'dictSex',
       enumsLabel: 'dictSex',
-      rules: [{message: '请选择性别!' }],
+      rules: [{ message: '请选择性别!' }],
     },
     // {
     //   label: '工作单位',
@@ -60,6 +73,17 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
     },
     {
       label: '身份证号',
+      name: 'idCardMd',
+      visible: adminVisible || !id,
+      // disabled: !!id,
+      // rules: [
+      //   { required: true, message: '请输入身份证号!', whitespace: true },
+      //   { validator: checkIdCard },
+      // ],
+      render: <Input onBlur={onBlur}></Input>,
+    },
+    {
+      label: '身份证号',
       name: 'idCard',
       visible: adminVisible || !id,
       // disabled: !!id,
@@ -67,6 +91,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       //   { required: true, message: '请输入身份证号!', whitespace: true },
       //   { validator: checkIdCard },
       // ],
+      hidden: true,
     },
     {
       label: '手机号码',
@@ -168,7 +193,7 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '现享受待遇',
       name: 'dictTreatmentNow',
       enumsLabel: 'dictTreatmentNow',
-      rules: [{  message: '请选择现享受待遇!' }],
+      rules: [{ message: '请选择现享受待遇!' }],
     },
     {
       label: '职级',
@@ -286,6 +311,12 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
       label: '职称',
       name: 'academicTitles',
     },
+    {
+      label: '备注',
+      name: 'remarks',
+      type: 'textarea',
+      rules: [{ max: 120, message: '备注内容请小于120位!', whitespace: true }],
+    },
   ];
 
   useEffect(() => {
@@ -304,6 +335,12 @@ const BasicInfoForm = ({ form, id, name, dispatch, loading }) => {
           resolve,
         });
       }).then(data => {
+        // 如果有身份证号，给样式idCardMd身份证号赋值并加密
+        if (data.idCard) {
+          form.setFieldsValue({
+            idCardMd: decrypt(data.idCard).replace(/^(.{5})(?:\w+)(.{4})$/, '$1********$2'),
+          });
+        }
         const fields = {
           ...data,
           idCard: data.idCard && decrypt(data.idCard),

@@ -70,6 +70,12 @@ const HealthyForm = ({ form, id, dispatch, loading }) => {
     //   type: 'switch',
     //   initialValue: 0,
     // },
+    {
+      label: '备注',
+      name: 'remarks',
+      type: 'textarea',
+      rules: [{ max: 120, message: '备注内容请小于120位!', whitespace: true }],
+    },
   ];
 
   useEffect(() => {

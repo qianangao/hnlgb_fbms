@@ -1,10 +1,12 @@
 import moment from 'moment';
-import { getHobbyList } from './service';
+import { getHobbyList, detailHobby, updateHobby } from './service';
+import { message } from 'antd';
 
 const Model = {
   namespace: 'vcHobbyInfo',
   state: {
     hobbyListData: {},
+    detailHobbyData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -52,6 +54,31 @@ const Model = {
       }
     },
 
+    *detailHobby({ payload, resolve }, { call, put }) {
+      const response = yield call(detailHobby, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailHobbyData: response,
+          },
+        });
+      }
+    },
+    *updateHobby({ payload, resolve }, { call, put }) {
+      const response = yield call(updateHobby, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('兴趣爱好修改成功！');
+
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
     *selectOrgChange({ payload }, { put }) {
       yield put({
         type: 'save',

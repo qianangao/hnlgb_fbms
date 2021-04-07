@@ -41,6 +41,12 @@ const PartTimeForm = ({ form, id, dispatch, loading }) => {
       span: 2,
       rules: [{ max: 120, message: '兼职常驻地详细地址请小于120位!', whitespace: true }],
     },
+    {
+      label: '备注',
+      name: 'remarks',
+      type: 'textarea',
+      rules: [{ max: 120, message: '备注内容请小于120位!', whitespace: true }],
+    },
   ];
 
   useEffect(() => {
