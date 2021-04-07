@@ -134,6 +134,8 @@ const AdvancedFormItem = ({
     fieldInput = <Switch disabled={disabled} checkedChildren="是" unCheckedChildren="否" />;
   } else if (type === 'upload') {
     fieldInput = <UploadInput disabled={disabled} />;
+  } else if (type === 'pdf') {
+    fieldInput = <UploadInput type="pdf" disabled={disabled} />;
   } else if (type === 'image') {
     fieldInput = <UploadInput type="image" disabled={disabled} />;
   } else if (type === 'number') {

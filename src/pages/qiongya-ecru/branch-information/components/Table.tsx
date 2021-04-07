@@ -71,6 +71,12 @@ const Table = ({
       hideInSearch: true,
     },
     {
+      title: '所属单位',
+      align: 'center',
+      dataIndex: 'organizationName',
+      hideInSearch: true,
+    },
+    {
       title: '操作',
       valueType: 'option',
       align: 'center',

@@ -54,14 +54,14 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       enumsLabel: 'dictPartySource',
       rules: [{ message: '请选择支部来源!', whitespace: true }],
     },
+    // {
+    //   label: '支部活动地点',
+    //   name: 'dictVenuesType',
+    //   // rules: [{ required: true, message: '请输入支部活动地点!', whitespace: true }],
+    // },
     {
       label: '支部活动地点',
-      name: 'venues',
-      // rules: [{ required: true, message: '请输入支部活动地点!', whitespace: true }],
-    },
-    {
-      label: '支部活动地点',
-      name: 'venues',
+      name: 'dictVenuesType',
       render: (
         <Radio.Group>
           <Radio value={0}>固定</Radio>
@@ -71,7 +71,7 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '固定地址',
-      name: 'guding',
+      name: 'venues',
       visible: venuesVisible,
     },
     {
@@ -92,15 +92,15 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
     },
     {
       label: '纪检委员',
-      name: 'disciplineCommissaryId',
+      name: 'disciplineCommissaryName',
     },
     {
       label: '组织委员',
-      name: 'organCommissaryId',
+      name: 'organCommissaryName',
     },
     {
       label: '宣传委员',
-      name: 'publicityCommissaryId',
+      name: 'publicityCommissaryName',
     },
     {
       label: '备注',

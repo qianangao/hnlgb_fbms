@@ -174,3 +174,11 @@ export async function clearSite(params) {
     data: params,
   });
 }
+
+//提醒
+export async function feachRemind(params) {
+  return request(`/party/remind`, {
+    method: 'GET',
+    params,
+  });
+}
