@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import OnlineClassForm from './form/OnlineClassForm';
 
-const ModifyModal = ({ dispatch, loading, actionRef }) => {
+const ModifyModal = ({ dispatch, loading, actionRef, tableType }) => {
   const [form] = OnlineClassForm.useForm();
   const [onlineClassId, setOnlineClassId] = useState('');
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
@@ -80,7 +80,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
           boxSizing: 'border-box',
         }}
       >
-        <OnlineClassForm form={form} id={onlineClassId} />
+        <OnlineClassForm form={form} id={onlineClassId} tableType={tableType} />
       </div>
     </Modal>
   );

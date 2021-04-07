@@ -3,7 +3,7 @@ import { connect } from 'umi';
 import { Modal, Button } from 'antd';
 import OnlineClassForm from './form/OnlineClassForm';
 
-const AddModal = ({ dispatch, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
   const [form] = OnlineClassForm.useForm();
   const [addModalVisible, setAddModalVisible] = useState(false);
   const showModal = () => {
@@ -70,7 +70,7 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       confirmLoading={loading}
       onCancel={hideModal}
     >
-      <OnlineClassForm form={form} />
+      <OnlineClassForm form={form} tableType={tableType} />
     </Modal>
   );
 };

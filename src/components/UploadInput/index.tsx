@@ -34,6 +34,8 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
       shouldUpdate = verifyImgFile(file);
     } else if (type === 'excel') {
       shouldUpdate = verifyExcelFile(file);
+    } else if (type === 'pdf') {
+      shouldUpdate = verifyPdfFile(file);
     } else {
       shouldUpdate = verifyFile(file);
     }
@@ -78,6 +80,22 @@ const UploadInput = ({ value, actionRef, type = '', onChange, disabled = false, 
     }
 
     return isExcel && isLt20M;
+  };
+  const verifyPdfFile = file => {
+    const fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
+    const isPdf = fileType === 'pdf' || file.type === 'PDF';
+
+    if (!isPdf) {
+      message.error('仅支持上传pdf文件，请选择对应文件进行上传！');
+    }
+
+    const isLt200M = file.size / 1024 / 1024 < 200;
+
+    if (!isLt200M) {
+      message.error('文件大小不能超过 200MB!');
+    }
+
+    return isPdf && isLt200M;
   };
   const verifyFile = file => {
     console.warn('file.type: ', file.type);

@@ -16,6 +16,7 @@ import {
   getSiteTimeData,
   setSite,
   clearSite,
+  feachRemind,
 } from './service';
 
 const Model = {
@@ -33,6 +34,7 @@ const Model = {
     siteData: {},
     totalNumber: '',
     totalNum: '',
+    feachRemindData:{},
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -284,6 +286,19 @@ const Model = {
         resolve && resolve(response);
         yield put({
           type: 'tableReload',
+        });
+      }
+    },
+    
+    *feachRemind({ payload, resolve }, { call, put }) {
+      const response = yield call(feachRemind, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            feachRemindData: response,
+          },
         });
       }
     },

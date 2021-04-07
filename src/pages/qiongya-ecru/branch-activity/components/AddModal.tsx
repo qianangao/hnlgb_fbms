@@ -3,11 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
 import BranchActivityForm from './form/BranchActivityForm';
 
-const AddModal = ({ dispatch, actionRef, loading }) => {
+const AddModal = ({ dispatch, actionRef, loading, branchActivity }) => {
+  const { feachRemindData } = branchActivity;
   const [form] = BranchActivityForm.useForm();
   const [addModalVisible, setAddModalVisible] = useState(false);
+  const [visibles, setVisibles] = useState(true);
   const showModal = () => {
     setAddModalVisible(true);
+    dispatch({
+      type: `branchActivity/feachRemind`, //请求放在model里面
+    });
   };
 
   useEffect(() => {
@@ -64,6 +69,9 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
         console.error('新增错误', info);
       });
   };
+  const hideModals = () => {
+    setVisibles(false);
+  };
 
   return (
     <Modal
@@ -89,10 +97,27 @@ const AddModal = ({ dispatch, actionRef, loading }) => {
       onCancel={hideModal}
     >
       <BranchActivityForm form={form} />
+      {feachRemindData && feachRemindData.data && (
+        <Modal
+          title="弹框"
+          centered
+          visible={visibles}
+          forceRender
+          onCancel={hideModals}
+          footer={[
+            <Button key="ok" type="primary" onClick={hideModals}>
+              确认
+            </Button>,
+          ]}
+        >
+          <div>当前单位退休党员数量已超过3人，请及时组建支部</div>
+        </Modal>
+      )}
     </Modal>
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, branchActivity }) => ({
   loading: loading.models.branchActivity,
+  branchActivity,
 }))(AddModal);

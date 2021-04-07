@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 
-const OnlineClassForm = ({ form, id, dispatch, loading }) => {
+const OnlineClassForm = ({ form, id, dispatch, loading, tableType }) => {
   // 链接地址校验
   const validateUrl = (rule, value, callback) => {
     const strRegex = /([\w.]+\/?)\S*/;
@@ -16,6 +16,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
       callback();
     }
   };
+
   const formItems = [
     {
       label: '标题名称',
@@ -37,7 +38,13 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
       label: '缩略图',
       name: 'cephFileInfo',
       type: 'image',
-      rules: [{ required: false, message: '请上传图片!' }],
+      visible: tableType !== '8adcf80a75303d66017545a9a4b4',
+    },
+    {
+      label: '附件',
+      name: 'cephFileInfo',
+      type: 'pdf',
+      visible: tableType === '8adcf80a75303d66017545a9a4b4',
     },
   ];
 

@@ -72,8 +72,8 @@ const OnlineClass = ({ dispatch, tableRef }) => {
           tableType={tableType}
         />
       </TypeSelectLayout>
-      <AddModal actionRef={addModelRef} />
-      <ModifyModal actionRef={modifyModelRef} />
+      <AddModal actionRef={addModelRef} tableType={tableType} />
+      <ModifyModal actionRef={modifyModelRef} tableType={tableType} />
     </OrgTreeLayout>
   );
 };
