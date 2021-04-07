@@ -53,3 +53,13 @@ export async function getLgbList(params) {
     params,
   });
 }
+/**
+ * 导出-离世信息
+ * @param {*} params
+ */
+export async function exportRecord(params) {
+  return request(`/users/death/export`, {
+    method: 'GET',
+    params,
+  });
+}

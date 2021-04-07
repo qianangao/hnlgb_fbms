@@ -78,6 +78,16 @@ export async function detailSpecialty(params) {
 }
 
 /**
+ * 银发人才-详情-根据userId
+ * @param {*} params
+ */
+export async function detailSpecialtyUserId(params) {
+  return request(`/silverTalent/user/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
+/**
  * 候鸟型银发人才-详情
  * @param {*} params
  */

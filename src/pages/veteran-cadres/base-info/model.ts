@@ -178,7 +178,16 @@ const Model = {
       }
     },
     *addLgb({ payload, resolve }, { call, put }) {
-      const response = yield call(addLgb, payload);
+      const params = {
+        ...payload,
+      };
+      if (payload.startWorkTime) {
+        params.startWorkTime = `${payload.startWorkTime}-01`;
+      }
+      if (payload.treatmentApproveTime) {
+        params.treatmentApproveTime = `${payload.treatmentApproveTime}-01`;
+      }
+      const response = yield call(addLgb, params);
 
       if (!response.error) {
         resolve && resolve(response);
@@ -213,7 +222,16 @@ const Model = {
       }
     },
     *updateLgb({ payload, resolve }, { call, put }) {
-      const response = yield call(updateLgb, payload);
+      const params = {
+        ...payload,
+      };
+      if (payload.startWorkTime && payload.startWorkTime.length === 7) {
+        params.startWorkTime = `${payload.startWorkTime}-01`;
+      }
+      if (payload.treatmentApproveTime && payload.treatmentApproveTime.length === 7) {
+        params.treatmentApproveTime = `${payload.treatmentApproveTime}-01`;
+      }
+      const response = yield call(updateLgb, params);
 
       if (!response.error) {
         message.success('修改老干部信息成功！');

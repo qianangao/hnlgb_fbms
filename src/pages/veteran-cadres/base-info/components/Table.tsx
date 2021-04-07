@@ -24,7 +24,12 @@ const Table = ({
       fixed: 'left',
       width: 64,
     },
-    { title: '姓名', align: 'center', dataIndex: 'realName' },
+    {
+      title: '姓名',
+      align: 'center',
+      dataIndex: 'realName',
+      render: (dom, employeeData) => <a onClick={() => openDetailModal(employeeData)}>{dom}</a>,
+    },
     { title: '性别', align: 'center', dataIndex: 'dictSex', valueEnum: enums.dictSex },
     { title: '民族', align: 'center', dataIndex: 'dictNation', valueEnum: enums.dictNation },
     {

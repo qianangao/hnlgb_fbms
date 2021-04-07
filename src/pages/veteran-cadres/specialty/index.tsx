@@ -39,6 +39,8 @@ const Specialty = ({ dispatch }) => {
           'dictHierarchy',
           'dictIdentity',
           'dictOrganizationArea',
+          'dictAdministrativeRank',
+          'dictTitleGrade',
         ],
       },
     });

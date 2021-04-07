@@ -4,13 +4,13 @@ import { connect } from 'umi';
 import AdvancedForm from '@/components/AdvancedForm';
 import ProvinceCascaderInput from '@/components/ProvinceCascaderInput';
 import { Descriptions } from 'antd';
-import { checkPost, checkPhone, checkTelephone } from '@/utils/validators';
-import { USER_INFO, getCookie } from '@/utils/cookie';
+import { checkPost, checkPhone } from '@/utils/validators';
+// import { USER_INFO, getCookie } from '@/utils/cookie';
 import { decrypt } from '@/utils/format';
 
 const FamilyForm = ({ form, id, dispatch, loading }) => {
   const [spouseDeadTimeVisible, setSpouseDeadTimeVisible] = useState(false);
-  const [adminVisible, setAdminVisible] = useState(false);
+  // const [adminVisible, setAdminVisible] = useState(false);
   const formItems = [
     {
       name: 'id',
@@ -31,7 +31,7 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       label: '常住详细地址',
       name: 'residentAddressDiy',
       span: 2,
-      visible: adminVisible || !id,
+      // visible: adminVisible || !id,
       rules: [
         // { required: true, message: '请输入常住详细地址!', whitespace: true },
         { max: 120, message: '常住详细地址请小于120位!', whitespace: true },
@@ -47,16 +47,20 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       label: '家庭详细地址',
       name: 'homeAddressDiy',
       span: 2,
-      visible: adminVisible || !id,
+      // visible: adminVisible || !id,
       rules: [
         // { required: true, message: '请输入家庭详细地址!', whitespace: true },
         { max: 120, message: '家庭详细地址请小于120位!', whitespace: true },
       ],
     },
+    // {
+    //   label: '住宅电话',
+    //   name: 'telephone',
+    //   rules: [{ validator: checkTelephone }],
+    // },
     {
-      label: '住宅电话',
-      name: 'telephone',
-      rules: [{ validator: checkTelephone }],
+      label: '联系方式',
+      name: 'contactInformation',
     },
     {
       label: '邮编',
@@ -87,24 +91,6 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       enumsLabel: 'dictLiveStatu',
     },
     {
-      label: '子女数',
-      name: 'childrenNum',
-      type: 'number',
-      extraProps: {
-        min: 0,
-        max: 10000,
-      },
-    },
-    {
-      label: '无劳动能力子女数',
-      name: 'noworkChildrenNum',
-      type: 'number',
-      extraProps: {
-        min: 0,
-        max: 10000,
-      },
-    },
-    {
       label: '赡养人数',
       name: 'supportNum',
       type: 'number',
@@ -122,19 +108,26 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
         max: 10000,
       },
     },
+    // {
+    //   label: '集团号码',
+    //   name: 'groupNumber',
+    // },
+    // {
+    //   label: '固定电话1',
+    //   name: 'telephone1',
+    //   rules: [{ validator: checkTelephone }],
+    // },
+    // {
+    //   label: '固定电话2',
+    //   name: 'telephone2',
+    //   rules: [{ validator: checkTelephone }],
+    // },
+
     {
-      label: '集团号码',
-      name: 'groupNumber',
-    },
-    {
-      label: '固定电话1',
-      name: 'telephone1',
-      rules: [{ validator: checkTelephone }],
-    },
-    {
-      label: '固定电话2',
-      name: 'telephone2',
-      rules: [{ validator: checkTelephone }],
+      label: '备注',
+      name: 'familyRemarks',
+      type: 'textarea',
+      rules: [{ max: 120, message: '备注内容请小于120位!', whitespace: true }],
     },
     {
       key: 'spouseTitle',
@@ -182,16 +175,39 @@ const FamilyForm = ({ form, id, dispatch, loading }) => {
       name: 'dictSpouseHealth',
       enumsLabel: 'dictSpouseHealth',
     },
+    {
+      key: 'childrenTitle',
+      span: 4,
+      render: <Descriptions title="子女信息" size="middle" />,
+    },
+    {
+      label: '子女数',
+      name: 'childrenNum',
+      type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
+    },
+    {
+      label: '无劳动能力子女数',
+      name: 'noworkChildrenNum',
+      type: 'number',
+      extraProps: {
+        min: 0,
+        max: 10000,
+      },
+    },
   ];
 
   useEffect(() => {
-    const {account} = JSON.parse(getCookie(USER_INFO));
-    const userId = JSON.parse(getCookie(USER_INFO)).id;
-    if (account === 'admin' && userId === '1') {
-      setAdminVisible(true);
-    } else {
-      setAdminVisible(false);
-    }
+    // const { account } = JSON.parse(getCookie(USER_INFO));
+    // const userId = JSON.parse(getCookie(USER_INFO)).id;
+    // if (account === 'admin' && userId === '1') {
+    //   // setAdminVisible(true);
+    // } else {
+    //   setAdminVisible(false);
+    // }
     if (id) {
       new Promise(resolve => {
         dispatch({

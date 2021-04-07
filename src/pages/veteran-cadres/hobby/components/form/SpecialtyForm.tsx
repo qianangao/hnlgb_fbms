@@ -7,36 +7,16 @@ import LgbSelectInput from '@/components/LgbSelectInput';
 const SpecialtyForm = ({ form, id, dispatch, loading }) => {
   const formItems = [
     {
-      label: '专业特长',
+      label: '兴趣爱好',
       name: 'hobby',
-      rules: [{ required: true, message: '请输入专业特长!', whitespace: true }],
+      enumsLabel: 'dictHobby',
+      rules: [{ required: true, message: '请选择兴趣爱好!', whitespace: true }],
     },
     {
-      label: '成果',
-      name: 'achievements',
-      rules: [{ required: false, message: '请输入成果!', whitespace: true }],
-    },
-    {
-      label: '类型',
-      name: 'administrativeRank',
-      enumsLabel: 'dictAdministrativeRank',
-      rules: [{ required: false, message: '请选择类型!', whitespace: true }],
-    },
-    {
-      label: '技术等级',
-      name: 'titleGrade',
-      enumsLabel: 'dictTitleGrade',
-      rules: [{ required: false, message: '请选择技术等级!', whitespace: true }],
-    },
-    {
-      label: '返聘岗位',
-      name: 'reemploymentPost',
-    },
-    {
-      label: '备注',
-      name: 'remarks',
-      type: 'textarea',
-      rules: [{ max: 120, message: '备注内容请小于120位!', whitespace: true }],
+      label: '等级',
+      name: 'level',
+      enumsLabel: 'dictHobbyLevel',
+      rules: [{ required: true, message: '请选择等级!', whitespace: true }],
     },
   ];
 
@@ -44,7 +24,7 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
     if (id) {
       new Promise(resolve => {
         dispatch({
-          type: 'specialty/detailSpecialty',
+          type: 'vcHobbyInfo/detailHobby',
           payload: { id },
           resolve,
         });
@@ -63,7 +43,7 @@ const SpecialtyForm = ({ form, id, dispatch, loading }) => {
       <Form.Item name="userId" rules={[{ required: true, message: '请选择老干部!' }]}>
         <LgbSelectInput />
       </Form.Item>
-      <Descriptions title="银发人才" />
+      <Descriptions title="兴趣爱好" />
     </>
   );
   return id ? (

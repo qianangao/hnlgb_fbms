@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Popconfirm, Modal } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
+import moment from 'moment';
 
 const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dispatch }) => {
   const { tableRef } = vcDeathInfo;
@@ -131,7 +132,15 @@ const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dis
       },
     });
   };
-
+  // 导出
+  const exportRecord = () => {
+    dispatch({
+      type: 'vcDeathInfo/exportRecord',
+      payload: {
+        excelName: `离世信息${moment().format('MM-DD HH:mm:ss')}.xls`,
+      },
+    });
+  };
   return (
     <ProTable
       rowKey="id"
@@ -141,6 +150,9 @@ const Table = ({ vcDeathInfo, openModifyModal, openReminiscenceModal, enums, dis
       scroll={{ x: 'max-content' }}
       request={async params => getEmployeeList(params)}
       toolBarRender={(_, { selectedRowKeys }) => [
+        <Button type="primary" onClick={() => exportRecord(selectedRowKeys)}>
+          导出
+        </Button>,
         selectedRowKeys && selectedRowKeys.length && (
           <Button
             onClick={() => {

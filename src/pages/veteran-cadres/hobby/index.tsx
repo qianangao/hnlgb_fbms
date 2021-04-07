@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { connect } from 'umi';
 import OrgTreeLayout from '@/layouts/OrgTreeLayout';
 import Table from './components/Table';
+import ModifyModal from './components/ModifyModal';
 
 const HobbyInfo = ({ dispatch }) => {
+  const modifyModelRef = useRef({});
   useEffect(() => {
     dispatch({
       type: 'global/getEnums',
@@ -29,10 +31,13 @@ const HobbyInfo = ({ dispatch }) => {
       payload: orgId,
     });
   };
-
+  const openModifyModal = ids => {
+    modifyModelRef.current.showModal(ids);
+  };
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
-      <Table />
+      <Table openModifyModal={openModifyModal} />
+      <ModifyModal actionRef={modifyModelRef} />
     </OrgTreeLayout>
   );
 };

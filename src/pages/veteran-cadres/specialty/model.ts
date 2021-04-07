@@ -6,6 +6,7 @@ import {
   updateSpecialty,
   specialtyList,
   detailSpecialty,
+  detailSpecialtyUserId,
   specialtyFlowList,
   addSpecialtyFlow,
   updateSpecialtyFlow,
@@ -17,6 +18,8 @@ const Model = {
   namespace: 'specialty',
   state: {
     specialtyListData: {},
+    detailSpecialtyData: {},
+    detailSpecialtyUserIdData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -183,11 +186,30 @@ const Model = {
         });
       }
     },
-    *detailSpecialty({ payload, resolve }, { call }) {
+    *detailSpecialty({ payload, resolve }, { call, put }) {
       const response = yield call(detailSpecialty, payload);
 
       if (!response.error) {
         resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailSpecialtyData: response,
+          },
+        });
+      }
+    },
+    *detailSpecialtyUserId({ payload, resolve }, { call, put }) {
+      const response = yield call(detailSpecialtyUserId, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailSpecialtyUserIdData: response,
+          },
+        });
       }
     },
     *detailSpecialtyFlow({ payload, resolve }, { call }) {

@@ -40,6 +40,8 @@ const BaseInfo = ({ dispatch }) => {
           'dictHierarchy',
           'dictIdentity',
           'dictOrganizationArea',
+          'dictAdministrativeRank',
+          'dictTitleGrade',
         ],
       },
     });

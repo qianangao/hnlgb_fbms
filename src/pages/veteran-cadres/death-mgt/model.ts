@@ -1,6 +1,13 @@
 import { message } from 'antd';
 import moment from 'moment';
-import { deleteLgb, updateLgb, getLgbList, initReminiscence, getSpouseInfo } from './service';
+import {
+  deleteLgb,
+  updateLgb,
+  getLgbList,
+  initReminiscence,
+  getSpouseInfo,
+  exportRecord,
+} from './service';
 
 const Model = {
   namespace: 'vcDeathInfo',
@@ -117,6 +124,16 @@ const Model = {
       if (!response.error) {
         resolve && resolve(response);
         message.success('追思缅怀活动发起成功！');
+        yield put({
+          type: 'tableReload',
+        });
+      }
+    },
+    *exportRecord({ payload, resolve }, { call, put }) {
+      const response = yield call(exportRecord, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('离世信息导出成功！');
         yield put({
           type: 'tableReload',
         });
