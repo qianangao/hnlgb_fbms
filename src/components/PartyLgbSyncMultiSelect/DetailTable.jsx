@@ -201,7 +201,7 @@ const DetailTable = ({
   return (
     <>
       <ProTable
-        rowKey="id"
+        rowKey="userId"
         headerTitle="人员列表（本系统内）"
         search={false}
         actionRef={actionRef}
