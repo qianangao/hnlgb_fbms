@@ -10,3 +10,14 @@ export async function getLgbList(params) {
     params,
   });
 }
+
+/**
+ * 获取全系统老干部列表
+ * @param {*} params
+ */
+export async function getSystemLgbList(params) {
+  return request('/party/users', {
+    method: 'GET',
+    params,
+  });
+}

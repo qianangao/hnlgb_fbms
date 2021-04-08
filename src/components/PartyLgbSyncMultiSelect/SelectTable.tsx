@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'umi';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Radio } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import OrgTree from '@/components/OrgTree';
+import { encrypt } from '@/utils/format';
 
 const SelectTable = ({
   enums,
@@ -18,7 +19,7 @@ const SelectTable = ({
   const [lgbSelectModalVisible, setVisible] = useState(false);
   const [selectedOrgId, setSelectedOrgId] = useState('');
   const [selectedKeys, setSelectedKeys] = useState([]);
-
+  const [systemType, setSystemType] = useState('单位');
   useEffect(() => {
     actionRef &&
       (actionRef.current = {
@@ -29,7 +30,7 @@ const SelectTable = ({
       });
   }, []);
 
-  const columns = [
+  const columns1 = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -39,7 +40,7 @@ const SelectTable = ({
       width: 64,
     },
     { title: '姓名', align: 'center', dataIndex: 'realName' },
-    { title: '身份证号', align: 'center', dataIndex: 'idCard', hideInTable: true },
+
     {
       title: '性别',
       align: 'center',
@@ -82,12 +83,77 @@ const SelectTable = ({
       // hideInSearch: true,
     },
   ];
-
+  const columns2 = [
+    {
+      title: '序号',
+      dataIndex: 'index',
+      valueType: 'index',
+      align: 'center',
+      fixed: 'left',
+      width: 64,
+    },
+    { title: '姓名', align: 'center', dataIndex: 'realName' },
+    { title: '身份证号', align: 'center', dataIndex: 'idCard', hideInTable: true },
+    {
+      title: '性别',
+      align: 'center',
+      dataIndex: 'dictSex',
+      valueEnum: enums.dictSex,
+      hideInSearch: true,
+    },
+    {
+      title: '民族',
+      align: 'center',
+      dataIndex: 'dictNation',
+      valueEnum: enums.dictNation,
+      hideInSearch: true,
+    },
+    {
+      title: '离退休类型',
+      align: 'center',
+      dataIndex: 'dictRetirementType',
+      valueEnum: enums.dictRetirementType,
+      hideInSearch: true,
+    },
+    {
+      title: '出生日期',
+      valueType: 'date',
+      align: 'center',
+      dataIndex: 'dateOfBirth',
+      hideInSearch: true,
+    },
+    {
+      title: '政治面貌',
+      align: 'center',
+      dataIndex: 'dictPoliticalStatus',
+      valueEnum: enums.dictPoliticalStatus,
+      hideInSearch: true,
+    },
+    { title: '参加工作时间', align: 'center', dataIndex: 'startWorkTime', hideInSearch: true },
+    {
+      title: '原工作单位及职务',
+      align: 'center',
+      dataIndex: 'originalUnitAndPosition',
+      hideInSearch: true,
+    },
+  ];
   const getLgbList = params =>
     new Promise(resolve => {
       orgTree && (params.orgIdForDataSelect = selectedOrgId);
       dispatch({
         type: 'globalLgb/getLgbList',
+        payload: { ...params },
+        resolve,
+      });
+    });
+  const getSystemLgbList = params =>
+    new Promise(resolve => {
+      if (params.idCard) {
+        params.idCard = encrypt(params.idCard);
+      }
+      orgTree && (params.orgIdForDataSelect = selectedOrgId);
+      dispatch({
+        type: 'globalLgb/getSystemLgbList',
         payload: { ...params },
         resolve,
       });
@@ -109,7 +175,9 @@ const SelectTable = ({
         reloadDataHandler();
       });
   };
-
+  const onPubilshChangeHander = e => {
+    setSystemType(e.target.value);
+  };
   return (
     <Modal
       title="选择老干部"
@@ -139,6 +207,10 @@ const SelectTable = ({
       // okText="添加"
       onCancel={() => setVisible(false)}
     >
+      <Radio.Group onChange={onPubilshChangeHander} defaultValue={'单位'}>
+        <Radio value={'单位'}>本单位及以下成员</Radio>
+        <Radio value={'个人'}>外单位成员</Radio>
+      </Radio.Group>
       <section
         style={{
           display: 'flex',
@@ -163,25 +235,48 @@ const SelectTable = ({
             <OrgTree onChange={onOrgSelect} />
           </aside>
         )}
-        <section style={{ width: '100%', overflow: 'auto' }}>
-          <ProTable
-            rowKey="id"
-            headerTitle="人员信息"
-            actionRef={selectRef}
-            rowSelection={{
-              onChange: keys => {
-                setSelectedKeys(keys);
-              },
-              getCheckboxProps: item => ({
-                disabled: checkedIds.indexOf(item.id) !== -1,
-              }),
-              selectedRowKeys: Array.from(new Set([...selectedKeys, ...checkedIds])),
-            }}
-            scroll={{ x: 'max-content' }}
-            request={getSelectLgbs || (async params => getLgbList(params))}
-            columns={columns}
-          />
-        </section>
+        {systemType === '单位' && (
+          <section style={{ width: '100%', overflow: 'auto' }}>
+            <ProTable
+              rowKey="id"
+              headerTitle="人员信息-单位"
+              actionRef={selectRef}
+              rowSelection={{
+                onChange: keys => {
+                  setSelectedKeys(keys);
+                },
+                getCheckboxProps: item => ({
+                  disabled: checkedIds.indexOf(item.id) !== -1,
+                }),
+                selectedRowKeys: Array.from(new Set([...selectedKeys, ...checkedIds])),
+              }}
+              scroll={{ x: 'max-content' }}
+              request={getSelectLgbs || (async params => getLgbList(params))}
+              columns={columns1}
+            />
+          </section>
+        )}
+        {systemType === '个人' && (
+          <section style={{ width: '100%', overflow: 'auto' }}>
+            <ProTable
+              rowKey="id"
+              headerTitle="人员信息-个人"
+              actionRef={selectRef}
+              rowSelection={{
+                onChange: keys => {
+                  setSelectedKeys(keys);
+                },
+                getCheckboxProps: item => ({
+                  disabled: checkedIds.indexOf(item.id) !== -1,
+                }),
+                selectedRowKeys: Array.from(new Set([...selectedKeys, ...checkedIds])),
+              }}
+              scroll={{ x: 'max-content' }}
+              request={getSelectLgbs || (async params => getSystemLgbList(params))}
+              columns={columns2}
+            />
+          </section>
+        )}
       </section>
     </Modal>
   );
