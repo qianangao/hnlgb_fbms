@@ -109,7 +109,7 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
   ];
 
   const fieldChangeHander = (label, value) => {
-    if (label === 'venues') {
+    if (label === 'dictVenuesType') {
       setVenuesVisible(!value);
     }
   };

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AdvancedForm from '@/components/AdvancedForm';
 import { connect } from 'umi';
 
-const OnlineClassForm = ({ form, id, dispatch, loading, tableType }) => {
+const OnlineClassForm = ({ form, id, dispatch, loading }) => {
+  const [visible, setVisible] = useState(false);
   // 链接地址校验
   const validateUrl = (rule, value, callback) => {
     const strRegex = /([\w.]+\/?)\S*/;
@@ -14,6 +15,14 @@ const OnlineClassForm = ({ form, id, dispatch, loading, tableType }) => {
       }
     } else {
       callback();
+    }
+  };
+
+  const fieldChangeHander = (label, value) => {
+    if (label === 'type' && value === '8adcf80a75303d66017545a9a4b4') {
+      setVisible(true);
+    } else if (label === 'type' && value !== '8adcf80a75303d66017545a9a4b4') {
+      setVisible(false);
     }
   };
 
@@ -33,18 +42,19 @@ const OnlineClassForm = ({ form, id, dispatch, loading, tableType }) => {
       label: '链接地址',
       name: 'url',
       rules: [{ required: true, message: '请输入链接地址!' }, { validator: validateUrl }],
+      visible: !visible,
     },
     {
       label: '缩略图',
       name: 'cephFileInfo',
       type: 'image',
-      visible: tableType !== '8adcf80a75303d66017545a9a4b4',
+      rules: [{ required: true, message: '请上传缩略图!' }],
     },
     {
       label: '附件',
-      name: 'cephFileInfo',
+      name: 'fileInfo',
       type: 'pdf',
-      visible: tableType === '8adcf80a75303d66017545a9a4b4',
+      visible: visible,
     },
   ];
 
@@ -68,13 +78,33 @@ const OnlineClassForm = ({ form, id, dispatch, loading, tableType }) => {
                   status: 'done',
                 }
               : null,
+
+          fileInfo:
+            data.fileCephFile && data.fileCephFile.id && data.fileCephFile.url
+              ? {
+                  uid: data.fileCephFile.id,
+                  name: data.fileCephFile.fileName,
+                  url: data.fileCephFile.url,
+                  status: 'done',
+                }
+              : null,
         };
         form.setFieldsValue(fields);
+        if (data.type === '8adcf80a75303d66017545a9a4b4') {
+          setVisible(true);
+        }
       });
     }
   }, [id]);
 
-  return <AdvancedForm form={form} loading={loading} fields={formItems} />;
+  return (
+    <AdvancedForm
+      form={form}
+      loading={loading}
+      fields={formItems}
+      fieldChange={fieldChangeHander}
+    />
+  );
 };
 
 OnlineClassForm.useForm = AdvancedForm.useForm;

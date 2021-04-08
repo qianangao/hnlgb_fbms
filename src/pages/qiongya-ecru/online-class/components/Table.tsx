@@ -24,6 +24,7 @@ const Table = ({ openAddModal, openModifyModal, onlineClass, dispatch, tableType
       align: 'center',
       dataIndex: 'url',
       hideInSearch: true,
+      hideInTable: tableType === '8adcf80a75303d66017545a9a4b4',
       render: text => {
         return (
           <a title={text} href={text} target="_blank" rel="noopener noreferrer">
