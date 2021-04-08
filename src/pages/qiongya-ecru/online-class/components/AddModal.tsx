@@ -37,6 +37,7 @@ const AddModal = ({ dispatch, actionRef, loading, tableType }) => {
               type: values.type,
               url: values.url,
               photoAttachmentId: values.cephFileInfo && values.cephFileInfo.uid,
+              fileId: values.fileInfo && values.fileInfo.uid,
             },
             resolve,
           });
