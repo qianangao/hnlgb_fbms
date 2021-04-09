@@ -84,6 +84,7 @@ const BranchActivity = ({ dispatch, tableRef }) => {
     setTableType(id);
     tableRef.current.reload();
   };
+
   return (
     <OrgTreeLayout onOrgSelect={orgChangeHander}>
       <TypeSelectLayout
@@ -123,4 +124,5 @@ const BranchActivity = ({ dispatch, tableRef }) => {
 
 export default connect(({ branchActivity }) => ({
   tableRef: branchActivity.tableRef,
+  branchActivity,
 }))(BranchActivity);

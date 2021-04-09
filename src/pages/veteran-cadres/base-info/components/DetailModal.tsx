@@ -275,7 +275,7 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
             <Descriptions.Item label="成果">
               {detailSpecialtyUserIdData.achievements}
             </Descriptions.Item>
-            <Descriptions.Item label="健康状态">
+            <Descriptions.Item label="类型">
               {enums.dictAdministrativeRank &&
                 enums.dictAdministrativeRank[detailSpecialtyUserIdData.administrativeRank]}
             </Descriptions.Item>
