@@ -54,7 +54,7 @@ const OnlineClassForm = ({ form, id, dispatch, loading }) => {
       label: '附件',
       name: 'fileInfo',
       type: 'pdf',
-      visible: visible,
+      visible,
     },
   ];
 

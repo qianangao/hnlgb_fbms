@@ -34,7 +34,7 @@ const Model = {
     siteData: {},
     totalNumber: '',
     totalNum: '',
-    feachRemindData:{},
+    feachRemindData: null,
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
@@ -289,7 +289,7 @@ const Model = {
         });
       }
     },
-    
+
     *feachRemind({ payload, resolve }, { call, put }) {
       const response = yield call(feachRemind, payload);
       if (!response.error) {
