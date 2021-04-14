@@ -19,6 +19,15 @@ const Table = ({ qeActivitySite, openModifyModal, dispatch }) => {
     { title: '地点地址', align: 'center', dataIndex: 'address', hideInSearch: true },
     { title: '备注', align: 'center', dataIndex: 'remarks', hideInSearch: true },
     {
+      title: '是否共享',
+      align: 'center',
+      dataIndex: 'isShare',
+      valueEnum: {
+        0: '否',
+        1: '共享',
+      },
+    },
+    {
       title: '操作',
       valueType: 'option',
       align: 'center',
