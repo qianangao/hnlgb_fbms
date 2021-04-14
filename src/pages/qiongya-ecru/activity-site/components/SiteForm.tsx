@@ -26,6 +26,13 @@ const SiteForm = ({ form, siteData }) => {
       name: 'remarks',
       span: 4,
     },
+    {
+      label: '是否共享',
+      name: 'isShare',
+      type: 'switch',
+      initialValue: 0,
+      rules: [{ required: false, message: '请选择是否共享!' }],
+    },
   ];
 
   useEffect(() => {
