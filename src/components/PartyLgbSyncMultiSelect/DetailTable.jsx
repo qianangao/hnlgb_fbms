@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Popconfirm } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
@@ -14,7 +14,12 @@ const DetailTable = ({
   deleteLgb,
   // openMemberModifyModel,
 }) => {
+  const [isSort, setIsSort] = useState(false);
   // console.log('getLgbsOuter', getLgbsOuter);
+  const onIsSort = () => {
+    setIsSort(!isSort);
+    actionRef.current.reload();
+  };
   const columns1 = [
     {
       title: '序号',
@@ -24,7 +29,15 @@ const DetailTable = ({
       fixed: 'left',
       width: 64,
     },
-    { title: '姓名', align: 'center', dataIndex: 'realName' },
+    {
+      title: (
+        <a title="按姓排序" onClick={() => onIsSort()}>
+          姓名
+        </a>
+      ),
+      align: 'center',
+      dataIndex: 'realName',
+    },
     {
       title: '工作单位',
       align: 'center',
@@ -177,7 +190,8 @@ const DetailTable = ({
   //   },
   // ];
   const getLgbList = params => {
-    return getLgbs(params);
+    const paramss = { ...params, isSort: isSort ? 1 : 0 };
+    return getLgbs(paramss);
   };
   // const getLgbOuterList = params => {
   //   return getLgbsOuter(params);
