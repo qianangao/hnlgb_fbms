@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Popconfirm, Modal, message } from 'antd';
 import ProTable from '@ant-design/pro-table';
 import { connect } from 'umi';
+import DeleteVerify from '@/components/DeleteVerify';
 
 const Table = ({
   vcBasicInfo,
@@ -15,6 +16,7 @@ const Table = ({
   const { tableRef } = vcBasicInfo;
   const uploadLgbListRef = useRef();
   const formRef = useRef();
+  const verifyModelRef = useRef({});
   const columns = [
     {
       title: '序号',
@@ -94,7 +96,12 @@ const Table = ({
           key={`${employeeData.id}del`}
           title="确认删除该人员吗？"
           placement="topRight"
-          onConfirm={() => deleteReturnworkPerson([employeeData.id])}
+          onConfirm={
+            () => {
+              openDeleteVerify([employeeData.id]);
+            }
+            // deleteReturnworkPerson([employeeData.id])
+          }
         >
           <a>删除</a>
         </Popconfirm>,
@@ -192,14 +199,14 @@ const Table = ({
     e.target.value = '';
   };
 
-  const deleteReturnworkPerson = ids => {
-    dispatch({
-      type: 'vcBasicInfo/deleteLgb',
-      payload: {
-        ids,
-      },
-    });
-  };
+  // const deleteReturnworkPerson = ids => {
+  //   dispatch({
+  //     type: 'vcBasicInfo/deleteLgb',
+  //     payload: {
+  //       ids,
+  //     },
+  //   });
+  // };
 
   const resetPassword = id => {
     dispatch({
@@ -209,85 +216,92 @@ const Table = ({
       },
     });
   };
+  const openDeleteVerify = selectedRowKeys => {
+    verifyModelRef.current.showModal(selectedRowKeys);
+  };
 
   return (
-    <ProTable
-      rowKey="id"
-      headerTitle="人员信息"
-      actionRef={tableRef}
-      formRef={formRef}
-      rowSelection={[]}
-      scroll={{ x: 'max-content' }}
-      request={async params => getEmployeeList(params)}
-      toolBarRender={(_, { selectedRowKeys }) => [
-        <Button
-          type="primary"
-          onClick={() => {
-            openAddModal();
-          }}
-        >
-          新增
-        </Button>,
-        <Button
-          onClick={() => {
-            const url = '/海南老干部管理系统人员信息导入模板.xlsx';
-            window.open(url);
-          }}
-        >
-          模版下载
-        </Button>,
-        <>
-          <input
-            type="file"
-            name="file"
-            onChange={importLgbs}
-            style={{ display: 'none' }}
-            ref={uploadLgbListRef}
-          />
+    <>
+      <ProTable
+        rowKey="id"
+        headerTitle="人员信息"
+        actionRef={tableRef}
+        formRef={formRef}
+        rowSelection={[]}
+        scroll={{ x: 'max-content' }}
+        request={async params => getEmployeeList(params)}
+        toolBarRender={(_, { selectedRowKeys }) => [
           <Button
             type="primary"
             onClick={() => {
-              uploadLgbListRef.current.click();
+              openAddModal();
             }}
           >
-            导入
-          </Button>
-        </>,
-        <Button
-          type="primary"
-          onClick={() => {
-            exportDetailData(selectedRowKeys);
-          }}
-        >
-          导出
-        </Button>,
-        selectedRowKeys && selectedRowKeys.length && (
+            新增
+          </Button>,
           <Button
             onClick={() => {
-              openOrgSelectModal(selectedRowKeys);
+              const url = '/海南老干部管理系统人员信息导入模板.xlsx';
+              window.open(url);
             }}
           >
-            修改单位
-          </Button>
-        ),
-        selectedRowKeys && selectedRowKeys.length && (
+            模版下载
+          </Button>,
+          <>
+            <input
+              type="file"
+              name="file"
+              onChange={importLgbs}
+              style={{ display: 'none' }}
+              ref={uploadLgbListRef}
+            />
+            <Button
+              type="primary"
+              onClick={() => {
+                uploadLgbListRef.current.click();
+              }}
+            >
+              导入
+            </Button>
+          </>,
           <Button
+            type="primary"
             onClick={() => {
-              Modal.confirm({
-                title: '确认删除选择人员？',
-                content: '一旦确定将无法恢复',
-                onOk: () => {
-                  deleteReturnworkPerson(selectedRowKeys);
-                },
-              });
+              exportDetailData(selectedRowKeys);
             }}
           >
-            批量删除
-          </Button>
-        ),
-      ]}
-      columns={columns}
-    />
+            导出
+          </Button>,
+          selectedRowKeys && selectedRowKeys.length && (
+            <Button
+              onClick={() => {
+                openOrgSelectModal(selectedRowKeys);
+              }}
+            >
+              修改单位
+            </Button>
+          ),
+          selectedRowKeys && selectedRowKeys.length && (
+            <Button
+              onClick={() => {
+                Modal.confirm({
+                  title: '确认删除选择人员？',
+                  content: '一旦确定将无法恢复',
+                  onOk: () => {
+                    // deleteReturnworkPerson(selectedRowKeys);
+                    openDeleteVerify(selectedRowKeys);
+                  },
+                });
+              }}
+            >
+              批量删除
+            </Button>
+          ),
+        ]}
+        columns={columns}
+      />
+      <DeleteVerify actionRef={verifyModelRef} />
+    </>
   );
 };
 

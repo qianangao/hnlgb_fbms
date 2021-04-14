@@ -54,3 +54,14 @@ export async function updatePhotoInfo(params) {
     data: params,
   });
 }
+
+/**
+ * 照片信息-userId-详情
+ * @param {*} params
+ */
+export async function detailUserIdPhotoInfo(params) {
+  return request(`/user_album/user/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}
