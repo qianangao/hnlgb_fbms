@@ -19,6 +19,10 @@ import {
   updatePartTimeLgb,
   getHealthyLgb,
   updateHealthyLgb,
+  checkPassword,
+  updatePhotoInfo,
+  deletePhotoInfo,
+  addPhotoInfo,
 } from './service';
 
 const Model = {
@@ -303,6 +307,39 @@ const Model = {
       if (!response.error) {
         message.success('修改老干部健康档案信息成功！');
         yield resolve && resolve();
+      }
+    },
+
+    *checkPassword({ payload, resolve }, { call }) {
+      const response = yield call(checkPassword, payload);
+
+      if (response === true) {
+        resolve && resolve(response);
+        message.success('密码校验成功！');
+      } else {
+        message.error('密码校验失败！');
+      }
+    },
+    *updatePhotoInfo({ payload, resolve }, { call }) {
+      const response = yield call(updatePhotoInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('修改照片信息成功！');
+      }
+    },
+    *deletePhotoInfo({ payload }, { call }) {
+      const response = yield call(deletePhotoInfo, payload);
+
+      if (!response.error) {
+        message.success('照片信息删除成功！');
+      }
+    },
+    *addPhotoInfo({ payload, resolve }, { call }) {
+      const response = yield call(addPhotoInfo, payload);
+      if (!response.error) {
+        resolve && resolve(response);
+        message.success('新增照片信息成功！');
       }
     },
   },

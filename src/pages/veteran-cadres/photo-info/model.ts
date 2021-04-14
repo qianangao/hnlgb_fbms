@@ -5,6 +5,7 @@ import {
   updatePhotoInfo,
   photoInfoList,
   detailPhotoInfo,
+  detailUserIdPhotoInfo,
 } from './service';
 
 const Model = {
@@ -94,6 +95,13 @@ const Model = {
     },
     *detailPhotoInfo({ payload, resolve }, { call }) {
       const response = yield call(detailPhotoInfo, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+      }
+    },
+    *detailUserIdPhotoInfo({ payload, resolve }, { call }) {
+      const response = yield call(detailUserIdPhotoInfo, payload);
 
       if (!response.error) {
         resolve && resolve(response);

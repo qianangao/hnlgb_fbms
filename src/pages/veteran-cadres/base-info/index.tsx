@@ -42,6 +42,8 @@ const BaseInfo = ({ dispatch }) => {
           'dictOrganizationArea',
           'dictAdministrativeRank',
           'dictTitleGrade',
+          'dictHobby',
+          'dictHobbyLevel',
         ],
       },
     });

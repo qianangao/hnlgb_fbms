@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'umi';
-import { Modal, Descriptions, Spin, Button } from 'antd';
+import { Modal, Descriptions, Spin, Button, Form } from 'antd';
 import { decrypt } from '@/utils/format';
+import AdvancedForm from '@/components/AdvancedForm';
 
-const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loading }) => {
+const DetailModal = ({
+  dispatch,
+  vcBasicInfo,
+  specialty,
+  vcHobbyInfo,
+  actionRef,
+  enums,
+  loading,
+}) => {
   const { lgbDetailData, lgbFamilyData, lgbPartTimeData, lgbHealthyData } = vcBasicInfo;
   const { detailSpecialtyUserIdData } = specialty;
+  const { detailUserIdHobbyData } = vcHobbyInfo;
+  const [form] = Form.useForm();
   const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [userId, setUserId] = useState();
+  const [photoId, setPhotoId] = useState();
+
   const showModal = id => {
     if (id) {
+      setUserId(id);
       dispatch({
         type: 'vcBasicInfo/getLgbDetail',
         payload: { id },
@@ -29,6 +44,32 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
         type: 'specialty/detailSpecialtyUserId',
         payload: { id },
       });
+      dispatch({
+        type: 'vcHobbyInfo/detailUserIdHobby',
+        payload: { id },
+      });
+      // 照片信息
+      new Promise(resolve => {
+        dispatch({
+          type: 'photoInfo/detailUserIdPhotoInfo',
+          payload: { id },
+          resolve,
+        });
+      }).then(data => {
+        if (data.attachmentInfo) {
+          const fields = {
+            file: {
+              url: data.attachmentInfo.url,
+              uid: data.attachmentInfo.id,
+              name: data.attachmentInfo.fileName,
+              status: 'done',
+            },
+          };
+          form.setFieldsValue(fields);
+        }
+        setPhotoId(data.id);
+      });
+
       setDetailModalVisible(true);
     }
   };
@@ -43,14 +84,55 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
     }
   }, []);
 
-  const hideModal = () => {
+  const hideModal = state => {
+    if (state) {
+      if (photoId) {
+        if (form.getFieldValue('file')) {
+          // 更新
+          dispatch({
+            type: `vcBasicInfo/updatePhotoInfo`,
+            payload: {
+              id: photoId,
+              fileId: form && form.getFieldValue('file') && form.getFieldValue('file').uid,
+            },
+          });
+        } else {
+          // 删除
+          dispatch({
+            type: `vcBasicInfo/deletePhotoInfo`,
+            payload: {
+              ids: [photoId],
+            },
+          });
+        }
+      } else if (form.getFieldValue('file')) {
+        // 新增
+        dispatch({
+          type: `vcBasicInfo/addPhotoInfo`,
+          payload: {
+            userId,
+            fileId: form && form.getFieldValue('file') && form.getFieldValue('file').uid,
+          },
+        });
+      }
+    }
     setDetailModalVisible(false);
+    setPhotoId('');
+    setUserId('');
+    form.setFieldsValue({ file: null });
   };
   const print = () => {
     window.document.body.innerHTML = window.document.getElementById('print').innerHTML;
     window.print();
     window.location.reload();
   };
+  const formItems = [
+    {
+      name: 'file',
+      type: 'image',
+    },
+  ];
+
   return (
     <Modal
       title="老干部详情"
@@ -63,9 +145,9 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
       }}
       visible={detailModalVisible}
       destroyOnClose
-      onCancel={hideModal}
+      onCancel={() => hideModal(false)}
       footer={[
-        <Button key="ok" type="primary" onClick={hideModal}>
+        <Button key="ok" type="primary" onClick={() => hideModal(true)}>
           确认
         </Button>,
         <Button key="ok" type="primary" onClick={print}>
@@ -78,6 +160,9 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
           <Descriptions title="基本信息" column={{ xxl: 4, xl: 3, lg: 2 }}>
             <Descriptions.Item label="姓名">{lgbDetailData.realName}</Descriptions.Item>
             <Descriptions.Item label="曾用名">{lgbDetailData.nameUsedBefore}</Descriptions.Item>
+            <Descriptions.Item>
+              <AdvancedForm form={form} fields={formItems} />
+            </Descriptions.Item>
             <Descriptions.Item label="性别">
               {enums.dictSex && enums.dictSex[lgbDetailData.dictSex]}
             </Descriptions.Item>
@@ -287,15 +372,24 @@ const DetailModal = ({ dispatch, vcBasicInfo, specialty, actionRef, enums, loadi
             </Descriptions.Item>
             <Descriptions.Item label="备注">{detailSpecialtyUserIdData.remarks}</Descriptions.Item>
           </Descriptions>
+          <Descriptions title="兴趣爱好" column={{ xxl: 4, xl: 3, lg: 2 }}>
+            <Descriptions.Item label="兴趣爱好">
+              {enums.dictHobby && enums.dictHobby[detailUserIdHobbyData.hobby]}
+            </Descriptions.Item>
+            <Descriptions.Item label="等级">
+              {enums.dictHobbyLevel && enums.dictHobbyLevel[detailUserIdHobbyData.level]}
+            </Descriptions.Item>
+          </Descriptions>
         </div>
       </Spin>
     </Modal>
   );
 };
 
-export default connect(({ vcBasicInfo, specialty, loading, global }) => ({
+export default connect(({ vcBasicInfo, specialty, vcHobbyInfo, loading, global }) => ({
   vcBasicInfo,
   specialty,
+  vcHobbyInfo,
   loading: loading.models.vcBasicInfo,
   enums: global.enums,
 }))(DetailModal);
