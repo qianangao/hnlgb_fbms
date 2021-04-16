@@ -169,7 +169,7 @@ export async function setSite(params) {
  * @param {*} params
  */
 export async function clearSite(params) {
-  return request(`/field_order/${params.id}`, {
+  return request(`/field_order`, {
     method: 'PUT',
     data: params,
   });
