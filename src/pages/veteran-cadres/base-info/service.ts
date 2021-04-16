@@ -175,3 +175,45 @@ export async function updateHealthyLgb(params) {
     data: params,
   });
 }
+
+/**
+ * 密码校验
+ * @param {*} params
+ */
+export async function checkPassword(params) {
+  return request(`/user/check_password`, {
+    method: 'POST',
+    data: params,
+  });
+}
+
+/**
+ * 快速编辑-照片信息
+ * @param {*} params
+ */
+export async function updatePhotoInfo(params) {
+  return request(`/user_album/${params.id}`, {
+    method: 'PUT',
+    data: params,
+  });
+}
+/**
+ * 快速删除-照片信息
+ * @param {*} params
+ */
+export async function deletePhotoInfo(params) {
+  return request(`/user_album`, {
+    method: 'DELETE',
+    data: params,
+  });
+}
+/**
+ * 快速新增-照片信息
+ * @param {*} params
+ */
+export async function addPhotoInfo(params) {
+  return request(`/user_album`, {
+    method: 'POST',
+    data: params,
+  });
+}

@@ -31,3 +31,14 @@ export async function updateHobby(params) {
     data: params,
   });
 }
+
+/**
+ * 兴趣爱好-根据userId查询-详情
+ * @param {*} params
+ */
+export async function detailUserIdHobby(params) {
+  return request(`/hobby/user/${params.id}`, {
+    method: 'GET',
+    params,
+  });
+}

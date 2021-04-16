@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { getHobbyList, detailHobby, updateHobby } from './service';
+import { getHobbyList, detailHobby, updateHobby, detailUserIdHobby } from './service';
 import { message } from 'antd';
 
 const Model = {
@@ -7,6 +7,7 @@ const Model = {
   state: {
     hobbyListData: {},
     detailHobbyData: {},
+    detailUserIdHobbyData: {},
     tableRef: {},
     selectedOrgId: undefined, // 选择的组织id
   },
@@ -63,6 +64,19 @@ const Model = {
           type: 'save',
           payload: {
             detailHobbyData: response,
+          },
+        });
+      }
+    },
+    *detailUserIdHobby({ payload, resolve }, { call, put }) {
+      const response = yield call(detailUserIdHobby, payload);
+
+      if (!response.error) {
+        resolve && resolve(response);
+        yield put({
+          type: 'save',
+          payload: {
+            detailUserIdHobbyData: response,
           },
         });
       }

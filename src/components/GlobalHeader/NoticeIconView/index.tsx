@@ -25,7 +25,6 @@ class NoticeIconView extends Component {
 
   UNSAFE_componentWillUpdate() {
     const { dispatch, filesStatus } = this.props;
-
     if (this.refreshDownloadFilesFlag > -1) {
       clearTimeout(this.refreshDownloadFilesFlag);
       this.refreshDownloadFilesFlag = -1;
