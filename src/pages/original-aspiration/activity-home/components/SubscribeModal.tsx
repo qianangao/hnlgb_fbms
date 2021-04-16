@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'umi';
 import SubscribeForm from './SubscribeForm';
 
-const SubscribeModal = ({ dispatch, loading, actionRef }) => {
+const SubscribeModal = ({ dispatch, loading, actionRef, oaActivityHome }) => {
+  const { tableRef } = oaActivityHome;
   const [form] = SubscribeForm.useForm();
   const [subModalVisible, setSubModalVisible] = useState(false);
   const [actId, setActId] = useState('');
+
   const showModal = id => {
     setActId(id);
     setSubModalVisible(true);
@@ -31,18 +33,23 @@ const SubscribeModal = ({ dispatch, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
+        const params = { ...values };
+        params.time = params.timeId.substring(0, 10);
+        params.amOrPm = params.timeId.substring(10);
+        delete params.timeId;
         return new Promise(resolve => {
           dispatch({
             type: `branchActivity/setSite`,
             payload: {
               activityId: actId,
-              ...values,
+              ...params,
             },
             resolve,
           });
         });
       })
       .then(() => {
+        tableRef.current && tableRef.current.reloadAndRest();
         hideModal();
       })
       .catch(info => {
@@ -66,6 +73,7 @@ const SubscribeModal = ({ dispatch, loading, actionRef }) => {
   );
 };
 
-export default connect(({ loading }) => ({
+export default connect(({ loading, oaActivityHome }) => ({
   loading: loading.models.branchActivity,
+  oaActivityHome,
 }))(SubscribeModal);

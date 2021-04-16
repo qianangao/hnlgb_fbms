@@ -122,13 +122,12 @@ const Model = {
       }
     },
     *getPartyUserList({ payload, resolve }, { call, put }) {
-      console.log(payload)
       const params = {
-        ...payload
-      }
+        ...payload,
+      };
       params.currentPage = params.current;
       delete params.current;
-      
+
       const response = yield call(partyUserList, params);
 
       if (!response.error) {
@@ -165,7 +164,13 @@ const Model = {
       }
     },
     *getUsersNoParty({ payload, resolve }, { call, put }) {
-      const response = yield call(getUsersNoParty, payload);
+      const params = {
+        ...payload,
+      };
+      params.currentPage = params.current;
+      delete params.current;
+      const response = yield call(getUsersNoParty, params);
+
       if (!response.error) {
         const { items, currentPage, totalNum } = response;
         const result = {

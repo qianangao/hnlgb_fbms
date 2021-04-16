@@ -21,6 +21,9 @@ const EditorInput = ({ value, onChange, disabled, dispatch }) => {
         }
       }
     };
+    // 关闭样式过滤
+    editor.current.customConfig.pasteFilterStyle = false;
+
     editor.current.customConfig.uploadFileName = 'file';
     editor.current.customConfig.uploadImgServer = '/ceph';
     editor.current.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;

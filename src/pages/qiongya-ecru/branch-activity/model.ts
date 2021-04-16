@@ -38,7 +38,7 @@ const Model = {
   },
   effects: {
     *branchActivityList({ payload, resolve }, { call, put, select }) {
-      const orgIdForDataSelect = yield select(state => state.receiveFile.selectedOrgId);
+      const orgIdForDataSelect = yield select(state => state.branchActivity.selectedOrgId);
       const params = {
         ...payload,
         orgIdForDataSelect,

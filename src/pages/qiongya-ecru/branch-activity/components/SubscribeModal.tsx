@@ -31,12 +31,16 @@ const SubscribeModal = ({ dispatch, loading, actionRef }) => {
     form
       .validateFields()
       .then(values => {
+        const params = { ...values };
+        params.time = params.timeId.substring(0, 10);
+        params.amOrPm = params.timeId.substring(10);
+        delete params.timeId;
         return new Promise(resolve => {
           dispatch({
             type: `branchActivity/setSite`,
             payload: {
               activityId: actId,
-              ...values,
+              ...params,
             },
             resolve,
           });

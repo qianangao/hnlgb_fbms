@@ -22,6 +22,7 @@ const ModifyModal = ({ dispatch, loading, actionRef }) => {
   }, []);
 
   const hideModal = () => {
+    setLgbId('');
     setModifyModalVisible(false);
   };
 

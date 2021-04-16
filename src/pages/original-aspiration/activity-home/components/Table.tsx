@@ -96,7 +96,7 @@ const Table = ({
             key={`${data.id}clear`}
             title="确认取消已预约的场地吗？"
             placement="topRight"
-            onConfirm={() => clearSite(data.resultFieldMangeVo.timeId)}
+            onConfirm={() => clearSite(data)}
           >
             <a>取消预约</a>
           </Popconfirm>
@@ -135,13 +135,17 @@ const Table = ({
         resolve,
       });
     });
-  const clearSite = id => {
+  const clearSite = activityData => {
     dispatch({
       type: 'branchActivity/clearSite',
       payload: {
-        id,
+        time: activityData.resultFieldMangeVo.time,
+        amOrPm: activityData.resultFieldMangeVo.amOrPm,
+        fieldId: activityData.resultFieldMangeVo.id,
+        activityId: activityData.id,
       },
     });
+    tableRef.current && tableRef.current.reloadAndRest();
   };
   // 删除
   const deleteReturnworkPerson = ids => {

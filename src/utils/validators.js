@@ -189,7 +189,9 @@ export const checkTelephone = (rule, value, callback) => {
 export const checkAllTel = (rule, value, callback) => {
   const isMobile = /^[1][3,4,5,6,7,8,9][0-9]{9}$/; // 手机号
   const isTel = /^0\d{2,3}-\d{7,8}$/; // 固定电话
-  if ((value && isMobile.test(value)) || isTel.test(value)) {
+  if (!value) {
+    callback();
+  } else if ((value && isMobile.test(value)) || isTel.test(value)) {
     callback();
   } else {
     callback('联系电话输入不合法！');

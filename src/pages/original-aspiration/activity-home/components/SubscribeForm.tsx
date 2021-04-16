@@ -25,7 +25,11 @@ const SubscribeForm = ({ form, siteData, dispatch }) => {
         <Select>
           {timeValue &&
             timeValue.map(item => (
-              <Select.Option key={item.timeId} value={item.timeId} disabled={item.isOrder === 0}>
+              <Select.Option
+                key={item.timeId}
+                value={item.time + item.amOrPm}
+                disabled={item.isOrder === 0}
+              >
                 {item.time +
                   (item.amOrPm === 1 ? '上午' : '下午') +
                   (item.isOrder === 0 ? '已被预约' : '')}

@@ -58,7 +58,7 @@ const errorHandler = error => {
 
     notification.error({
       key: `${response.status}-${data.code}`,
-      message: `请求错误`, // ${status}: ${url}
+      message: `请注意`, // ${status}: ${url}
       description: errorText,
     });
   } else if (!response) {

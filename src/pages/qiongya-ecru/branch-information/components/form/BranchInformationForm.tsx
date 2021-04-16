@@ -64,8 +64,8 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
       name: 'dictVenuesType',
       render: (
         <Radio.Group>
-          <Radio value={0}>固定</Radio>
-          <Radio value={1}>临时</Radio>
+          <Radio value={'40289f7c78ab0f600178ab1b76dd'}>固定</Radio>
+          <Radio value={'40289f7c78ab0f600178ab1b957d'}>临时</Radio>
         </Radio.Group>
       ),
     },
@@ -110,7 +110,8 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
 
   const fieldChangeHander = (label, value) => {
     if (label === 'dictVenuesType') {
-      setVenuesVisible(!value);
+      setVenuesVisible(value === '40289f7c78ab0f600178ab1b76dd');
+      form.setFieldsValue({ venues: null });
     }
   };
 
@@ -131,6 +132,7 @@ const BranchInformationForm = ({ form, id, dispatch, loading }) => {
         // commissaryRef.current.setLabel(data.disciplineCommissaryName);
         // organRef.current.setLabel(data.organCommissaryName);
         // publicityRef.current.setLabel(data.publicityCommissaryName);
+        setVenuesVisible(fields.dictVenuesType === '40289f7c78ab0f600178ab1b76dd');
         form.setFieldsValue(fields);
       });
     }
