@@ -65,7 +65,7 @@ const EditorInput = ({ value, onChange, disabled, dispatch }) => {
   }, []);
 
   useEffect(() => {
-    editor.current.txt.html(value);
+    if (editor.current.txt.html() !== value) editor.current.txt.html(value);
   }, [value]);
   useEffect(() => {
     editor.current.$textElem.attr('contenteditable', !disabled);
