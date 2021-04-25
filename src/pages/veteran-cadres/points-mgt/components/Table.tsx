@@ -78,7 +78,7 @@ const Table = ({ openModifyModal, vcPointsMgt, enums, dispatch }) => {
           key={`${data.id}up`}
           onClick={() => {
             setAddPonitsVisible(true);
-            setSelectedRowKeys([data.id]);
+            setSelectedRowAllKeys([data.id]);
           }}
         >
           添加积分
